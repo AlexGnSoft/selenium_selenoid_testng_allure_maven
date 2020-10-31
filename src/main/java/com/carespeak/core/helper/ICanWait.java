@@ -29,7 +29,7 @@ public interface ICanWait {
      * @return true if wait was successful
      */
     default Boolean waitFor(Callable<Boolean> func, int timeOutSec) {
-        return waitFor(func, timeOutSec, true);
+        return waitFor(func, timeOutSec, false);
     }
 
     /**

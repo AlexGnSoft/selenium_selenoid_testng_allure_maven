@@ -26,10 +26,8 @@ public class ProdLoginSteps implements LoginSteps {
 
     @Override
     public LoginSteps loginAs(String user, String password) {
-        loginPage.loginInput.clear();
-        loginPage.loginInput.sendKeys(user);
-        loginPage.passwordInput.clear();
-        loginPage.passwordInput.sendKeys(password);
+        loginPage.loginInput.enterText(user);
+        loginPage.passwordInput.enterText(password);
         loginPage.loginButton.click();
         return this;
     }

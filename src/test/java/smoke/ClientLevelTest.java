@@ -98,18 +98,20 @@ public class ClientLevelTest extends BaseTest {
 
     @AfterClass
     public void removeClient() {
-        site.loginSteps()
-                .openSite()
-                .loginAs(user, password);
-        site.adminToolsSteps()
-                .removeClient(client);
+        if (client != null) {
+            site.loginSteps()
+                    .openSite()
+                    .loginAs(user, password);
+            site.adminToolsSteps()
+                    .removeClient(client);
 
-        site.loginSteps()
-                .openSite()
-                .loginAs(user, password);
-        Client shouldBeRemoved = site.adminToolsSteps().getClientByCode(client.getCode());
+            site.loginSteps()
+                    .openSite()
+                    .loginAs(user, password);
+            Client shouldBeRemoved = site.adminToolsSteps().getClientByCode(client.getCode());
 
-        Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
+            Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
+        }
     }
 
 }

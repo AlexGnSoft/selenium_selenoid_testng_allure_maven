@@ -26,7 +26,7 @@ class TableBody extends AbstractComponent {
     }
 
     public TableRowItem findItemBy(String tableHeader, String valueToSearch) {
-        Logger.info("Searching for '" + valueToSearch + "' in header '" + tableHeader + "'");
+        Logger.info("Searching for '" + valueToSearch + "' in column '" + tableHeader + "'");
         try {
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
@@ -58,7 +58,7 @@ class TableBody extends AbstractComponent {
     }
 
     WebElement findRowWebElementBy(String tableHeader, String valueToSearch) {
-        Logger.info("Searching for '" + valueToSearch + "' in header '" + tableHeader + "'");
+        Logger.info("Searching for '" + valueToSearch + "' in column '" + tableHeader + "'");
         try {
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();

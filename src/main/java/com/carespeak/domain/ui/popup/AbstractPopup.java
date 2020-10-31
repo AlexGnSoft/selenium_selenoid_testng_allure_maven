@@ -49,7 +49,7 @@ public abstract class AbstractPopup implements ICanWait {
             } catch (WebDriverException e) {
                 return true;
             }
-        }, true);
+        }, false);
     }
 
 
