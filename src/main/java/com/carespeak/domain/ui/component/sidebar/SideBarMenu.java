@@ -15,7 +15,7 @@ public class SideBarMenu extends AbstractComponent {
     public void openItem(String menuItem) {
         String url = driver.getCurrentUrl();
         menuItem(menuItem).click();
-        waitFor(() -> !driver.getCurrentUrl().equals(url), false);
+        waitFor(() -> !driver.getCurrentUrl().equals(url), 10, false);
     }
 
     private ClickableElement menuItem(String itemName) {

@@ -56,7 +56,7 @@ public class ReportListener implements ITestListener, IDataGenerator {
      */
     private static String description(ITestResult result) {
         String description = result.getMethod().getDescription();
-        if (description != null) {
+        if (description != null && !description.isEmpty()) {
             return description;
         } else {
             return splitByCamelCase(result.getMethod().getMethodName());

@@ -13,33 +13,30 @@ import org.testng.annotations.*;
 
 import java.io.File;
 
-@Test(suiteName = "Smoke test suite")
 @Listeners({ReportListener.class, ReportPortalTestNGListener.class})
 public abstract class BaseTest implements IDataGenerator {
 
-    protected Config config;
+    protected static Config config;
     protected SiteStepsHolder site;
 
     protected String user;
     protected String password;
 
-    @BeforeTest
-    public void beforeTest() {
+    static {
         String env = System.getProperty("env", "demo");
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
+        config = ConfigProvider.provide();
     }
 
-    @BeforeClass
-    public void beforeClass() {
-        config = ConfigProvider.provide();
+    public BaseTest() {
         site = new SiteStepsHolder(config);
         user = config.get("data.user");
         password = config.get("data.pass");
     }
 
-    @AfterTest
-    public void afterTestClass() {
+    @AfterClass
+    public void afterTest() {
         RemoteWebDriver driver = DriverFactory.getDriver();
         if (driver != null) {
             driver.quit();

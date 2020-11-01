@@ -21,7 +21,7 @@ public class DriverFactory {
      *
      * @return RemoteWebDriver instance for current thread.
      */
-    public static RemoteWebDriver getDriver() {
+    public static synchronized RemoteWebDriver getDriver() {
         if (drivers.get() == null) {
             String hubUrl = ConfigProvider.provide().get("driver.hub");
             String driverName = ConfigProvider.provide().get("driver.name");

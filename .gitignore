@@ -4,6 +4,8 @@
 
 # Compiled Java class files
 *.class
+reportportal.lock
+reportportal.sync
 
 # Log files
 *.log
