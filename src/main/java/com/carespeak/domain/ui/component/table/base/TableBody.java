@@ -28,6 +28,7 @@ class TableBody extends AbstractComponent {
     public TableRowItem findItemBy(String tableHeader, String valueToSearch) {
         Logger.info("Searching for '" + valueToSearch + "' in column '" + tableHeader + "'");
         try {
+            waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
             int tdIndex = headersMap.get(tableHeader);
@@ -60,6 +61,7 @@ class TableBody extends AbstractComponent {
     WebElement findRowWebElementBy(String tableHeader, String valueToSearch) {
         Logger.info("Searching for '" + valueToSearch + "' in column '" + tableHeader + "'");
         try {
+            waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
             int tdIndex = headersMap.get(tableHeader);
@@ -92,6 +94,7 @@ class TableBody extends AbstractComponent {
     List<WebElement> getRowsWebElelments() {
         Logger.debug("Receiving rows web elements...");
         try {
+            waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             //FIXME: search supported for exact match. Support wait for table to be fully loaded
             waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
@@ -104,54 +107,10 @@ class TableBody extends AbstractComponent {
         return null;
     }
 
-    WebElement getFirstRowWebElement() {
-        Logger.debug("Receiving first web element row item...");
-        try {
-            table = driver.findElement(tableLocator);
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
-            List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
-            return rows.get(1);
-        } catch (Throwable t) {
-            //Error during table analyzing, do nothing here
-            Logger.error("Failed to parse table and find required web element", t);
-        }
-        Logger.error("First row web element wasn't found");
-        return null;
-    }
-
-    WebElement getLastRowWebElement() {
-        Logger.debug("Receiving first web element row item...");
-        try {
-            table = driver.findElement(tableLocator);
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
-            List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
-            return rows.get(rows.size() - 1);
-        } catch (Throwable t) {
-            //Error during table analyzing, do nothing here
-            Logger.error("Failed to parse table and find required web element", t);
-        }
-        Logger.error("First row web element wasn't found");
-        return null;
-    }
-
-    WebElement getRowWebElementByIndex(int index) {
-        Logger.debug("Receiving row with index " + index + " row item...");
-        try {
-            table = driver.findElement(tableLocator);
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
-            List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
-            return rows.get(index);
-        } catch (Throwable t) {
-            //Error during table analyzing, do nothing here
-            Logger.error("Failed to parse table and find required web element", t);
-        }
-        Logger.error("First row web element wasn't found");
-        return null;
-    }
-
     public TableRowItem getFirstRowItem() {
         Logger.info("Receiving first row item...");
         try {
+            waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
             waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
@@ -163,20 +122,6 @@ class TableBody extends AbstractComponent {
         }
         Logger.error("First row item wasn't found");
         return null;
-    }
-
-    int getRowsCount() {
-        Logger.debug("Receiving rows count...");
-        try {
-            table = driver.findElement(tableLocator);
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
-            List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
-            return rows.size() > 0 ? rows.size() - 1 : 0;
-        } catch (Throwable t) {
-            //Error during table analyzing, do nothing here
-            Logger.error("Failed to parse table and calculate rows count", t);
-            return 0;
-        }
     }
 
     //Returns table from TableRowItem

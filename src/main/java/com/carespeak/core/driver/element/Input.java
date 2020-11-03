@@ -27,6 +27,8 @@ public class Input extends ClickableElement {
     }
 
     public void enterText(String text) {
+        scrollIntoView();
+        waitFor(() -> innerElement.isDisplayed(), 10, false);
         if (text != null) {
             LOG.log(LOG_NAME, Level.DEBUG, "Clear " + name, null);
             highlight();

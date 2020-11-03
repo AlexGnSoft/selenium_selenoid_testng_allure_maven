@@ -5,7 +5,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * DriverFactory can provide different webdriver instances based on configurations
@@ -28,7 +33,7 @@ public class DriverFactory {
             String driverVersion = ConfigProvider.provide().get("driver.version");
             RemoteWebDriver driver;
             if (hubUrl != null && !hubUrl.isEmpty()) {
-                driver = createRemoteWebDriver(driverName, hubUrl);
+                driver = createRemoteWebDriver(driverName, hubUrl, driverVersion);
             } else {
                 driver = createLocalWebDriver(driverName, driverVersion);
             }
@@ -71,10 +76,32 @@ public class DriverFactory {
      *
      * @param driverName - name of required web driver.
      * @param hubUrl     - selenium hub url to interact with.
+     * @param version    - string representation for version.
      * @return RemoteWebDriver instance.
      */
-    private static RemoteWebDriver createRemoteWebDriver(String driverName, String hubUrl) {
-        throw new UnsupportedOperationException("Remote web driver operation creation is not supported yet");
+    private static RemoteWebDriver createRemoteWebDriver(String driverName, String hubUrl, String version) {
+        DriverManagerType driverType = getType(driverName);
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("browserName", driverType.toString().toLowerCase());
+        if (version != null && !version.isEmpty()) {
+            capabilities.setCapability("browserVersion", version);
+        }
+        Map<String, Object> caps = new HashMap<>();
+        caps.put("enableVNC", true);
+        caps.put("enableVideo", true);
+        capabilities.setCapability("selenoid:options", caps);
+
+        try {
+            RemoteWebDriver remoteWebDriver = new RemoteWebDriver(
+                    URI.create(hubUrl).toURL(),
+                    capabilities
+            );
+            remoteWebDriver.manage().window().maximize();
+            return remoteWebDriver;
+        } catch (Throwable e) {
+            throw new RuntimeException("Remote web driver session creation failed!", e);
+        }
     }
 
     /**

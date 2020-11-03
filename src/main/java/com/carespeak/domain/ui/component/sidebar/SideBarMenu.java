@@ -16,6 +16,7 @@ public class SideBarMenu extends AbstractComponent {
         String url = driver.getCurrentUrl();
         menuItem(menuItem).click();
         waitFor(() -> !driver.getCurrentUrl().equals(url), 10, false);
+        waitFor(() -> !driver.findElement(By.id("cs-sub-header")).getText().trim().contains(menuItem), 10, false);
     }
 
     private ClickableElement menuItem(String itemName) {

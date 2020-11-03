@@ -31,8 +31,10 @@ public class ClientLanguageSettingsPage extends AbstractClientPage {
     private ClickableElement languageRows;
 
     public List<String> getAdditionalLanguages() {
+        String languageRowsXpath = ".//div[contains(@class, 'language-row')]//select";
         List<String> additionalLanguages = new ArrayList<>();
-        List<WebElement> languageRowsElements = languageRows.findElements(By.xpath(".//div[contains(@class, 'language-row')]//select"));
+        waitFor(() -> languageRows.findElements(By.xpath(languageRowsXpath)) != null);
+        List<WebElement> languageRowsElements = languageRows.findElements(By.xpath(languageRowsXpath));
         if (languageRowsElements.size() != 0) {
             for (WebElement languageRow : languageRowsElements) {
                 String langShortName = languageRow.getAttribute("value");

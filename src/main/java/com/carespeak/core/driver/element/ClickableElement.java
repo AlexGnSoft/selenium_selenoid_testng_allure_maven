@@ -60,19 +60,17 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
         this.innerElement = (WebElement) element;
     }
 
-    public ClickableElement refreshElement() {
-        this.innerElement = DriverFactory.getDriver().findElement(locator);
-        return this;
-    }
-
     @Override
     public void click() {
-        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(innerElement));
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         highlight();
         try {
             LOG.log(LOG_NAME, Level.INFO, "Click on " + name, null);
-            Actions actions = new Actions(DriverFactory.getDriver());
+            Actions actions = new Actions(driver);
             actions.moveToElement(innerElement).click().build().perform();
         } catch (Throwable ex) {
             LOG.log(LOG_NAME, Level.ERROR, name + " was not able to be clicked.", ex);
@@ -90,6 +88,9 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
 
     @Override
     public void sendKeys(CharSequence... charSequences) {
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         highlight();
         if (name != null && name.toLowerCase().contains("password")) {
             LOG.log(LOG_NAME, Level.INFO, "Typing text '*********' to " + name, null);
@@ -105,6 +106,9 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
 
     @Override
     public void clear() {
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         LOG.log(LOG_NAME, Level.INFO, "Clear " + name, null);
         highlight();
         innerElement.clear();
@@ -122,18 +126,27 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
 
     @Override
     public boolean isSelected() {
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         highlight();
         return innerElement.isSelected();
     }
 
     @Override
     public boolean isEnabled() {
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         highlight();
         return innerElement.isEnabled();
     }
 
     @Override
     public String getText() {
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         highlight();
         return innerElement.getText().trim();
     }
@@ -150,8 +163,11 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
 
     @Override
     public boolean isDisplayed() {
+        if (!isVisible()) {
+            scrollIntoView();
+        }
         try {
-            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 3);
+            WebDriverWait wait = new WebDriverWait(driver, 3);
             wait.until(ExpectedConditions.visibilityOf(innerElement));
             highlight();
             return innerElement.isDisplayed();
@@ -198,7 +214,7 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
     public void scrollIntoView() {
         try {
             waitFor(() -> {
-                ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].scrollIntoView({block : \"center\"});", innerElement);
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block : \"center\"});", innerElement);
                 TimeUnit.MILLISECONDS.sleep(500);
                 return isVisible();
             }, 30, false);
@@ -208,18 +224,23 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
     }
 
     public Boolean isVisible() {
-        return (Boolean) ((JavascriptExecutor) DriverFactory.getDriver()).executeScript(
-                "var elem = arguments[0],                 " +
-                        "  box = elem.getBoundingClientRect(),    " +
-                        "  cx = box.left + box.width / 2,         " +
-                        "  cy = box.top + box.height / 2,         " +
-                        "  e = document.elementFromPoint(cx, cy); " +
-                        "for (; e; e = e.parentElement) {         " +
-                        "  if (e === elem)                        " +
-                        "    return true;                         " +
-                        "}                                        " +
-                        "return false;                            "
-                , innerElement);
+        try {
+            return (Boolean) ((JavascriptExecutor) driver).executeScript(
+                    "var elem = arguments[0],                 " +
+                            "  box = elem.getBoundingClientRect(),    " +
+                            "  cx = box.left + box.width / 2,         " +
+                            "  cy = box.top + box.height / 2,         " +
+                            "  e = document.elementFromPoint(cx, cy); " +
+                            "for (; e; e = e.parentElement) {         " +
+                            "  if (e === elem)                        " +
+                            "    return true;                         " +
+                            "}                                        " +
+                            "return false;                            "
+                    , innerElement);
+        } catch (WebDriverException ex) {
+            LOG.log(LOG_NAME, Level.DEBUG, "Is visible in viewport failed for " + name, ex);
+            return false;
+        }
     }
 
     protected void highlight() {
@@ -229,7 +250,7 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
     protected void highlight(WebElement element) {
         boolean isHighlightRequired = Boolean.parseBoolean(config.get("driver.highlighting"));
         if (isHighlightRequired) {
-            highlightElement(DriverFactory.getDriver(), element);
+            highlightElement(driver, element);
         }
     }
 }
