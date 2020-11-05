@@ -18,7 +18,7 @@ public class ProdClientSteps implements ClientSteps {
     private DashboardPage dashboardPage;
     private ClientsPage clientsPage;
 
-    public ProdClientSteps(){
+    public ProdClientSteps() {
         autoRespondersPage = new ClientAutoRespondersPage();
         dashboardPage = new DashboardPage();
         clientsPage = new ClientsPage();
@@ -26,7 +26,7 @@ public class ProdClientSteps implements ClientSteps {
 
     @Override
     public ClientSteps addAutoResponder(Client client, String message, boolean isAllDay, Day... days) {
-        if (!autoRespondersPage.isOpened()){
+        if (!autoRespondersPage.isOpened()) {
             goToClientSettingsPage(client.getCode());
         }
         List<AutoResponderContainer> containers = autoRespondersPage.autoResponders();

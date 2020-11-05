@@ -14,7 +14,7 @@ public class AutoResponderTest extends SmokeBaseTest {
     }
 
     @Test(description = "Add Auto Responders and check auto response")
-    public void addAutoResponder(){
+    public void addAutoResponder() {
         site.clientSteps()
                 .addAutoResponder(client, "It's working day!", true, Day.getWorkingDays())
                 .addAutoResponder(client, "It's WEEKEND, yay!!!", true, Day.getWeekEnds());

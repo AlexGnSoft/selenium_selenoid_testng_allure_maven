@@ -5,7 +5,6 @@ import com.carespeak.core.driver.element.Button;
 import com.carespeak.domain.ui.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.component.message.StatusMessage;
 import com.carespeak.domain.ui.page.AbstractPage;
-import com.carespeak.domain.ui.popup.StatusPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,12 +24,12 @@ public class ClientAutoRespondersPage extends AbstractPage {
 
     public StatusMessage statusMessage;
 
-    public ClientAutoRespondersPage(){
+    public ClientAutoRespondersPage() {
         statusMessage = new StatusMessage();
     }
 
     @Override
-    public boolean isOpened(){
+    public boolean isOpened() {
         return getCurrentUrl().contains("auto-responders.page");
     }
 

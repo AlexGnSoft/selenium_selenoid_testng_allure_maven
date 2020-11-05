@@ -9,7 +9,8 @@ import com.carespeak.core.listener.ReportListener;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Listeners;
 
 import java.io.File;
 

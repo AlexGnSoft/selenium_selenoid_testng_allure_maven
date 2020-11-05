@@ -3,7 +3,6 @@ package com.carespeak.domain.ui.component;
 import com.carespeak.core.driver.decorator.CustomDecorator;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.ICanWait;
-import com.carespeak.core.logger.Logger;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;

@@ -3,13 +3,10 @@ package com.carespeak.domain.ui.component.container;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.CheckBox;
 import com.carespeak.core.driver.element.Input;
-import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.domain.entities.common.Day;
 import com.carespeak.domain.ui.component.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Represents Auto Responder container on Client -> Auto Responders tab
@@ -53,7 +50,7 @@ public class AutoResponderContainer extends AbstractComponent {
     }
 
     private WebElement findInContainer(By locator) {
-       return container().findElement(locator);
+        return container().findElement(locator);
     }
 
     private WebElement container() {
