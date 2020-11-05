@@ -1,6 +1,5 @@
 package smoke;
 
-import base.BaseTest;
 import com.carespeak.domain.entities.client.Language;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.Client;
@@ -19,7 +18,7 @@ public class ClientLevelTest extends SmokeBaseTest {
 
     @BeforeClass
     public void prepareClientData() {
-        client = createClient();
+        client = createClientData();
         site.loginSteps().openSite().loginAs(user, password);
     }
 
@@ -92,21 +91,8 @@ public class ClientLevelTest extends SmokeBaseTest {
     }
 
     @AfterClass
-    public void removeClient() {
-        if (client != null) {
-            site.loginSteps()
-                    .openSite()
-                    .loginAs(user, password);
-            site.adminToolsSteps()
-                    .removeClient(client);
-
-            site.loginSteps()
-                    .openSite()
-                    .loginAs(user, password);
-            Client shouldBeRemoved = site.adminToolsSteps().getClientByCode(client.getCode());
-
-            Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
-        }
+    public void cleanUp() {
+        removeClient(client);
     }
 
 }

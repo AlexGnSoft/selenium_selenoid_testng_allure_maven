@@ -1,14 +1,8 @@
 package com.carespeak.domain.steps.holders;
 
 import com.carespeak.core.config.Config;
-import com.carespeak.domain.steps.AdminToolsSteps;
-import com.carespeak.domain.steps.LoginSteps;
-import com.carespeak.domain.steps.MessagesSteps;
-import com.carespeak.domain.steps.ProgramSteps;
-import com.carespeak.domain.steps.imp.ProdAdminToolsSteps;
-import com.carespeak.domain.steps.imp.ProdLoginSteps;
-import com.carespeak.domain.steps.imp.ProdMessagesSteps;
-import com.carespeak.domain.steps.imp.ProdProgramSteps;
+import com.carespeak.domain.steps.*;
+import com.carespeak.domain.steps.imp.*;
 
 public class SiteStepsHolder {
 
@@ -18,6 +12,7 @@ public class SiteStepsHolder {
     private AdminToolsSteps adminToolsSteps;
     private ProgramSteps programSteps;
     private MessagesSteps messagesSteps;
+    private ClientSteps clientSteps;
 
     public SiteStepsHolder(Config config) {
         this.config = config;
@@ -53,6 +48,13 @@ public class SiteStepsHolder {
             messagesSteps = isCurrentProdVersion() ? new ProdMessagesSteps() : null;
         }
         return messagesSteps;
+    }
+
+    public ClientSteps clientSteps() {
+        if (clientSteps == null) {
+            clientSteps = isCurrentProdVersion() ? new ProdClientSteps() : null;
+        }
+        return clientSteps;
     }
 
 }

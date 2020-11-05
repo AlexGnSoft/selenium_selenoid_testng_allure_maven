@@ -17,6 +17,7 @@ public class AccountCreationTable extends ItemsTable {
     }
 
     public QuestionRowItem getLastQuestionRowItem() {
+        //FIXME: Add only visible items
         List<WebElement> rowsList = getRowsWebElements();
         //avoid 0-element - it's header
         //avoid last element - it's the question row template

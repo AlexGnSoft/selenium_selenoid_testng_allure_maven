@@ -5,6 +5,7 @@ import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import org.openqa.selenium.support.FindBy;
 
+//TODO: review status popup usages
 public class StatusPopup extends AbstractPopup {
 
     @ElementName("Status content element")

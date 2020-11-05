@@ -48,7 +48,7 @@ public class ItemsTable {
     }
 
     protected List<WebElement> getRowsWebElements() {
-        return tableBody.getRowsWebElelments();
+        return tableBody.getRowsWebElements();
     }
 
 

@@ -91,7 +91,8 @@ class TableBody extends AbstractComponent {
         return null;
     }
 
-    List<WebElement> getRowsWebElelments() {
+    //FIXME: Add only visible items
+    List<WebElement> getRowsWebElements() {
         Logger.debug("Receiving rows web elements...");
         try {
             waitFor(() -> driver.findElement(tableLocator) != null);
