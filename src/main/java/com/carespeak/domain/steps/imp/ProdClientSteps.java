@@ -1,12 +1,12 @@
 package com.carespeak.domain.steps.imp;
 
 import com.carespeak.domain.entities.common.Day;
-import com.carespeak.domain.entities.program.Client;
+import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.steps.ClientSteps;
 import com.carespeak.domain.ui.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
-import com.carespeak.domain.ui.page.admin_tools.ClientsPage;
-import com.carespeak.domain.ui.page.admin_tools.client.ClientAutoRespondersPage;
+import com.carespeak.domain.ui.page.admin_tools.clients.ClientsPage;
+import com.carespeak.domain.ui.page.admin_tools.clients.auto_responders.ClientAutoRespondersPage;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 import org.apache.commons.lang3.NotImplementedException;
 

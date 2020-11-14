@@ -17,7 +17,7 @@ public class KeywordSignUpLevelTest extends SmokeBaseTest {
 
     @BeforeClass
     public void prepareClientData() {
-        prepareClient();
+        createNewClient();
         createProgram();
     }
 
@@ -32,7 +32,7 @@ public class KeywordSignUpLevelTest extends SmokeBaseTest {
         String expectedMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
-                .getLastMessageFromLogs();
+                .getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_2);
 
         Assert.assertEquals(signupResponse.getMessage(), expectedMessage, "Received message is not the same as expected!");
     }
@@ -44,7 +44,7 @@ public class KeywordSignUpLevelTest extends SmokeBaseTest {
 
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
-                .getLastMessageFromLogs();
+                .getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER);
 
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
@@ -63,19 +63,18 @@ public class KeywordSignUpLevelTest extends SmokeBaseTest {
                         "Wrong email entered, try again");
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_2, TO_ENDPOINT, SIGN_UP_KEYWORD);
-        site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogs();
+        site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_2);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_2, TO_ENDPOINT, "AGREE");
-        site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogs();
+        site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_2);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_2, TO_ENDPOINT, "AutoFred");
-        site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogs();
+        site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_2);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_2, TO_ENDPOINT, "SKIP");
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
-                .goToMessageLogsForNumber(FROM_PHONE_NUMBER_2)
-                .getLastMessageFromLogs();
+                .getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_2);
 
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }

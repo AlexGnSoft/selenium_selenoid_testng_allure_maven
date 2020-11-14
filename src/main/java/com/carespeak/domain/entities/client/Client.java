@@ -1,4 +1,4 @@
-package com.carespeak.domain.entities.program;
+package com.carespeak.domain.entities.client;
 
 import com.carespeak.domain.entities.message.Module;
 
@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Entity that represents MHM customer
+ */
 public class Client {
 
     private String code;

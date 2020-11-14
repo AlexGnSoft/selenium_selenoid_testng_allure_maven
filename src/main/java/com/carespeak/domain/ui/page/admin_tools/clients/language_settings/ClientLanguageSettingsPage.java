@@ -1,9 +1,10 @@
-package com.carespeak.domain.ui.page.admin_tools.client;
+package com.carespeak.domain.ui.page.admin_tools.clients.language_settings;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
+import com.carespeak.domain.ui.page.admin_tools.clients.AbstractClientPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

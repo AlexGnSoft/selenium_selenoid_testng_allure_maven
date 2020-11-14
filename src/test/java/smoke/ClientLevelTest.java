@@ -1,8 +1,8 @@
 package smoke;
 
-import com.carespeak.domain.entities.client.Language;
+import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.Module;
-import com.carespeak.domain.entities.program.Client;
+import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;

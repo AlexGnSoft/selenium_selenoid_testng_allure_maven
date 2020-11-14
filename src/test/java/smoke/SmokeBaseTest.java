@@ -2,7 +2,7 @@ package smoke;
 
 import base.BaseTest;
 import com.carespeak.domain.entities.message.Module;
-import com.carespeak.domain.entities.program.Client;
+import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 
@@ -15,7 +15,7 @@ public abstract class SmokeBaseTest extends BaseTest {
 
     private static AtomicInteger clientsCount = new AtomicInteger(0);
 
-    protected Client prepareClient() {
+    protected Client createNewClient() {
         client = createClientData();
 
         site.loginSteps()

@@ -1,10 +1,11 @@
-package com.carespeak.domain.ui.page.admin_tools.client;
+package com.carespeak.domain.ui.page.admin_tools.clients.general;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
+import com.carespeak.domain.ui.page.admin_tools.clients.AbstractClientPage;
 import org.openqa.selenium.support.FindBy;
 
 public class ClientSettingsPage extends AbstractClientPage {

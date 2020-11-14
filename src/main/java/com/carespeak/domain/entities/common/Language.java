@@ -1,4 +1,4 @@
-package com.carespeak.domain.entities.client;
+package com.carespeak.domain.entities.common;
 
 import java.util.NoSuchElementException;
 

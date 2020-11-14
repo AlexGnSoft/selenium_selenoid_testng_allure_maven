@@ -1,7 +1,7 @@
 package com.carespeak.domain.steps;
 
 import com.carespeak.domain.entities.common.Day;
-import com.carespeak.domain.entities.program.Client;
+import com.carespeak.domain.entities.client.Client;
 
 public interface ClientSteps extends BaseSteps {
 

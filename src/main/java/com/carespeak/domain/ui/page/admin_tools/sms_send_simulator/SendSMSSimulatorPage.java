@@ -1,4 +1,4 @@
-package com.carespeak.domain.ui.page.admin_tools;
+package com.carespeak.domain.ui.page.admin_tools.sms_send_simulator;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;

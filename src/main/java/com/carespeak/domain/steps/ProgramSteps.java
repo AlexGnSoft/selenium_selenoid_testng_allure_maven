@@ -1,6 +1,8 @@
 package com.carespeak.domain.steps;
 
 import com.carespeak.domain.entities.message.MessageLogItem;
+import com.carespeak.domain.entities.client.Client;
+import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 
 public interface ProgramSteps extends BaseSteps {
@@ -45,13 +47,29 @@ public interface ProgramSteps extends BaseSteps {
 
 
     /**
-     * Returns last message from Programs Messages Logs.
+     * Returns last message from Programs Messages Logs for specified phone number
      *
+     * @param - phoneNumber phone number to analyze
      * @return Messages object
      */
-    MessageLogItem getLastMessageFromLogs();
+    MessageLogItem getLastMessageFromLogsForNumber(String number);
 
+    /**
+     * Reject unsolicited message for specified program and client
+     *
+     * @param client - client to use
+     * @param programName - program to be select
+     * @return Program Steps object
+     */
+    ProgramSteps rejectUnsolicitedMessages(Client client, String programName);
 
-    ProgramSteps goToMessageLogsForNumber(String number);
+    /**
+     * Add patient to specific program
+     *
+     * @param client - client to use
+     * @param programName - program to be select
+     * @return Program Steps object
+     */
+    ProgramSteps addNewPatient(Patient patient, Client client, String programName);
 
 }

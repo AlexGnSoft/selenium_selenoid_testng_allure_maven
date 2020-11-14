@@ -1,10 +1,11 @@
-package com.carespeak.domain.ui.page.programs;
+package com.carespeak.domain.ui.page.programs.general;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
 import com.carespeak.domain.ui.component.search.SearchWithSelection;
+import com.carespeak.domain.ui.page.programs.AbstractProgramPage;
 import com.carespeak.domain.ui.popup.StatusPopup;
 import org.openqa.selenium.support.FindBy;
 

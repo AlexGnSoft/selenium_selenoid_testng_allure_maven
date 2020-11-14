@@ -1,4 +1,4 @@
-package com.carespeak.domain.ui.page.admin_tools;
+package com.carespeak.domain.ui.page.admin_tools.clients;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.ClickableElement;

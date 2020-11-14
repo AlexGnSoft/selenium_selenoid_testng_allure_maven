@@ -1,4 +1,4 @@
-package com.carespeak.domain.ui.page.admin_tools.client;
+package com.carespeak.domain.ui.page.admin_tools.clients.auto_responders;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
@@ -30,7 +30,8 @@ public class ClientAutoRespondersPage extends AbstractPage {
 
     @Override
     public boolean isOpened() {
-        return getCurrentUrl().contains("auto-responders.page");
+        String url = getCurrentUrl();
+        return url.contains("client") && url.contains("auto-responders.page");
     }
 
     public List<AutoResponderContainer> autoResponders() {

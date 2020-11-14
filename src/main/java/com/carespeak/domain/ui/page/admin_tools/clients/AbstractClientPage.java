@@ -1,4 +1,4 @@
-package com.carespeak.domain.ui.page.admin_tools.client;
+package com.carespeak.domain.ui.page.admin_tools.clients;
 
 import com.carespeak.domain.ui.component.header.HeaderMenu;
 import com.carespeak.domain.ui.component.sidebar.SideBarMenu;
