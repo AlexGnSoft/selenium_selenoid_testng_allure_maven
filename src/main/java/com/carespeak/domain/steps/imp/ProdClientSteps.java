@@ -7,6 +7,7 @@ import com.carespeak.domain.ui.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.page.admin_tools.clients.ClientsPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.auto_responders.ClientAutoRespondersPage;
+import com.carespeak.domain.ui.page.admin_tools.clients.consent_management.ClientConsentManagementPage;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -17,17 +18,22 @@ public class ProdClientSteps implements ClientSteps {
     private ClientAutoRespondersPage autoRespondersPage;
     private DashboardPage dashboardPage;
     private ClientsPage clientsPage;
+    private ClientConsentManagementPage consentManagementPage;
 
     public ProdClientSteps() {
         autoRespondersPage = new ClientAutoRespondersPage();
         dashboardPage = new DashboardPage();
         clientsPage = new ClientsPage();
+        consentManagementPage = new ClientConsentManagementPage();
     }
 
     @Override
     public ClientSteps addAutoResponder(Client client, String message, boolean isAllDay, Day... days) {
         if (!autoRespondersPage.isOpened()) {
             goToClientSettingsPage(client.getCode());
+            String url = dashboardPage.getCurrentUrl();
+            clientsPage.sideBarMenu.openItem("Auto Responders");
+            autoRespondersPage.waitFor(() -> !autoRespondersPage.getCurrentUrl().equals(url));
         }
         List<AutoResponderContainer> containers = autoRespondersPage.autoResponders();
         autoRespondersPage.addAutoResponderButton.click();
@@ -59,7 +65,43 @@ public class ProdClientSteps implements ClientSteps {
         throw new NotImplementedException("implement from and to dates parsing first");
     }
 
-    public void goToClientSettingsPage(String code) {
+    @Override
+    public ClientSteps addOptOutHeader(Client client, String message) {
+        goToConsentManagementPage(client);
+        consentManagementPage.enableOptOutCheckbox.check();
+        consentManagementPage.optOutHeaderInput.enterText(message);
+        consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ClientSteps addOptOutBody(Client client, String message) {
+        goToConsentManagementPage(client);
+        consentManagementPage.enableOptOutCheckbox.check();
+        consentManagementPage.optOutBodyInput.enterText(message);
+        consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ClientSteps addOptOutFooter(Client client, String message) {
+        goToConsentManagementPage(client);
+        consentManagementPage.enableOptOutCheckbox.check();
+        consentManagementPage.optOutFooterInput.enterText(message);
+        consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    private void goToConsentManagementPage(Client client){
+        if (!consentManagementPage.isOpened()) {
+            goToClientSettingsPage(client.getCode());
+            String url = dashboardPage.getCurrentUrl();
+            clientsPage.sideBarMenu.openItem("Consent Management");
+            autoRespondersPage.waitFor(() -> !autoRespondersPage.getCurrentUrl().equals(url));
+        }
+    }
+
+    private void goToClientSettingsPage(String code) {
         if (!clientsPage.isOpened()) {
             dashboardPage.headerMenu.adminTools().goToSubMenu("Clients");
         }
@@ -68,8 +110,5 @@ public class ProdClientSteps implements ClientSteps {
             throw new RuntimeException("Client was not found by code '" + code + "'!");
         }
         clientsPage.clientsTable.editFirstItemButton().click();
-        String url = dashboardPage.getCurrentUrl();
-        clientsPage.sideBarMenu.openItem("Auto Responders");
-        autoRespondersPage.waitFor(() -> !autoRespondersPage.getCurrentUrl().equals(url));
     }
 }

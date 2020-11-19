@@ -17,5 +17,10 @@ public interface ClientSteps extends BaseSteps {
 
     ClientSteps addAutoResponder(Client client, String message, String from, String to, boolean isAllDay, Day... days);
 
+    ClientSteps addOptOutHeader(Client client, String message);
+
+    ClientSteps addOptOutBody(Client client, String message);
+
+    ClientSteps addOptOutFooter(Client client, String message);
 
 }
