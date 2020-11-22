@@ -170,7 +170,7 @@ class TableBody extends AbstractComponent {
 
     public ClickableElement deleteFirstRecordButton() {
         WebElement element = driver.findElement(By.xpath("//*[contains(@class, 'cell-controls')]//button"));
-        String elementName = "Edit record button";
+        String elementName = "Delete record button";
         return new ClickableElement(element, elementName);
     }
 

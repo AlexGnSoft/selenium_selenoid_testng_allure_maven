@@ -1,15 +1,16 @@
 package com.carespeak.domain.steps.imp;
 
+import com.carespeak.core.logger.Logger;
+import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
-import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
-import com.carespeak.domain.ui.page.programs.*;
+import com.carespeak.domain.ui.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.page.programs.auto_responders.ProgramAutoRespondersPage;
 import com.carespeak.domain.ui.page.programs.general.ProgramGeneralSettingsPage;
 import com.carespeak.domain.ui.page.programs.keyword_signup.ProgramKeywordSignupPage;
@@ -170,5 +171,39 @@ public class ProdProgramSteps implements ProgramSteps {
         addPatientsPage.timezoneDropdown.select(patient.getTimezone());
         addPatientsPage.saveButton.click();
         return this;
+    }
+
+    public void goToProgramTab() {
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.programsMenuItem.click();
+        waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+
+        dashboardPage.headerMenu.programsMenuItem.click();
+    }
+
+    @Override
+    public String getProgramByName(String clientName, String programName) {
+        goToProgramTab();
+        programsPage.searchClient.search(clientName);
+        TableRowItem tableRowItem = programsPage.programTable.searchInTable("Name", programName);
+        if (tableRowItem == null) {
+            Logger.info("Program was not found by name '" + programName + "'!");
+            return null;
+        }
+        return tableRowItem.getDataByHeader("Name");
+    }
+
+    @Override
+    public String getProgramAccessModifier(String clientName, String accessModifier) {
+        goToProgramTab();
+        programsPage.searchClient.search(clientName);
+        TableRowItem tableRowItem = programsPage.programTable.searchInTable("Access", accessModifier);
+        if (tableRowItem == null) {
+            Logger.info("Access was not found by access modifier '" + accessModifier + "'!");
+            return null;
+        }
+        String[] access = tableRowItem.getDataByHeader("Access").split(" ");
+
+        return access[0];
     }
 }

@@ -1,7 +1,7 @@
 package com.carespeak.domain.steps;
 
-import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.client.Client;
+import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 
@@ -41,7 +41,7 @@ public interface ProgramSteps extends BaseSteps {
      * Add create account questions.
      *
      * @param keyword
-     * @return
+     * @return Program Steps object
      */
     ProgramSteps addKeywordForSignUp(String keyword);
 
@@ -49,7 +49,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns last message from Programs Messages Logs for specified phone number
      *
-     * @param - phoneNumber phone number to analyze
+     * @param number - phoneNumber phone number to analyze
      * @return Messages object
      */
     MessageLogItem getLastMessageFromLogsForNumber(String number);
@@ -57,7 +57,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Reject unsolicited message for specified program and client
      *
-     * @param client - client to use
+     * @param client      - client to use
      * @param programName - program to be select
      * @return Program Steps object
      */
@@ -66,10 +66,28 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add patient to specific program
      *
-     * @param client - client to use
+     * @param client      - client to use
      * @param programName - program to be select
      * @return Program Steps object
      */
     ProgramSteps addNewPatient(Patient patient, Client client, String programName);
 
+
+    /**
+     * Get program by name from column
+     *
+     * @param clientName  - client to use
+     * @param programName - program name
+     * @return program name String
+     */
+    String getProgramByName(String clientName, String programName);
+
+    /**
+     * Get program access modifier from column
+     *
+     * @param clientName    - client to use
+     * @param programAccess - program access level
+     * @return access modifier String
+     */
+    String getProgramAccessModifier(String clientName, String programAccess);
 }
