@@ -29,4 +29,9 @@ public class ClientConsentManagementPage extends AbstractClientPage {
     @FindBy(id = "save-btn")
     public Button saveButton;
 
+    public boolean isOpened() {
+        String url = getCurrentUrl();
+        return url.contains("client") && url.contains("consent-management.page");
+    }
+
 }
