@@ -150,7 +150,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
             int languagesCount = clientLanguageSettingsPage.getAdditionalLanguages().size();
             clientLanguageSettingsPage.addLanguageButton.click();
             waitFor(() -> clientLanguageSettingsPage.getAdditionalLanguages().size() > languagesCount);
-            clientLanguageSettingsPage.getLastLanguageDropdown().select(language.getLanguangeName());
+            clientLanguageSettingsPage.getLastLanguageDropdown().select(language.getLanguageName());
         }
         clientLanguageSettingsPage.saveButton.click();
         return this;
@@ -164,7 +164,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
 
         for (Language language : languages) {
             int languagesCount = clientLanguageSettingsPage.getAdditionalLanguages().size();
-            clientLanguageSettingsPage.getLanguageRemoveButton(language.getLanguangeName()).click();
+            clientLanguageSettingsPage.getLanguageRemoveButton(language.getLanguageName()).click();
             waitFor(() -> clientLanguageSettingsPage.getAdditionalLanguages().size() < languagesCount);
         }
         clientLanguageSettingsPage.saveButton.click();

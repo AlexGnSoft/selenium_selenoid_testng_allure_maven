@@ -8,6 +8,7 @@ import com.carespeak.domain.ui.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.page.admin_tools.clients.ClientsPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.auto_responders.ClientAutoRespondersPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.consent_management.ClientConsentManagementPage;
+import com.carespeak.domain.ui.page.admin_tools.clients.webhooks.ClientWebHooksPage;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -19,12 +20,14 @@ public class ProdClientSteps implements ClientSteps {
     private DashboardPage dashboardPage;
     private ClientsPage clientsPage;
     private ClientConsentManagementPage consentManagementPage;
+    private ClientWebHooksPage webHooksPage;
 
     public ProdClientSteps() {
         autoRespondersPage = new ClientAutoRespondersPage();
         dashboardPage = new DashboardPage();
         clientsPage = new ClientsPage();
         consentManagementPage = new ClientConsentManagementPage();
+        webHooksPage = new ClientWebHooksPage();
     }
 
     @Override
@@ -89,6 +92,24 @@ public class ProdClientSteps implements ClientSteps {
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutFooterInput.enterText(message);
         consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ClientSteps addWebhook(Client client, String webhookName, String webhookUrl, Integer interval) {
+        if (!webHooksPage.isOpened()) {
+            goToClientSettingsPage(client.getCode());
+            String url = dashboardPage.getCurrentUrl();
+            clientsPage.sideBarMenu.openItem("Webhooks");
+            webHooksPage.waitFor(() -> !autoRespondersPage.getCurrentUrl().equals(url));
+        }
+        webHooksPage.addButton.click();
+        webHooksPage.webHooksPopup.waitForDisplayed();
+        webHooksPage.webHooksPopup.nameInput.enterText(webhookName);
+        webHooksPage.webHooksPopup.urlTemplateInput.enterText(webhookUrl);
+        webHooksPage.webHooksPopup.expiryIntervalMinutesInput.enterText(interval);
+        webHooksPage.webHooksPopup.saveButton.click();
+        webHooksPage.webHooksPopup.waitForDisappear();
         return this;
     }
 

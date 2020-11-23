@@ -13,6 +13,7 @@ public class SiteStepsHolder {
     private ProgramSteps programSteps;
     private MessagesSteps messagesSteps;
     private ClientSteps clientSteps;
+    private CampaignSteps campaignSteps;
 
     public SiteStepsHolder(Config config) {
         this.config = config;
@@ -55,6 +56,13 @@ public class SiteStepsHolder {
             clientSteps = isCurrentProdVersion() ? new ProdClientSteps() : null;
         }
         return clientSteps;
+    }
+
+    public CampaignSteps campaignSteps() {
+        if (campaignSteps == null) {
+            campaignSteps = isCurrentProdVersion() ? new ProdCampaignSteps() : null;
+        }
+        return campaignSteps;
     }
 
 }

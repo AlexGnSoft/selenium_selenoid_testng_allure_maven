@@ -4,6 +4,7 @@ import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import com.carespeak.domain.entities.program.ProgramOptOutForm;
 
 public interface ProgramSteps extends BaseSteps {
 
@@ -82,6 +83,7 @@ public interface ProgramSteps extends BaseSteps {
      */
     String getProgramByName(String clientName, String programName);
 
+
     /**
      * Get program access modifier from column
      *
@@ -90,4 +92,13 @@ public interface ProgramSteps extends BaseSteps {
      * @return access modifier String
      */
     String getProgramAccessModifier(String clientName, String programAccess);
+
+
+    /**
+     * Returns OptOut form that set on program level
+     *
+     * @param clientName - client to use
+     * @return ProgramOptOutForm object
+     */
+    ProgramOptOutForm getProgramOptOutForm(String clientName, String programName);
 }

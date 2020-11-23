@@ -8,19 +8,19 @@ public enum Language {
     DU("Dutch"),
     CH("Chinese");
 
-    private String languangeName;
+    private String languageName;
 
-    private Language(String languangeName) {
-        this.languangeName = languangeName;
+    private Language(String languageName) {
+        this.languageName = languageName;
     }
 
-    public String getLanguangeName() {
-        return languangeName;
+    public String getLanguageName() {
+        return languageName;
     }
 
     public static Language getLanguage(String language) {
         for (Language lang : values()) {
-            if (lang.languangeName.toLowerCase().contains(language.trim().toLowerCase())) {
+            if (lang.languageName.toLowerCase().contains(language.trim().toLowerCase())) {
                 return lang;
             }
         }

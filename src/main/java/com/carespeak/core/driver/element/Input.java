@@ -38,4 +38,17 @@ public class Input extends ClickableElement {
             LOG.log(LOG_NAME, Level.INFO, "Provided text is null, nothing to enter to " + name, null);
         }
     }
+
+    public void enterText(Integer text) {
+        scrollIntoView();
+        waitFor(() -> innerElement.isDisplayed(), 10, false);
+        if (text != null) {
+            LOG.log(LOG_NAME, Level.DEBUG, "Clear " + name, null);
+            highlight();
+            innerElement.clear();
+            sendKeys(String.valueOf(text));
+        } else {
+            LOG.log(LOG_NAME, Level.INFO, "Provided text is null, nothing to enter to " + name, null);
+        }
+    }
 }

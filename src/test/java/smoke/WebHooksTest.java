@@ -1,15 +1,11 @@
 package smoke;
 
-import com.carespeak.domain.entities.common.Day;
-import com.carespeak.domain.entities.common.Sex;
-import com.carespeak.domain.entities.message.MessageLogItem;
-import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class ConsentManagementTest extends SmokeBaseTest {
+public class WebHooksTest extends SmokeBaseTest {
 
     private static final String FROM_PHONE_NUMBER = "+15554622669";
     private static final String TO_ENDPOINT = "twilioSmsSender5 [TWILIO +17542272273]";
@@ -21,16 +17,10 @@ public class ConsentManagementTest extends SmokeBaseTest {
         site.loginSteps().openSite().loginAs(user, password);
     }
 
-    @Test(description = "Check if added header/footer appear on the web form and if made changes are visible")
+    @Test(description = "Add a link and webhook name, try adding it to an SMS message to check if the shortened link that goes out leads to a needed link")
     public void addedFooterAppearsOnWebForm() {
         site.clientSteps()
-                .addOptOutHeader(client, "Auto added header")
-                .addOptOutBody(client, "Auto added body")
-                .addOptOutFooter(client, "Auto added footer");
-
-        site.programSteps()
-                .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
-                .getProgramOptOutForm(client.getName(), programName);
+                .addWebhook(client, "webhook_test", "http://webhooktest.com", null);
 
         //TODO: implement testcase assertion
         System.out.println();

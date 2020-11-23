@@ -38,12 +38,12 @@ public class AutoResponderTest extends SmokeBaseTest {
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .rejectUnsolicitedMessages(client, programName);
         site.adminToolsSteps()
-                .simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, "Unrecognized");
+                .simulateSMSToClient(patient.getCellPhone(), TO_ENDPOINT, "Unrecognized");
 
         MessageLogItem actualSms = site.programSteps()
                 .addNewPatient(patient, client, programName)
                 .goToProgramSettings(client.getName(), programName)
-                .getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER);
+                .getLastMessageFromLogsForNumber(patient.getCellPhone());
         //TODO: implement assertion
         System.out.println();
     }
