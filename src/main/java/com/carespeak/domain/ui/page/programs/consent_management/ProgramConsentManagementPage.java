@@ -16,6 +16,10 @@ public class ProgramConsentManagementPage extends AbstractProgramPage {
     @FindBy(name = "enabled")
     public CheckBox enableOptOutCheckbox;
 
+    @ElementName("View Form button")
+    @FindBy(id = "view-button")
+    public Button viewFormButton;
+
     @ElementName("Opt-out Form Header")
     @FindBy(xpath = "//*[@name='header']/following-sibling::*//div[@role='textbox']")
     public Input optOutHeaderInput;

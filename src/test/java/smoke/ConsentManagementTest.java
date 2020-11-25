@@ -1,18 +1,13 @@
 package smoke;
 
-import com.carespeak.domain.entities.common.Day;
-import com.carespeak.domain.entities.common.Sex;
-import com.carespeak.domain.entities.message.MessageLogItem;
-import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class ConsentManagementTest extends SmokeBaseTest {
-
-    private static final String FROM_PHONE_NUMBER = "+15554622669";
-    private static final String TO_ENDPOINT = "twilioSmsSender5 [TWILIO +17542272273]";
 
     @BeforeClass
     public void prepareClientData() {
@@ -23,17 +18,19 @@ public class ConsentManagementTest extends SmokeBaseTest {
 
     @Test(description = "Check if added header/footer appear on the web form and if made changes are visible")
     public void addedFooterAppearsOnWebForm() {
-        site.clientSteps()
-                .addOptOutHeader(client, "Auto added header")
-                .addOptOutBody(client, "Auto added body")
-                .addOptOutFooter(client, "Auto added footer");
+        ProgramOptOutForm expectedOptOutForm = new ProgramOptOutForm("Auto added header","Auto added body","Auto added footer");
 
-        site.programSteps()
+        site.clientSteps()
+                .addOptOutHeader(client,expectedOptOutForm.getHeader())
+                .addOptOutBody(client, expectedOptOutForm.getBody())
+                .addOptOutFooter(client, expectedOptOutForm.getFooter());
+
+        ProgramOptOutForm actualOptOutForm = site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
+                .addOptOutHeader(client, programName, null)
                 .getProgramOptOutForm(client.getName(), programName);
 
-        //TODO: implement testcase assertion
-        System.out.println();
+        Assert.assertEquals(actualOptOutForm, expectedOptOutForm, "OptOutForm not appear on program level.");
     }
 
     @AfterClass

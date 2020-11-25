@@ -18,6 +18,40 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addNewProgram(String clientName, String programName, ProgramAccess programAccess);
 
+
+    /**
+     * Adds OptOut Header for specified client and program with specified message
+     *
+     * @param client      - client to use
+     * @param programName - program name
+     * @param message     - message to add
+     * @return ProgramSteps object
+     */
+    ProgramSteps addOptOutHeader(Client client, String programName, String message);
+
+
+    /**
+     * Adds OptOut Body for specified client and program with specified message
+     *
+     * @param client      - client to use
+     * @param programName - program name
+     * @param message     - message to add
+     * @return ProgramSteps object
+     */
+    ProgramSteps addOptOutBody(Client client, String programName, String message);
+
+
+    /**
+     * Adds OptOut Footer for specified client and program with specified message
+     *
+     * @param client      - client to use
+     * @param programName - program name
+     * @param message     - message to add
+     * @return ProgramSteps object
+     */
+    ProgramSteps addOptOutFooter(Client client, String programName, String message);
+
+
     /**
      * Go to program with specified name.
      *

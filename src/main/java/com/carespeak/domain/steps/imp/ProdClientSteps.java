@@ -118,7 +118,7 @@ public class ProdClientSteps implements ClientSteps {
             goToClientSettingsPage(client.getCode());
             String url = dashboardPage.getCurrentUrl();
             clientsPage.sideBarMenu.openItem("Consent Management");
-            autoRespondersPage.waitFor(() -> !autoRespondersPage.getCurrentUrl().equals(url));
+            consentManagementPage.waitFor(() -> !consentManagementPage.getCurrentUrl().equals(url));
         }
     }
 

@@ -1,5 +1,6 @@
 package smoke;
 
+import com.carespeak.domain.entities.campaign.CampaignAccess;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -21,7 +22,8 @@ public class WebHooksTest extends SmokeBaseTest {
     public void addedFooterAppearsOnWebForm() {
         site.clientSteps()
                 .addWebhook(client, "webhook_test", "http://webhooktest.com", null);
-
+        site.campaignSteps()
+                .addCampaign(client, "AutoTestCampaign", CampaignAccess.PUBLIC, "Automation created campaign", null);
         //TODO: implement testcase assertion
         System.out.println();
     }

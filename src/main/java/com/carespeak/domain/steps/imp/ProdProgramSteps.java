@@ -7,6 +7,7 @@ import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import com.carespeak.domain.steps.ClientSteps;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
@@ -14,6 +15,7 @@ import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.page.programs.auto_responders.ProgramAutoRespondersPage;
 import com.carespeak.domain.ui.page.programs.consent_management.ProgramConsentManagementPage;
+import com.carespeak.domain.ui.page.programs.consent_management.ProgramOptOutFormPage;
 import com.carespeak.domain.ui.page.programs.general.ProgramGeneralSettingsPage;
 import com.carespeak.domain.ui.page.programs.keyword_signup.ProgramKeywordSignupPage;
 import com.carespeak.domain.ui.page.programs.message_logs.ProgramMessageLogsPage;
@@ -32,6 +34,7 @@ public class ProdProgramSteps implements ProgramSteps {
     private ProgramsPatientsPage programsPatientsPage;
     private AddPatientsPage addPatientsPage;
     private ProgramConsentManagementPage consentManagementPage;
+    private ProgramOptOutFormPage optOutFormPage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -43,6 +46,7 @@ public class ProdProgramSteps implements ProgramSteps {
         programsPatientsPage = new ProgramsPatientsPage();
         addPatientsPage = new AddPatientsPage();
         consentManagementPage = new ProgramConsentManagementPage();
+        optOutFormPage = new ProgramOptOutFormPage();
     }
 
     @Override
@@ -62,6 +66,44 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.statusPopup.close();
         programSettingsPage.statusPopup.waitForDisappear();
         return this;
+    }
+
+    @Override
+    public ProgramSteps addOptOutHeader(Client client, String programName, String message) {
+        goToConsentManagementPage(client);
+        consentManagementPage.enableOptOutCheckbox.check();
+        consentManagementPage.optOutHeaderInput.enterText(message);
+        consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addOptOutBody(Client client, String programName, String message) {
+        goToConsentManagementPage(client);
+        consentManagementPage.enableOptOutCheckbox.check();
+        consentManagementPage.optOutBodyInput.enterText(message);
+        consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addOptOutFooter(Client client, String programName, String message) {
+        goToConsentManagementPage(client);
+        consentManagementPage.enableOptOutCheckbox.check();
+        consentManagementPage.optOutFooterInput.enterText(message);
+        consentManagementPage.saveButton.click();
+        return this;
+    }
+
+    private void goToConsentManagementPage(Client client) {
+        if (!consentManagementPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.editFirstItemButton().click();
+            programsPage.sideBarMenu.openItem("Consent Management");
+        }
     }
 
     @Override
@@ -226,9 +268,17 @@ public class ProdProgramSteps implements ProgramSteps {
             return null;
         }
         consentManagementPage.sideBarMenu.openItem("Consent Management");
-        consentManagementPage.enableOptOutCheckbox.check();
+        if (!consentManagementPage.viewFormButton.isVisible()) {
+            Logger.error("View Form button is not visible!");
+            return null;
+        }
+        consentManagementPage.viewFormButton.click();
+        consentManagementPage.switchToNewTab();
         ProgramOptOutForm form = new ProgramOptOutForm();
-        //TODO: implement form receiving from view form button
-        return null;
+        form.setHeader(optOutFormPage.header.getText());
+        form.setBody(optOutFormPage.body.getText());
+        form.setFooter(optOutFormPage.footer.getText());
+        consentManagementPage.switchBack();
+        return form;
     }
 }

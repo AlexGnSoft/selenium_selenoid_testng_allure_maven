@@ -8,6 +8,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractPage implements ICanWait {
 
     protected RemoteWebDriver driver;
@@ -28,6 +31,30 @@ public abstract class AbstractPage implements ICanWait {
     public boolean isOpened() {
         String pageSuffix = getClass().getSimpleName().toLowerCase().replace("page", "");
         return getCurrentUrl().contains(pageSuffix) || driver.getTitle().toLowerCase().contains(pageSuffix);
+    }
+
+    public void switchToNewTab() {
+        String currentWindowHandle = driver.getWindowHandle();
+        List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
+        if (windowHandles.size() > 1) {
+            for (String windowHandle : windowHandles) {
+                if (!windowHandle.equals(currentWindowHandle)) {
+                    driver.switchTo().window(windowHandle);
+                    return;
+                }
+            }
+        }
+        throw new RuntimeException("No new tabs opened! Tabs count is: " + windowHandles.size());
+    }
+
+    //TODO: improve implementation
+    public void switchBack(){
+        List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
+        if (windowHandles.size() > 1) {
+            driver.switchTo().window(windowHandles.get(0));
+            return;
+        }
+        throw new RuntimeException("No new tabs opened! Tabs count is: " + windowHandles.size());
     }
 
 }

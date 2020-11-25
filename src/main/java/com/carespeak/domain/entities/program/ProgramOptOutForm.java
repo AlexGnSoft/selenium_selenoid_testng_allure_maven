@@ -12,6 +12,12 @@ public class ProgramOptOutForm {
 
     }
 
+    public ProgramOptOutForm(String header, String body, String footer) {
+        this.header = header;
+        this.body = body;
+        this.footer = footer;
+    }
+
     public String getHeader() {
         return header;
     }
