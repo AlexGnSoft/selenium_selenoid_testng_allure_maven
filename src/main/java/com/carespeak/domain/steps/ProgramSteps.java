@@ -6,6 +6,8 @@ import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
 
+import java.util.List;
+
 public interface ProgramSteps extends BaseSteps {
 
     /**
@@ -135,4 +137,18 @@ public interface ProgramSteps extends BaseSteps {
      * @return ProgramOptOutForm object
      */
     ProgramOptOutForm getProgramOptOutForm(String clientName, String programName);
+
+    /**
+     * Get all program endpoints on program level
+     *
+     * @return List of endpoints
+     */
+    List<String> getEndpointsOnProgramLevel();
+
+    /**
+     * Get all program endpoints on patient level
+     *
+     * @return List of endpoints
+     */
+    List<String> getEndpointsOnPatientLevel();
 }

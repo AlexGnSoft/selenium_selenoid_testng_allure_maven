@@ -1,7 +1,7 @@
 package com.carespeak.domain.steps.imp;
 
-import com.carespeak.domain.entities.common.Day;
 import com.carespeak.domain.entities.client.Client;
+import com.carespeak.domain.entities.common.Day;
 import com.carespeak.domain.steps.ClientSteps;
 import com.carespeak.domain.ui.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;

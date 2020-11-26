@@ -1,7 +1,6 @@
 package com.carespeak.domain.ui.page.campaigns;
 
 import com.carespeak.domain.ui.component.header.HeaderMenu;
-import com.carespeak.domain.ui.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.page.AbstractPage;
 

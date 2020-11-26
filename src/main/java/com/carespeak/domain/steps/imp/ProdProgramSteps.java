@@ -7,7 +7,6 @@ import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
-import com.carespeak.domain.steps.ClientSteps;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
@@ -22,6 +21,8 @@ import com.carespeak.domain.ui.page.programs.message_logs.ProgramMessageLogsPage
 import com.carespeak.domain.ui.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.ProgramPatientsTab;
+
+import java.util.List;
 
 public class ProdProgramSteps implements ProgramSteps {
 
@@ -223,8 +224,6 @@ public class ProdProgramSteps implements ProgramSteps {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.programsMenuItem.click();
         waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
-
-        dashboardPage.headerMenu.programsMenuItem.click();
     }
 
     @Override
@@ -280,5 +279,21 @@ public class ProdProgramSteps implements ProgramSteps {
         form.setFooter(optOutFormPage.footer.getText());
         consentManagementPage.switchBack();
         return form;
+    }
+
+    @Override
+    public List<String> getEndpointsOnProgramLevel() {
+        dashboardPage.headerMenu.programsMenuItem.click();
+        programsPage.programTable.editFirstItemButton().click();
+        programSettingsPage.programEndpointDropdown.click();
+        return programSettingsPage.getEndpoints();
+    }
+
+    @Override
+    public List<String> getEndpointsOnPatientLevel() {
+        waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+        programsPage.programTable.editFirstItemButton().click();
+        addPatientsPage.endpointDropdown.click();
+        return addPatientsPage.getEndpoints();
     }
 }

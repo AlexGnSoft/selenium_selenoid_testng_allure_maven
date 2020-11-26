@@ -1,16 +1,16 @@
 package com.carespeak.domain.steps.imp;
 
 import com.carespeak.core.logger.Logger;
+import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.Module;
-import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.steps.AdminToolsSteps;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.page.admin_tools.clients.ClientsPage;
-import com.carespeak.domain.ui.page.admin_tools.sms_send_simulator.SendSMSSimulatorPage;
+import com.carespeak.domain.ui.page.admin_tools.clients.general.ClientSettingsPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.language_settings.ClientLanguageSettingsPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.modules.ClientModulesPage;
-import com.carespeak.domain.ui.page.admin_tools.clients.general.ClientSettingsPage;
+import com.carespeak.domain.ui.page.admin_tools.sms_send_simulator.SendSMSSimulatorPage;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 
 import java.util.ArrayList;

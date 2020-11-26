@@ -5,7 +5,12 @@ import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
+import com.carespeak.core.logger.Logger;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddPatientsPage extends ProgramPatientsTab {
 
@@ -77,6 +82,10 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @FindBy(id = "endpoint")
     public Dropdown endpointDropdown;
 
+    @ElementName("Endpoint list")
+    @FindBy(xpath = "//select[@id='endpoint']/option")
+    public List<WebElement> endpointList;
+
     @ElementName("Enroll patient radiobutton option")
     @FindBy(id = "assignAllOn")
     public ClickableElement yesEnrollPatientsOption;
@@ -93,4 +102,12 @@ public class AddPatientsPage extends ProgramPatientsTab {
         return getCurrentUrl().contains("patients/add/new.page");
     }
 
+    public List<String> getEndpoints() {
+        List<String> result = new ArrayList<>();
+        for (WebElement endpoint : endpointList) {
+            result.add(endpoint.getText());
+        }
+        Logger.info("Complete list of endpoints: " + result);
+        return result;
+    }
 }

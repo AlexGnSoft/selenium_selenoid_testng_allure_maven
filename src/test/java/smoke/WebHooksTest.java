@@ -1,7 +1,6 @@
 package smoke;
 
 import com.carespeak.domain.entities.campaign.CampaignAccess;
-import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

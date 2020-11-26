@@ -5,6 +5,7 @@ import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.ICanWait;
 import com.carespeak.core.logger.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -39,18 +40,30 @@ public abstract class AbstractPopup implements ICanWait {
     }
 
     protected boolean waitForElementAppear(WebElement el) {
-        return waitFor(el::isEnabled, false);
+        return waitFor(() -> isVisible(el), false);
     }
 
     protected boolean waitForElementDisappear(WebElement el) {
-        return waitFor(() -> {
-            try {
-                return el.isEnabled();
-            } catch (WebDriverException e) {
-                return true;
-            }
-        }, false);
+        return waitFor(() -> !isVisible(el), false);
     }
 
+    private boolean isVisible(WebElement element) {
+        try {
+            return (Boolean) ((JavascriptExecutor) driver).executeScript(
+                    "var elem = arguments[0],                 " +
+                            "  box = elem.getBoundingClientRect(),    " +
+                            "  cx = box.left + box.width / 2,         " +
+                            "  cy = box.top + box.height / 2,         " +
+                            "  e = document.elementFromPoint(cx, cy); " +
+                            "for (; e; e = e.parentElement) {         " +
+                            "  if (e === elem)                        " +
+                            "    return true;                         " +
+                            "}                                        " +
+                            "return false;                            "
+                    , element);
+        } catch (WebDriverException ex) {
+            return false;
+        }
+    }
 
 }
