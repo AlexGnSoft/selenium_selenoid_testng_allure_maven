@@ -1,10 +1,11 @@
 package com.carespeak.core.helper;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Random;
-import java.util.TimeZone;
+import java.util.*;
 
 public interface IDataGenerator {
 
@@ -99,5 +100,33 @@ public interface IDataGenerator {
             sb.append(symbols.charAt(new Random().nextInt(symbols.length())));
         }
         return sb.toString();
+    }
+
+    /**
+     * Tries to receive counter with specified name from local file.
+     * Once counter received, it will be incremented and save back to local file
+     * It is not recommended to use, use this just as workaround.
+     *
+     * @param counterName - counter name to receive
+     * @return incremented counter
+     */
+    @SuppressWarnings("deprecated")
+    default Integer getPersistentCounter(String counterName) {
+        //TODO: implement directory and file creation if need
+        String fileName = System.getProperty("user.dir") + "/data/" + counterName + ".txt";
+        int counter = 0;
+        try {
+            File file = new File(fileName);
+            List<String> lines = FileUtils.readLines(file);
+            if (lines.size() > 0) {
+                counter = Integer.parseInt(lines.get(0).trim());
+            }
+            counter = counter + 1;
+            lines.set(0, String.valueOf(counter));
+            FileUtils.writeLines(file, lines);
+        } catch (IOException ex) {
+            throw new RuntimeException("Exception during persistence counter reader", ex);
+        }
+        return counter;
     }
 }

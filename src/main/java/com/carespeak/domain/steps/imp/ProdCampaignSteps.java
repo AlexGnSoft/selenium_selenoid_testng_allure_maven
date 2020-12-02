@@ -35,7 +35,21 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.selectModulePopup.moduleDropdown.select("Education");
         campaignsPage.selectModulePopup.nextButton.click();
         campaignsPage.selectModulePopup.waitForDisappear();
-
+        generalPage.nameInput.enterText(name);
+        generalPage.campaignAccessDropdown.select(access.getValue());
+        generalPage.campaignDescriptionInput.enterText(description);
+        if (tags != null && tags.length > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (String tag : tags) {
+                builder.append(tag);
+                builder.append(" ");
+            }
+            generalPage.tagsInput.enterText(builder.toString());
+        }
+        generalPage.nextButton.click();
+        //TODO: implement timetable parameters settings
+        timeTablePage.sendImmediatelyRadio.click();
+        timeTablePage.nextButton.click();
         throw new NotImplementedException("Add campaign is not implemented yet!");
     }
 }

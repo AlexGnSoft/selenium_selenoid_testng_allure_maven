@@ -56,6 +56,16 @@ public interface ClientSteps extends BaseSteps {
      */
     ClientSteps addOptOutFooter(Client client, String message);
 
-
+    /**
+     * Adds new weebhook for specified client with provided parameters
+     *
+     * @param client      - client to use
+     * @param webhookName - webhook name to enter
+     * @param webhookUrl  - webhook url to use
+     * @param interval    - webhook interval (optional)
+     * @return ClientSteps object
+     */
     ClientSteps addWebhook(Client client, String webhookName, String webhookUrl, Integer interval);
+
+    ClientSteps setOptInKeyWords(Client client, String startKeywords, String stopKeywords, String helpKeywords, String agreeKeywords);
 }

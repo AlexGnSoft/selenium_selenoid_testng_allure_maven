@@ -6,6 +6,7 @@
 *.class
 reportportal.lock
 reportportal.sync
+data/
 
 # Log files
 *.log

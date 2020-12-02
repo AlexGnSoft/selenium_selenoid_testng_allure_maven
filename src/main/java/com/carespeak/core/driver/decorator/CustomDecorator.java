@@ -30,6 +30,7 @@ public class CustomDecorator implements FieldDecorator {
         this.factory = factory;
     }
 
+    //FIXME: Implement List<ClickableElement>
     public Object decorate(ClassLoader loader, Field field) {
         if (!WebElement.class.isAssignableFrom(field.getType()) && !this.isDecoratableList(field)) {
             return null;

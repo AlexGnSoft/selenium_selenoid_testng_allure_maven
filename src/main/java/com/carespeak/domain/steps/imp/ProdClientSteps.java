@@ -8,6 +8,7 @@ import com.carespeak.domain.ui.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.page.admin_tools.clients.ClientsPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.auto_responders.ClientAutoRespondersPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.consent_management.ClientConsentManagementPage;
+import com.carespeak.domain.ui.page.admin_tools.clients.opt_in_keywords.ClientOptInKeyWordsPage;
 import com.carespeak.domain.ui.page.admin_tools.clients.webhooks.ClientWebHooksPage;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 import org.apache.commons.lang3.NotImplementedException;
@@ -21,6 +22,7 @@ public class ProdClientSteps implements ClientSteps {
     private ClientsPage clientsPage;
     private ClientConsentManagementPage consentManagementPage;
     private ClientWebHooksPage webHooksPage;
+    private ClientOptInKeyWordsPage clientOptInKeyWordsPage;
 
     public ProdClientSteps() {
         autoRespondersPage = new ClientAutoRespondersPage();
@@ -28,6 +30,7 @@ public class ProdClientSteps implements ClientSteps {
         clientsPage = new ClientsPage();
         consentManagementPage = new ClientConsentManagementPage();
         webHooksPage = new ClientWebHooksPage();
+        clientOptInKeyWordsPage = new ClientOptInKeyWordsPage();
     }
 
     @Override
@@ -99,9 +102,7 @@ public class ProdClientSteps implements ClientSteps {
     public ClientSteps addWebhook(Client client, String webhookName, String webhookUrl, Integer interval) {
         if (!webHooksPage.isOpened()) {
             goToClientSettingsPage(client.getCode());
-            String url = dashboardPage.getCurrentUrl();
             clientsPage.sideBarMenu.openItem("Webhooks");
-            webHooksPage.waitFor(() -> !autoRespondersPage.getCurrentUrl().equals(url));
         }
         webHooksPage.addButton.click();
         webHooksPage.webHooksPopup.waitForDisplayed();
@@ -113,12 +114,24 @@ public class ProdClientSteps implements ClientSteps {
         return this;
     }
 
+    @Override
+    public ClientSteps setOptInKeyWords(Client client, String startKeywords, String stopKeywords, String helpKeywords, String agreeKeywords) {
+        goToClientSettingsPage(client.getCode());
+        clientsPage.sideBarMenu.openItem("Opt In Keywords");
+        clientOptInKeyWordsPage.useDefaultCheckbox.uncheck();
+        waitFor(() -> clientOptInKeyWordsPage.customKeyWordsPanel.isVisible());
+        clientOptInKeyWordsPage.startKeywordsInput.enterText(startKeywords);
+        clientOptInKeyWordsPage.stopKeywordsInput.enterText(stopKeywords);
+        clientOptInKeyWordsPage.helpKeywordsInput.enterText(helpKeywords);
+        clientOptInKeyWordsPage.agreeKeywordsInput.enterText(agreeKeywords);
+        clientOptInKeyWordsPage.saveButton.click();
+        return this;
+    }
+
     private void goToConsentManagementPage(Client client){
         if (!consentManagementPage.isOpened()) {
             goToClientSettingsPage(client.getCode());
-            String url = dashboardPage.getCurrentUrl();
             clientsPage.sideBarMenu.openItem("Consent Management");
-            consentManagementPage.waitFor(() -> !consentManagementPage.getCurrentUrl().equals(url));
         }
     }
 

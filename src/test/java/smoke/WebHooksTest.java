@@ -19,8 +19,10 @@ public class WebHooksTest extends SmokeBaseTest {
 
     @Test(description = "Add a link and webhook name, try adding it to an SMS message to check if the shortened link that goes out leads to a needed link")
     public void addedFooterAppearsOnWebForm() {
+        //TODO: remove once webhook issue naming will be resolved
+        String webhookName = "webhookName" + getPersistentCounter("webhook");
         site.clientSteps()
-                .addWebhook(client, "webhook_test", "http://webhooktest.com", null);
+                .addWebhook(client, webhookName, "http://webhooktest.com", null);
         site.campaignSteps()
                 .addCampaign(client, "AutoTestCampaign", CampaignAccess.PUBLIC, "Automation created campaign", null);
         //TODO: implement testcase assertion
