@@ -28,7 +28,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         if (!campaignsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.campaignsMenuItem.click();
-            waitFor(()-> !url.equals(campaignsPage.getCurrentUrl()));
+            waitFor(() -> !url.equals(campaignsPage.getCurrentUrl()));
         }
         campaignsPage.addCampaignButton.click();
         campaignsPage.selectModulePopup.waitForDisplayed();

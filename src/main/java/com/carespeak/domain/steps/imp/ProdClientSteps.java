@@ -128,7 +128,7 @@ public class ProdClientSteps implements ClientSteps {
         return this;
     }
 
-    private void goToConsentManagementPage(Client client){
+    private void goToConsentManagementPage(Client client) {
         if (!consentManagementPage.isOpened()) {
             goToClientSettingsPage(client.getCode());
             clientsPage.sideBarMenu.openItem("Consent Management");

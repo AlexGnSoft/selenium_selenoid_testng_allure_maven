@@ -32,7 +32,8 @@ public interface ClientSteps extends BaseSteps {
 
     /**
      * Adds OptOut Header for specified client with specified message
-     * @param client - client to use
+     *
+     * @param client  - client to use
      * @param message - message to add
      * @return ClientSteps object
      */
@@ -41,7 +42,8 @@ public interface ClientSteps extends BaseSteps {
 
     /**
      * Adds OptOut Body for specified client with specified message
-     * @param client - client to use
+     *
+     * @param client  - client to use
      * @param message - message to add
      * @return ClientSteps object
      */
@@ -50,7 +52,8 @@ public interface ClientSteps extends BaseSteps {
 
     /**
      * Adds OptOut Footer for specified client with specified message
-     * @param client - client to use
+     *
+     * @param client  - client to use
      * @param message - message to add
      * @return ClientSteps object
      */

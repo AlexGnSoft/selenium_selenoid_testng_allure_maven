@@ -18,10 +18,10 @@ public class ConsentManagementTest extends SmokeBaseTest {
 
     @Test(description = "Check if added header/footer appear on the web form and if made changes are visible")
     public void addedFooterAppearsOnWebForm() {
-        ProgramOptOutForm expectedOptOutForm = new ProgramOptOutForm("Auto added header","Auto added body","Auto added footer");
+        ProgramOptOutForm expectedOptOutForm = new ProgramOptOutForm("Auto added header", "Auto added body", "Auto added footer");
 
         site.clientSteps()
-                .addOptOutHeader(client,expectedOptOutForm.getHeader())
+                .addOptOutHeader(client, expectedOptOutForm.getHeader())
                 .addOptOutBody(client, expectedOptOutForm.getBody())
                 .addOptOutFooter(client, expectedOptOutForm.getFooter());
 

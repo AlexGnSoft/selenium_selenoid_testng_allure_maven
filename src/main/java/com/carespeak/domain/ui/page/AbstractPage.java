@@ -48,7 +48,7 @@ public abstract class AbstractPage implements ICanWait {
     }
 
     //TODO: improve implementation
-    public void switchBack(){
+    public void switchBack() {
         List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
         if (windowHandles.size() > 1) {
             driver.switchTo().window(windowHandles.get(0));

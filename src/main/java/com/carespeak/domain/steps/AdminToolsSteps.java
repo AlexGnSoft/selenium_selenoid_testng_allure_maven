@@ -1,8 +1,8 @@
 package com.carespeak.domain.steps;
 
+import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.Module;
-import com.carespeak.domain.entities.client.Client;
 
 import java.util.List;
 

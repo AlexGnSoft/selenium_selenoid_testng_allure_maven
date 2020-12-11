@@ -38,7 +38,7 @@ public class ClientOptInKeyWordsPage extends AbstractClientPage {
     @FindBy(id = "saveBtn")
     public Button saveButton;
 
-    public ClientOptInKeyWordsPage(){
+    public ClientOptInKeyWordsPage() {
     }
 
 

@@ -22,7 +22,7 @@ public class ClientWebHooksPage extends AbstractClientPage {
 
     public ItemsTable webHooksTable;
 
-    public ClientWebHooksPage(){
+    public ClientWebHooksPage() {
         webHooksTable = new ItemsTable(By.id("webhooks-table-wrapper"));
         webHooksPopup = new AddWebHooksPopup();
     }
