@@ -18,9 +18,12 @@ import com.carespeak.domain.ui.page.programs.consent_management.ProgramOptOutFor
 import com.carespeak.domain.ui.page.programs.general.ProgramGeneralSettingsPage;
 import com.carespeak.domain.ui.page.programs.keyword_signup.ProgramKeywordSignupPage;
 import com.carespeak.domain.ui.page.programs.message_logs.ProgramMessageLogsPage;
+import com.carespeak.domain.ui.page.programs.opt_in_messages.OptInMessagesPage;
+import com.carespeak.domain.ui.page.programs.patient_message_logs.ProgramPatientMessageLogsPage;
 import com.carespeak.domain.ui.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.ProgramPatientsTab;
+import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
@@ -36,6 +39,8 @@ public class ProdProgramSteps implements ProgramSteps {
     private AddPatientsPage addPatientsPage;
     private ProgramConsentManagementPage consentManagementPage;
     private ProgramOptOutFormPage optOutFormPage;
+    private OptInMessagesPage optInMessagesPage;
+    private ProgramPatientMessageLogsPage patientMessageLogsPage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -48,6 +53,8 @@ public class ProdProgramSteps implements ProgramSteps {
         addPatientsPage = new AddPatientsPage();
         consentManagementPage = new ProgramConsentManagementPage();
         optOutFormPage = new ProgramOptOutFormPage();
+        optInMessagesPage = new OptInMessagesPage();
+        patientMessageLogsPage = new ProgramPatientMessageLogsPage();
     }
 
     @Override
@@ -295,5 +302,76 @@ public class ProdProgramSteps implements ProgramSteps {
         programsPage.programTable.editFirstItemButton().click();
         addPatientsPage.endpointDropdown.click();
         return addPatientsPage.getEndpoints();
+    }
+
+    @Override
+    public ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage) {
+        if (!optInMessagesPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Opt-in Messages");
+        }
+        selectFile(filePath);
+        optInMessagesPage.uploadButton.click();
+
+        if (isSendConfirmMessage) {
+            optInMessagesPage.dontSendMessageCheckBox.uncheck();
+        } else {
+            optInMessagesPage.dontSendMessageCheckBox.check();
+        }
+
+        optInMessagesPage.saveButton.click();
+        optInMessagesPage.addOptInMessagePopup.closePopupButton.click();
+        optInMessagesPage.addOptInMessagePopup.waitForDisappear();
+        return this;
+    }
+
+    @Override
+    public void selectFile(String filePath) {
+        optInMessagesPage.selectButton.sendKeys(filePath);
+    }
+
+    private void selectPatientByName(String patientFirstName) {
+        programsPatientsPage.goToPatientsTab()
+                .selectPatientByName(patientFirstName);
+    }
+
+    @Override
+    public ProgramSteps simulateResponse(String patientFirstName, String message) {
+        if (!patientMessageLogsPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Patients");
+            selectPatientByName(patientFirstName);
+        }
+        patientMessageLogsPage.simulateResponseBtn.click();
+        patientMessageLogsPage.simulateResponsePopup.waitForDisplayed();
+        patientMessageLogsPage.simulateResponsePopup.responseInput.enterText(message);
+        patientMessageLogsPage.simulateResponsePopup.sendButton.click();
+        waitFor(() -> patientMessageLogsPage.simulateResponseBtn.isDisplayed());
+        return this;
+    }
+
+    @Override
+    public MessageLogItem getLastPatientMessageFromLogs(String patientFirstName) {
+        if (!patientMessageLogsPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Patients");
+            selectPatientByName(patientFirstName);
+        }
+
+        TableRowItem messageLogRow = patientMessageLogsPage.patientMessageTable.getFirstRowItem();
+        if (messageLogRow == null) {
+            throw new RuntimeException("Message log was not found!");
+        }
+        MessageLogItem logItem = new MessageLogItem();
+        logItem.setFlow(messageLogRow.getDataByHeader("Flow"));
+        logItem.setSent(messageLogRow.getDataByHeader("Sent"));
+        logItem.setStatus(messageLogRow.getDataByHeader("Status"));
+        logItem.setDelivery(messageLogRow.getDataByHeader("Delivery"));
+        logItem.setMessage(messageLogRow.getDataByHeader("Message"));
+        return logItem;
+    }
+
+    @Override
+    public boolean isAttachedImageDisplayed() {
+        patientMessageLogsPage.attachmentButton.click();
+        waitFor(patientMessageLogsPage.attachmentSideBar.attachment::isDisplayed);
+        return patientMessageLogsPage.attachmentSideBar.isImageDisplayed(patientMessageLogsPage.attachmentSideBar.attachment);
     }
 }

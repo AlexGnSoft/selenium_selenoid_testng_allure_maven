@@ -151,4 +151,48 @@ public interface ProgramSteps extends BaseSteps {
      * @return List of endpoints
      */
     List<String> getEndpointsOnPatientLevel();
+
+
+    /**
+     * Add program opt-in messages
+     *
+     * @param filePath             - the path to the data file
+     * @param isSendConfirmMessage - true if want to send confirm message, false if not
+     * @return Program Steps object
+     */
+    ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage);
+
+
+    /**
+     * Select data file
+     *
+     * @param filePath -  the path to the data file
+     */
+    void selectFile(String filePath);
+
+
+    /**
+     * Simulate response from Program Patient Message Logs
+     *
+     * @param message          - text to send
+     * @param patientFirstName - patient who will have a simulation
+     * @return Message object
+     */
+    ProgramSteps simulateResponse(String patientFirstName, String message);
+
+
+    /**
+     * Returns last message from Programs Patient Messages Logs
+     *
+     * @param patientFirstName - patient to be select
+     * @return Messages object
+     */
+    MessageLogItem getLastPatientMessageFromLogs(String patientFirstName);
+
+    /**
+     * Returns true if attached image is displayed otherwise false
+     *
+     * @return true if attached image is displayed otherwise false
+     */
+    boolean isAttachedImageDisplayed();
 }

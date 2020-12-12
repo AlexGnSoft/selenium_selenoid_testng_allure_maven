@@ -6,6 +6,7 @@ import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 
+import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class SmokeBaseTest extends BaseTest {
@@ -74,5 +75,14 @@ public abstract class SmokeBaseTest extends BaseTest {
                     .getClientByCode(client.getCode());
             Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
         }
+    }
+
+    protected String getResourcesPath() {
+        String defaultPath = System.getProperty("user.dir") +
+                File.separator + "src" +
+                File.separator + "main" +
+                File.separator + "resources" +
+                File.separator + "data";
+        return System.getProperty("resources.path", defaultPath);
     }
 }

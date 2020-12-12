@@ -57,6 +57,15 @@ public interface IDataGenerator {
         return new SimpleDateFormat(formatPattern).format(calendar.getTime());
     }
 
+    default String getGeneratedPhoneNumber() {
+        StringBuilder number = new StringBuilder("+1555");
+        for (int i = 0; i <= 6; i++) {
+            int generatedNumber = (int) (Math.random() * 10);
+            number.append(generatedNumber);
+        }
+        return number.toString();
+    }
+
     /**
      * Returns random generated string
      */
