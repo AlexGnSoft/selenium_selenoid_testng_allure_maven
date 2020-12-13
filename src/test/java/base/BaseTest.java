@@ -5,12 +5,14 @@ import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
+import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.core.listener.ReportListener;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import com.carespeak.domain.steps.reporter.NoStepReporter;
 import com.carespeak.domain.steps.reporter.ReportPortalStepReporter;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.IReporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 
@@ -33,9 +35,19 @@ public abstract class BaseTest implements IDataGenerator {
     }
 
     public BaseTest() {
-        site = new SiteStepsHolder(config, new ReportPortalStepReporter());
+        site = new SiteStepsHolder(config, createReporter());
         user = config.get("data.user");
         password = config.get("data.pass");
+    }
+
+    private IStepsReporter createReporter(){
+        Class reporter;
+        try {
+            reporter = Class.forName(config.get("framework.reporter"));
+            return (IStepsReporter) reporter.newInstance();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @AfterClass
