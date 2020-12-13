@@ -7,6 +7,7 @@ import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.listener.ReportListener;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
+import com.carespeak.domain.steps.reporter.NoStepReporter;
 import com.carespeak.domain.steps.reporter.ReportPortalStepReporter;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -32,7 +33,7 @@ public abstract class BaseTest implements IDataGenerator {
     }
 
     public BaseTest() {
-        site = new SiteStepsHolder(config, new ReportPortalStepReporter());
+        site = new SiteStepsHolder(config, new NoStepReporter());
         user = config.get("data.user");
         password = config.get("data.pass");
     }

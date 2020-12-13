@@ -23,7 +23,6 @@ import com.carespeak.domain.ui.page.programs.patient_message_logs.ProgramPatient
 import com.carespeak.domain.ui.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.ProgramPatientsTab;
-import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
