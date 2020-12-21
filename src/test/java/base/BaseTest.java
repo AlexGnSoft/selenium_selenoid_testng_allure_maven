@@ -35,7 +35,7 @@ public abstract class BaseTest implements IDataGenerator {
     }
 
     public BaseTest() {
-        site = new SiteStepsHolder(config, new NoStepReporter());
+        site = new SiteStepsHolder(config, createReporter());
         user = config.get("data.user");
         password = config.get("data.pass");
     }
