@@ -21,7 +21,7 @@ public class NoStepReporter implements IStepsReporter {
     public <T> T createStepProxy(Class clazz) {
         try {
             return (T) clazz.newInstance();
-        } catch (InstantiationException|IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }

@@ -126,8 +126,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Reject unsolicited message for specified program and client
      *
-     * @param client      - client to use
-     * @param programName - program to be select
+     * @param client         - client to use
+     * @param programName    - program to be select
      * @param messagePattern - accepted message pattern
      * @return Program Steps object
      */
@@ -226,7 +226,7 @@ public interface ProgramSteps extends BaseSteps {
      * Returns true if patient is in the specified program otherwise false
      *
      * @param newProgramName - new program name
-     * @param patient     - patient to be select
+     * @param patient        - patient to be select
      * @return return true if patient is in the specified program otherwise false
      */
     boolean isInProgram(String newProgramName, Patient patient);

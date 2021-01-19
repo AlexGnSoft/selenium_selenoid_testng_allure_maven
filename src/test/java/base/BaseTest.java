@@ -8,7 +8,6 @@ import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.core.listener.ReportListener;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
-import com.carespeak.domain.steps.reporter.ReportPortalStepReporter;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
@@ -38,7 +37,7 @@ public abstract class BaseTest implements IDataGenerator {
         password = config.get("data.pass");
     }
 
-    private IStepsReporter createReporter(){
+    private IStepsReporter createReporter() {
         Class reporter;
         try {
             reporter = Class.forName(config.get("framework.reporter"));

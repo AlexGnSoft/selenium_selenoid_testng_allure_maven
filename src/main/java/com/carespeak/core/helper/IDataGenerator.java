@@ -140,7 +140,7 @@ public interface IDataGenerator {
         return counter;
     }
 
-    default Day today(){
-       return Day.getDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
+    default Day today() {
+        return Day.getDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
     }
 }

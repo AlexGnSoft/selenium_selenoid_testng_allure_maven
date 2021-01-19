@@ -51,9 +51,9 @@ public enum Day {
         return new Day[]{SATURDAY, SUNDAY};
     }
 
-    public boolean isWeekend(){
-        for (Day day : getWeekEnds()){
-            if (day.equals(this)){
+    public boolean isWeekend() {
+        for (Day day : getWeekEnds()) {
+            if (day.equals(this)) {
                 return true;
             }
         }
