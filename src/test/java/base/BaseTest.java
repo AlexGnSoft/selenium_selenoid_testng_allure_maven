@@ -8,11 +8,9 @@ import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.core.listener.ReportListener;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
-import com.carespeak.domain.steps.reporter.NoStepReporter;
 import com.carespeak.domain.steps.reporter.ReportPortalStepReporter;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.IReporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 

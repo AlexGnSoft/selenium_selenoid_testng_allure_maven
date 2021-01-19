@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 /**
- * Represents Auto Responder container on Client -> Auto Responders tab
+ * Represents Auto Responder container -> Auto Responders tab
  */
 public class AutoResponderContainer extends AbstractComponent {
 

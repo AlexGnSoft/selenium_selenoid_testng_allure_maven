@@ -2,6 +2,7 @@ package com.carespeak.domain.ui.page.programs.patient_message_logs;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
+import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.domain.ui.component.sidebar.AttachmentSideBar;
 import com.carespeak.domain.ui.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.page.AbstractPage;
@@ -14,6 +15,14 @@ public class ProgramPatientMessageLogsPage extends AbstractPage {
     public SimulateResponsePopup simulateResponsePopup;
     public ItemsTable patientMessageTable;
     public AttachmentSideBar attachmentSideBar;
+
+    @ElementName("Program name button")
+    @FindBy(xpath = "//a[contains(@class, 'program')]/strong")
+    public Button programNameButton;
+
+    @ElementName("Patient name text")
+    @FindBy(id = "csHeaderName")
+    public ClickableElement patientNameText;
 
     @ElementName("Simulate Response button")
     @FindBy(id = "btnSimulateResponse")

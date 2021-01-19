@@ -88,11 +88,6 @@ public class ProgramOptInMessageTest extends SmokeBaseTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
     }
 
-    @Test(enabled = false)
-    public void simulateServiceStopReminder() {
-        //TODO: implement this test
-    }
-
     @Test(description = "Add opt-in message with 'Do NOT send opt in confirmation message' checkbox", dependsOnMethods = "simulateHelp")
     public void addOptInMessageWithoutConfirmation() {
         site.programSteps()
@@ -135,11 +130,6 @@ public class ProgramOptInMessageTest extends SmokeBaseTest {
                 .getLastPatientMessageFromLogs(patient.getFirstName());
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
-    }
-
-    @Test(enabled = false)
-    public void verifyServiceStopReminder() {
-        //TODO: implement this test
     }
 
     @AfterClass

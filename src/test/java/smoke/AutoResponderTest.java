@@ -5,14 +5,12 @@ import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AutoResponderTest extends SmokeBaseTest {
-
-    private static final String FROM_PHONE_NUMBER = "+15554622669";
-    private static final String TO_ENDPOINT = "twilioSmsSender5 [TWILIO +17542272273]";
 
     private Patient patient;
 
@@ -31,21 +29,26 @@ public class AutoResponderTest extends SmokeBaseTest {
 
     @Test(description = "Add Auto Responders and check auto response")
     public void addAutoResponder() {
+        String workingDayMessage = "It's working day!";
+        String weekendMessage = "It's WEEKEND, yay!!!";
+
+        String expectedMessage = today().isWeekend() ? weekendMessage : workingDayMessage;
+
         site.clientSteps()
-                .addAutoResponder(client, "It's working day!", true, Day.getWorkingDays())
-                .addAutoResponder(client, "It's WEEKEND, yay!!!", true, Day.getWeekEnds());
+                .addAutoResponder(client, workingDayMessage, true, Day.getWorkingDays())
+                .addAutoResponder(client, weekendMessage, true, Day.getWeekEnds());
         site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
-                .rejectUnsolicitedMessages(client, programName);
-        site.adminToolsSteps()
-                .simulateSMSToClient(patient.getCellPhone(), TO_ENDPOINT, "Unrecognized");
+                .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");
 
         MessageLogItem actualSms = site.programSteps()
                 .addNewPatient(patient, client, programName)
+                .simulateResponse(patient.getFirstName(), "AGREE")
+                .simulateResponse(patient.getFirstName(), "Accepted")
                 .goToProgramSettings(client.getName(), programName)
                 .getLastMessageFromLogsForNumber(patient.getCellPhone());
-        //TODO: implement assertion
-        System.out.println();
+
+        Assert.assertEquals(actualSms.getMessage(), expectedMessage, "Received message does not equal to expected");
     }
 
     @AfterClass

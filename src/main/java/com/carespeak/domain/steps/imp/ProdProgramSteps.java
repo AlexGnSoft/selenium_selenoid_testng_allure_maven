@@ -4,10 +4,12 @@ import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
+import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
 import com.carespeak.domain.steps.ProgramSteps;
+import com.carespeak.domain.ui.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
@@ -15,6 +17,7 @@ import com.carespeak.domain.ui.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.page.programs.auto_responders.ProgramAutoRespondersPage;
 import com.carespeak.domain.ui.page.programs.consent_management.ProgramConsentManagementPage;
 import com.carespeak.domain.ui.page.programs.consent_management.ProgramOptOutFormPage;
+import com.carespeak.domain.ui.page.programs.custom_fields.ProgramCustomFieldsPage;
 import com.carespeak.domain.ui.page.programs.general.ProgramGeneralSettingsPage;
 import com.carespeak.domain.ui.page.programs.keyword_signup.ProgramKeywordSignupPage;
 import com.carespeak.domain.ui.page.programs.message_logs.ProgramMessageLogsPage;
@@ -40,6 +43,7 @@ public class ProdProgramSteps implements ProgramSteps {
     private ProgramOptOutFormPage optOutFormPage;
     private OptInMessagesPage optInMessagesPage;
     private ProgramPatientMessageLogsPage patientMessageLogsPage;
+    private ProgramCustomFieldsPage programCustomFieldsPage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -54,6 +58,7 @@ public class ProdProgramSteps implements ProgramSteps {
         optOutFormPage = new ProgramOptOutFormPage();
         optInMessagesPage = new OptInMessagesPage();
         patientMessageLogsPage = new ProgramPatientMessageLogsPage();
+        programCustomFieldsPage = new ProgramCustomFieldsPage();
     }
 
     @Override
@@ -129,6 +134,21 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public ProgramSteps addDestinationProgramQuestionKeywords(String keyword, String programName) {
+        if (!programKeywordSignupPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Keyword Signup");
+        }
+
+        programKeywordSignupPage.addDestinationProgramKeywordBtn.click();
+        programKeywordSignupPage.destinationProgramKeywordInput.enterText(keyword);
+
+        programKeywordSignupPage.destinationProgramDropdownButton.click();
+        programKeywordSignupPage.selectProgramByName(programName);
+        programKeywordSignupPage.saveButton.click();
+        return this;
+    }
+
+    @Override
     public ProgramSteps addAccountCreationQuestion(boolean isMandatory, String field, String questionText, String onErrorText) {
         if (!programKeywordSignupPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Keyword Signup");
@@ -161,6 +181,43 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public ProgramSteps addCustomFields(String fieldName) {
+        if (!programCustomFieldsPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Custom Fields");
+        }
+        programCustomFieldsPage.addCustomFieldBtn.click();
+        programCustomFieldsPage.fieldNameInput.enterText(fieldName);
+        programCustomFieldsPage.saveButton.click();
+        programCustomFieldsPage.statusPopup.waitForDisplayed();
+        programCustomFieldsPage.statusPopup.waitForDisappear();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addValidationMessage(String validationMessage) {
+        if (!programKeywordSignupPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Keyword Signup");
+        }
+
+        programKeywordSignupPage.validationMessageButton.click();
+        programKeywordSignupPage.validationMessageInput.enterText(validationMessage);
+        programKeywordSignupPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addCompletedMessage(String completedMessage) {
+        if (!programKeywordSignupPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Keyword Signup");
+        }
+
+        programKeywordSignupPage.completedMessageButton.click();
+        programKeywordSignupPage.completedMessageInput.enterText(completedMessage);
+        programKeywordSignupPage.saveButton.click();
+        return this;
+    }
+
+    @Override
     public MessageLogItem getLastMessageFromLogsForNumber(String phoneNumber) {
         programsPage.sideBarMenu.openItem("Message Logs");
         programMessageLogsPage.messageLogsTable.searchInTable("From", phoneNumber);
@@ -181,7 +238,7 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps rejectUnsolicitedMessages(Client client, String programName) {
+    public ProgramSteps rejectUnsolicitedMessages(Client client, String programName, String messagePattern) {
         if (!programAutoRespondersPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.programsMenuItem.click();
@@ -191,7 +248,7 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.rejectSolicitedCheckbox.check();
-        programAutoRespondersPage.acceptedMessageRegexInput.enterText("Accepted");
+        programAutoRespondersPage.acceptedMessageRegexInput.enterText(messagePattern);
         programAutoRespondersPage.saveButton.click();
         return this;
     }
@@ -339,6 +396,7 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Patients");
             selectPatientByName(patientFirstName);
         }
+        waitFor(() -> patientMessageLogsPage.simulateResponseBtn.isDisplayed());
         patientMessageLogsPage.simulateResponseBtn.click();
         patientMessageLogsPage.simulateResponsePopup.waitForDisplayed();
         patientMessageLogsPage.simulateResponsePopup.responseInput.enterText(message);
@@ -368,9 +426,49 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public boolean isInProgram(String newProgramName, Patient patient) {
+        if (!patientMessageLogsPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Patients");
+        }
+
+        TableRowItem patientRow = programsPatientsPage.goToPatientsTab().programPatientsTable.getFirstRowItem();
+        if (patientRow == null) {
+            throw new RuntimeException("Patient was not found!");
+        }
+        selectPatientByName(patient.getFirstName());
+
+        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patient.getFirstName()) &&
+                patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
+
+        Logger.info("Is patient '" + patient.getFirstName() + "' in '" + newProgramName + "' program? - " + result);
+        return result;
+    }
+
+    @Override
     public boolean isAttachedImageDisplayed() {
         patientMessageLogsPage.attachmentButton.click();
         waitFor(patientMessageLogsPage.attachmentSideBar.attachment::isDisplayed);
         return patientMessageLogsPage.attachmentSideBar.isImageDisplayed(patientMessageLogsPage.attachmentSideBar.attachment);
+    }
+
+    @Override
+    public ProgramSteps addAutoResponder(Client client, AutoRespondersStatus status, String message) {
+        if (!programAutoRespondersPage.isOpened()) {
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.editFirstItemButton().click();
+            programsPatientsPage.sideBarMenu.openItem("Auto Responders");
+        }
+        programAutoRespondersPage.statusExpand.select(status.getValue());
+        List<AutoResponderContainer> containers = programAutoRespondersPage.autoResponders();
+        programAutoRespondersPage.addAutoResponderButton.click();
+        //wait for new responder to be added
+        waitFor(() -> programAutoRespondersPage.autoResponders().size() > containers.size());
+        AutoResponderContainer lastResponder = programAutoRespondersPage.getLatestResponder();
+        lastResponder.allDayCheckbox().check();
+        lastResponder.messageInput().enterText(message);
+        programAutoRespondersPage.saveButton.click();
+        programAutoRespondersPage.statusMessage.waitForDisplayed();
+        programAutoRespondersPage.statusMessage.waitForDisappear();
+        return this;
     }
 }

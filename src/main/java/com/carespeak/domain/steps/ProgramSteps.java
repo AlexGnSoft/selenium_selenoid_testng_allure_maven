@@ -2,6 +2,7 @@ package com.carespeak.domain.steps;
 
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
+import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
@@ -64,6 +65,15 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps goToProgramSettings(String clientName, String programName);
 
     /**
+     * Add destination program question keywords
+     *
+     * @param keyword     keyword to move patient
+     * @param programName destination program name
+     * @return Program Steps object
+     */
+    ProgramSteps addDestinationProgramQuestionKeywords(String keyword, String programName);
+
+    /**
      * Add account creation question for keyword sign up.
      *
      * @param isMandatory  - is question mandatory ?
@@ -77,11 +87,33 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add create account questions.
      *
-     * @param keyword
+     * @param keyword keyword to sign up
      * @return Program Steps object
      */
     ProgramSteps addKeywordForSignUp(String keyword);
 
+    /**
+     * @param fieldName - custom field name to select in the drop-down menu in the question field
+     * @return Program Steps object
+     */
+    ProgramSteps addCustomFields(String fieldName);
+
+    /**
+     * Add validation message for keyword sign up
+     *
+     * @param validationMessage - validation message
+     * @return Program Steps object
+     */
+    ProgramSteps addValidationMessage(String validationMessage);
+
+
+    /**
+     * Add completed message for keyword signup
+     *
+     * @param completedMessage - completed message
+     * @return Program Steps object
+     */
+    ProgramSteps addCompletedMessage(String completedMessage);
 
     /**
      * Returns last message from Programs Messages Logs for specified phone number
@@ -96,9 +128,10 @@ public interface ProgramSteps extends BaseSteps {
      *
      * @param client      - client to use
      * @param programName - program to be select
+     * @param messagePattern - accepted message pattern
      * @return Program Steps object
      */
-    ProgramSteps rejectUnsolicitedMessages(Client client, String programName);
+    ProgramSteps rejectUnsolicitedMessages(Client client, String programName, String messagePattern);
 
     /**
      * Add patient to specific program
@@ -190,9 +223,28 @@ public interface ProgramSteps extends BaseSteps {
     MessageLogItem getLastPatientMessageFromLogs(String patientFirstName);
 
     /**
+     * Returns true if patient is in the specified program otherwise false
+     *
+     * @param newProgramName - new program name
+     * @param patient     - patient to be select
+     * @return return true if patient is in the specified program otherwise false
+     */
+    boolean isInProgram(String newProgramName, Patient patient);
+
+    /**
      * Returns true if attached image is displayed otherwise false
      *
      * @return true if attached image is displayed otherwise false
      */
     boolean isAttachedImageDisplayed();
+
+    /**
+     * Add new Auto Responder on program level
+     *
+     * @param client  - client to use
+     * @param status  - status autoresponders
+     * @param message - message for Auto response
+     * @return Program Steps Object
+     */
+    ProgramSteps addAutoResponder(Client client, AutoRespondersStatus status, String message);
 }

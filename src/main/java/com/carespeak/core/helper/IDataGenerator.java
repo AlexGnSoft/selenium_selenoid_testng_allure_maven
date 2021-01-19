@@ -1,5 +1,6 @@
 package com.carespeak.core.helper;
 
+import com.carespeak.domain.entities.common.Day;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -137,5 +138,9 @@ public interface IDataGenerator {
             throw new RuntimeException("Exception during persistence counter reader", ex);
         }
         return counter;
+    }
+
+    default Day today(){
+       return Day.getDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1);
     }
 }
