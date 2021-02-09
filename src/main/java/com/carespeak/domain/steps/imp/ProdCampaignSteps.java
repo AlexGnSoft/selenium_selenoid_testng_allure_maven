@@ -3,11 +3,16 @@ package com.carespeak.domain.steps.imp;
 import com.carespeak.domain.entities.campaign.CampaignAccess;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.steps.CampaignSteps;
+import com.carespeak.domain.ui.component.campaign.AlertTimeComponent;
+import com.carespeak.domain.ui.component.campaign.AlertTimeContainer;
 import com.carespeak.domain.ui.page.campaigns.CampaignsPage;
 import com.carespeak.domain.ui.page.campaigns.general.CampaignsGeneralPage;
 import com.carespeak.domain.ui.page.campaigns.time_table.CampaignsTimeTablePage;
 import com.carespeak.domain.ui.page.dashboard.DashboardPage;
 import org.apache.commons.lang3.NotImplementedException;
+import org.testng.collections.CollectionUtils;
+
+import java.util.List;
 
 public class ProdCampaignSteps implements CampaignSteps {
 
@@ -47,9 +52,16 @@ public class ProdCampaignSteps implements CampaignSteps {
             generalPage.tagsInput.enterText(builder.toString());
         }
         generalPage.nextButton.click();
-        //TODO: implement timetable parameters settings
         timeTablePage.sendImmediatelyRadio.click();
+        timeTablePage.selectDailyButton.click();
+        List<AlertTimeContainer> alertContainers = timeTablePage.alertTimeComponent.findAlertTimeContainers();
+        if (!CollectionUtils.hasElements(alertContainers)){
+            throw new AssertionError("Alert time containers were not found!");
+        }
+        AlertTimeContainer firstAlert = alertContainers.get(0);
+        firstAlert.amPmDropdown().select("AM");
         timeTablePage.nextButton.click();
+        //TODO: implement add Messages screen handling
         throw new NotImplementedException("Add campaign is not implemented yet!");
     }
 }

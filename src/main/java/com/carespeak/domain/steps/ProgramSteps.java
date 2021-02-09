@@ -247,4 +247,9 @@ public interface ProgramSteps extends BaseSteps {
      * @return Program Steps Object
      */
     ProgramSteps addAutoResponder(Client client, AutoRespondersStatus status, String message);
+    /*
+
+    -Dframework.reporter="com.carespeak.domain.steps.reporter.ReportPortalStepReporter"
+
+    */
 }
