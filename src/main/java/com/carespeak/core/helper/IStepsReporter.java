@@ -8,9 +8,9 @@ import java.lang.reflect.Proxy;
 
 public interface IStepsReporter {
 
-    void onStepStart(Method stepMethod);
+    void onStepStart(Method stepMethod, Object[] args);
 
-    void onStepFinished(Method stepMethod);
+    void onStepFinished(Method stepMethod, Throwable t);
 
     @SuppressWarnings("unchecked")
     default <T> T createStepProxy(Class clazz) {
@@ -22,18 +22,18 @@ public interface IStepsReporter {
     //TODO: remove tight connection with BaseSteps class
     default InvocationHandler getHandler(Object stepsObject, Class clazz) {
         return (proxy, method, args) -> {
-            onStepStart(method);
             try {
+                onStepStart(method, args);
                 Object returnObj = method.invoke(stepsObject, args);
                 if (returnObj instanceof BaseSteps) {
                     return createStepProxy(clazz);
                 }
-                onStepFinished(method);
+                onStepFinished(method, null);
                 return returnObj;
             } catch (Throwable e) {
                 e.printStackTrace();
+                onStepFinished(method, e.getCause());
             }
-            onStepFinished(method);
             return null;
         };
     }

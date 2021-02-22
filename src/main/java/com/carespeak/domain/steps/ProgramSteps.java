@@ -65,6 +65,14 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps goToProgramSettings(String clientName, String programName);
 
     /**
+     * Returns all program names as list for specified client
+     *
+     * @param client - client to use
+     * @return list of program names as String
+     */
+    List<String> getProgramsForClient(Client client);
+
+    /**
      * Add destination program question keywords
      *
      * @param keyword     keyword to move patient
@@ -134,6 +142,15 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps rejectUnsolicitedMessages(Client client, String programName, String messagePattern);
 
     /**
+     * Removes specified program for specified client
+     *
+     * @param client      - client to use
+     * @param programName - program to remove
+     * @return Program Steps object
+     */
+    ProgramSteps removeProgram(Client client, String programName);
+
+    /**
      * Add patient to specific program
      *
      * @param client      - client to use
@@ -174,16 +191,19 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Get all program endpoints on program level
      *
+     * @param programName - name of program to use
      * @return List of endpoints
      */
-    List<String> getEndpointsOnProgramLevel();
+    List<String> getEndpointsOnProgramLevel(String programName);
 
     /**
      * Get all program endpoints on patient level
      *
+     * @param programName - name of program to get endpoints
+     * @param patient     - patient to get endpoints
      * @return List of endpoints
      */
-    List<String> getEndpointsOnPatientLevel();
+    List<String> getEndpointsOnPatientLevel(Client client, String programName, Patient patient);
 
 
     /**
@@ -247,9 +267,6 @@ public interface ProgramSteps extends BaseSteps {
      * @return Program Steps Object
      */
     ProgramSteps addAutoResponder(Client client, AutoRespondersStatus status, String message);
-    /*
 
-    -Dframework.reporter="com.carespeak.domain.steps.reporter.ReportPortalStepReporter"
-
-    */
+    List<Patient> getPatients(Client client, String programName);
 }

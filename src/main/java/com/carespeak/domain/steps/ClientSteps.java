@@ -12,9 +12,9 @@ public interface ClientSteps extends BaseSteps {
      * @param message  - message for Auto response
      * @param isAllDay - is respond will work during the whole day
      * @param days     - days for auto response
+     * @return Client Steps object
      */
     ClientSteps addAutoResponder(Client client, String message, boolean isAllDay, Day... days);
-
 
     /**
      * Adds new Auto Responder for provided client
@@ -25,7 +25,7 @@ public interface ClientSteps extends BaseSteps {
      * @param from     - phone number from
      * @param to       - phone number to
      * @param days     - days for auto response
-     * @return ClientSteps object
+     * @return Client Steps object
      */
     ClientSteps addAutoResponder(Client client, String message, String from, String to, boolean isAllDay, Day... days);
 

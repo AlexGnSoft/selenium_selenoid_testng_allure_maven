@@ -1,4 +1,4 @@
-package smoke;
+package prod.smoke.keyword_signup;
 
 import com.carespeak.core.constant.Constants;
 import com.carespeak.domain.entities.message.MessageLogItem;
@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import prod.smoke.SmokeBaseTest;
 
 public class KeywordSignUpLevelTest extends SmokeBaseTest {
 
@@ -26,8 +27,6 @@ public class KeywordSignUpLevelTest extends SmokeBaseTest {
 
     @BeforeClass
     public void prepareClientData() {
-        createNewClient();
-        createProgram();
         newProgramName = createProgram(client);
         patient = new Patient();
         patient.setFirstName("AutoFred");

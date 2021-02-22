@@ -25,8 +25,11 @@ import com.carespeak.domain.ui.page.programs.opt_in_messages.OptInMessagesPage;
 import com.carespeak.domain.ui.page.programs.patient_message_logs.ProgramPatientMessageLogsPage;
 import com.carespeak.domain.ui.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.page.programs.patients.patients.AddPatientsPage;
+import com.carespeak.domain.ui.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.page.programs.patients.patients.ProgramPatientsTab;
+import org.testng.collections.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProdProgramSteps implements ProgramSteps {
@@ -44,6 +47,7 @@ public class ProdProgramSteps implements ProgramSteps {
     private OptInMessagesPage optInMessagesPage;
     private ProgramPatientMessageLogsPage patientMessageLogsPage;
     private ProgramCustomFieldsPage programCustomFieldsPage;
+    private PatientProfilePage patientProfilePage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -59,6 +63,7 @@ public class ProdProgramSteps implements ProgramSteps {
         optInMessagesPage = new OptInMessagesPage();
         patientMessageLogsPage = new ProgramPatientMessageLogsPage();
         programCustomFieldsPage = new ProgramCustomFieldsPage();
+        patientProfilePage = new PatientProfilePage();
     }
 
     @Override
@@ -124,13 +129,27 @@ public class ProdProgramSteps implements ProgramSteps {
         dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         programsPage.searchClient.search(clientName);
-
+        programsPage.programTable.searchFor(programName);
         TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
         if (programRow == null) {
             throw new RuntimeException("Program was not found by name '" + programName + "'!");
         }
         programsPage.programTable.editFirstItemButton().click();
         return this;
+    }
+
+    @Override
+    public List<String> getProgramsForClient(Client client) {
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.programsMenuItem.click();
+        programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+        programsPage.searchClient.search(client.getName());
+        List<TableRowItem> programRows = programsPage.programTable.getItems();
+        List<String> res = new ArrayList<>();
+        for (TableRowItem programRow : programRows) {
+            res.add(programRow.getDataByHeader("Name"));
+        }
+        return res;
     }
 
     @Override
@@ -254,12 +273,28 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public ProgramSteps removeProgram(Client client, String programName) {
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.programsMenuItem.click();
+        programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+        programsPage.programTable.searchFor(programName);
+        programsPage.programTable.removeFirstItemButton().click();
+        programsPage.confirmationPopup.waitForDisplayed();
+        programsPage.confirmationPopup.okButton.click();
+        programsPage.confirmationPopup.waitForDisappear();
+        programsPage.statusMessage.waitForDisplayed();
+        return this;
+    }
+
+    @Override
     public ProgramSteps addNewPatient(Patient patient, Client client, String programName) {
         if (!addPatientsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.programsMenuItem.click();
             dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
             programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
             programsPage.programTable.editFirstItemButton().click();
         }
         programSettingsPage.sideBarMenu.openItem("Patients");
@@ -345,7 +380,7 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public List<String> getEndpointsOnProgramLevel() {
+    public List<String> getEndpointsOnProgramLevel(String programName) {
         dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.programTable.editFirstItemButton().click();
         programSettingsPage.programEndpointDropdown.click();
@@ -353,11 +388,27 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public List<String> getEndpointsOnPatientLevel() {
-        waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-        programsPage.programTable.editFirstItemButton().click();
-        addPatientsPage.endpointDropdown.click();
-        return addPatientsPage.getEndpoints();
+    public List<String> getEndpointsOnPatientLevel(Client client, String programName, Patient patient) {
+        if (!programsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
+            TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
+            if (programRow == null) {
+                throw new RuntimeException("Program was not found by name '" + programName + "'!");
+            }
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+            programsPage.programTable.editFirstItemButton().click();
+        }
+        programsPatientsPage.sideBarMenu.openItem("Patients");
+        //TODO: to confirm that it is expected that we cannot search by First + last name
+        ProgramPatientsTab programPatientsTab = programsPatientsPage.goToPatientsTab();
+        programPatientsTab.programPatientsTable.searchFor(patient.getFirstName());
+        waitFor(() -> programPatientsTab.programPatientsTable.editFirstItemButton().isDisplayed());
+        programPatientsTab.programPatientsTable.editFirstItemButton().click();
+        return patientProfilePage.endpointDropdown.getAvailableOptions();
     }
 
     @Override
@@ -470,5 +521,36 @@ public class ProdProgramSteps implements ProgramSteps {
         programAutoRespondersPage.statusMessage.waitForDisplayed();
         programAutoRespondersPage.statusMessage.waitForDisappear();
         return this;
+    }
+
+    @Override
+    public List<Patient> getPatients(Client client, String programName) {
+        List<Patient> entitiesList = new ArrayList<>();
+
+        goToProgramSettings(client.getName(), programName);
+        if (!programsPatientsPage.isOpened()) {
+            programsPage.sideBarMenu.openItem("Patients");
+        }
+        List<TableRowItem> rows = programsPatientsPage.goToPatientsTab().programPatientsTable.getItems();
+        if (CollectionUtils.hasElements(rows)) {
+            for (TableRowItem rowItem : rows) {
+                Patient patient = new Patient();
+                // programsPatientsPage.goToPatientsTab().programPatientsTable.editItemButton(i).click();
+                patient.setCellPhone(rowItem.getDataByHeader("Mobile"));
+                patient.setTimezone(rowItem.getDataByHeader("Time Zone"));
+                //TODO: implement status field
+                //patient.setStatus(addPatientsPage.getStatusText());
+                //TODO: do we really need email status here?
+                //patient.setEmailStatus(addPatientsPage.getEmailStatusText());
+                String[] name = rowItem.getDataByHeader("Name").split(" ");
+                patient.setFirstName(name[0]);
+                patient.setLastName(name[1]);
+                //TODO: do we really need email?
+                //patient.setEmail(addPatientsPage.getEmailText());
+                entitiesList.add(patient);
+                //programsPage.sideBarMenu.program().click();
+            }
+        }
+        return entitiesList;
     }
 }

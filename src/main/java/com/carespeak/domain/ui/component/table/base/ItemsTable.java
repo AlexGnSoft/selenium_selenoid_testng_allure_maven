@@ -1,12 +1,13 @@
 package com.carespeak.domain.ui.component.table.base;
 
 import com.carespeak.core.driver.element.ClickableElement;
+import com.carespeak.core.helper.ICanWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class ItemsTable {
+public class ItemsTable implements ICanWait {
 
     protected TableSearch tableSearch;
     protected TableBody tableBody;
@@ -31,6 +32,13 @@ public class ItemsTable {
         return tableBody.findItemBy(columnName, tableValue);
     }
 
+    public void searchFor(String tableValue) {
+        List<TableRowItem> itemsBefore = tableBody.getItems();
+        tableSearch.search(tableValue);
+        //TODO: fix minor logging issue here with no rows found
+        waitFor(() -> tableBody.getItems().size() != itemsBefore.size(), 10);
+    }
+
     public TableRowItem getFirstRowItem() {
         return tableBody.getFirstRowItem();
     }
@@ -49,6 +57,10 @@ public class ItemsTable {
 
     protected List<WebElement> getRowsWebElements() {
         return tableBody.getRowsWebElements();
+    }
+
+    public List<TableRowItem> getItems() {
+        return tableBody.getItems();
     }
 
 

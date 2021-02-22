@@ -6,6 +6,7 @@ import com.carespeak.domain.ui.component.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,6 +124,27 @@ class TableBody extends AbstractComponent {
         }
         Logger.error("First row item wasn't found");
         return null;
+    }
+
+    public List<TableRowItem> getItems() {
+        List<TableRowItem> res = new ArrayList<>();
+        Logger.info("Receiving row items...");
+        try {
+            waitFor(() -> driver.findElement(tableLocator) != null);
+            table = driver.findElement(tableLocator);
+            Map<String, Integer> headersMap = getHeadersMap();
+            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
+            List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
+            for (int i = 1; i < rows.size(); i++) {
+                res.add(createTableRowItem(rows.get(i), headersMap));
+            }
+            return res;
+        } catch (Throwable t) {
+            //Error during table analyzing, do nothing here
+            Logger.debug("Failed to parse table", t);
+        }
+        Logger.info("No items found in table");
+        return res;
     }
 
     //Returns table from TableRowItem

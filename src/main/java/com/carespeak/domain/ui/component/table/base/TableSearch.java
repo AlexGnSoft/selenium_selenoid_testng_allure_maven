@@ -12,6 +12,7 @@ class TableSearch extends AbstractComponent {
     private Input searchInput;
 
     public void search(String text) {
+        searchInput.clear();
         searchInput.sendKeys(text);
     }
 

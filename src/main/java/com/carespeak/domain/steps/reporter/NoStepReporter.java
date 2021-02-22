@@ -8,12 +8,12 @@ import java.lang.reflect.Method;
 public class NoStepReporter implements IStepsReporter {
 
     @Override
-    public void onStepStart(Method stepMethod) {
+    public void onStepStart(Method stepMethod, Object[] args) {
 
     }
 
     @Override
-    public void onStepFinished(Method stepMethod) {
+    public void onStepFinished(Method stepMethod, Throwable t) {
 
     }
 

@@ -3,7 +3,6 @@ package com.carespeak.domain.steps.imp;
 import com.carespeak.domain.entities.campaign.CampaignAccess;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.steps.CampaignSteps;
-import com.carespeak.domain.ui.component.campaign.AlertTimeComponent;
 import com.carespeak.domain.ui.component.campaign.AlertTimeContainer;
 import com.carespeak.domain.ui.page.campaigns.CampaignsPage;
 import com.carespeak.domain.ui.page.campaigns.general.CampaignsGeneralPage;
@@ -55,7 +54,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         timeTablePage.sendImmediatelyRadio.click();
         timeTablePage.selectDailyButton.click();
         List<AlertTimeContainer> alertContainers = timeTablePage.alertTimeComponent.findAlertTimeContainers();
-        if (!CollectionUtils.hasElements(alertContainers)){
+        if (!CollectionUtils.hasElements(alertContainers)) {
             throw new AssertionError("Alert time containers were not found!");
         }
         AlertTimeContainer firstAlert = alertContainers.get(0);

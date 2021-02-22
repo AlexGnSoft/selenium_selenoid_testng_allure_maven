@@ -59,6 +59,7 @@ public class Dropdown extends ClickableElement {
 
     private void selectInSelectElement(String value) {
         LOG.log(LOG_NAME, Level.INFO, "Select '" + value + "' from " + name, null);
+        scrollIntoView();
         innerElement.click();
         WebElement option = innerElement.findElement(By.xpath(String.format(SELECT_OPTION_XPATH, value)));
         highlight(option);
@@ -67,6 +68,7 @@ public class Dropdown extends ClickableElement {
 
     private void selectInDropdownElement(ClickableElement expandElement, String value) {
         LOG.log(LOG_NAME, Level.INFO, "Select '" + value + "' from " + name, null);
+        expandElement.scrollIntoView();
         expandElement.innerElement.click();
         waitFor(() -> driver.findElement(By.xpath(DROPDOWN_UL_XPATH)).isDisplayed(), 5, false);
         WebElement option = innerElement.findElement(By.xpath(String.format(DROPDOWN_VALUE_XPATH, value)));
@@ -77,6 +79,7 @@ public class Dropdown extends ClickableElement {
     public List<String> getAvailableOptions() {
         LOG.log(LOG_NAME, Level.INFO, "Retrieve all available options from " + name, null);
         highlight(innerElement);
+        scrollIntoView();
         innerElement.click();
         List<WebElement> options;
         if ("select".equals(getTagName())) {

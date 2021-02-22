@@ -1,12 +1,14 @@
-package base;
+package prod.base;
 
 import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.config.PropertyFileReader;
+import com.carespeak.core.context.Storage;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.core.listener.ReportListener;
+import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -20,6 +22,7 @@ public abstract class BaseTest implements IDataGenerator {
 
     protected static Config config;
     protected SiteStepsHolder site;
+    protected static Storage<Patient> patients;
 
     protected String user;
     protected String password;
@@ -29,6 +32,7 @@ public abstract class BaseTest implements IDataGenerator {
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
         config = ConfigProvider.provide();
+        //patients = new Storage<>();
     }
 
     public BaseTest() {
@@ -47,7 +51,7 @@ public abstract class BaseTest implements IDataGenerator {
         }
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void afterTest() {
         RemoteWebDriver driver = DriverFactory.getDriver();
         if (driver != null) {

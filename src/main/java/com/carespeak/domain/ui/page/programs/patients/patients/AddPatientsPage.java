@@ -30,6 +30,10 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @FindBy(id = "formUser.status")
     public Dropdown statusDropdown;
 
+    @ElementName("Email status dropdown")
+    @FindBy(id = "emailStatus")
+    public Dropdown emailStatusDropdown;
+
     @ElementName("First name input")
     @FindBy(id = "formUser.firstName")
     public Input firstNameInput;
@@ -110,4 +114,50 @@ public class AddPatientsPage extends ProgramPatientsTab {
         Logger.info("Complete list of endpoints: " + result);
         return result;
     }
+/*
+    public String getCellPhoneText() {
+        String cellPhoneText = cellPhoneInput.getAttribute("value");
+        Logger.info("Get cell phone text - " + cellPhoneText);
+        return cellPhoneText;
+    }
+
+    public String getTimeZoneText() {
+        Select selected = new Select(timezoneDropdown);
+        String timeZoneText = selected.getFirstSelectedOption().getText();
+        Logger.info("Get time zone text - " + timeZoneText);
+        return timeZoneText;
+    }
+
+    public String getStatusText() {
+        Select selected = new Select(statusDropdown);
+        String status = selected.getFirstSelectedOption().getText();
+        Logger.info("Get status text - " + status);
+        return status;
+    }
+
+    public String getEmailStatusText() {
+        Select selected = new Select(emailStatusDropdown);
+        String emailStatus = selected.getFirstSelectedOption().getText();
+        Logger.info("Get email status text - " + emailStatus);
+        return emailStatus;
+    }
+
+    public String getFirstNameText() {
+        String firstNameText = firstNameInput.getAttribute("value");
+        Logger.info("Get first name text - " + firstNameText);
+        return firstNameText;
+    }
+
+    public String getLastNameText() {
+        String lastNameText = lastNameInput.getAttribute("value");
+        Logger.info("Get last name text - " + lastNameText);
+        return lastNameText;
+    }
+
+    public String getEmailText() {
+        String emailText = emailInput.getAttribute("value");
+        Logger.info("Get email text - " + emailText);
+        return emailText;
+    }*/
+
 }

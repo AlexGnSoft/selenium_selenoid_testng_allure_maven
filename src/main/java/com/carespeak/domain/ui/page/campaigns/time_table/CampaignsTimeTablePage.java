@@ -52,7 +52,7 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
 
     public AlertTimeComponent alertTimeComponent;
 
-    public CampaignsTimeTablePage(){
+    public CampaignsTimeTablePage() {
         alertTimeComponent = new AlertTimeComponent();
     }
 
