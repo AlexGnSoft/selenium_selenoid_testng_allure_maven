@@ -43,6 +43,14 @@ public class DriverFactory {
     }
 
     /**
+     * Deregister driver from DriverFactory.
+     * Makes sense to remove
+     */
+    public static synchronized void deregisterDriver() {
+        drivers.remove();
+    }
+
+    /**
      * Setup webdriver binary and creates webdriver instance for provided driver name.
      *
      * @param driverName    - name of required web driver.

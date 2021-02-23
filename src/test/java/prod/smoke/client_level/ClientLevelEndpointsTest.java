@@ -11,17 +11,17 @@ import java.util.List;
 
 public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
 
-    List<String> expectedEndpoints = Arrays.asList("twilioSmsSender5 [TWILIO +17542272273]");
+    private List<String> expectedEndpoints = Arrays.asList("twilioSmsSender5 [TWILIO +17542272273]");
 
     private Patient patient;
     private Client client;
     private String programName;
 
     @BeforeClass
-    public void setUp() {
-        client = getTestClientByCode("Autoresponder client");
-        programName = getTestProgramByName("ClientEndpoints program", client);
-        patient = getTestPatientByName("EnpointsPatient", client, programName);
+    public void prepareClientData() {
+        client = getTestClientByCode("ClientLevelTestEndpoints client");
+        programName = getTestProgramByName("ClientLevelTestEndpoints program", client);
+        patient = getTestPatientByName("ClientLevelTestEndpointsPatient", client, programName);
     }
 
     @Test(description = "Check client level endpoints are available on program level")

@@ -5,7 +5,6 @@ import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
-import org.testng.annotations.BeforeClass;
 import prod.base.BaseTest;
 
 import java.util.List;
@@ -15,21 +14,6 @@ import java.util.List;
  * Preparations that common for all client level tests should be implemented here.
  */
 public abstract class AbstractClientLevelTest extends BaseTest {
-
-    /**
-     * For client level test we are going to create separate client for each class
-     * to avoid concurrency issues
-     */
-    /*
-    @BeforeSuite(alwaysRun = true)
-    public void testDataPreparation() {
-        site.loginSteps().openSite().loginAs(user, password);
-    }
-*/
-    @BeforeClass(alwaysRun = true)
-    public void testDataPreparation() {
-        site.loginSteps().openSite().loginAs(user, password);
-    }
 
     protected Client getTestClientByCode(String clientCode) {
         return getTestClientByCode(clientCode, "twilioSmsSender5 [TWILIO +17542272273]");

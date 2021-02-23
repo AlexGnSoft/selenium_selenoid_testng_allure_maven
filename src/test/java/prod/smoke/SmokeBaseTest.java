@@ -8,7 +8,6 @@ import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 import prod.base.BaseTest;
 
-import java.io.File;
 import java.util.List;
 
 public abstract class SmokeBaseTest extends BaseTest {
@@ -52,16 +51,12 @@ public abstract class SmokeBaseTest extends BaseTest {
             site.programSteps().addNewPatient(patient, client, programName);
             patientList.add(patient);
         }
-        patients.setEntities(patientList);
+        //patients.setEntities(patientList);
         site.loginSteps().openSite().loginAs(user, password);
     }
 
     protected String defaultProgram() {
         return "Default";
-    }
-
-    protected void createProgram() {
-        programName = createProgram(client);
     }
 
     protected String createProgram(Client client) {
@@ -94,14 +89,5 @@ public abstract class SmokeBaseTest extends BaseTest {
                     .getClientByCode(client.getCode());
             Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
         }
-    }
-
-    protected String getResourcesPath() {
-        String defaultPath = System.getProperty("user.dir") +
-                File.separator + "src" +
-                File.separator + "main" +
-                File.separator + "resources" +
-                File.separator + "data";
-        return System.getProperty("resources.path", defaultPath);
     }
 }

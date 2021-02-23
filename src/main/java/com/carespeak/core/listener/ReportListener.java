@@ -39,6 +39,7 @@ public class ReportListener implements ITestListener, IDataGenerator {
         String failureMessage = "Test '" + description(result) + "' failed! See screenshot attached.";
         String path = String.format("./screenshots/%s_%s.png", methodName, date);
 
+        Logger.debug("Taking screenshot for '" + description(result) + "'");
         File screenshot = getScreenshot(DriverFactory.getDriver(), path);
         ReportPortalMessage msg = screenshotMessage(screenshot, failureMessage);
         if (msg != null) {
@@ -90,7 +91,7 @@ public class ReportListener implements ITestListener, IDataGenerator {
             FileUtils.copyFile(srcFile, new File(screenshotFilepath));
             return srcFile;
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.error("Failed to take screenshot " + screenshotFilepath, ex);
             return null;
         }
     }

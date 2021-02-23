@@ -41,6 +41,13 @@
             </exclusions>
         </dependency>
 
+        <!--Library that works with byte code, used for changing test execution order-->
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
