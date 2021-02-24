@@ -5,8 +5,8 @@ import com.epam.reportportal.listeners.ItemStatus;
 import com.epam.reportportal.service.Launch;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
 
-//FIXME: Pretty step reporter is not working properly now because of nested steps, so use NoStepReporter for simple logging instead
 public class ReportPortalStepReporter implements IStepsReporter {
 
     @Override
@@ -23,6 +23,18 @@ public class ReportPortalStepReporter implements IStepsReporter {
             Launch.currentLaunch().getStepReporter().sendStep(ItemStatus.FAILED, prettyName);
         } else {
             Launch.currentLaunch().getStepReporter().finishPreviousStep();
+        }
+    }
+
+    @Override
+    public <T> T reportStep(String stepMessage, Callable<T> c) {
+        try {
+            T res = c.call();
+            Launch.currentLaunch().getStepReporter().sendStep(stepMessage);
+            return res;
+        } catch (Throwable t) {
+            Launch.currentLaunch().getStepReporter().sendStep(ItemStatus.FAILED, stepMessage);
+            throw new RuntimeException(t);
         }
     }
 

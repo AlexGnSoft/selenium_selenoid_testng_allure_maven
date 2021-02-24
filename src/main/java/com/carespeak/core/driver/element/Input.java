@@ -1,5 +1,7 @@
 package com.carespeak.core.driver.element;
 
+import com.carespeak.core.driver.reporter.ElementActionsReporter;
+import io.qameta.allure.Allure;
 import org.apache.log4j.Level;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -35,6 +37,7 @@ public class Input extends ClickableElement {
             innerElement.clear();
             sendKeys(text);
         } else {
+            Allure.step("Provided text is null, nothing to enter to " + name);
             LOG.log(LOG_NAME, Level.INFO, "Provided text is null, nothing to enter to " + name, null);
         }
     }
@@ -48,7 +51,10 @@ public class Input extends ClickableElement {
             innerElement.clear();
             sendKeys(String.valueOf(text));
         } else {
-            LOG.log(LOG_NAME, Level.INFO, "Provided text is null, nothing to enter to " + name, null);
+            ElementActionsReporter.report("Provided text is null, nothing to enter to " + name, () -> {
+                LOG.log(LOG_NAME, Level.INFO, "Provided text is null, nothing to enter to " + name, null);
+                return null;
+            });
         }
     }
 }

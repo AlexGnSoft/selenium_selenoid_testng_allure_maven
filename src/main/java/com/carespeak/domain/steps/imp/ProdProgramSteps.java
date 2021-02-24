@@ -535,20 +535,12 @@ public class ProdProgramSteps implements ProgramSteps {
         if (CollectionUtils.hasElements(rows)) {
             for (TableRowItem rowItem : rows) {
                 Patient patient = new Patient();
-                // programsPatientsPage.goToPatientsTab().programPatientsTable.editItemButton(i).click();
                 patient.setCellPhone(rowItem.getDataByHeader("Mobile"));
                 patient.setTimezone(rowItem.getDataByHeader("Time Zone"));
-                //TODO: implement status field
-                //patient.setStatus(addPatientsPage.getStatusText());
-                //TODO: do we really need email status here?
-                //patient.setEmailStatus(addPatientsPage.getEmailStatusText());
                 String[] name = rowItem.getDataByHeader("Name").split(" ");
                 patient.setFirstName(name[0]);
                 patient.setLastName(name[1]);
-                //TODO: do we really need email?
-                //patient.setEmail(addPatientsPage.getEmailText());
                 entitiesList.add(patient);
-                //programsPage.sideBarMenu.program().click();
             }
         }
         return entitiesList;

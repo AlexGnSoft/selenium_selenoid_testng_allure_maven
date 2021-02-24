@@ -5,12 +5,15 @@ import com.carespeak.domain.steps.BaseSteps;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.concurrent.Callable;
 
 public interface IStepsReporter {
 
     void onStepStart(Method stepMethod, Object[] args);
 
     void onStepFinished(Method stepMethod, Throwable t);
+
+    <T> T reportStep(String stepMessage, Callable<T> c);
 
     @SuppressWarnings("unchecked")
     default <T> T createStepProxy(Class clazz) {

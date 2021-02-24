@@ -1,5 +1,6 @@
 package prod.smoke.client_level;
 
+import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.Module;
@@ -45,20 +46,23 @@ public abstract class AbstractClientLevelTest extends BaseTest {
 
     protected Patient getTestPatientByName(String name, Client client, String programName) {
         List<Patient> patientList = site.programSteps().getPatients(client, programName);
-        if (patientList.size() == 0) {
-            Patient patient = new Patient();
-            patient.setFirstName(name);
-            patient.setLastName("Automator");
-            patient.setSex(Sex.MALE);
-            int mobileNumberRandomized = getRandomNumber(6);
-            patient.setCellPhone("+15554" + mobileNumberRandomized);
-            patient.setTimezone("Eastern Time (New York)");
-            site.programSteps().addNewPatient(patient, client, programName);
-            return patient;
-        } else {
-            return patientList.stream()
-                    .filter(patient -> patient.getFirstName().equalsIgnoreCase(name))
-                    .findFirst().get();
+        if (patientList.size() != 0) {
+            try {
+                return patientList.stream()
+                        .filter(patient -> patient.getFirstName().equalsIgnoreCase(name))
+                        .findFirst().get();
+            } catch (Exception ex) {
+                Logger.info("Cannot find patient with name '" + name + "'. Message: " + ex.getMessage());
+            }
         }
+        Patient patient = new Patient();
+        patient.setFirstName(name);
+        patient.setLastName("Automator");
+        patient.setSex(Sex.MALE);
+        int mobileNumberRandomized = getRandomNumber(6);
+        patient.setCellPhone("+15554" + mobileNumberRandomized);
+        patient.setTimezone("Eastern Time (New York)");
+        site.programSteps().addNewPatient(patient, client, programName);
+        return patient;
     }
 }
