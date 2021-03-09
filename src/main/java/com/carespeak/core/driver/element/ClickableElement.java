@@ -6,7 +6,6 @@ import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import com.carespeak.core.helper.ICanHighlightElements;
 import com.carespeak.core.helper.ICanWait;
-import io.qameta.allure.Allure;
 import org.apache.log4j.Level;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -17,7 +16,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -107,7 +105,7 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
             }
             logMessage = "Typing text '" + builder.toString() + "' to " + name;
         }
-        ElementActionsReporter.report(logMessage, ()-> {
+        ElementActionsReporter.report(logMessage, () -> {
             if (!isVisible()) {
                 scrollIntoView();
             }

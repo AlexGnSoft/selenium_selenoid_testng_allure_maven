@@ -5,7 +5,6 @@ import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
-import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.core.listener.ExecutionTestOrderInterceptor;
@@ -32,7 +31,7 @@ public abstract class BaseTest implements IDataGenerator {
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
         config = ConfigProvider.provide();
-        ElementActionsReporter.init(new com.carespeak.domain.ui.reporting.ElementActionsReporter());
+        ElementActionsReporter.init(new com.carespeak.domain.steps.reporter.ElementActionsReporter());
     }
 
     public BaseTest() {

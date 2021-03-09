@@ -3,10 +3,10 @@
 <!-- -Dsurefire.suiteXmlFiles=src/test/resources/smoke-test.xml -->
 <suite name="Smoke test suite" parallel="classes" thread-count="5">
     <test name="Smoke tests">
-    <!--
-        In suite should be only one <test> tag, otherwise
-        TesNG won't perform multi-threading properly
-    -->
+        <!--
+            In suite should be only one <test> tag, otherwise
+            TesNG won't perform multi-threading properly
+        -->
         <classes>
             <!--Client level tests-->
             <class name="prod.smoke.client_level.ClientManagementTest"/>

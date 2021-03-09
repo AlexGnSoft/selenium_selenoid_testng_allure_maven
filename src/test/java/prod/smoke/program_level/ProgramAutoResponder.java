@@ -7,8 +7,11 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class ProgramAutoResponder extends AbstractProgramLevelTest {
 
@@ -56,5 +59,12 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
                 .getLastPatientMessageFromLogs(patient.getFirstName());
 
         Assert.assertEquals(actualSms.getMessage(), AUTO_RESPONDER_MESSAGE, "Received message is not the same as expected!");
+    }
+
+    @AfterClass
+    public void removeProgram() {
+        site.programSteps().removeProgram(client, programName);
+        List<String> programs = site.programSteps().getProgramsForClient(client);
+        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
     }
 }

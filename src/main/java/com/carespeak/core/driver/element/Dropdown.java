@@ -1,7 +1,6 @@
 package com.carespeak.core.driver.element;
 
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
-import io.qameta.allure.Allure;
 import org.apache.log4j.Level;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

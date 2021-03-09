@@ -4,7 +4,6 @@ import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.driver.decorator.CustomDecorator;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.ICanWait;
-import com.carespeak.core.logger.Logger;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;

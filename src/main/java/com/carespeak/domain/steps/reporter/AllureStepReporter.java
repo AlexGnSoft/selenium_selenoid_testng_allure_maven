@@ -2,12 +2,16 @@ package com.carespeak.domain.steps.reporter;
 
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.BaseSteps;
-import io.qameta.allure.Allure;
+import io.qameta.allure.model.Status;
+import io.qameta.allure.model.StepResult;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import static io.qameta.allure.Allure.getLifecycle;
 
 public class AllureStepReporter implements IStepsReporter {
 
@@ -21,9 +25,25 @@ public class AllureStepReporter implements IStepsReporter {
 
     }
 
-    @Override
-    public <T> T reportStep(String stepMessage, Callable<T> c) {
-        return Allure.step(stepMessage, c::call);
+    private <T> T reportStep(String stepMessage, Callable<T> c) {
+        final String uuid = UUID.randomUUID().toString();
+        final StepResult result = new StepResult()
+                .withName(stepMessage);
+        getLifecycle().startStep(uuid, result);
+        try {
+            T res = c.call();
+            getLifecycle().updateStep(uuid, s -> s.withStatus(Status.PASSED));
+            return res;
+        } catch (Throwable t) {
+            if (t instanceof Error || t.getCause() instanceof Error) {
+                getLifecycle().updateStep(uuid, s -> s.withStatus(Status.FAILED));
+            } else {
+                getLifecycle().updateStep(uuid, s -> s.withStatus(Status.BROKEN));
+            }
+            throw new RuntimeException(t.getCause());
+        } finally {
+            getLifecycle().stopStep(uuid);
+        }
     }
 
     @SuppressWarnings("unchecked")

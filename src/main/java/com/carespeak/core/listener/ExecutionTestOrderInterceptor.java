@@ -16,24 +16,21 @@ import java.util.*;
  * Class is designed to create a proper test method execution order.
  * The goal is to resolve issues with execution order in multi-thread mode execution
  * (for situation when thread-count less than test class count).
- *
+ * <p>
  * By default TestNG doesn't provide any guarantee for test method execution.
  * This interceptor forces TestNG to run tests in the that the class was written.
- *
+ * <p>
  * For example:
  * <code>
  * public class SomeTestClass {
  *
- * @Test
- * public void b(){
+ * @Test public void b(){
  * //some awesome test b here
  * }
- * @Test
- * public void a(){
+ * @Test public void a(){
  * //some awesome test a here
  * }
- * @Test
- * public void c(){
+ * @Test public void c(){
  * //some awesome test c here
  * }
  * }
@@ -42,12 +39,12 @@ import java.util.*;
  * 1. Method a
  * 2. Method b
  * 3. Method c
- *
+ * <p>
  * With this class execution order will be same as order the test method written in file:
  * 1. Method b
  * 2. Method a
  * 3. Method c
- *
+ * <p>
  * Currently the execution order is based on lines in class.
  */
 public class ExecutionTestOrderInterceptor implements IMethodInterceptor {

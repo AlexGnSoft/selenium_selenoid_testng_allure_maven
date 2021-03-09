@@ -1,9 +1,7 @@
 package com.carespeak.core.listener;
 
-import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.logger.Logger;
-import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.RemoteWebDriver;
