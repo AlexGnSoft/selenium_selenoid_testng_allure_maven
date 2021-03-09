@@ -5,6 +5,7 @@ import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
+import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.core.listener.ExecutionTestOrderInterceptor;
@@ -31,20 +32,28 @@ public abstract class BaseTest implements IDataGenerator {
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
         config = ConfigProvider.provide();
-        ElementActionsReporter.init(new com.carespeak.domain.steps.reporter.ElementActionsReporter());
+        ElementActionsReporter.init(createDriverActionsReporter());
     }
 
     public BaseTest() {
-        site = new SiteStepsHolder(config, createReporter());
+        site = new SiteStepsHolder(config, createStepsReporter());
         user = config.get("data.user");
         password = config.get("data.pass");
     }
 
-    private IStepsReporter createReporter() {
-        Class reporter;
+    private IStepsReporter createStepsReporter() {
         try {
-            reporter = Class.forName(config.get("framework.reporter"));
+            Class reporter = Class.forName(config.get("framework.reporter"));
             return (IStepsReporter) reporter.newInstance();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static IElementInteractionsReporter createDriverActionsReporter() {
+        try {
+            Class reporter = Class.forName(config.get("driver.reporter"));
+            return (IElementInteractionsReporter) reporter.newInstance();
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

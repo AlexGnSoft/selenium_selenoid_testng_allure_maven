@@ -1,4 +1,4 @@
-package com.carespeak.domain.steps.reporter;
+package com.carespeak.domain.steps.reporter.action;
 
 import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
 import io.qameta.allure.model.Status;
@@ -9,7 +9,11 @@ import java.util.concurrent.Callable;
 
 import static io.qameta.allure.Allure.getLifecycle;
 
-public class ElementActionsReporter implements IElementInteractionsReporter {
+/**
+ * Provides Allure reporting functionality for UI actions,
+ * and should be used for direct UI interactions reporting (e.g. click, double click, selecting option, etc)
+ */
+public class AllureElementActionsReporter implements IElementInteractionsReporter {
 
     @Override
     public <T> T reportAction(String message, Callable<T> actionFunction) {

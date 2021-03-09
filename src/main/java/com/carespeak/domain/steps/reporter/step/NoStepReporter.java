@@ -1,4 +1,4 @@
-package com.carespeak.domain.steps.reporter;
+package com.carespeak.domain.steps.reporter.step;
 
 import com.carespeak.core.helper.IStepsReporter;
 
