@@ -8,6 +8,7 @@ import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
+import com.carespeak.core.listener.AllureReportListener;
 import com.carespeak.core.listener.ExecutionTestOrderInterceptor;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import io.qameta.allure.testng.AllureTestNg;
@@ -18,7 +19,7 @@ import org.testng.annotations.Listeners;
 
 import java.io.File;
 
-@Listeners({ExecutionTestOrderInterceptor.class, AllureTestNg.class})
+@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
 public abstract class BaseTest implements IDataGenerator {
 
     protected static Config config;
