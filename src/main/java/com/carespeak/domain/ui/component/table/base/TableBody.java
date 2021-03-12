@@ -3,8 +3,12 @@ package com.carespeak.domain.ui.component.table.base;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.component.AbstractComponent;
+import org.apache.log4j.Level;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -185,13 +189,19 @@ class TableBody extends AbstractComponent {
     }
 
     public ClickableElement editFirstRecordButton() {
-        WebElement element = driver.findElement(By.xpath("//*[contains(@class, 'cell-controls')]//a"));
+        By locator = By.xpath("//*[contains(@class, 'cell-controls')]//a");
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        WebElement element = driver.findElement(locator);
         String elementName = "Edit record button";
         return new ClickableElement(element, elementName);
     }
 
     public ClickableElement deleteFirstRecordButton() {
-        WebElement element = driver.findElement(By.xpath("//*[contains(@class, 'cell-controls')]//button"));
+        By locator = By.xpath("//*[contains(@class, 'cell-controls')]//button");
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+        WebElement element = driver.findElement(locator);
         String elementName = "Delete record button";
         return new ClickableElement(element, elementName);
     }
