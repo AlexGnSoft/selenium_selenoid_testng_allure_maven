@@ -41,7 +41,7 @@ public class AllureReportListener implements ITestListener, IDataGenerator {
         String date = getFormattedDate("dd-MM-HH_mm_ss");
         String failureMessage = "Test '" + description(result) + "' failed! See screenshot attached.";
         Logger.error(failureMessage);
-        Logger.debug("Taking screenshot for '" + description(result) + "'");
+        Logger.info("Taking screenshot for '" + description(result) + "'");
         ByteArrayInputStream is = new ByteArrayInputStream(((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES));
         Allure.addAttachment(methodName + " " + date, is);
     }
