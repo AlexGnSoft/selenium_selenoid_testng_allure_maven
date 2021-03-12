@@ -1,13 +1,18 @@
 package com.carespeak.core.listener;
 
+import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.logger.Logger;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -35,17 +40,10 @@ public class AllureReportListener implements ITestListener, IDataGenerator {
         String methodName = result.getMethod().getMethodName();
         String date = getFormattedDate("dd-MM-HH_mm_ss");
         String failureMessage = "Test '" + description(result) + "' failed! See screenshot attached.";
-        String path = String.format("./screenshots/%s_%s.png", methodName, date);
-
+        Logger.error(failureMessage);
         Logger.debug("Taking screenshot for '" + description(result) + "'");
-        //File screenshot = getScreenshot(DriverFactory.getDriver(), path);
-
-      /*  ReportPortalMessage msg = screenshotMessage(screenshot, failureMessage);
-        if (msg != null) {
-            Logger.info(msg);
-        } else {
-            Logger.info("Test '" + description(result) + "' failed!");
-        }*/
+        ByteArrayInputStream is = new ByteArrayInputStream(((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES));
+        Allure.addAttachment(methodName + " " + date, is);
     }
 
     /**
@@ -73,16 +71,5 @@ public class AllureReportListener implements ITestListener, IDataGenerator {
         }
         String res = sb.toString();
         return res.substring(0, 1).toUpperCase() + res.substring(1);
-    }
-
-    private static File getScreenshot(RemoteWebDriver driver, String screenshotFilepath) {
-        try {
-            File srcFile = driver.getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(srcFile, new File(screenshotFilepath));
-            return srcFile;
-        } catch (IOException ex) {
-            Logger.error("Failed to take screenshot " + screenshotFilepath, ex);
-            return null;
-        }
     }
 }

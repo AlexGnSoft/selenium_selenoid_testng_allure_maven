@@ -97,7 +97,7 @@ public class DriverFactory {
         }
         Map<String, Object> caps = new HashMap<>();
         caps.put("enableVNC", true);
-        caps.put("enableVideo", true);
+        caps.put("enableVideo", ConfigProvider.provide().get("driver.recordVideo"));
         capabilities.setCapability("selenoid:options", caps);
 
         try {
