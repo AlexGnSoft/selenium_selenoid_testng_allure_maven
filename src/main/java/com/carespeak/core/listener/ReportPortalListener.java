@@ -13,7 +13,7 @@ import org.testng.ITestResult;
 import java.io.File;
 import java.io.IOException;
 
-public class ReportListener implements ITestListener, IDataGenerator {
+public class ReportPortalListener implements ITestListener, IDataGenerator {
 
     /**
      * Invoked each time before a test will be invoked. The <code>ITestResult</code> is only partially

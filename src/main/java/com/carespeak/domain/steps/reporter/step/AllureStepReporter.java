@@ -1,10 +1,15 @@
 package com.carespeak.domain.steps.reporter.step;
 
+import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.BaseSteps;
+import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -40,6 +45,8 @@ public class AllureStepReporter implements IStepsReporter {
             } else {
                 getLifecycle().updateStep(uuid, s -> s.withStatus(Status.BROKEN));
             }
+            ByteArrayInputStream is = new ByteArrayInputStream(((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES));
+            Allure.addAttachment("Screenshot", is);
             throw new RuntimeException(t.getCause());
         } finally {
             getLifecycle().stopStep(uuid);
