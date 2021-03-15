@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
-    private final String filePath = getResourcesPath() + File.separator + "picture.png";
+    private final String filePath = getResourcesPath() + "picture.png";
 
     private Client client;
     private Patient patient;

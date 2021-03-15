@@ -81,7 +81,8 @@ public abstract class BaseTest implements IDataGenerator {
                 File.separator + "src" +
                 File.separator + "main" +
                 File.separator + "resources" +
-                File.separator + "data";
+                File.separator + "data" +
+                File.separator;
         return System.getProperty("resources.path", defaultPath);
     }
 
