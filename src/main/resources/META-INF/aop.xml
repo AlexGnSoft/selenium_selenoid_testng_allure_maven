@@ -1,0 +1,5 @@
+<aspectj>
+    <aspects>
+        <aspect name="com.carespeak.core.listener.AssertionsAspect"/>
+    </aspects>
+</aspectj>

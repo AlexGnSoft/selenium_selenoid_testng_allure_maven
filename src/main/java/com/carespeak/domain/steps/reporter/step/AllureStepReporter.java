@@ -36,7 +36,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     }
 
-    private <T> T reportStep(String stepMessage, Callable<T> c) {
+    public <T> T reportStep(String stepMessage, Callable<T> c) {
         final String uuid = UUID.randomUUID().toString();
         final StepResult result = new StepResult()
                 .setName(stepMessage);
@@ -65,6 +65,13 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
         } finally {
             getLifecycle().stopStep(uuid);
         }
+    }
+
+    public void reportStep(String stepMessage) {
+        final String uuid = UUID.randomUUID().toString();
+        final StepResult result = new StepResult().setName(stepMessage);
+        getLifecycle().startStep(uuid, result);
+        getLifecycle().stopStep(uuid);
     }
 
     @SuppressWarnings("unchecked")

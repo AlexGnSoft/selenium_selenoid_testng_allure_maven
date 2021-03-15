@@ -5,6 +5,7 @@ import com.epam.reportportal.listeners.ItemStatus;
 import com.epam.reportportal.service.Launch;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
 
 public class ReportPortalStepReporter implements IStepsReporter {
 
@@ -23,6 +24,25 @@ public class ReportPortalStepReporter implements IStepsReporter {
         } else {
             Launch.currentLaunch().getStepReporter().finishPreviousStep();
         }
+    }
+
+    @Override
+    public <T> T reportStep(String stepMessage, Callable<T> actionToCall) {
+        try {
+            T res = actionToCall.call();
+            Launch.currentLaunch().getStepReporter().sendStep(stepMessage);
+            Launch.currentLaunch().getStepReporter().finishPreviousStep();
+            return res;
+        } catch (Exception e) {
+            Launch.currentLaunch().getStepReporter().sendStep(ItemStatus.FAILED, stepMessage);
+            Launch.currentLaunch().getStepReporter().finishPreviousStep();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void reportStep(String stepMessage) {
+        Launch.currentLaunch().getStepReporter().sendStep(stepMessage);
+        Launch.currentLaunch().getStepReporter().finishPreviousStep();
     }
 
     private static String prettify(String s) {

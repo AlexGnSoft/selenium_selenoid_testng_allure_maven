@@ -4,6 +4,7 @@ import com.carespeak.core.helper.IStepsReporter;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
 
 public class NoStepReporter implements IStepsReporter {
 
@@ -14,6 +15,19 @@ public class NoStepReporter implements IStepsReporter {
 
     @Override
     public void onStepFinished(Method stepMethod, Throwable t) {
+
+    }
+
+    @Override
+    public <T> T reportStep(String stepMessage, Callable<T> actionToCall) {
+        try {
+            return actionToCall.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void reportStep(String stepMessage) {
 
     }
 
