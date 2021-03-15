@@ -1,21 +1,26 @@
 package com.carespeak.domain.steps.reporter.step;
 
+import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.exception.WebDriverActionFailedException;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.BaseSteps;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.Augmenter;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.net.URL;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
@@ -62,6 +67,9 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.BROKEN));
             }
             attachScreenshot("Screenshot");
+            if (Boolean.parseBoolean(ConfigProvider.provide().get("driver.recordVideo"))) {
+                attachVideo(DriverFactory.getDriver().getSessionId().toString());
+            }
             throw new RuntimeException(cause);
         } finally {
             getLifecycle().stopStep(uuid);
@@ -98,7 +106,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     @Attachment(value = "{name}", type = "image/png")
     private byte[] attachScreenshot(String name) {
-        if (ConfigProvider.provide().get("driver.hub").isEmpty()) {
+        if (StringUtils.isBlank(ConfigProvider.provide().get("driver.hub.baseUrl"))) {
             return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
         } else {
             return ((TakesScreenshot) new Augmenter().augment(DriverFactory.getDriver())).getScreenshotAs(OutputType.BYTES);
@@ -126,5 +134,40 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     private static String capitalize(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    private static void attachVideo(String sessionId) {
+        try {
+            Config config = ConfigProvider.provide();
+            String hubUrl = config.get("driver.hub.baseUrl") + ":" + config.get("driver.hub.uiPort");
+            URL videoUrl = new URL( hubUrl + "/video/" + sessionId + ".mp4");
+            InputStream is = getSelenoidVideo(videoUrl);
+            Allure.addAttachment("Video", "video/mp4", is, "mp4");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static InputStream getSelenoidVideo(URL url) {
+        int lastSize = 0;
+        int exit = 2;
+        for (int i = 0; i < 20; i++) {
+            try {
+                int size = Integer.parseInt(url.openConnection().getHeaderField("Content-Length"));
+                if (size > lastSize) {
+                    lastSize = size;
+                    Thread.sleep(1500);
+                } else if (size == lastSize) {
+                    exit--;
+                    Thread.sleep(1000);
+                }
+                if (exit < 0) {
+                    return url.openStream();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

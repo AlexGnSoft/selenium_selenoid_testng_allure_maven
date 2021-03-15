@@ -1,5 +1,6 @@
 package com.carespeak.core.driver.factory;
 
+import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -28,12 +29,15 @@ public class DriverFactory {
      */
     public static synchronized RemoteWebDriver getDriver() {
         if (drivers.get() == null) {
-            String hubUrl = ConfigProvider.provide().get("driver.hub");
-            String driverName = ConfigProvider.provide().get("driver.name");
-            String driverVersion = ConfigProvider.provide().get("driver.version");
+            Config config = ConfigProvider.provide();
+            String hubUrl = config.get("driver.hub.baseUrl");
+            ;
+            String driverName = config.get("driver.name");
+            String driverVersion = config.get("driver.version");
             RemoteWebDriver driver;
             if (hubUrl != null && !hubUrl.isEmpty()) {
-                driver = createRemoteWebDriver(driverName, hubUrl + "/wd/hub", driverVersion);
+                hubUrl = hubUrl + ":" + config.get("driver.hub.apiPort") + "/wd/hub";
+                driver = createRemoteWebDriver(driverName, hubUrl, driverVersion);
             } else {
                 driver = createLocalWebDriver(driverName, driverVersion);
             }

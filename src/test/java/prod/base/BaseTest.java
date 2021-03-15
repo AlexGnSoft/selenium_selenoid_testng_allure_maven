@@ -12,6 +12,7 @@ import com.carespeak.core.listener.AllureReportListener;
 import com.carespeak.core.listener.ExecutionTestOrderInterceptor;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import io.qameta.allure.testng.AllureTestNg;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -40,6 +41,7 @@ public abstract class BaseTest implements IDataGenerator {
         site = new SiteStepsHolder(config, createStepsReporter());
         user = config.get("data.user");
         password = config.get("data.pass");
+        checkConfigurations();
     }
 
     private IStepsReporter createStepsReporter() {
@@ -81,5 +83,17 @@ public abstract class BaseTest implements IDataGenerator {
                 File.separator + "resources" +
                 File.separator + "data";
         return System.getProperty("resources.path", defaultPath);
+    }
+
+    private void checkConfigurations() {
+        if (!config.get("driver.hub.baseUrl").isEmpty()) {
+            if (StringUtils.isBlank(config.get("driver.hub.apiPort")) || StringUtils.isBlank(config.get("driver.hub.uiPort"))) {
+                throw new IllegalArgumentException("You should specify:\n"+
+                        "driver.hub.baseUrl" + "(http://myWebDriverHubAddress)\n" +
+                        "driver.hub.apiPort" +"(some port for instance 4444)\n" +
+                        "driver.hub.uiPort" + "(some port for instance 8081)\n" +
+                        "if you want to execute tests on web driver hub,\notherwise leave this properties empty for local execution");
+            }
+        }
     }
 }
