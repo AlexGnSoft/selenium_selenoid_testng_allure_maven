@@ -10,11 +10,12 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.util.List;
 
 public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
-    private final String filePath = getResourcesPath() + "\\picture.png";
+    private final String filePath = getResourcesPath() + File.separator + "picture.png";
 
     private Client client;
     private Patient patient;
