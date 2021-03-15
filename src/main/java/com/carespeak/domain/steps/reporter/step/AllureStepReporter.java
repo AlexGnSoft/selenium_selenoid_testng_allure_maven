@@ -9,6 +9,7 @@ import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.remote.Augmenter;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -89,7 +90,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     @Attachment(value = "{name}", type = "image/png")
     private byte[] attachScreenshot(String name) {
-        return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot)new Augmenter().augment(DriverFactory.getDriver())).getScreenshotAs(OutputType.BYTES);
     }
 
     private static String prettify(String s) {
