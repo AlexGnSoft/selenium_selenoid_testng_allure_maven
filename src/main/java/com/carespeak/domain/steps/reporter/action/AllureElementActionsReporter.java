@@ -1,17 +1,9 @@
 package com.carespeak.domain.steps.reporter.action;
 
-import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
-import com.carespeak.core.logger.Logger;
-import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriverException;
-import org.testng.ITestResult;
 
-import java.io.ByteArrayInputStream;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
@@ -27,7 +19,7 @@ public class AllureElementActionsReporter implements IElementInteractionsReporte
     public <T> T reportAction(String message, Callable<T> actionFunction) {
         final String uuid = UUID.randomUUID().toString();
         final StepResult result = new StepResult()
-                .withName(message);
+                .setName(message);
         getLifecycle().startStep(uuid, result);
         try {
             T res = actionFunction.call();

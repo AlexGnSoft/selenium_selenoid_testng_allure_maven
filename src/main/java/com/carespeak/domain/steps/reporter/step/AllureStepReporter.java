@@ -34,7 +34,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
     private <T> T reportStep(String stepMessage, Callable<T> c) {
         final String uuid = UUID.randomUUID().toString();
         final StepResult result = new StepResult()
-                .withName(stepMessage);
+                .setName(stepMessage);
         getLifecycle().startStep(uuid, result);
         try {
             T res = c.call();
@@ -90,7 +90,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     @Attachment(value = "{name}", type = "image/png")
     private byte[] attachScreenshot(String name) {
-        return ((TakesScreenshot)new Augmenter().augment(DriverFactory.getDriver())).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) new Augmenter().augment(DriverFactory.getDriver())).getScreenshotAs(OutputType.BYTES);
     }
 
     private static String prettify(String s) {
