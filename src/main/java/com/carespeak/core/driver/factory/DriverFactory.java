@@ -28,12 +28,12 @@ public class DriverFactory {
      */
     public static synchronized RemoteWebDriver getDriver() {
         if (drivers.get() == null) {
-            String hubUrl = ConfigProvider.provide().get("driver.hub") + "/wd/hub";
+            String hubUrl = ConfigProvider.provide().get("driver.hub");
             String driverName = ConfigProvider.provide().get("driver.name");
             String driverVersion = ConfigProvider.provide().get("driver.version");
             RemoteWebDriver driver;
             if (hubUrl != null && !hubUrl.isEmpty()) {
-                driver = createRemoteWebDriver(driverName, hubUrl, driverVersion);
+                driver = createRemoteWebDriver(driverName, hubUrl + "/wd/hub", driverVersion);
             } else {
                 driver = createLocalWebDriver(driverName, driverVersion);
             }

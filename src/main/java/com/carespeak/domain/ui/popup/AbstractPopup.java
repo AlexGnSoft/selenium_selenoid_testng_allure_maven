@@ -27,14 +27,14 @@ public abstract class AbstractPopup implements ICanWait {
 
     public void waitForDisplayed() {
         String popupName = getPopupName();
-        Logger.info("Wait for " + popupName + " to be displayed...");
+        Logger.info("Wait for " + popupName + " popup to be displayed...");
         boolean isDisplayed = waitForElementAppear(getTitleElement());
         Logger.info(popupName + " is displayed? - " + isDisplayed);
     }
 
     public void waitForDisappear() {
         String popupName = getPopupName();
-        Logger.info("Wait for " + popupName + " to disappear...");
+        Logger.info("Wait for " + popupName + " popup to disappear...");
         boolean isDisappeared = waitForElementDisappear(getTitleElement());
         Logger.info("Did " + popupName + " disappear? - " + isDisappeared);
     }

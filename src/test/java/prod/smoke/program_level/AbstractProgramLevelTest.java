@@ -2,6 +2,7 @@ package prod.smoke.program_level;
 
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.program.ProgramAccess;
 import prod.base.BaseTest;
 
 /**
@@ -26,5 +27,15 @@ public abstract class AbstractProgramLevelTest extends BaseTest {
         newClient.setEndpoint(endpoint);
         site.adminToolsSteps().addNewClient(newClient, Module.CHECK_ALL);
         return newClient;
+    }
+
+    public String getTestProgramByName(String programName, Client client) {
+        try {
+            site.programSteps().goToProgramSettings(client.getName(), programName);
+        } catch (Throwable t) {
+            //TODO: implement without try catch (to avoid unnecessary memory usage)
+            site.programSteps().addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC);
+        }
+        return programName;
     }
 }

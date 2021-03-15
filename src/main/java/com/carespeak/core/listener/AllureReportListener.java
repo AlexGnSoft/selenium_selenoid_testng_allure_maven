@@ -39,7 +39,7 @@ public class AllureReportListener implements ITestListener, IDataGenerator {
     public void onTestFailure(ITestResult result) {
         String failureMessage = "Test '" + description(result) + "' failed! See screenshot attached.";
         Logger.error(failureMessage);
-        if (ConfigProvider.provide().get("driver.recordVideo")) {
+        if (Boolean.parseBoolean(ConfigProvider.provide().get("driver.recordVideo"))) {
             final String uuid = UUID.randomUUID().toString();
             final StepResult res = new StepResult()
                     .setName("Video for current selenium session:" + result.getMethod());

@@ -132,7 +132,6 @@ class TableBody extends AbstractComponent {
 
     public List<TableRowItem> getItems() {
         List<TableRowItem> res = new ArrayList<>();
-        Logger.info("Receiving row items...");
         try {
             waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);

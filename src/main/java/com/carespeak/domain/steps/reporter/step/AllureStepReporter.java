@@ -1,5 +1,6 @@
 package com.carespeak.domain.steps.reporter.step;
 
+import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
@@ -41,19 +42,24 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
             getLifecycle().updateStep(uuid, s -> s.setStatus(Status.PASSED));
             return res;
         } catch (Throwable t) {
-            if (t instanceof Error || t.getCause() instanceof Error) {
+            //Steps will contain Element actions, mostly like failure will happen in driver action,
+            //and will be wrapped with RuntimeException, so to get rootcause we are searching rootcause recursively
+            while (true) {
+                t = t.getCause();
+                if (t == null) {
+                    break;
+                }
+                if (!(t instanceof RuntimeException)) {
+                    break;
+                }
+            }
+            if (t instanceof Error) {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.FAILED));
             } else {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.BROKEN));
             }
             attachScreenshot("Screenshot");
-            //Steps will contain Element actions, mostly like failure will happen in driver action,
-            //and will be wrapped with RuntimeException, so to get rootcause we should take second rootcause
-            if (t.getCause() != null) {
-                throw new RuntimeException(t.getCause().getCause());
-            } else {
-                throw new RuntimeException(t.getCause());
-            }
+            throw new RuntimeException(t.getMessage());
         } finally {
             getLifecycle().stopStep(uuid);
         }
@@ -89,7 +95,11 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     @Attachment(value = "{name}", type = "image/png")
     private byte[] attachScreenshot(String name) {
-        return ((TakesScreenshot) new Augmenter().augment(DriverFactory.getDriver())).getScreenshotAs(OutputType.BYTES);
+        if (ConfigProvider.provide().get("driver.hub").isEmpty()) {
+            return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
+        } else {
+            return ((TakesScreenshot) new Augmenter().augment(DriverFactory.getDriver())).getScreenshotAs(OutputType.BYTES);
+        }
     }
 
     private static String prettify(String s) {

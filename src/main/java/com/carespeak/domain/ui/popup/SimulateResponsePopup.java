@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 public class SimulateResponsePopup extends AbstractPopup {
 
     @ElementName("Popup title")
-    @FindBy(xpath = "//span[@id='ui-id-1']")
+    @FindBy(xpath = "//span[@class='ui-dialog-title']")
     public ClickableElement title;
 
     @ElementName("Response input field")
