@@ -23,13 +23,13 @@ public class AllureElementActionsReporter implements IElementInteractionsReporte
         getLifecycle().startStep(uuid, result);
         try {
             T res = actionFunction.call();
-            getLifecycle().updateStep(uuid, s -> s.withStatus(Status.PASSED));
+            getLifecycle().updateStep(uuid, s -> s.setStatus(Status.PASSED));
             return res;
         } catch (Throwable t) {
             if (t instanceof Error || t.getCause() instanceof Error) {
-                getLifecycle().updateStep(uuid, s -> s.withStatus(Status.FAILED));
+                getLifecycle().updateStep(uuid, s -> s.setStatus(Status.FAILED));
             } else {
-                getLifecycle().updateStep(uuid, s -> s.withStatus(Status.BROKEN));
+                getLifecycle().updateStep(uuid, s -> s.setStatus(Status.BROKEN));
             }
             throw new RuntimeException(t);
         } finally {

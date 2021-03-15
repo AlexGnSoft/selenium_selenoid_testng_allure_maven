@@ -60,7 +60,6 @@ public class ReportPortalStepReporter implements IStepsReporter {
             sb.append(" ");
         }
         sb.append("]");
-        //TODO: add last arguments pretty handling
         return sb.toString();
     }
 }

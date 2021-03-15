@@ -19,7 +19,6 @@ public interface IStepsReporter {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), handler);
     }
 
-    //TODO: remove tight connection with BaseSteps class
     default InvocationHandler getHandler(Object stepsObject, Class clazz) {
         return (proxy, method, args) -> {
             try {

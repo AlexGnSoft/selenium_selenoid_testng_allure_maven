@@ -38,13 +38,13 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
         getLifecycle().startStep(uuid, result);
         try {
             T res = c.call();
-            getLifecycle().updateStep(uuid, s -> s.withStatus(Status.PASSED));
+            getLifecycle().updateStep(uuid, s -> s.setStatus(Status.PASSED));
             return res;
         } catch (Throwable t) {
             if (t instanceof Error || t.getCause() instanceof Error) {
-                getLifecycle().updateStep(uuid, s -> s.withStatus(Status.FAILED));
+                getLifecycle().updateStep(uuid, s -> s.setStatus(Status.FAILED));
             } else {
-                getLifecycle().updateStep(uuid, s -> s.withStatus(Status.BROKEN));
+                getLifecycle().updateStep(uuid, s -> s.setStatus(Status.BROKEN));
             }
             attachScreenshot("Screenshot");
             //Steps will contain Element actions, mostly like failure will happen in driver action,
@@ -66,7 +66,6 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), handler);
     }
 
-    //TODO: remove tight connection with BaseSteps class
     public InvocationHandler getHandler(Object stepsObject, Class clazz) {
         return (proxy, method, args) -> {
             String prettyName = prettify(method.getName());
