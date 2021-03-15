@@ -88,9 +88,9 @@ public abstract class BaseTest implements IDataGenerator {
     private void checkConfigurations() {
         if (!config.get("driver.hub.baseUrl").isEmpty()) {
             if (StringUtils.isBlank(config.get("driver.hub.apiPort")) || StringUtils.isBlank(config.get("driver.hub.uiPort"))) {
-                throw new IllegalArgumentException("You should specify:\n"+
+                throw new IllegalArgumentException("You should specify:\n" +
                         "driver.hub.baseUrl" + "(http://myWebDriverHubAddress)\n" +
-                        "driver.hub.apiPort" +"(some port for instance 4444)\n" +
+                        "driver.hub.apiPort" + "(some port for instance 4444)\n" +
                         "driver.hub.uiPort" + "(some port for instance 8081)\n" +
                         "if you want to execute tests on web driver hub,\notherwise leave this properties empty for local execution");
             }

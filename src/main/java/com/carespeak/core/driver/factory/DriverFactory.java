@@ -31,7 +31,6 @@ public class DriverFactory {
         if (drivers.get() == null) {
             Config config = ConfigProvider.provide();
             String hubUrl = config.get("driver.hub.baseUrl");
-            ;
             String driverName = config.get("driver.name");
             String driverVersion = config.get("driver.version");
             RemoteWebDriver driver;

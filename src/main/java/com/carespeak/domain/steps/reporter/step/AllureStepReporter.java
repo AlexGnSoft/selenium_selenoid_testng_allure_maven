@@ -16,11 +16,9 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.Augmenter;
 
-import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.net.URL;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
@@ -51,15 +49,8 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
             //Steps will contain Element actions, mostly like failure will happen in driver action,
             //and will be wrapped with RuntimeException, so to get rootcause we are searching rootcause recursively
             Throwable cause = t;
-            while (true) {
+            if (cause instanceof WebDriverActionFailedException) {
                 cause = cause.getCause();
-                if (cause == null) {
-                    break;
-                }
-                if (cause instanceof WebDriverActionFailedException) {
-                    cause = cause.getCause();
-                    break;
-                }
             }
             if (cause instanceof Error) {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.FAILED));
@@ -70,7 +61,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
             if (Boolean.parseBoolean(ConfigProvider.provide().get("driver.recordVideo"))) {
                 attachVideo(DriverFactory.getDriver().getSessionId().toString());
             }
-            throw new RuntimeException(cause);
+            throw new RuntimeException(cause.getMessage(), cause);
         } finally {
             getLifecycle().stopStep(uuid);
         }
@@ -139,35 +130,16 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
     private static void attachVideo(String sessionId) {
         try {
             Config config = ConfigProvider.provide();
-            String hubUrl = config.get("driver.hub.baseUrl") + ":" + config.get("driver.hub.uiPort");
-            URL videoUrl = new URL( hubUrl + "/video/" + sessionId + ".mp4");
-            InputStream is = getSelenoidVideo(videoUrl);
-            Allure.addAttachment("Video", "video/mp4", is, "mp4");
+            String videoUrl = config.get("driver.hub.baseUrl") + ":" + config.get("driver.hub.uiPort") + "/video/" + sessionId + ".mp4";
+            String htmlContent = "<html>" +
+                    "<body>" +
+                    "<video width='100%' height='100%' controls autoplay>" +
+                    "<source src='" + videoUrl + "' type='video/mp4'></video>" +
+                    "</body>" +
+                    "</html>";
+            Allure.addAttachment("Video", "text/html", htmlContent, ".html");
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static InputStream getSelenoidVideo(URL url) {
-        int lastSize = 0;
-        int exit = 2;
-        for (int i = 0; i < 20; i++) {
-            try {
-                int size = Integer.parseInt(url.openConnection().getHeaderField("Content-Length"));
-                if (size > lastSize) {
-                    lastSize = size;
-                    Thread.sleep(1500);
-                } else if (size == lastSize) {
-                    exit--;
-                    Thread.sleep(1000);
-                }
-                if (exit < 0) {
-                    return url.openStream();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 }
