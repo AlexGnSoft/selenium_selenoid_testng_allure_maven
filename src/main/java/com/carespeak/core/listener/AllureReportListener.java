@@ -1,20 +1,9 @@
 package com.carespeak.core.listener;
 
-import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.logger.Logger;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
 
 public class AllureReportListener implements ITestListener, IDataGenerator {
 

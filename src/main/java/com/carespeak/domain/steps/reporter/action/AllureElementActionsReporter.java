@@ -8,6 +8,7 @@ import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriverException;
 import org.testng.ITestResult;
 
 import java.io.ByteArrayInputStream;
@@ -38,9 +39,7 @@ public class AllureElementActionsReporter implements IElementInteractionsReporte
             } else {
                 getLifecycle().updateStep(uuid, s -> s.withStatus(Status.BROKEN));
             }
-            ByteArrayInputStream is = new ByteArrayInputStream(((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES));
-            Allure.addAttachment("Screenshot", is);
-            throw new RuntimeException(t.getCause());
+            throw new RuntimeException(t);
         } finally {
             getLifecycle().stopStep(uuid);
         }

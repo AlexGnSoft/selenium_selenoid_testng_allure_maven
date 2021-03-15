@@ -1,15 +1,15 @@
 package com.carespeak.domain.steps.reporter.step;
 
 import com.carespeak.core.driver.factory.DriverFactory;
+import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.BaseSteps;
-import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
 
 import static io.qameta.allure.Allure.getLifecycle;
 
-public class AllureStepReporter implements IStepsReporter {
+public class AllureStepReporter implements IStepsReporter, IDataGenerator {
 
     @Override
     public void onStepStart(Method stepMethod, Object[] args) {
@@ -45,9 +45,14 @@ public class AllureStepReporter implements IStepsReporter {
             } else {
                 getLifecycle().updateStep(uuid, s -> s.withStatus(Status.BROKEN));
             }
-            ByteArrayInputStream is = new ByteArrayInputStream(((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES));
-            Allure.addAttachment("Screenshot", is);
-            throw new RuntimeException(t.getCause());
+            attachScreenshot("Screenshot");
+            //Steps will contain Element actions, mostly like failure will happen in driver action,
+            //and will be wrapped with RuntimeException, so to get rootcause we should take second rootcause
+            if (t.getCause() != null) {
+                throw new RuntimeException(t.getCause().getCause());
+            } else {
+                throw new RuntimeException(t.getCause());
+            }
         } finally {
             getLifecycle().stopStep(uuid);
         }
@@ -80,6 +85,11 @@ public class AllureStepReporter implements IStepsReporter {
             throw new RuntimeException("Failed to create steps implementation object for class: " + clazz);
         }
         return stepsObj;
+    }
+
+    @Attachment(value = "{name}", type = "image/png")
+    private byte[] attachScreenshot(String name) {
+        return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
     private static String prettify(String s) {
