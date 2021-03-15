@@ -7,6 +7,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URI;
@@ -108,6 +109,7 @@ public class DriverFactory {
                     URI.create(hubUrl).toURL(),
                     capabilities
             );
+            remoteWebDriver.setFileDetector(new LocalFileDetector());
             remoteWebDriver.manage().window().maximize();
             return remoteWebDriver;
         } catch (Throwable e) {
