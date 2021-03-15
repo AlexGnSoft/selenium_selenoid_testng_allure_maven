@@ -2,6 +2,7 @@ package com.carespeak.domain.steps.reporter.step;
 
 import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.driver.factory.DriverFactory;
+import com.carespeak.core.exception.WebDriverActionFailedException;
 import com.carespeak.core.helper.IDataGenerator;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.BaseSteps;
@@ -44,22 +45,24 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
         } catch (Throwable t) {
             //Steps will contain Element actions, mostly like failure will happen in driver action,
             //and will be wrapped with RuntimeException, so to get rootcause we are searching rootcause recursively
+            Throwable cause = t;
             while (true) {
-                t = t.getCause();
-                if (t == null) {
+                cause = cause.getCause();
+                if (cause == null) {
                     break;
                 }
-                if (!(t instanceof RuntimeException)) {
+                if (cause instanceof WebDriverActionFailedException) {
+                    cause = cause.getCause();
                     break;
                 }
             }
-            if (t instanceof Error) {
+            if (cause instanceof Error) {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.FAILED));
             } else {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.BROKEN));
             }
             attachScreenshot("Screenshot");
-            throw new RuntimeException(t.getMessage());
+            throw new RuntimeException(cause);
         } finally {
             getLifecycle().stopStep(uuid);
         }

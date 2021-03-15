@@ -1,6 +1,7 @@
 package com.carespeak.domain.steps.reporter.action;
 
 import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
+import com.carespeak.core.exception.WebDriverActionFailedException;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
 
@@ -31,7 +32,7 @@ public class AllureElementActionsReporter implements IElementInteractionsReporte
             } else {
                 getLifecycle().updateStep(uuid, s -> s.setStatus(Status.BROKEN));
             }
-            throw new RuntimeException(t);
+            throw new WebDriverActionFailedException(t);
         } finally {
             getLifecycle().stopStep(uuid);
         }
