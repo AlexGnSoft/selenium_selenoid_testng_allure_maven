@@ -53,7 +53,6 @@ public class ClientAutoResponderTest extends AbstractClientLevelTest {
         MessageLogItem actualSms = site.programSteps()
                 .addNewPatient(patient, client, programName)
                 .simulateResponse(patient.getFirstName(), "AGREE")
-                //TODO: second message simulation is quite slow here but it is not critical now
                 .simulateResponse(patient.getFirstName(), "Accepted")
                 .goToProgramSettings(client.getName(), programName)
                 .getLastMessageFromLogsForNumber(patient.getCellPhone());

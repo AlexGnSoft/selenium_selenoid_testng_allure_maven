@@ -503,9 +503,10 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps addAutoResponder(Client client, AutoRespondersStatus status, String message) {
+    public ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message) {
         if (!programAutoRespondersPage.isOpened()) {
             programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
             programsPage.programTable.editFirstItemButton().click();
             programsPatientsPage.sideBarMenu.openItem("Auto Responders");
         }

@@ -261,12 +261,13 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add new Auto Responder on program level
      *
-     * @param client  - client to use
-     * @param status  - status autoresponders
-     * @param message - message for Auto response
+     * @param client      - client to use
+     * @param programName - program name
+     * @param status      - status autoresponders
+     * @param message     - message for Auto response
      * @return Program Steps Object
      */
-    ProgramSteps addAutoResponder(Client client, AutoRespondersStatus status, String message);
+    ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message);
 
     List<Patient> getPatients(Client client, String programName);
 }

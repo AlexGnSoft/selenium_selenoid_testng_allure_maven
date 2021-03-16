@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class AssertionsAspect {
 
-    @Around("execution(* org.testng.Assert.*(..))")
+    @Around("execution(public static void org.testng.Assert.*(..))")
     public Object assertionMethod(ProceedingJoinPoint thisJoinPoint) throws Throwable {
         IStepsReporter reporter = new AllureStepReporter();
         Object[] args = thisJoinPoint.getArgs();
