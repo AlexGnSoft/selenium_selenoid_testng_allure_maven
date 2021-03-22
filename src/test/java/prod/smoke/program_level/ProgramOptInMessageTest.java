@@ -137,7 +137,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void removeProgram() {
         site.programSteps().removeProgram(client, programName);
         List<String> programs = site.programSteps().getProgramsForClient(client);

@@ -60,7 +60,7 @@ public class ClientAutoResponderTest extends AbstractClientLevelTest {
         Assert.assertEquals(actualSms.getMessage(), expectedMessage, "Received message does not equal to expected");
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void removeProgram() {
         site.programSteps().removeProgram(client, programName);
         List<String> programs = site.programSteps().getProgramsForClient(client);

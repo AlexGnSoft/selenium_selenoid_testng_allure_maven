@@ -140,9 +140,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
             String videoUrl = config.get("driver.hub.baseUrl") + ":" + config.get("driver.hub.uiPort") + "/video/" + sessionId + ".mp4";
             String htmlContent = "<html>" +
                     "<body>" +
-                    "<video width='100%' height='100%' controls autoplay>" +
-                    "<source src='" + videoUrl + "' type='video/mp4'></video>" +
-                    "</body>" +
+                    "<a href='" + videoUrl + "'/>"+
                     "</html>";
             Allure.addAttachment("Video", "text/html", htmlContent, ".html");
         } catch (Exception e) {

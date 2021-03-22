@@ -38,7 +38,7 @@ public class ProgramConsentManagementTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptOutForm, expectedOptOutForm, "OptOutForm not appear on program level.");
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void removeProgram() {
         site.programSteps().removeProgram(client, programName);
         List<String> programs = site.programSteps().getProgramsForClient(client);
