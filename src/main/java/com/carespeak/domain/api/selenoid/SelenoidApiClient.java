@@ -9,7 +9,7 @@ public class SelenoidApiClient {
 
     private String baseUrl;
 
-    public SelenoidApiClient(String url){
+    public SelenoidApiClient(String url) {
         baseUrl = url;
     }
 
@@ -24,7 +24,7 @@ public class SelenoidApiClient {
             httpCon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpCon.connect();
         } catch (Throwable t) {
-            Logger.error("Failed to remove video with name: "+ videoFileName, t);
+            Logger.error("Failed to remove video with name: " + videoFileName, t);
         } finally {
             if (httpCon != null) {
                 httpCon.disconnect();

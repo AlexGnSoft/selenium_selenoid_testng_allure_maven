@@ -11,7 +11,7 @@ public interface MessagesSteps extends BaseSteps {
     /**
      * Retrieves available modules for provided client
      *
-     * @param clientName - client code
+     * @param clientName client code
      * @return ProgramSteps object
      */
     List<Module> getAvailableModules(String clientName);

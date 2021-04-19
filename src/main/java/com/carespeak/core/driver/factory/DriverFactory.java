@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class DriverFactory {
 
-    //Thread safe storage for WebDrivers in case if code parallelism need
+    //Thread safe storage for WebDrivers in case if we need to run code in a few threads
     private static ThreadLocal<RemoteWebDriver> drivers = new ThreadLocal<>();
 
     /**

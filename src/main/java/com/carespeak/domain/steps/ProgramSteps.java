@@ -14,9 +14,9 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Creates new Program for provided client.
      *
-     * @param clientName    - client name
-     * @param programName   - program name
-     * @param programAccess - program access type
+     * @param clientName    client name
+     * @param programName   program name
+     * @param programAccess program access type
      * @return ProgramSteps object
      */
     ProgramSteps addNewProgram(String clientName, String programName, ProgramAccess programAccess);
@@ -25,9 +25,9 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Adds OptOut Header for specified client and program with specified message
      *
-     * @param client      - client to use
-     * @param programName - program name
-     * @param message     - message to add
+     * @param client      client to use
+     * @param programName program name
+     * @param message     message to add
      * @return ProgramSteps object
      */
     ProgramSteps addOptOutHeader(Client client, String programName, String message);
@@ -36,9 +36,9 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Adds OptOut Body for specified client and program with specified message
      *
-     * @param client      - client to use
-     * @param programName - program name
-     * @param message     - message to add
+     * @param client      client to use
+     * @param programName program name
+     * @param message     message to add
      * @return ProgramSteps object
      */
     ProgramSteps addOptOutBody(Client client, String programName, String message);
@@ -47,9 +47,9 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Adds OptOut Footer for specified client and program with specified message
      *
-     * @param client      - client to use
-     * @param programName - program name
-     * @param message     - message to add
+     * @param client      client to use
+     * @param programName program name
+     * @param message     message to add
      * @return ProgramSteps object
      */
     ProgramSteps addOptOutFooter(Client client, String programName, String message);
@@ -58,8 +58,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Go to program with specified name.
      *
-     * @param clientName  - client name
-     * @param programName - program name
+     * @param clientName  client name
+     * @param programName program name
      * @return ProgramSteps object
      */
     ProgramSteps goToProgramSettings(String clientName, String programName);
@@ -67,7 +67,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns all program names as list for specified client
      *
-     * @param client - client to use
+     * @param client client to use
      * @return list of program names as String
      */
     List<String> getProgramsForClient(Client client);
@@ -84,10 +84,10 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add account creation question for keyword sign up.
      *
-     * @param isMandatory  - is question mandatory ?
-     * @param field        - field name to receive from client's response
-     * @param questionText - question to send
-     * @param onErrorText  - text to show on error
+     * @param isMandatory  is question mandatory ?
+     * @param field        field name to receive from client's response
+     * @param questionText question to send
+     * @param onErrorText  text to show on error
      * @return ProgramSteps object
      */
     ProgramSteps addAccountCreationQuestion(boolean isMandatory, String field, String questionText, String onErrorText);
@@ -101,7 +101,7 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps addKeywordForSignUp(String keyword);
 
     /**
-     * @param fieldName - custom field name to select in the drop-down menu in the question field
+     * @param fieldName custom field name to select in the dropdown menu in the question field
      * @return Program Steps object
      */
     ProgramSteps addCustomFields(String fieldName);
@@ -109,7 +109,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add validation message for keyword sign up
      *
-     * @param validationMessage - validation message
+     * @param validationMessage validation message
      * @return Program Steps object
      */
     ProgramSteps addValidationMessage(String validationMessage);
@@ -118,7 +118,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add completed message for keyword signup
      *
-     * @param completedMessage - completed message
+     * @param completedMessage completed message
      * @return Program Steps object
      */
     ProgramSteps addCompletedMessage(String completedMessage);
@@ -126,7 +126,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns last message from Programs Messages Logs for specified phone number
      *
-     * @param number - phoneNumber phone number to analyze
+     * @param number phoneNumber phone number to analyze
      * @return Messages object
      */
     MessageLogItem getLastMessageFromLogsForNumber(String number);
@@ -134,9 +134,9 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Reject unsolicited message for specified program and client
      *
-     * @param client         - client to use
-     * @param programName    - program to be select
-     * @param messagePattern - accepted message pattern
+     * @param client         client to use
+     * @param programName    program to be select
+     * @param messagePattern accepted message pattern
      * @return Program Steps object
      */
     ProgramSteps rejectUnsolicitedMessages(Client client, String programName, String messagePattern);
@@ -144,8 +144,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Removes specified program for specified client
      *
-     * @param client      - client to use
-     * @param programName - program to remove
+     * @param client      client to use
+     * @param programName program to remove
      * @return Program Steps object
      */
     ProgramSteps removeProgram(Client client, String programName);
@@ -153,8 +153,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add patient to specific program
      *
-     * @param client      - client to use
-     * @param programName - program to be select
+     * @param client      client to use
+     * @param programName program to be select
      * @return Program Steps object
      */
     ProgramSteps addNewPatient(Patient patient, Client client, String programName);
@@ -163,8 +163,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Get program by name from column
      *
-     * @param clientName  - client to use
-     * @param programName - program name
+     * @param clientName  client to use
+     * @param programName program name
      * @return program name String
      */
     String getProgramByName(String clientName, String programName);
@@ -173,8 +173,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Get program access modifier from column
      *
-     * @param clientName    - client to use
-     * @param programAccess - program access level
+     * @param clientName    client to use
+     * @param programAccess program access level
      * @return access modifier String
      */
     String getProgramAccessModifier(String clientName, String programAccess);
@@ -183,7 +183,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns OptOut form that set on program level
      *
-     * @param clientName - client to use
+     * @param clientName client to use
      * @return ProgramOptOutForm object
      */
     ProgramOptOutForm getProgramOptOutForm(String clientName, String programName);
@@ -191,7 +191,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Get all program endpoints on program level
      *
-     * @param programName - name of program to use
+     * @param programName name of program to use
      * @return List of endpoints
      */
     List<String> getEndpointsOnProgramLevel(String programName);
@@ -199,18 +199,18 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Get all program endpoints on patient level
      *
-     * @param programName - name of program to get endpoints
-     * @param patient     - patient to get endpoints
+     * @param programName name of program to get endpoints
+     * @param patient     patient to get endpoints
      * @return List of endpoints
      */
     List<String> getEndpointsOnPatientLevel(Client client, String programName, Patient patient);
 
 
     /**
-     * Add program opt-in messages
+     * Add program optin messages
      *
-     * @param filePath             - the path to the data file
-     * @param isSendConfirmMessage - true if want to send confirm message, false if not
+     * @param filePath             the path to the data file
+     * @param isSendConfirmMessage true if want to send confirm message, false if not
      * @return Program Steps object
      */
     ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage);
@@ -219,7 +219,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Select data file
      *
-     * @param filePath -  the path to the data file
+     * @param filePath the path to the data file
      */
     void selectFile(String filePath);
 
@@ -227,8 +227,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Simulate response from Program Patient Message Logs
      *
-     * @param message          - text to send
-     * @param patientFirstName - patient who will have a simulation
+     * @param message          text to send
+     * @param patientFirstName patient who will have a simulation
      * @return Message object
      */
     ProgramSteps simulateResponse(String patientFirstName, String message);
@@ -237,7 +237,7 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns last message from Programs Patient Messages Logs
      *
-     * @param patientFirstName - patient to be select
+     * @param patientFirstName patient to be select
      * @return Messages object
      */
     MessageLogItem getLastPatientMessageFromLogs(String patientFirstName);
@@ -245,8 +245,8 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns true if patient is in the specified program otherwise false
      *
-     * @param newProgramName - new program name
-     * @param patient        - patient to be select
+     * @param newProgramName new program name
+     * @param patient        patient to be select
      * @return return true if patient is in the specified program otherwise false
      */
     boolean isInProgram(String newProgramName, Patient patient);
@@ -261,10 +261,10 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Add new Auto Responder on program level
      *
-     * @param client      - client to use
-     * @param programName - program name
-     * @param status      - status autoresponders
-     * @param message     - message for Auto response
+     * @param client      client to use
+     * @param programName program name
+     * @param status      status autoresponders
+     * @param message     message for Auto response
      * @return Program Steps Object
      */
     ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message);

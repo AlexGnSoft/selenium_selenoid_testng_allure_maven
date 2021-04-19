@@ -71,6 +71,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
         final String uuid = UUID.randomUUID().toString();
         final StepResult result = new StepResult().setName(stepMessage);
         getLifecycle().startStep(uuid, result);
+        getLifecycle().updateStep(uuid, s -> s.setStatus(Status.PASSED));
         getLifecycle().stopStep(uuid);
     }
 
@@ -140,7 +141,7 @@ public class AllureStepReporter implements IStepsReporter, IDataGenerator {
             String videoUrl = config.get("driver.hub.baseUrl") + ":" + config.get("driver.hub.uiPort") + "/video/" + sessionId + ".mp4";
             String htmlContent = "<html>" +
                     "<body>" +
-                    "<a href='http://" + videoUrl + "'>Video for the whole test class (you will see all actions before failure)</a>"+
+                    "<a href='http://" + videoUrl + "'>Video for the whole test class (you will see all actions before failure)</a>" +
                     "</html>";
             Allure.addAttachment("Video", "text/html", htmlContent, ".html");
         } catch (Exception e) {
