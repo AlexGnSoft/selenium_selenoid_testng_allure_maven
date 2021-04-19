@@ -3,7 +3,6 @@ package com.carespeak.domain.steps.holders;
 import com.carespeak.core.config.Config;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.*;
-import com.carespeak.domain.steps.imp.pe2.Pe2LoginSteps;
 import com.carespeak.domain.steps.imp.prod.*;
 
 public class SiteStepsHolder {
@@ -29,7 +28,7 @@ public class SiteStepsHolder {
 
     public LoginSteps loginSteps() {
         if (loginSteps == null) {
-            Class clazz = isCurrentProdVersion() ? ProdLoginSteps.class : Pe2LoginSteps.class;
+            Class clazz = isCurrentProdVersion() ? ProdLoginSteps.class : null;
             loginSteps = reporter.createStepProxy(clazz);
         }
         return loginSteps;
