@@ -1,6 +1,5 @@
 package com.carespeak.core.logger;
 
-
 import org.apache.log4j.Level;
 
 /**

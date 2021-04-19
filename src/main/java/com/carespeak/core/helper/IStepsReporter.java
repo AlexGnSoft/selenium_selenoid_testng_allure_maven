@@ -5,12 +5,17 @@ import com.carespeak.domain.steps.BaseSteps;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.concurrent.Callable;
 
 public interface IStepsReporter {
 
-    void onStepStart(Method stepMethod);
+    void onStepStart(Method stepMethod, Object[] args);
 
-    void onStepFinished(Method stepMethod);
+    void onStepFinished(Method stepMethod, Throwable t);
+
+    <T> T reportStep(String stepMessage, Callable<T> actionToCall);
+
+    void reportStep(String stepMessage);
 
     @SuppressWarnings("unchecked")
     default <T> T createStepProxy(Class clazz) {
@@ -19,21 +24,20 @@ public interface IStepsReporter {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), handler);
     }
 
-    //TODO: remove tight connection with BaseSteps class
     default InvocationHandler getHandler(Object stepsObject, Class clazz) {
         return (proxy, method, args) -> {
-            onStepStart(method);
             try {
+                onStepStart(method, args);
                 Object returnObj = method.invoke(stepsObject, args);
                 if (returnObj instanceof BaseSteps) {
                     return createStepProxy(clazz);
                 }
-                onStepFinished(method);
+                onStepFinished(method, null);
                 return returnObj;
             } catch (Throwable e) {
                 e.printStackTrace();
+                onStepFinished(method, e.getCause());
             }
-            onStepFinished(method);
             return null;
         };
     }

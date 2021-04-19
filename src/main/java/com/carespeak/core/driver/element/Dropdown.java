@@ -1,5 +1,6 @@
 package com.carespeak.core.driver.element;
 
+import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import org.apache.log4j.Level;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -59,55 +60,47 @@ public class Dropdown extends ClickableElement {
 
     private void selectInSelectElement(String value) {
         LOG.log(LOG_NAME, Level.INFO, "Select '" + value + "' from " + name, null);
-        innerElement.click();
-        WebElement option = innerElement.findElement(By.xpath(String.format(SELECT_OPTION_XPATH, value)));
-        highlight(option);
-        option.click();
+        ElementActionsReporter.report("Select '" + value + "' from " + name, () -> {
+            scrollIntoView();
+            innerElement.click();
+            WebElement option = innerElement.findElement(By.xpath(String.format(SELECT_OPTION_XPATH, value)));
+            highlight(option);
+            option.click();
+            return null;
+        });
     }
 
     private void selectInDropdownElement(ClickableElement expandElement, String value) {
         LOG.log(LOG_NAME, Level.INFO, "Select '" + value + "' from " + name, null);
-        expandElement.innerElement.click();
-        waitFor(() -> driver.findElement(By.xpath(DROPDOWN_UL_XPATH)).isDisplayed(), 5, false);
-        WebElement option = innerElement.findElement(By.xpath(String.format(DROPDOWN_VALUE_XPATH, value)));
-        highlight(option);
-        option.click();
+        ElementActionsReporter.report("Select '" + value + "' from " + name, () -> {
+            expandElement.scrollIntoView();
+            expandElement.innerElement.click();
+            waitFor(() -> driver.findElement(By.xpath(DROPDOWN_UL_XPATH)).isDisplayed(), 5, false);
+            WebElement option = innerElement.findElement(By.xpath(String.format(DROPDOWN_VALUE_XPATH, value)));
+            highlight(option);
+            option.click();
+            return null;
+        });
     }
 
     public List<String> getAvailableOptions() {
         LOG.log(LOG_NAME, Level.INFO, "Retrieve all available options from " + name, null);
-        highlight(innerElement);
-        innerElement.click();
-        List<WebElement> options;
-        if ("select".equals(getTagName())) {
-            options = innerElement.findElements(By.xpath(OPTIONS_XPATH));
-        } else {
-            options = innerElement.findElements(By.xpath(LIST_ITEMS_XPATH));
-        }
-        List<String> res = new ArrayList<>();
-        for (WebElement option : options) {
-            highlight(option);
-            res.add(option.getText().trim());
-        }
-        return res;
+        return ElementActionsReporter.report("Retrieve all available options from " + name, () -> {
+            highlight(innerElement);
+            scrollIntoView();
+            innerElement.click();
+            List<WebElement> options;
+            if ("select".equals(getTagName())) {
+                options = innerElement.findElements(By.xpath(OPTIONS_XPATH));
+            } else {
+                options = innerElement.findElements(By.xpath(LIST_ITEMS_XPATH));
+            }
+            List<String> res = new ArrayList<>();
+            for (WebElement option : options) {
+                highlight(option);
+                res.add(option.getText().trim());
+            }
+            return res;
+        });
     }
-
-    public List<String> getAvailableOptions(ClickableElement expandElement) {
-        LOG.log(LOG_NAME, Level.INFO, "Retrieve all available options from " + name, null);
-        expandElement.innerElement.click();
-        List<WebElement> options;
-        if ("select".equals(getTagName())) {
-            options = expandElement.findElements(By.xpath(OPTIONS_XPATH));
-        } else {
-            options = expandElement.findElements(By.xpath(LIST_ITEMS_XPATH));
-        }
-        List<String> res = new ArrayList<>();
-        for (WebElement option : options) {
-            highlight(option);
-            res.add(option.getText().trim());
-        }
-        return res;
-    }
-
-
 }

@@ -10,9 +10,8 @@ public class Config {
         this.properties = properties;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T get(String key) {
-        return (T) properties.getProperty(key);
+    public String get(String key) {
+        return properties.getProperty(key);
     }
 
 }

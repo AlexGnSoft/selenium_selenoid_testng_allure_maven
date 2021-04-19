@@ -1,6 +1,7 @@
 package com.carespeak.core.driver.element;
 
 import com.carespeak.core.driver.factory.DriverFactory;
+import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import org.apache.log4j.Level;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -32,16 +33,22 @@ public class CheckBox extends ClickableElement {
 
     public void check() {
         LOG.log(LOG_NAME, Level.INFO, "Checking " + name, null);
-        if (!isChecked()) {
-            innerElement.click();
-        }
+        ElementActionsReporter.report("Checking " + name, () -> {
+            if (!isChecked()) {
+                innerElement.click();
+            }
+            return null;
+        });
     }
 
     public void uncheck() {
         LOG.log(LOG_NAME, Level.INFO, "Unchecking " + name, null);
-        if (isChecked()) {
-            innerElement.click();
-        }
+        ElementActionsReporter.report("Unchecking " + name, () -> {
+            if (isChecked()) {
+                innerElement.click();
+            }
+            return null;
+        });
     }
 
     public boolean isChecked() {

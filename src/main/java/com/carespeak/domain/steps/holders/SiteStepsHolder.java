@@ -3,7 +3,8 @@ package com.carespeak.domain.steps.holders;
 import com.carespeak.core.config.Config;
 import com.carespeak.core.helper.IStepsReporter;
 import com.carespeak.domain.steps.*;
-import com.carespeak.domain.steps.imp.*;
+import com.carespeak.domain.steps.imp.pe2.Pe2LoginSteps;
+import com.carespeak.domain.steps.imp.prod.*;
 
 public class SiteStepsHolder {
 
@@ -23,12 +24,12 @@ public class SiteStepsHolder {
     }
 
     public boolean isCurrentProdVersion() {
-        return config.get("app.env").equals("demo");
+        return config.get("app.env").equals("prod");
     }
 
     public LoginSteps loginSteps() {
         if (loginSteps == null) {
-            Class clazz = isCurrentProdVersion() ? ProdLoginSteps.class : null;
+            Class clazz = isCurrentProdVersion() ? ProdLoginSteps.class : Pe2LoginSteps.class;
             loginSteps = reporter.createStepProxy(clazz);
         }
         return loginSteps;

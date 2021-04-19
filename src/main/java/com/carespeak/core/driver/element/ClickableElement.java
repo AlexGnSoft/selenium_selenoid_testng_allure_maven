@@ -3,6 +3,7 @@ package com.carespeak.core.driver.element;
 import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.driver.factory.DriverFactory;
+import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import com.carespeak.core.helper.ICanHighlightElements;
 import com.carespeak.core.helper.ICanWait;
 import org.apache.log4j.Level;
@@ -62,46 +63,57 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
 
     @Override
     public void click() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.elementToBeClickable(innerElement));
-        if (!isVisible()) {
-            scrollIntoView();
-        }
-        highlight();
-        try {
-            LOG.log(LOG_NAME, Level.INFO, "Click on " + name, null);
-            Actions actions = new Actions(driver);
-            actions.moveToElement(innerElement).click().build().perform();
-        } catch (Throwable ex) {
-            LOG.log(LOG_NAME, Level.ERROR, name + " was not able to be clicked.", ex);
-            ex.printStackTrace();
-            throw ex;
-        }
+        ElementActionsReporter.report("Click on " + name, () -> {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.elementToBeClickable(innerElement));
+            if (!isVisible()) {
+                scrollIntoView();
+            }
+            highlight();
+            try {
+                LOG.log(LOG_NAME, Level.INFO, "Click on " + name, null);
+                Actions actions = new Actions(driver);
+                actions.moveToElement(innerElement).click().build().perform();
+            } catch (Throwable ex) {
+                LOG.log(LOG_NAME, Level.ERROR, name + " was not able to be clicked.", ex);
+                ex.printStackTrace();
+                throw ex;
+            }
+            return null;
+        });
     }
 
     @Override
     public void submit() {
-        highlight();
-        LOG.log(LOG_NAME, Level.DEBUG, "Submit " + name, null);
-        innerElement.submit();
+        ElementActionsReporter.report("Submit " + name, () -> {
+            highlight();
+            LOG.log(LOG_NAME, Level.DEBUG, "Submit " + name, null);
+            innerElement.submit();
+            return null;
+        });
     }
 
     @Override
     public void sendKeys(CharSequence... charSequences) {
-        if (!isVisible()) {
-            scrollIntoView();
-        }
-        highlight();
+        String logMessage;
         if (name != null && name.toLowerCase().contains("password")) {
-            LOG.log(LOG_NAME, Level.INFO, "Typing text '*********' to " + name, null);
+            logMessage = "Typing text '*********' to " + name;
         } else {
             StringBuilder builder = new StringBuilder();
             for (CharSequence ch : charSequences) {
                 builder.append(ch);
             }
-            LOG.log(LOG_NAME, Level.INFO, "Typing text '" + builder.toString() + "' to " + name, null);
+            logMessage = "Typing text '" + builder.toString() + "' to " + name;
         }
-        innerElement.sendKeys(charSequences);
+        ElementActionsReporter.report(logMessage, () -> {
+            if (!isVisible()) {
+                scrollIntoView();
+            }
+            highlight();
+            LOG.log(LOG_NAME, Level.INFO, logMessage, null);
+            innerElement.sendKeys(charSequences);
+            return null;
+        });
     }
 
     @Override

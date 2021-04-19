@@ -11,11 +11,11 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Add new user with provided parameters
      *
-     * @param code     - unique code for new client
-     * @param username - client's username
-     * @param notes    - some notes about the client
-     * @param endpoint - endpoint to send SMS
-     * @param modules  - modules to add
+     * @param code     unique code for new client
+     * @param username client's username
+     * @param notes    some notes about the client
+     * @param endpoint endpoint to send SMS
+     * @param modules  modules to add
      * @return AdminToolsSteps object
      */
     AdminToolsSteps addNewClient(String code, String username, String notes, String endpoint, Module... modules);
@@ -24,8 +24,8 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Add new user with provided parameters
      *
-     * @param client  - client object to create
-     * @param modules - modules to add
+     * @param client  client object to create
+     * @param modules modules to add
      * @return AdminToolsSteps object
      */
     AdminToolsSteps addNewClient(Client client, Module... modules);
@@ -34,7 +34,7 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Add new user with provided parameters
      *
-     * @param client - client object to create
+     * @param client client object to create
      * @return AdminToolsSteps object
      */
     AdminToolsSteps addNewClient(Client client);
@@ -43,7 +43,7 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Remove new user with provided parameters
      *
-     * @param client - client object to create
+     * @param client client object to create
      * @return AdminToolsSteps object
      */
     AdminToolsSteps removeClient(Client client);
@@ -52,8 +52,8 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Opens client setting page for client by provided client code
      *
-     * @param clientCode - code to search
-     * @param newModules - new modules to be set
+     * @param clientCode code to search
+     * @param newModules new modules to be set
      * @return AdminToolsSteps object
      */
     AdminToolsSteps editClientsModules(String clientCode, Module... newModules);
@@ -62,7 +62,7 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Returns client object by code
      *
-     * @param code - string code
+     * @param code string code
      * @return Client object
      */
     Client getClientByCode(String code);
@@ -71,7 +71,7 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Go to general settings view for specified client
      *
-     * @param code - client code to find a client
+     * @param code client code to find a client
      * @return AdminToolsSteps object
      */
     AdminToolsSteps goToClientSettings(String code);
@@ -84,7 +84,7 @@ public interface AdminToolsSteps extends BaseSteps {
      * Each client has default language, and additional.
      * Method adds additional languages for client
      *
-     * @param languages - languages to add
+     * @param languages languages to add
      * @return AdminToolsSteps object
      */
     AdminToolsSteps addAdditionalLanguage(Language... languages);
@@ -99,7 +99,7 @@ public interface AdminToolsSteps extends BaseSteps {
      * Each client has default language, and additional.
      * Method removes additional languages for client
      *
-     * @param languages - languages to remove
+     * @param languages languages to remove
      * @return AdminToolsSteps object
      */
     AdminToolsSteps removeAdditionalLanguage(Language... languages);
@@ -129,9 +129,9 @@ public interface AdminToolsSteps extends BaseSteps {
     /**
      * Send SMS to specified endpoint from simulator
      *
-     * @param fromPhoneNumber - phone number to send sms from
-     * @param endpoint        - endpoint/SMS aggregator for user
-     * @param smsText         - text to send
+     * @param fromPhoneNumber phone number to send sms from
+     * @param endpoint        endpoint/SMS aggregator for user
+     * @param smsText         text to send
      * @return AdminToolsSteps object
      */
     AdminToolsSteps simulateSMSToClient(String fromPhoneNumber, String endpoint, String smsText);

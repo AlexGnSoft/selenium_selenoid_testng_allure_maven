@@ -1,11 +1,13 @@
 package com.carespeak.core.driver.factory;
 
+import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URI;
@@ -17,7 +19,7 @@ import java.util.Map;
  */
 public class DriverFactory {
 
-    //Thread safe storage for WebDrivers in case if code parallelism need
+    //Thread safe storage for WebDrivers in case if we need to run code in a few threads
     private static ThreadLocal<RemoteWebDriver> drivers = new ThreadLocal<>();
 
     /**
@@ -28,11 +30,13 @@ public class DriverFactory {
      */
     public static synchronized RemoteWebDriver getDriver() {
         if (drivers.get() == null) {
-            String hubUrl = ConfigProvider.provide().get("driver.hub");
-            String driverName = ConfigProvider.provide().get("driver.name");
-            String driverVersion = ConfigProvider.provide().get("driver.version");
+            Config config = ConfigProvider.provide();
+            String hubUrl = config.get("driver.hub.baseUrl");
+            String driverName = config.get("driver.name");
+            String driverVersion = config.get("driver.version");
             RemoteWebDriver driver;
             if (hubUrl != null && !hubUrl.isEmpty()) {
+                hubUrl = hubUrl + ":" + config.get("driver.hub.apiPort") + "/wd/hub";
                 driver = createRemoteWebDriver(driverName, hubUrl, driverVersion);
             } else {
                 driver = createLocalWebDriver(driverName, driverVersion);
@@ -40,6 +44,14 @@ public class DriverFactory {
             drivers.set(driver);
         }
         return drivers.get();
+    }
+
+    /**
+     * Deregister driver from DriverFactory.
+     * Makes sense to remove
+     */
+    public static synchronized void deregisterDriver() {
+        drivers.remove();
     }
 
     /**
@@ -89,7 +101,7 @@ public class DriverFactory {
         }
         Map<String, Object> caps = new HashMap<>();
         caps.put("enableVNC", true);
-        caps.put("enableVideo", true);
+        caps.put("enableVideo", Boolean.parseBoolean(ConfigProvider.provide().get("driver.recordVideo")));
         capabilities.setCapability("selenoid:options", caps);
 
         try {
@@ -97,6 +109,7 @@ public class DriverFactory {
                     URI.create(hubUrl).toURL(),
                     capabilities
             );
+            remoteWebDriver.setFileDetector(new LocalFileDetector());
             remoteWebDriver.manage().window().maximize();
             return remoteWebDriver;
         } catch (Throwable e) {
