@@ -23,7 +23,7 @@ public class SiteStepsHolder {
     }
 
     public boolean isCurrentProdVersion() {
-        return config.get("app.env").equals("prod");
+        return config.get("app.env").equals("demo");
     }
 
     public LoginSteps loginSteps() {

@@ -42,7 +42,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Assert.assertEquals(actualClient, client, "Actual client differs from expected client");
     }
 
-    @Test(description = "Edit client's modules", dependsOnMethods = "addNewClient")
     public void editClientsModules() {
         Module[] modulesToSet = {Module.BIOMETRIC, Module.EDUCATION, Module.MOTIVATION};
         client.setModules(modulesToSet);
