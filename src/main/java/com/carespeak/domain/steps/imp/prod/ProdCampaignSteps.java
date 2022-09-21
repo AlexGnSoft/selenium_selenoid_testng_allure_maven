@@ -3,7 +3,7 @@ package com.carespeak.domain.steps.imp.prod;
 import com.carespeak.domain.entities.campaign.CampaignAccess;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.steps.CampaignSteps;
-import com.carespeak.domain.ui.prod.component.campaign.AlertTimeContainer;
+import com.carespeak.domain.ui.prod.page.programs.general.campaign.AlertTimeContainer;
 import com.carespeak.domain.ui.prod.page.campaigns.CampaignsPage;
 import com.carespeak.domain.ui.prod.page.campaigns.general.CampaignsGeneralPage;
 import com.carespeak.domain.ui.prod.page.campaigns.time_table.CampaignsTimeTablePage;

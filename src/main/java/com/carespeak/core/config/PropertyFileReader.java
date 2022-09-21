@@ -2,8 +2,7 @@ package com.carespeak.core.config;
 
 import com.carespeak.core.logger.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -12,6 +11,8 @@ import java.util.Properties;
  * Reads properties from property file
  */
 public class PropertyFileReader implements IConfigReader {
+
+    public Properties properties;
 
     @Override
     public Config readConfig(String url) {
@@ -43,4 +44,30 @@ public class PropertyFileReader implements IConfigReader {
             properties.put(key, System.getProperty(key, properties.getProperty(key)));
         }
     }
+
+    public PropertyFileReader(){
+        BufferedReader reader;
+        String propertyFilePath = "src/main/resources/env/demo.properties";
+        try {
+            reader = new BufferedReader(new FileReader(propertyFilePath));
+            properties = new Properties();
+            try {
+                properties.load(reader);
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Configuration.properties not found at " + propertyFilePath);
+        }
+    }
+
+    public String getEnvValue() {
+        String app_env = properties.getProperty("app_env");
+        if(app_env != null) return app_env;
+        else throw new RuntimeException("app_env is not specified in the config.properties file");
+    }
+
+
 }

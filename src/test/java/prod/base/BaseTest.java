@@ -19,18 +19,23 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 
 import java.io.File;
+import java.util.Properties;
 
 @Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
 public abstract class BaseTest implements IDataGenerator {
 
     protected static Config config;
+    protected static PropertyFileReader propertyFileReader;
     protected SiteStepsHolder site;
 
     protected String user;
     protected String password;
 
     static {
-        String env = System.getProperty("env", "demo");
+        propertyFileReader = new PropertyFileReader();
+        String envValue = propertyFileReader.getEnvValue();
+
+        String env = System.getProperty("env", envValue);Ba
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
         config = ConfigProvider.provide();
