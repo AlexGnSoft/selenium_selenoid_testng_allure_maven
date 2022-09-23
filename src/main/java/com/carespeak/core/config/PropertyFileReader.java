@@ -12,7 +12,7 @@ import java.util.Properties;
  */
 public class PropertyFileReader implements IConfigReader {
 
-    public Properties properties;
+    public static Properties properties;
 
     @Override
     public Config readConfig(String url) {
@@ -59,15 +59,19 @@ public class PropertyFileReader implements IConfigReader {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new RuntimeException("Configuration.properties not found at " + propertyFilePath);
+            throw new RuntimeException("Properties file not found at " + propertyFilePath);
         }
     }
 
-    public String getEnvValue() {
-        String app_env = properties.getProperty("app_env");
-        if(app_env != null) return app_env;
-        else throw new RuntimeException("app_env is not specified in the config.properties file");
+    /**
+     * Returns variable value from properties file, depending on variable name
+     *
+     * @param variableName - any variable name from the properties file
+     */
+    public static String getVariableValue(String variableName) {
+        String variable = properties.getProperty(variableName);
+        if(variable != null) return variable;
+        else throw new RuntimeException("variable is not specified in the properties file");
     }
-
 
 }

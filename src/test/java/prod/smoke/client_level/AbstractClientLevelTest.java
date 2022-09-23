@@ -1,5 +1,6 @@
 package prod.smoke.client_level;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
@@ -17,7 +18,8 @@ import java.util.List;
 public abstract class AbstractClientLevelTest extends BaseTest {
 
     protected Client getTestClientByCode(String clientCode) {
-        return getTestClientByCode(clientCode, "twilioSmsSender5 [TWILIO +17542272273]");
+        String twilioSmsSenderEndPoint = PropertyFileReader.getVariableValue("twilioSmsSender");
+        return getTestClientByCode(clientCode, twilioSmsSenderEndPoint);
     }
 
     protected Client getTestClientByCode(String clientCode, String endpoint) {

@@ -1,5 +1,6 @@
 package prod.smoke.client_level;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.program.Patient;
 import org.testng.Assert;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
 
-    private List<String> expectedEndpoints = Arrays.asList("twilioSmsSender5 [TWILIO +17542272273]");
+    private List<String> expectedEndpoints = Arrays.asList(PropertyFileReader.getVariableValue("twilioSmsSender"));
 
     private Patient patient;
     private Client client;
