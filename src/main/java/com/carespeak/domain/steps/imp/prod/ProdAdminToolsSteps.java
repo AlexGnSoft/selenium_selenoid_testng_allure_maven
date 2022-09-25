@@ -12,8 +12,11 @@ import com.carespeak.domain.ui.prod.page.admin_tools.clients.language_settings.C
 import com.carespeak.domain.ui.prod.page.admin_tools.clients.modules.ClientModulesPage;
 import com.carespeak.domain.ui.prod.page.admin_tools.sms_send_simulator.SendSMSSimulatorPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
+import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProdAdminToolsSteps implements AdminToolsSteps {
@@ -116,7 +119,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         Client client = new Client();
         client.setName(tableRowItem.getDataByHeader("Name"));
         client.setCode(tableRowItem.getDataByHeader("Code"));
-        client.setModules(getModules(tableRowItem.getDataByHeader("Modules")));
+        client.setModules(getModulesFromWebElements());
         client.setEndpoint(selectedEndpoints);
         return client;
     }
@@ -205,13 +208,39 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         return this;
     }
 
-    private List<Module> getModules(String moduleShortNames) {
-        String[] modulesShortName = moduleShortNames.split(",");
-        List<Module> modules = new ArrayList<>();
-        for (String shortName : modulesShortName) {
-            modules.add(Module.getModule(shortName));
-        }
-        return modules;
-    }
+//    private List<Module> getModules(String moduleShortNames) {
+//        String[] modulesShortName = moduleShortNames.split(",");
+//        List<Module> modules = new ArrayList<>();
+//        for (String shortName : modulesShortName) {
+//            modules.add(Module.getModule(shortName));
+//        }
+//        return modules;
+//    }
 
+    private List<Module> getModulesFromWebElements() {
+        clientsPage.sideBarMenu.openItem("Modules");
+
+        // Strings of modules
+        List<String> modules = new ArrayList<>();
+        for (WebElement allModuleName : clientModulesPage.allModuleNames) {
+            modules.add(allModuleName.getText());
+        }
+
+        //Array of Module objects
+        Module[] modulesToSet = new Module[modules.size()];
+        for (int i = 0; i < modules.size()-1; i++) {
+            modulesToSet [i] = Module.getModule(modules.get(i));
+        }
+
+        //List of Modules
+        List<Module> module = new ArrayList<>();
+        for (int i = 0; i < modulesToSet.length-1; i++) {
+            module.add(modulesToSet[i]);
+        }
+
+        //Sort in alphabetical order
+        module.sort(Comparator.comparing(Module::name));
+
+        return module;
+    }
 }

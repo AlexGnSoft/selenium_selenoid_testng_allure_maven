@@ -42,9 +42,10 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Client actualClient = site.adminToolsSteps()
                 .addNewClient(client, Module.CHECK_ALL)
                 .getClientByCode(client.getCode());
-        Assert.assertEquals(actualClient, client, "Actual client differs from expected client");
+        Assert.assertEquals(client, actualClient, "Actual client differs from expected client");
     }
 
+    @Test(description = "Edit clients modules")
     public void editClientsModules() {
         Module[] modulesToSet = {Module.BIOMETRIC, Module.EDUCATION, Module.MOTIVATION};
         client.setModules(modulesToSet);

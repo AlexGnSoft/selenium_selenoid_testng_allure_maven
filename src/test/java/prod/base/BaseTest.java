@@ -24,7 +24,7 @@ import org.testng.annotations.Listeners;
 import java.io.File;
 import java.util.Properties;
 
-@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
+//@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
 public abstract class BaseTest implements IDataGenerator {
 
     protected static Config config;
@@ -36,7 +36,7 @@ public abstract class BaseTest implements IDataGenerator {
 
     static {
         propertyFileReader = new PropertyFileReader();
-        String envVariableValue = propertyFileReader.getVariableValue("app_env");
+        String envVariableValue = PropertyFileReader.getVariableValue("app_env");
         String env = System.getProperty("env", envVariableValue);
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
