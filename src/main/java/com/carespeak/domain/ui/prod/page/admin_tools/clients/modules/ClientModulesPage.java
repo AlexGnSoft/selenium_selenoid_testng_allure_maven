@@ -90,6 +90,7 @@ public class ClientModulesPage extends AbstractClientPage {
     }
 
     public void uncheckAll() {
+          checkAllCheckBox.click();
         checkAllCheckBox.uncheck();
         for (Module module : Module.getAllModules()) {
             String value = module.name().toUpperCase().substring(0, 2);
@@ -100,4 +101,8 @@ public class ClientModulesPage extends AbstractClientPage {
         }
     }
 
+    public void checkUncheckAll() {
+        checkAllCheckBox.click();
+        checkAllCheckBox.uncheck();
+    }
 }

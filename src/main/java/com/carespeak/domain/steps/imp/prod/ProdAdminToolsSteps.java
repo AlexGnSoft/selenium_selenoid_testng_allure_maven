@@ -92,9 +92,10 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         if (tableRowItem == null) {
             throw new RuntimeException("Client was not found by code '" + clientCode + "'!");
         }
+
         clientsPage.clientsTable.editFirstItemButton().click();
         clientsPage.sideBarMenu.openItem("Modules");
-        clientModulesPage.uncheckAll();
+        clientModulesPage.checkUncheckAll();
         clientModulesPage.check(newModules);
         clientModulesPage.saveButton.click();
         clientModulesPage.statusPopup.waitForDisplayed();
@@ -208,15 +209,6 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         return this;
     }
 
-//    private List<Module> getModules(String moduleShortNames) {
-//        String[] modulesShortName = moduleShortNames.split(",");
-//        List<Module> modules = new ArrayList<>();
-//        for (String shortName : modulesShortName) {
-//            modules.add(Module.getModule(shortName));
-//        }
-//        return modules;
-//    }
-
     private List<Module> getModulesFromWebElements() {
         clientsPage.sideBarMenu.openItem("Modules");
 
@@ -229,7 +221,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         //Array of Module objects
         Module[] modulesToSet = new Module[modules.size()];
         for (int i = 0; i < modules.size()-1; i++) {
-            modulesToSet [i] = Module.getModule(modules.get(i));
+            modulesToSet[i] = Module.getModule(modules.get(i));
         }
 
         //List of Modules
