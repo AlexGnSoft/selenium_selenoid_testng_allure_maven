@@ -2,6 +2,7 @@ package com.carespeak.domain.steps.imp.prod;
 
 import com.carespeak.domain.entities.campaign.CampaignAccess;
 import com.carespeak.domain.entities.client.Client;
+import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.steps.CampaignSteps;
 import com.carespeak.domain.ui.prod.page.programs.general.campaign.AlertTimeContainer;
 import com.carespeak.domain.ui.prod.page.campaigns.CampaignsPage;
@@ -25,6 +26,24 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage = new CampaignsPage();
         generalPage = new CampaignsGeneralPage();
         timeTablePage = new CampaignsTimeTablePage();
+    }
+
+    @Override
+    public CampaignSteps goToCampaignsTab() {
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.campaignsMenuItem.click();
+        waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+
+        return this;
+    }
+
+    @Override
+    public List<Module> getAvailableModules(String clientName) {
+        campaignsPage.searchClient.search(clientName);
+        campaignsPage.addCampaignButton.click();
+        List<String> options = campaignsPage.selectModuleActionTypePopup.moduleDropdownOnCampaignsTab.getAvailableOptions();
+        campaignsPage.selectModuleActionTypePopup.nextButton.click();
+        return Module.getModules(options);
     }
 
     @Override

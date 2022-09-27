@@ -34,7 +34,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         messagesPage.searchClient.search(clientName);
         messagesPage.addButton.click();
         messagesPage.selectModuleActionTypePopup.waitForDisplayed();
-        List<String> options = messagesPage.selectModuleActionTypePopup.moduleDropdown.getAvailableOptions();
+        List<String> options = messagesPage.selectModuleActionTypePopup.moduleDropdownOnMessageTab.getAvailableOptions();
         messagesPage.selectModuleActionTypePopup.nextButton.click();
         return Module.getModules(options);
     }
