@@ -218,6 +218,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
             modules.add(allModuleName.getText());
         }
 
+
         //Array of Module objects
         Module[] modulesToSet = new Module[modules.size()];
         for (int i = 0; i < modules.size()-1; i++) {
