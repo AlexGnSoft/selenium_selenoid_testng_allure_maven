@@ -20,7 +20,7 @@ public class SimulateResponsePopup extends AbstractPopup {
     public Input closePopupButton;
 
     @ElementName("Send popup button")
-    @FindBy(xpath = "//span[contains(text(),'Send')]")
+    @FindBy(xpath = "//span[@class='ui-button-text' and text()='Send']")
     public Input sendButton;
 
     @ElementName("Close popup button")
