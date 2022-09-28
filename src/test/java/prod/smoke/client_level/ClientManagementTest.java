@@ -7,6 +7,7 @@ import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.steps.imp.prod.ProdMessagesSteps;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -89,7 +90,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
 
 
     @Test(description = "Add additional language for client", dependsOnMethods = "addNewClient")
-    public void addAdditionalLanguageForClient() {
+        public void addAdditionalLanguageForClient() {
         List<Language> expectedLanguages = Arrays.asList(Language.CH, Language.DU);
 
         List<Language> actualLanguages = site.adminToolsSteps()
@@ -104,7 +105,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                         "but additional languages is " + Arrays.toString(actualLanguages.toArray()) + "\n");
     }
 
-    @Test(description = "Remove additional language for client", dependsOnMethods = "addAdditionalLanguageForClient")
+    @Test(description = "Remove additional language for client", dependsOnMethods = {"addNewClient", "addAdditionalLanguageForClient"})
     public void removeAdditionalLanguageForClient() {
         Language languageToRemove = Language.CH;
 
@@ -120,20 +121,13 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                         "but additional languages is " + Arrays.toString(actualLanguages.toArray()) + "\n");
     }
 
-    @Test(description = "Remove created client test", dependsOnMethods = "removeAdditionalLanguageForClient")
+    @AfterClass(alwaysRun = true)
     public void removeClient() {
-        site.loginSteps()
-                .openSite()
-                .loginAs(user, password);
         site.adminToolsSteps()
                 .removeClient(client);
 
-        site.loginSteps()
-                .openSite()
-                .loginAs(user, password);
         Client shouldBeRemoved = site.adminToolsSteps()
                 .getClientByCode(client.getCode());
         Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
     }
-
 }
