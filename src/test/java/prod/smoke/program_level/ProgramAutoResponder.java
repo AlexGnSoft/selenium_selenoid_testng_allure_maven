@@ -53,6 +53,11 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
 
     @Test(description = "Check the auto responder goes out as expected when send an unrecognized message")
     public void unrecognizedMessage() {
+        //To validate exact steps with QA team
+//        site.programSteps()
+//                .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
+//                .addNewPatient(patient, client, programName)
+//                .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");
         site.programSteps()
                 .simulateResponse(patient.getFirstName(), "Unrecognized");
 
