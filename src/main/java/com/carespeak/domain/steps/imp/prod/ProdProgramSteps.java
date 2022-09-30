@@ -267,6 +267,8 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.rejectSolicitedCheckbox.check();
+        //TODO: But not from Pending Patients checkbox is needs to be checked. Implementation:
+        programAutoRespondersPage.acceptPendingUserCheckbox.check();
         programAutoRespondersPage.acceptedMessageRegexInput.enterText(messagePattern);
         programAutoRespondersPage.saveButton.click();
         return this;
