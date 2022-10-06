@@ -455,6 +455,7 @@ public class ProdProgramSteps implements ProgramSteps {
         patientMessageLogsPage.simulateResponsePopup.responseInput.enterText(message);
         patientMessageLogsPage.simulateResponsePopup.sendButton.click();
         waitFor(() -> patientMessageLogsPage.simulateResponseBtn.isDisplayed());
+        patientMessageLogsPage.sleepWait(3000);
         return this;
     }
 

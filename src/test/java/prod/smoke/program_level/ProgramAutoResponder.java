@@ -34,33 +34,15 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
         patient.setTimezone("Eastern Time (New York)");
     }
 
-    @Test(description = "Check auto response on accepted message regexes")
-    public void addAutoResponder() {
-        site.programSteps()
-                .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
-                .addNewPatient(patient, client, programName)
-                .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");
-        site.programSteps()
-                .addAutoResponder(client, programName, AutoRespondersStatus.OVERRIDDEN, AUTO_RESPONDER_MESSAGE);
-        site.programSteps()
-                .simulateResponse(patient.getFirstName(), "AGREE")
-                .simulateResponse(patient.getFirstName(), "Accepted");
-
-        MessageLogItem actualSms = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
-
-        Assert.assertEquals(actualSms.getMessage(), AUTO_RESPONDER_MESSAGE, "Received message is not the same as expected!");
-    }
-
     @Test(description = "Check that auto responder sends predefined message at Overridden status")
     public void addAutoResponderOverride() {
         site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
-                .addNewPatient(patient, client, programName)
                 .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");
         site.programSteps()
                         .addAutoResponder(client, programName, AutoRespondersStatus.OVERRIDDEN, AUTO_RESPONDER_MESSAGE);
         site.programSteps()
+                .addNewPatient(patient, client, programName)
                 .simulateResponse(patient.getFirstName(), "AGREE")
                 .simulateResponse(patient.getFirstName(), "Accepted");
 

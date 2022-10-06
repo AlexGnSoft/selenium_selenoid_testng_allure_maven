@@ -1,6 +1,6 @@
 package prod.smoke.keyword_signup;
+import prod.base.BaseTest;
 
-import prod.smoke.SmokeBaseTest;
 
-public abstract class AbstractKeyWordSignUpLevelTest extends SmokeBaseTest {
+public abstract class AbstractKeyWordSignUpLevelTest extends BaseTest {
 }

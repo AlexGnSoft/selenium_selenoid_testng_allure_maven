@@ -59,4 +59,12 @@ public abstract class AbstractPage implements ICanWait {
         throw new RuntimeException("No new tabs opened! Tabs count is: " + windowHandles.size());
     }
 
+    public void sleepWait(int waitTime){
+        try {
+            Thread.sleep(waitTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
