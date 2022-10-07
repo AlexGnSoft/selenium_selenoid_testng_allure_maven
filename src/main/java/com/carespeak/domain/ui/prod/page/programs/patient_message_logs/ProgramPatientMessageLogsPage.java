@@ -25,7 +25,7 @@ public class ProgramPatientMessageLogsPage extends AbstractPage {
     public ClickableElement patientNameText;
 
     @ElementName("Simulate Response button")
-    @FindBy(id = "btnSimulateResponse")
+    @FindBy(xpath = "//div[@id='csMessagesLogsTable_wrapper']//button[@class='btn btn-default cs-button']")
     public Button simulateResponseBtn;
 
     @ElementName("Message attachment button")
