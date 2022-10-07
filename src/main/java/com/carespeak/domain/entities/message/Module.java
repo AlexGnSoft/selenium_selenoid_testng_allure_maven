@@ -17,7 +17,7 @@ public enum Module {
 
     //Returns all modules except Check All value
     public static List<Module> getAllModules() {
-        return Arrays.asList(APPOINTMENT, BIOMETRIC, EDUCATION, INCENTIVE, JOURNAL, MEDICATION, MOTIVATION, RULES, SURVEY);
+        return Arrays.asList(APPOINTMENT, BIOMETRIC, EDUCATION, JOURNAL, MEDICATION, MOTIVATION, RULES, SURVEY);
     }
 
     //Returns all modules except Check All value
