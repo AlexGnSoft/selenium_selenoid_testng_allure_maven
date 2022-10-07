@@ -549,4 +549,11 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         return entitiesList;
     }
+
+    @Override
+    public ProgramSteps pageRefresh() {
+        optInMessagesPage.refreshPage();
+        return this;
+    }
+
 }

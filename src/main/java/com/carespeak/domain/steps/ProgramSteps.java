@@ -270,4 +270,6 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message);
 
     List<Patient> getPatients(Client client, String programName);
+
+    ProgramSteps pageRefresh();
 }
