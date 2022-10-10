@@ -26,12 +26,12 @@ public class QuestionRowItem {
     }
 
     public Input questionTextInput() {
-        WebElement element = rowWebElement.findElement(By.name("ac-question"));
+        WebElement element = rowWebElement.findElement(By.name("cs-as-question"));
         return new Input(element, "Question text input");
     }
 
     public Input onErrorTextInput() {
-        WebElement element = rowWebElement.findElement(By.name("ac-error"));
+        WebElement element = rowWebElement.findElement(By.name("cs-as-error"));
         return new Input(element, "On Error text input");
     }
 

@@ -43,7 +43,7 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
 
     //Account creation section
     @ElementName("Add account creation question button")
-    @FindBy(id = "addAccountCreationQuestionBtn")
+    @FindBy(id = "addQuestionBtn")
     public Button addQuestionButton;
 
     @ElementName("Validation message button")
