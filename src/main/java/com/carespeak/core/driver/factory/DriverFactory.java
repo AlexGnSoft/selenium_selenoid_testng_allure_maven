@@ -6,6 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -73,8 +74,8 @@ public class DriverFactory {
             case CHROME:
                 remoteWebDriver = new ChromeDriver();
                 break;
-            case EDGE:
-                remoteWebDriver = new EdgeDriver();
+            case FIREFOX:
+                remoteWebDriver = new FirefoxDriver();
                 break;
             default:
                 throw new UnsupportedOperationException("Driver creation is not supported for type " + driverName);
