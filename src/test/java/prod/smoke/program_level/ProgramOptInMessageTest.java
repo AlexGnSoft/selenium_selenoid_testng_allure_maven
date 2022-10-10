@@ -51,7 +51,9 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
                 .goToProgramSettings(client.getName(), programName)
                 .addOptInMessages(filePath, false);
 
-        site.programSteps().simulateResponse(patient.getFirstName(), "Agree");
+        site.programSteps()
+                .pageRefresh()
+                .simulateResponse(patient.getFirstName(), "Agree");
 
         MessageLogItem actualOptInMessage = site.programSteps()
                 .getLastPatientMessageFromLogs(patient.getFirstName());
@@ -90,8 +92,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @Test(description = "Simulate patient's STOP response", dependsOnMethods = "simulateConfirmation")
     public void simulateStop() {
-        site.programSteps().pageRefresh();
-        site.programSteps().simulateResponse(patient.getFirstName(), "Stop");
+        site.programSteps()
+                .simulateResponse(patient.getFirstName(), "Stop");
 
         MessageLogItem actualOptInMessage = site.programSteps()
                 .getLastPatientMessageFromLogs(patient.getFirstName());
@@ -101,8 +103,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @Test(description = "Simulate patient's START response", dependsOnMethods = "simulateStop")
     public void simulateStart() {
-        site.programSteps().pageRefresh();
-        site.programSteps().simulateResponse(patient.getFirstName(), "Start");
+        site.programSteps()
+                .simulateResponse(patient.getFirstName(), "Start");
 
         MessageLogItem actualOptInMessage = site.programSteps()
                 .getLastPatientMessageFromLogs(patient.getFirstName());
@@ -112,8 +114,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @Test(description = "Simulate patient's HELP response", dependsOnMethods = "simulateStart")
     public void simulateHelp() {
-        site.programSteps().pageRefresh();
-        site.programSteps().simulateResponse(patient.getFirstName(), "Help");
+        site.programSteps()
+                .simulateResponse(patient.getFirstName(), "Help");
 
         MessageLogItem actualOptInMessage = site.programSteps()
                 .getLastPatientMessageFromLogs(patient.getFirstName());

@@ -449,11 +449,11 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Patients");
             selectPatientByName(patientFirstName);
         }
-        patientMessageLogsPage.simulateResponseBtn.isDisplayed();
+        patientMessageLogsPage.sleepWait(3000); //Preventive measure. Regular waiters are not in 10% of the time with this button.
         patientMessageLogsPage.simulateResponseBtn.click();
         patientMessageLogsPage.simulateResponsePopup.responseInput.enterText(message);
         patientMessageLogsPage.simulateResponsePopup.sendButton.click();
-        patientMessageLogsPage.sleepWait(4000);
+        patientMessageLogsPage.sleepWait(3000); //to give time for the system message to be shown
         return this;
     }
 

@@ -34,8 +34,23 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
         patient.setTimezone("Eastern Time (New York)");
     }
 
-    @Test(description = "Check that auto responder sends predefined message at Overridden status")
+    @Test(description = "Check the auto responder goes out as expected when send an unrecognized message")
+    public void unrecognizedMessage() {
+        site.programSteps()
+                .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
+                .addNewPatient(patient, client, programName);
+        site.programSteps()
+                .simulateResponse(patient.getFirstName(), "Unrecognized");
+
+        MessageLogItem actualSms = site.programSteps()
+                .getLastPatientMessageFromLogs(patient.getFirstName());
+
+        Assert.assertEquals(actualSms.getMessage(), AUTO_RESPONDER_MESSAGE_UNRECOGNIZED, "Received message is not the same as expected!");
+    }
+
+    @Test(description = "Check that auto responder sends predefined message at Overridden status", dependsOnMethods = "unrecognizedMessage")
     public void addAutoResponderOverride() {
+        site.loginSteps().openSite().loginAs(user, password);
         site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");
@@ -50,21 +65,6 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
                 .getLastPatientMessageFromLogs(patient.getFirstName());
 
         Assert.assertEquals(actualSms.getMessage(), AUTO_RESPONDER_MESSAGE, "Received message is not the same as expected!");
-    }
-
-    @Test(description = "Check the auto responder goes out as expected when send an unrecognized message")
-    public void unrecognizedMessage() {
-        site.programSteps().pageRefresh();
-        site.programSteps()
-                .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
-                .addNewPatient(patient, client, programName);
-        site.programSteps()
-                .simulateResponse(patient.getFirstName(), "Unrecognized");
-
-        MessageLogItem actualSms = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
-
-        Assert.assertEquals(actualSms.getMessage(), AUTO_RESPONDER_MESSAGE_UNRECOGNIZED, "Received message is not the same as expected!");
     }
 
     @AfterClass(alwaysRun = true)
