@@ -168,7 +168,7 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps addAccountCreationQuestion(boolean isMandatory, String field, String questionText, String onErrorText) {
+    public ProgramSteps addAccountCreationQuestion(boolean isMandatory, String dropDownfield, String questionText, String onErrorText) {
         if (!programKeywordSignupPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Keyword Signup");
         }
@@ -180,7 +180,8 @@ public class ProdProgramSteps implements ProgramSteps {
         } else {
             questionItem.mandatoryQuestionCheckbox().uncheck();
         }
-        questionItem.fieldDropdown().select(field);
+//        questionItem.fieldDropdown().click();
+        questionItem.fieldDropdown().select(dropDownfield);
         questionItem.questionTextInput().enterText(questionText);
         questionItem.onErrorTextInput().enterText(onErrorText);
         programKeywordSignupPage.saveButton.click();
