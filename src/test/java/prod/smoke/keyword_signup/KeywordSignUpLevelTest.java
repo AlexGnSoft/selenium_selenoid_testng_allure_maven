@@ -13,8 +13,6 @@ import org.testng.annotations.Test;
 
 public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
 
-    //SIGN_UP_KEYWORD should contain only digits and letters without underscores and white spaces for valid test cases
-    private static final String SIGN_UP_KEYWORD = "mykeyword";
     private static final String FROM_PHONE_NUMBER = "+15554622669";
     private static final String FROM_PHONE_NUMBER_2 = "+15554622555";
     private static final String FROM_PHONE_NUMBER_3 = "+15554622556";
@@ -23,10 +21,12 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     private static final String FROM_PHONE_NUMBER_6 = "+15554622559";
     private static final String TO_ENDPOINT = "twilioSmsSender10 [TWILIO +15874102273]";
     private static final String COMPLETED_MESSAGE = "You've successfully completed the registration.";
+    private final String SIGN_UP_KEYWORD = getRandomString();
 
     private Patient patient;
     private Client client;
     private String programName;
+    private String signUpKeyword;
 
     @BeforeClass
     public void prepareClientData() {
@@ -67,8 +67,6 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                 .goToProgramSettings(client.getName(), programName)
                 .addKeywordForSignUp(SIGN_UP_KEYWORD);
 
-        site.adminToolsSteps()
-                .simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
         //TODO: Simulate Signup
         site.adminToolsSteps()
                 .simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD)
