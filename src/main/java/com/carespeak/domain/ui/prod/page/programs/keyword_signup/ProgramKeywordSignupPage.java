@@ -22,15 +22,15 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
     public Input keywordInput;
 
     @ElementName("Destination program question keywords button")
-    @FindBy(id = "ks-dpk-items-add")
+    @FindBy(id = "cs-as-dpk-items-add")
     public Button addDestinationProgramKeywordBtn;
 
     @ElementName("Destination program question keyword input")
-    @FindBy(xpath = "//div[@class = 'ks-dpk-items']//input[@name='keyword']")
+    @FindBy(xpath = "//div[@class = 'cs-as-dpk-items']//input[@name='keyword']")
     public Input destinationProgramKeywordInput;
 
     @ElementName("Destination program dropdown button")
-    @FindBy(xpath = "//div[@id='ks-dpk-items-container']//button[@role='button']")
+    @FindBy(xpath = "//div[@class='cs-as-dpk-items']//button[@role='button']")
     public Button destinationProgramDropdownButton;
 
     @ElementName("Skip question response input")
@@ -47,7 +47,7 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
     public Button addQuestionButton;
 
     @ElementName("Validation message button")
-    @FindBy(id = "addValidationMessageBtn")
+    @FindBy(id = "toggleValidationMessageBtn")
     public Button validationMessageButton;
 
     @ElementName("Validation message input")
@@ -55,7 +55,7 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
     public Input validationMessageInput;
 
     @ElementName("Completed message button")
-    @FindBy(id = "addCompletedMessageBtn")
+    @FindBy(id = "toggleCompletedMessageBtn")
     public Button completedMessageButton;
 
     @ElementName("Completed message input")

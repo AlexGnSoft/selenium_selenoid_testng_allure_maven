@@ -74,6 +74,7 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
 
+        dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.searchClient.search(clientName);
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);

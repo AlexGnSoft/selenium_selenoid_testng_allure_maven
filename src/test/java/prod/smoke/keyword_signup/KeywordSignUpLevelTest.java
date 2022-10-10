@@ -26,7 +26,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     private Patient patient;
     private Client client;
     private String programName;
-    private String signUpKeyword;
+
 
     @BeforeClass
     public void prepareClientData() {
@@ -59,7 +59,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), expectedMessage, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Simulate health alerts subscription confirmation (simulate patient's AGREE response)")
+    @Test(description = "Simulate health alerts subscription confirmation (simulate patient's AGREE response)", dependsOnMethods = "addKeywordForSignUp")
     public void simulateConfirmation() {
         //TODO: Add signup keyword
         site.programSteps()
@@ -79,7 +79,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Successful sign up with questions")
+    @Test(description = "Successful sign up with questions", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation"})
     public void addSignupQuestions() {
         //TODO: Set signup keyword and add questions
         site.programSteps()
@@ -114,7 +114,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Successful sign up with custom fields")
+    @Test(description = "Successful sign up with custom fields", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions"})
     public void addCustomField() {
         //TODO: Set signup keyword and add questions
         site.programSteps()
@@ -166,6 +166,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                         "Name: ${p} \n" +
                         "Therapy Start Date: ${event:Rx Therapy Start Date}");
 
+        //TODO: Simulate sms from patient
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, SIGN_UP_KEYWORD);
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
@@ -178,19 +179,19 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "SKIP");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "12/19/20");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "10/10/22");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "No");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "AutoFred");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "AutoName");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "SKIP");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "12/19/20");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "10/10/22");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "Yes");
@@ -201,25 +202,26 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check if completed message is added", dependsOnMethods = "addValidationMessage")
+    @Test(description = "Check if completed message is added", dependsOnMethods = {"addCustomField", "addValidationMessage"})
     public void addCompletedMessage() {
         site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
                 .addCompletedMessage(COMPLETED_MESSAGE);
 
+        //TODO: Simulate sms from patient
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, SIGN_UP_KEYWORD);
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_5);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "AGREE");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_5);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "AutoFred");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "AutoName");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_5);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "SKIP");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_5);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "12/19/20");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "10/10/22");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_5);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "Yes");
@@ -230,7 +232,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), COMPLETED_MESSAGE, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Move patient to a specific program based on the keyword answer", dependsOnMethods = "addCompletedMessage")
+    @Test(description = "Move patient to a specific program based on the keyword answer", dependsOnMethods = {"addCustomField", "addValidationMessage", "addCompletedMessage"})
     public void movePatientToSpecificProgram() {
         site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
@@ -240,19 +242,20 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                         "Enter MOVE if you'd like to be moved to another program. Or type SKIP if you wish to stay in this one.",
                         "Wrong response, try again");
 
+        //TODO: Simulate sms from patient
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, SIGN_UP_KEYWORD);
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "AGREE");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "AutoFred");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "AutoName");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "SKIP");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
 
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "12/19/20");
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "10/10/22");
         site.programSteps().goToProgramSettings(client.getName(), programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "MOVE");

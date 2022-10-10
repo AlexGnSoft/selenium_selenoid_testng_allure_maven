@@ -71,7 +71,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
     @Test(description = "Simulate patient's AGREE response", dependsOnMethods = {"addOptInMessageWithConfirmation", "addOptInMessageWithoutConfirmation", "messageAttachment"} )
     public void simulateConfirmation() {
         //TODO: Page refresh to make 'Programs' button visible
-        site.programSteps().pageRefresh();
+        //site.programSteps().pageRefresh();
         //TODO: Creating a new program and patient (new patient is needed for this test)
         String programName2 = getTestProgramByName("OptIn program " + getRandomString(), client);
         Patient patient2 = new Patient();
