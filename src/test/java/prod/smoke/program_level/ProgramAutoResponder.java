@@ -50,7 +50,6 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
 
     @Test(description = "Check that auto responder sends predefined message at Overridden status", dependsOnMethods = "unrecognizedMessage")
     public void addAutoResponderOverride() {
-        //site.loginSteps().openSite().loginAs(user, password);
         site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");
