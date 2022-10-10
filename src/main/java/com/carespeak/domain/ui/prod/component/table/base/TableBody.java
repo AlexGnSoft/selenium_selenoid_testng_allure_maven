@@ -18,11 +18,14 @@ class TableBody extends AbstractComponent {
 
     private static final String TABLE_HEADERS = ".//th";
     private static final String TABLE_ROWS = ".//tr";
+    private static final String TABLE_ROWS_INSIDE = "//tbody//tr";
     private static final String TABLE_CELLS = ".//td";
     private static final String TABLE_CELL_LOCATOR = ".//td[%s]";
+    private static final String tableLocatorId = "cs-as-table";
 
     private WebElement table;
     private By tableLocator;
+
 
     public TableBody(By tableLocator) {
         this.tableLocator = tableLocator;
@@ -94,17 +97,14 @@ class TableBody extends AbstractComponent {
         return null;
     }
 
-    //FIXME: Add only visible items
     List<WebElement> getRowsWebElements() {
         Logger.debug("Receiving rows web elements...");
         try {
             waitFor(() -> driver.findElement(tableLocator) != null);
-            table = driver.findElement(tableLocator);
-            //FIXME: search supported for exact match. Support wait for table to be fully loaded
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
-            return table.findElements(By.xpath(TABLE_ROWS));
+            table = driver.findElement(By.id(tableLocatorId));
+            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS_INSIDE)).size() == 2, 5, false);
+            return table.findElements(By.xpath(TABLE_ROWS_INSIDE));
         } catch (Throwable t) {
-            //Error during table analyzing, do nothing here
             Logger.error("Failed to parse table and find rows web elements", t);
         }
         Logger.error("Rows web elements were not found");
