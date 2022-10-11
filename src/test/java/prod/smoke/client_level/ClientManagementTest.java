@@ -40,7 +40,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         client.setModules(Module.getAllModules());
     }
 
-    @Test(description = "Add new client with SMS aggregator and all modules")
+    @Test(description = "Add new client with all modules")
     public void addNewClient() {
         Client actualClient = site.adminToolsSteps()
                 .addNewClient(client, Module.CHECK_ALL)
@@ -48,7 +48,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Assert.assertEquals(client, actualClient, "Actual client differs from expected client");
     }
 
-    @Test(description = "Edit clients modules")
+    @Test(description = "Edit clients modules", dependsOnMethods = "addNewClient")
     public void editClientsModules() {
         Module[] modulesToSet = {Module.BIOMETRIC, Module.EDUCATION, Module.MOTIVATION};
         client.setModules(modulesToSet);
@@ -63,7 +63,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Assert.assertTrue(site.messagesSteps().isMessageModulesEqualToClient(modulesToSet, updatedClient), "Client list of modules was not updated");
     }
 
-    @Test(description = "Check client's modules for messages", dependsOnMethods = "editClientsModules")
+    @Test(description = "Check client's modules for messages", dependsOnMethods = {"addNewClient", "editClientsModules"})
     public void checkClientsModulesForMessages() {
         List<Module> availableModules = site.messagesSteps()
                 .goToMessagesTab()
@@ -75,7 +75,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                         "Client modules: " + client.getModules() + "\n");
     }
 
-    @Test(description = "Check client's modules for campaigns", dependsOnMethods = "editClientsModules")
+    @Test(description = "Check client's modules for campaigns", dependsOnMethods = {"addNewClient", "editClientsModules"})
     public void checkClientsModulesForCampaigns() {
         List<Module> availableModules = site.campaignSteps()
                 .goToCampaignsTab()
