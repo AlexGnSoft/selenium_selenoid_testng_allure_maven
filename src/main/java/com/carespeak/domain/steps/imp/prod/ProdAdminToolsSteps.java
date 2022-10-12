@@ -15,7 +15,6 @@ import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     private ClientModulesPage clientModulesPage;
     private ClientLanguageSettingsPage clientLanguageSettingsPage;
     private SendSMSSimulatorPage sendSMSSimulatorPage;
+    private ProdProgramSteps prodProgramSteps;
 
     public ProdAdminToolsSteps() {
         clientsPage = new ClientsPage();
@@ -35,6 +35,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         clientModulesPage = new ClientModulesPage();
         clientLanguageSettingsPage = new ClientLanguageSettingsPage();
         sendSMSSimulatorPage = new SendSMSSimulatorPage();
+        prodProgramSteps = new ProdProgramSteps();
     }
 
     @Override
@@ -206,6 +207,44 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         sendSMSSimulatorPage.fromInput.enterText(fromPhoneNumber);
         sendSMSSimulatorPage.bodyInput.enterText(smsText);
         sendSMSSimulatorPage.sendButton.click();
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkip(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, patientName);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "SKIP");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(patientName);
+
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkipDate(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName, String date) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, patientName);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "SKIP");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, date);
+        //as you put patient name, his name is the system is displayed now as name, and not as his number
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(patientName);
+
         return this;
     }
 

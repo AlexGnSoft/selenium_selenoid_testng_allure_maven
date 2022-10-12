@@ -181,7 +181,6 @@ public class ProdProgramSteps implements ProgramSteps {
         } else {
             questionItem.mandatoryQuestionCheckbox().uncheck();
         }
-//        questionItem.fieldDropdown().click();
         questionItem.fieldDropdown().select(dropDownfield);
         questionItem.questionTextInput().enterText(questionText);
         questionItem.onErrorTextInput().enterText(onErrorText);
@@ -479,8 +478,27 @@ public class ProdProgramSteps implements ProgramSteps {
         return logItem;
     }
 
+//    @Override
+//    public boolean isInProgram(String newProgramName, Patient patient) {
+//        if (!patientMessageLogsPage.isOpened()) {
+//            programsPage.sideBarMenu.openItem("Patients");
+//        }
+//
+//        TableRowItem patientRow = programsPatientsPage.goToPatientsTab().programPatientsTable.getFirstRowItem();
+//        if (patientRow == null) {
+//            throw new RuntimeException("Patient was not found!");
+//        }
+//        selectPatientByName(patient.getFirstName());
+//
+//        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patient.getFirstName()) &&
+//                patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
+//
+//        Logger.info("Is patient '" + patient.getFirstName() + "' in '" + newProgramName + "' program? - " + result);
+//        return result;
+//    }
+
     @Override
-    public boolean isInProgram(String newProgramName, Patient patient) {
+    public boolean isInProgram(String newProgramName, String patientName) {
         if (!patientMessageLogsPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Patients");
         }
@@ -489,12 +507,12 @@ public class ProdProgramSteps implements ProgramSteps {
         if (patientRow == null) {
             throw new RuntimeException("Patient was not found!");
         }
-        selectPatientByName(patient.getFirstName());
+        selectPatientByName(patientName);
 
-        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patient.getFirstName()) &&
+        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patientName) &&
                 patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
 
-        Logger.info("Is patient '" + patient.getFirstName() + "' in '" + newProgramName + "' program? - " + result);
+        Logger.info("Is patient '" + patientName + "' in '" + newProgramName + "' program? - " + result);
         return result;
     }
 

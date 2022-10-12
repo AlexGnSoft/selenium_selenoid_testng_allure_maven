@@ -19,6 +19,8 @@
             <class name="prod.smoke.program_level.ProgramConsentManagementTest"/>
             <class name="prod.smoke.program_level.ProgramOptInMessageTest"/>
             <class name="prod.smoke.program_level.ProgramAutoResponder"/>
+            <!--KeywordSign level tests-->
+            <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
         </classes>
     </test>
 </suite>
