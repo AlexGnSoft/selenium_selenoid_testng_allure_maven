@@ -189,7 +189,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
 
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
-                .addDestinationProgramQuestionKeywords("MOVING", landingProgram)
+                .addDestinationProgramQuestionKeywords("MOVING", programName)
                 .addAccountCreationQuestion(false,
                         "Destination Program",
                         "Enter MOVE if you'd like to be moved to another program. Or type SKIP if you wish to stay in this one.",
