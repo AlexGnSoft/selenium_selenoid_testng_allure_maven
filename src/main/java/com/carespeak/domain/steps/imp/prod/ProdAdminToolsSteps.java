@@ -242,8 +242,6 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
         simulateSMSToClient(phoneNumber, endpoint, date);
-        //as you put patient name, his name is the system is displayed now as name, and not as his number
-        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(patientName);
 
         return this;
     }

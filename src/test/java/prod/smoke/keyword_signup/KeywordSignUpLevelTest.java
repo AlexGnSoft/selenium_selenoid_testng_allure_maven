@@ -153,7 +153,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "Yes");
-        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(ADD_VALIDATION_MESSAGE_PATIENT);
 
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -173,7 +173,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                 .initiateKeywordSignupSendAgreeNameAndSkipDate(clientName, programName, FROM_PHONE_NUMBER_5, TO_ENDPOINT, SIGN_UP_KEYWORD, ADD_COMPLETED_MESSAGE_PATIENT, THERAPY_START_DATE);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_5, TO_ENDPOINT, "Yes");
-        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_5);
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(ADD_COMPLETED_MESSAGE_PATIENT);
 
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -202,7 +202,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "MOVING");
         site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_6, TO_ENDPOINT, "Yes");
-        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_6);
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(MOVE_PATIENT_TO_SPECIFIC_PROGRAM_PATIENT);
 
         boolean isPatientMoved = site.programSteps()
                 .goToProgramSettings(clientName, landingProgram)
