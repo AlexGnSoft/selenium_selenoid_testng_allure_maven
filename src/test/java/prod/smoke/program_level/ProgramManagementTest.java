@@ -39,8 +39,9 @@ public class ProgramManagementTest extends AbstractProgramLevelTest {
 
     @AfterClass(alwaysRun=true)
     public void removeProgram() {
-        site.programSteps().removeProgram(client, programName);
-        List<String> programs = site.programSteps().getProgramsForClient(client);
-        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
+//        site.programSteps().removeProgram(client, programName);
+//        List<String> programs = site.programSteps().getProgramsForClient(client);
+//        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
+        site.adminToolsSteps().removeClient(client);
     }
 }

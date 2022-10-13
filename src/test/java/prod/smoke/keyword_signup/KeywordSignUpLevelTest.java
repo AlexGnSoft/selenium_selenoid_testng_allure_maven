@@ -25,7 +25,6 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     private final String ADD_CUSTOM_FIELD_PATIENT = getRandomLetters();
     private final String ADD_VALIDATION_MESSAGE_PATIENT = getRandomLetters();
     private final String ADD_COMPLETED_MESSAGE_PATIENT = getRandomLetters();
-    private final String MOVE_PATIENT_TO_SPECIFIC_PROGRAM_PATIENT = getRandomLetters();
     private final String THERAPY_START_DATE = "10/10/22";
     private final String TO_ENDPOINT = PropertyFileReader.getVariableValue("twilioSmsSender");
     private static final String COMPLETED_MESSAGE = "You've successfully completed the registration.";

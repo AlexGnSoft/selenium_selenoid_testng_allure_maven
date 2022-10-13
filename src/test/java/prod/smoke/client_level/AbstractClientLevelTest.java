@@ -7,6 +7,7 @@ import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import org.testng.Assert;
 import prod.base.BaseTest;
 
 import java.util.List;
@@ -66,5 +67,19 @@ public abstract class AbstractClientLevelTest extends BaseTest {
         patient.setTimezone("Eastern Time (New York)");
         site.programSteps().addNewPatient(patient, client, programName);
         return patient;
+    }
+
+    protected void removeClient(Client client) {
+        if (client != null) {
+            site.adminToolsSteps()
+                    .removeClient(client);
+
+            site.loginSteps()
+                    .openSite()
+                    .loginAs(user, password);
+            Client shouldBeRemoved = site.adminToolsSteps()
+                    .getClientByCode(client.getCode());
+            Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
+        }
     }
 }
