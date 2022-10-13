@@ -478,25 +478,6 @@ public class ProdProgramSteps implements ProgramSteps {
         return logItem;
     }
 
-//    @Override
-//    public boolean isInProgram(String newProgramName, Patient patient) {
-//        if (!patientMessageLogsPage.isOpened()) {
-//            programsPage.sideBarMenu.openItem("Patients");
-//        }
-//
-//        TableRowItem patientRow = programsPatientsPage.goToPatientsTab().programPatientsTable.getFirstRowItem();
-//        if (patientRow == null) {
-//            throw new RuntimeException("Patient was not found!");
-//        }
-//        selectPatientByName(patient.getFirstName());
-//
-//        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patient.getFirstName()) &&
-//                patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
-//
-//        Logger.info("Is patient '" + patient.getFirstName() + "' in '" + newProgramName + "' program? - " + result);
-//        return result;
-//    }
-
     @Override
     public boolean isInProgram(String newProgramName, String patientName) {
         if (!patientMessageLogsPage.isOpened()) {
@@ -509,8 +490,7 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         selectPatientByName(patientName);
 
-        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patientName) &&
-                patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
+        boolean result = patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
 
         Logger.info("Is patient '" + patientName + "' in '" + newProgramName + "' program? - " + result);
         return result;

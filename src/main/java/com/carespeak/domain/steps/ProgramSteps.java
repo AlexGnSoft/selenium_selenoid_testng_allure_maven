@@ -249,7 +249,6 @@ public interface ProgramSteps extends BaseSteps {
      * @param patientName        patient to be select
      * @return return true if patient is in the specified program otherwise false
      */
-//    boolean isInProgram(String newProgramName, Patient patient);
     boolean isInProgram(String newProgramName, String patientName);
 
     /**

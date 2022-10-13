@@ -222,7 +222,6 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
         simulateSMSToClient(phoneNumber, endpoint, "SKIP");
-        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(patientName);
 
         return this;
     }
