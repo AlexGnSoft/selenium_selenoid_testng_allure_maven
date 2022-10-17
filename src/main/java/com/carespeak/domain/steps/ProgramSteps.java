@@ -233,6 +233,23 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps simulateResponse(String patientFirstName, String message);
 
+    /**
+     * Simulate response and get the last Patient Message Log
+     *
+     * @param message          text to send
+     * @param patient          patient who will have a simulation
+     * @return Message object
+     */
+    MessageLogItem simulateResponseAndGetLastPatientMessage(Patient patient, String message);
+
+    /**
+     * Get the last Patient Message from Logs
+     *
+     * @param patient          patient who will have a simulation
+     * @return Message object
+     */
+    MessageLogItem getLastPatientMessage(Patient patient);
+
 
     /**
      * Returns last message from Programs Patient Messages Logs

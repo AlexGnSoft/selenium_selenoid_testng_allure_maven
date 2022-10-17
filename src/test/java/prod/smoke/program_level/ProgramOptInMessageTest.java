@@ -51,12 +51,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
                 .goToProgramSettings(client.getName(), programName)
                 .addOptInMessages(filePath, false);
 
-        site.programSteps()
-                .pageRefresh()
-                .simulateResponse(patient.getFirstName(), "Agree");
-
-        MessageLogItem actualOptInMessage = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "Agree");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), "Agree", "Received message is not the same as expected!");
     }
@@ -80,45 +76,37 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         patient2.setCellPhone(getGeneratedPhoneNumber());
         patient2.setTimezone("Eastern Time (New York)");
 
-        site.programSteps()
-                .addNewPatient(patient2, client, programName2)
-                .simulateResponse(patient2.getFirstName(), "Agree");
+        site.programSteps().addNewPatient(patient2, client, programName2);
 
-        MessageLogItem actualOptInMessage = site.programSteps()
-                .getLastPatientMessageFromLogs(patient2.getFirstName());
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient2, "Agree");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
     @Test(description = "Simulate patient's STOP response", dependsOnMethods = "simulateConfirmation")
     public void simulateStop() {
-        site.programSteps()
-                .simulateResponse(patient.getFirstName(), "Stop");
 
-        MessageLogItem actualOptInMessage = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "Stop");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.UNSUBSCRIBED, "Received message is not the same as expected!");
     }
 
     @Test(description = "Simulate patient's START response", dependsOnMethods = "simulateStop")
     public void simulateStart() {
-        site.programSteps()
-                .simulateResponse(patient.getFirstName(), "Start");
 
-        MessageLogItem actualOptInMessage = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "Start");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
     @Test(description = "Simulate patient's HELP response", dependsOnMethods = "simulateStart")
     public void simulateHelp() {
-        site.programSteps()
-                .simulateResponse(patient.getFirstName(), "Help");
 
-        MessageLogItem actualOptInMessage = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "Help");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
     }

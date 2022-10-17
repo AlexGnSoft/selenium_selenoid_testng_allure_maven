@@ -459,6 +459,19 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public MessageLogItem simulateResponseAndGetLastPatientMessage(Patient patient, String message) {
+        simulateResponse(patient.getFirstName(), message);
+
+        return getLastPatientMessage(patient);
+    }
+
+    @Override
+    public MessageLogItem getLastPatientMessage(Patient patient) {
+
+        return getLastPatientMessageFromLogs(patient.getFirstName());
+    }
+
+    @Override
     public MessageLogItem getLastPatientMessageFromLogs(String patientFirstName) {
         if (!patientMessageLogsPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Patients");

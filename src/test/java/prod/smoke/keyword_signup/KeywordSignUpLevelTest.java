@@ -60,6 +60,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
 
         String expectedMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
+
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(clientName, programName)
                 .getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER);
