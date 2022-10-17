@@ -39,8 +39,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
                 .addNewPatient(patient, client, programName);
 
         String expectedOptInMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
-        MessageLogItem actualOptInMessage = site.programSteps()
-                .getLastPatientMessageFromLogs(patient.getFirstName());
+
+        MessageLogItem actualOptInMessage = site.programSteps().getLastPatientMessage(patient);
 
         Assert.assertEquals(actualOptInMessage.getMessage(), expectedOptInMessage, "Received message is not the same as expected!");
     }
@@ -78,7 +78,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps().addNewPatient(patient2, client, programName2);
 
-        MessageLogItem actualOptInMessage  = site.programSteps()
+        MessageLogItem actualOptInMessage = site.programSteps()
                 .simulateResponseAndGetLastPatientMessage(patient2, "Agree");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
