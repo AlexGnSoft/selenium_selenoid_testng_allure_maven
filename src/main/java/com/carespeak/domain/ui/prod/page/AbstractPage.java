@@ -23,7 +23,7 @@ public abstract class AbstractPage implements ICanWait {
     public void openSite() {
         driver = DriverFactory.getDriver();
         PageFactory.initElements(new CustomDecorator(new DefaultElementLocatorFactory(driver)), this);
-        driver.get(ConfigProvider.provide().get("app.url"));
+        driver.get(ConfigProvider.provide().get("app_url"));
     }
 
     public String getCurrentUrl() {
@@ -57,6 +57,14 @@ public abstract class AbstractPage implements ICanWait {
             return;
         }
         throw new RuntimeException("No new tabs opened! Tabs count is: " + windowHandles.size());
+    }
+
+    public void sleepWait(int waitTime){
+        try {
+            Thread.sleep(waitTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

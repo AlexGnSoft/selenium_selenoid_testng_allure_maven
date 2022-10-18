@@ -3,6 +3,7 @@ package prod.base;
 import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.config.PropertyFileReader;
+import com.carespeak.core.driver.decorator.CustomDecorator;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
@@ -14,23 +15,29 @@ import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import io.qameta.allure.testng.AllureTestNg;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 
 import java.io.File;
+import java.util.Properties;
 
-@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
+//@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
 public abstract class BaseTest implements IDataGenerator {
 
     protected static Config config;
+    protected static PropertyFileReader propertyFileReader;
     protected SiteStepsHolder site;
 
     protected String user;
     protected String password;
 
     static {
-        String env = System.getProperty("env", "demo");
+        propertyFileReader = new PropertyFileReader();
+        String envVariableValue = PropertyFileReader.getVariableValue("app_env");
+        String env = System.getProperty("env", envVariableValue);
         String url = "env" + File.separator + env + ".properties";
         ConfigProvider.init(new PropertyFileReader(), url);
         config = ConfigProvider.provide();

@@ -12,8 +12,10 @@ import com.carespeak.domain.ui.prod.page.admin_tools.clients.language_settings.C
 import com.carespeak.domain.ui.prod.page.admin_tools.clients.modules.ClientModulesPage;
 import com.carespeak.domain.ui.prod.page.admin_tools.sms_send_simulator.SendSMSSimulatorPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
+import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProdAdminToolsSteps implements AdminToolsSteps {
@@ -24,6 +26,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     private ClientModulesPage clientModulesPage;
     private ClientLanguageSettingsPage clientLanguageSettingsPage;
     private SendSMSSimulatorPage sendSMSSimulatorPage;
+    private ProdProgramSteps prodProgramSteps;
 
     public ProdAdminToolsSteps() {
         clientsPage = new ClientsPage();
@@ -32,6 +35,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         clientModulesPage = new ClientModulesPage();
         clientLanguageSettingsPage = new ClientLanguageSettingsPage();
         sendSMSSimulatorPage = new SendSMSSimulatorPage();
+        prodProgramSteps = new ProdProgramSteps();
     }
 
     @Override
@@ -89,9 +93,10 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         if (tableRowItem == null) {
             throw new RuntimeException("Client was not found by code '" + clientCode + "'!");
         }
+
         clientsPage.clientsTable.editFirstItemButton().click();
         clientsPage.sideBarMenu.openItem("Modules");
-        clientModulesPage.uncheckAll();
+        clientModulesPage.checkUncheckAll();
         clientModulesPage.check(newModules);
         clientModulesPage.saveButton.click();
         clientModulesPage.statusPopup.waitForDisplayed();
@@ -116,7 +121,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         Client client = new Client();
         client.setName(tableRowItem.getDataByHeader("Name"));
         client.setCode(tableRowItem.getDataByHeader("Code"));
-        client.setModules(getModules(tableRowItem.getDataByHeader("Modules")));
+        client.setModules(getModulesFromWebElements());
         client.setEndpoint(selectedEndpoints);
         return client;
     }
@@ -205,13 +210,66 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         return this;
     }
 
-    private List<Module> getModules(String moduleShortNames) {
-        String[] modulesShortName = moduleShortNames.split(",");
-        List<Module> modules = new ArrayList<>();
-        for (String shortName : modulesShortName) {
-            modules.add(Module.getModule(shortName));
-        }
-        return modules;
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkip(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, patientName);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "SKIP");
+
+        return this;
     }
 
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkipDate(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName, String date) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, patientName);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "SKIP");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, date);
+
+        return this;
+    }
+
+    private List<Module> getModulesFromWebElements() {
+        clientsPage.sideBarMenu.openItem("Modules");
+
+        // Strings of modules
+        List<String> modules = new ArrayList<>();
+        for (WebElement allModuleName : clientModulesPage.allModuleNames) {
+            modules.add(allModuleName.getText());
+        }
+
+
+        //Array of Module objects
+        Module[] modulesToSet = new Module[modules.size()];
+        for (int i = 0; i < modules.size()-1; i++) {
+            modulesToSet[i] = Module.getModule(modules.get(i));
+        }
+
+        //List of Modules
+        List<Module> module = new ArrayList<>();
+        for (int i = 0; i < modulesToSet.length-1; i++) {
+            module.add(modulesToSet[i]);
+        }
+
+        //Sort in alphabetical order
+        module.sort(Comparator.comparing(Module::name));
+
+        return module;
+    }
 }

@@ -8,6 +8,7 @@ import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.prod.page.admin_tools.clients.AbstractClientPage;
 import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.Arrays;
@@ -21,6 +22,10 @@ public class ClientModulesPage extends AbstractClientPage {
     @ElementName("Check all module checkbox")
     @FindBy(id = "moduleCheckAll")
     public CheckBox checkAllCheckBox;
+
+    @ElementName("All module names")
+    @FindBy(xpath = "//div[@class='moduleBoxModule']")
+    public List<WebElement> allModuleNames;
 
     @ElementName("Appointments module checkbox")
     @FindBy(xpath = "//input[@type='checkbox' and @value='AP']")
@@ -85,6 +90,7 @@ public class ClientModulesPage extends AbstractClientPage {
     }
 
     public void uncheckAll() {
+          checkAllCheckBox.click();
         checkAllCheckBox.uncheck();
         for (Module module : Module.getAllModules()) {
             String value = module.name().toUpperCase().substring(0, 2);
@@ -95,4 +101,8 @@ public class ClientModulesPage extends AbstractClientPage {
         }
     }
 
+    public void checkUncheckAll() {
+        checkAllCheckBox.click();
+        checkAllCheckBox.uncheck();
+    }
 }

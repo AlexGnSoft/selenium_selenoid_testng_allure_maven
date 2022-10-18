@@ -1,5 +1,6 @@
 package prod.smoke;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.Module;
@@ -27,7 +28,7 @@ public abstract class SmokeBaseTest extends BaseTest {
             testAutomator.setName("Test Automator");
             testAutomator.setModules(Module.CHECK_ALL);
             testAutomator.setCode("Test Automator");
-            testAutomator.setEndpoint("twilioSmsSender5 [TWILIO +17542272273]");
+            testAutomator.setEndpoint(PropertyFileReader.getVariableValue("twilioSmsSender"));
             site.adminToolsSteps().addNewClient(client, Module.CHECK_ALL);
             client = testAutomator;
         }

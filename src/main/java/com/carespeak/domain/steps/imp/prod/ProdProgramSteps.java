@@ -74,6 +74,7 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
 
+        dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.searchClient.search(clientName);
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);
@@ -168,7 +169,7 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps addAccountCreationQuestion(boolean isMandatory, String field, String questionText, String onErrorText) {
+    public ProgramSteps addAccountCreationQuestion(boolean isMandatory, String dropDownfield, String questionText, String onErrorText) {
         if (!programKeywordSignupPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Keyword Signup");
         }
@@ -180,7 +181,7 @@ public class ProdProgramSteps implements ProgramSteps {
         } else {
             questionItem.mandatoryQuestionCheckbox().uncheck();
         }
-        questionItem.fieldDropdown().select(field);
+        questionItem.fieldDropdown().select(dropDownfield);
         questionItem.questionTextInput().enterText(questionText);
         questionItem.onErrorTextInput().enterText(onErrorText);
         programKeywordSignupPage.saveButton.click();
@@ -267,6 +268,8 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.rejectSolicitedCheckbox.check();
+        //TODO: But not from Pending Patients checkbox is needs to be checked. Implementation:
+        programAutoRespondersPage.acceptPendingUserCheckbox.check();
         programAutoRespondersPage.acceptedMessageRegexInput.enterText(messagePattern);
         programAutoRespondersPage.saveButton.click();
         return this;
@@ -447,13 +450,25 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Patients");
             selectPatientByName(patientFirstName);
         }
-        waitFor(() -> patientMessageLogsPage.simulateResponseBtn.isDisplayed());
+        patientMessageLogsPage.sleepWait(3000); //Preventive measure. Regular waiters are not in 10% of the time with this button.
         patientMessageLogsPage.simulateResponseBtn.click();
-        patientMessageLogsPage.simulateResponsePopup.waitForDisplayed();
         patientMessageLogsPage.simulateResponsePopup.responseInput.enterText(message);
         patientMessageLogsPage.simulateResponsePopup.sendButton.click();
-        waitFor(() -> patientMessageLogsPage.simulateResponseBtn.isDisplayed());
+        patientMessageLogsPage.sleepWait(3000); //to give time for the system message to be shown
         return this;
+    }
+
+    @Override
+    public MessageLogItem simulateResponseAndGetLastPatientMessage(Patient patient, String message) {
+        simulateResponse(patient.getFirstName(), message);
+
+        return getLastPatientMessage(patient);
+    }
+
+    @Override
+    public MessageLogItem getLastPatientMessage(Patient patient) {
+
+        return getLastPatientMessageFromLogs(patient.getFirstName());
     }
 
     @Override
@@ -477,7 +492,7 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public boolean isInProgram(String newProgramName, Patient patient) {
+    public boolean isInProgram(String newProgramName, String patientName) {
         if (!patientMessageLogsPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Patients");
         }
@@ -486,12 +501,11 @@ public class ProdProgramSteps implements ProgramSteps {
         if (patientRow == null) {
             throw new RuntimeException("Patient was not found!");
         }
-        selectPatientByName(patient.getFirstName());
+        selectPatientByName(patientName);
 
-        boolean result = patientMessageLogsPage.patientNameText.getText().equals(patient.getFirstName()) &&
-                patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
+        boolean result = patientMessageLogsPage.programNameButton.getText().equals(newProgramName);
 
-        Logger.info("Is patient '" + patient.getFirstName() + "' in '" + newProgramName + "' program? - " + result);
+        Logger.info("Is patient '" + patientName + "' in '" + newProgramName + "' program? - " + result);
         return result;
     }
 
@@ -546,4 +560,11 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         return entitiesList;
     }
+
+    @Override
+    public ProgramSteps pageRefresh() {
+        optInMessagesPage.refreshPage();
+        return this;
+    }
+
 }

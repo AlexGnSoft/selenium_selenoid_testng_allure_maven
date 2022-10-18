@@ -1,11 +1,13 @@
 package prod.smoke.client_level;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import org.testng.Assert;
 import prod.base.BaseTest;
 
 import java.util.List;
@@ -17,7 +19,8 @@ import java.util.List;
 public abstract class AbstractClientLevelTest extends BaseTest {
 
     protected Client getTestClientByCode(String clientCode) {
-        return getTestClientByCode(clientCode, "twilioSmsSender5 [TWILIO +17542272273]");
+        String twilioSmsSenderEndPoint = PropertyFileReader.getVariableValue("twilioSmsSender");
+        return getTestClientByCode(clientCode, twilioSmsSenderEndPoint);
     }
 
     protected Client getTestClientByCode(String clientCode, String endpoint) {
@@ -64,5 +67,19 @@ public abstract class AbstractClientLevelTest extends BaseTest {
         patient.setTimezone("Eastern Time (New York)");
         site.programSteps().addNewPatient(patient, client, programName);
         return patient;
+    }
+
+    protected void removeClient(Client client) {
+        if (client != null) {
+            site.adminToolsSteps()
+                    .removeClient(client);
+
+            site.loginSteps()
+                    .openSite()
+                    .loginAs(user, password);
+            Client shouldBeRemoved = site.adminToolsSteps()
+                    .getClientByCode(client.getCode());
+            Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
+        }
     }
 }

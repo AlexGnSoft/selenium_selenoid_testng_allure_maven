@@ -4,7 +4,7 @@ import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
-import com.carespeak.domain.ui.prod.component.campaign.AlertTimeComponent;
+import com.carespeak.domain.ui.prod.page.programs.general.campaign.AlertTimeComponent;
 import com.carespeak.domain.ui.prod.page.campaigns.AbstractCampaignsPage;
 import org.openqa.selenium.support.FindBy;
 

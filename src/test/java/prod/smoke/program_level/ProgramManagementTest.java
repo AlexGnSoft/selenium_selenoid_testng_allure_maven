@@ -3,6 +3,7 @@ package prod.smoke.program_level;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -36,10 +37,11 @@ public class ProgramManagementTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualAccess, ProgramAccess.PUBLIC.getValue(), "Actual access differs from expected access");
     }
 
-    @Test(description = "Remove created program", dependsOnMethods = "publicProgram")
+    @AfterClass(alwaysRun=true)
     public void removeProgram() {
-        site.programSteps().removeProgram(client, programName);
-        List<String> programs = site.programSteps().getProgramsForClient(client);
-        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
+//        site.programSteps().removeProgram(client, programName);
+//        List<String> programs = site.programSteps().getProgramsForClient(client);
+//        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
+        site.adminToolsSteps().removeClient(client);
     }
 }

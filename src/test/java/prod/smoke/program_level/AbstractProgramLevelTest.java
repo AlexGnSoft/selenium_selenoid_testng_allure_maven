@@ -1,5 +1,6 @@
 package prod.smoke.program_level;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.ProgramAccess;
@@ -12,7 +13,7 @@ import prod.base.BaseTest;
 public abstract class AbstractProgramLevelTest extends BaseTest {
 
     protected Client getTestClientByCode(String clientCode) {
-        return getTestClientByCode(clientCode, "twilioSmsSender5 [TWILIO +17542272273]");
+        return getTestClientByCode(clientCode, PropertyFileReader.getVariableValue("twilioSmsSender"));
     }
 
     protected Client getTestClientByCode(String clientCode, String endpoint) {

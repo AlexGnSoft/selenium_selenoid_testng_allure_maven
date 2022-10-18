@@ -25,7 +25,7 @@ public class HeaderMenu extends AbstractComponent {
     public ClickableElement dashboardMenuItem;
 
     @ElementName("Programs")
-    @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Programs')]")
+    @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Programs') and contains(@href,'list.page')]")
     public ClickableElement programsMenuItem;
 
     @ElementName("Patient Lists")

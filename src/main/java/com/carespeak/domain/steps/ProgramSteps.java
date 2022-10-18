@@ -233,6 +233,23 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps simulateResponse(String patientFirstName, String message);
 
+    /**
+     * Simulate response and get the last Patient Message Log
+     *
+     * @param message          text to send
+     * @param patient          patient who will have a simulation
+     * @return Message object
+     */
+    MessageLogItem simulateResponseAndGetLastPatientMessage(Patient patient, String message);
+
+    /**
+     * Get the last Patient Message from Logs
+     *
+     * @param patient          patient who will have a simulation
+     * @return Message object
+     */
+    MessageLogItem getLastPatientMessage(Patient patient);
+
 
     /**
      * Returns last message from Programs Patient Messages Logs
@@ -246,10 +263,10 @@ public interface ProgramSteps extends BaseSteps {
      * Returns true if patient is in the specified program otherwise false
      *
      * @param newProgramName new program name
-     * @param patient        patient to be select
+     * @param patientName        patient to be select
      * @return return true if patient is in the specified program otherwise false
      */
-    boolean isInProgram(String newProgramName, Patient patient);
+    boolean isInProgram(String newProgramName, String patientName);
 
     /**
      * Returns true if attached image is displayed otherwise false
@@ -270,4 +287,6 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message);
 
     List<Patient> getPatients(Client client, String programName);
+
+    ProgramSteps pageRefresh();
 }

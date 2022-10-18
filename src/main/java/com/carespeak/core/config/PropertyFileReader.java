@@ -2,8 +2,7 @@ package com.carespeak.core.config;
 
 import com.carespeak.core.logger.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -12,6 +11,8 @@ import java.util.Properties;
  * Reads properties from property file
  */
 public class PropertyFileReader implements IConfigReader {
+
+    public static Properties properties;
 
     @Override
     public Config readConfig(String url) {
@@ -43,4 +44,34 @@ public class PropertyFileReader implements IConfigReader {
             properties.put(key, System.getProperty(key, properties.getProperty(key)));
         }
     }
+
+    public PropertyFileReader(){
+        BufferedReader reader;
+        String propertyFilePath = "src/main/resources/env/demo.properties";
+        try {
+            reader = new BufferedReader(new FileReader(propertyFilePath));
+            properties = new Properties();
+            try {
+                properties.load(reader);
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Properties file not found at " + propertyFilePath);
+        }
+    }
+
+    /**
+     * Returns variable value from properties file, depending on variable name
+     *
+     * @param variableName - any variable name from the properties file
+     */
+    public static String getVariableValue(String variableName) {
+        String variable = properties.getProperty(variableName);
+        if(variable != null) return variable;
+        else throw new RuntimeException("variable is not specified in the properties file");
+    }
+
 }
