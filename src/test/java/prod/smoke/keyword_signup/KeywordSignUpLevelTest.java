@@ -219,7 +219,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertTrue(isPatientMoved, "The patient was not moved!");
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void cleanUpClientData() {
         removeClient(client);
     }
