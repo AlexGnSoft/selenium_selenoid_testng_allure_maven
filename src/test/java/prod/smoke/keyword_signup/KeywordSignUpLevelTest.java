@@ -230,7 +230,7 @@ public class KeywordSignUpLevelTest extends SmokeBaseTest {
         Assert.assertTrue(isPatientMoved, "The patient was not moved!");
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void cleanUpClientData() {
         removeClient();
     }
