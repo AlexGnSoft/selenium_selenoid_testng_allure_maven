@@ -1,8 +1,10 @@
 package prod.smoke.client_level;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.program.Patient;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -11,7 +13,7 @@ import java.util.List;
 
 public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
 
-    private List<String> expectedEndpoints = Arrays.asList("twilioSmsSender5 [TWILIO +17542272273]");
+    private List<String> expectedEndpoints = Arrays.asList(PropertyFileReader.getVariableValue("twilioSmsSender"));
 
     private Patient patient;
     private Client client;
@@ -42,5 +44,13 @@ public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
         Assert.assertTrue(actualEndpoints.containsAll(expectedEndpoints), "Actual endpoints should contain next values:\n" +
                 expectedEndpoints + "\n" +
                 "but endpoints is " + actualEndpoints + "\n");
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void cleanUpClientData() {
+//        site.programSteps().removeProgram(client, programName);
+//        List<String> programs = site.programSteps().getProgramsForClient(client);
+//        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
+        removeClient(client);
     }
 }

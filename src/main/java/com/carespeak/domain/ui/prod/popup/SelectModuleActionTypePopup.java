@@ -16,9 +16,13 @@ public class SelectModuleActionTypePopup extends AbstractPopup {
     @FindBy(xpath = "//*[contains(@class, 'ui-dialog-title')]//button[@role='button']")
     public Button closePopupButton;
 
-    @ElementName("Module dropdown")
+    @ElementName("Module dropdown on Message tab")
     @FindBy(xpath = "//label[text()='Module']/following-sibling::select")
-    public Dropdown moduleDropdown;
+    public Dropdown moduleDropdownOnMessageTab;
+
+    @ElementName("Module dropdown on Campaigns tab")
+    @FindBy(xpath = "//select[@class='form-control cs-campaign-mp-select']")
+    public Dropdown moduleDropdownOnCampaignsTab;
 
     @ElementName("Action dropdown")
     @FindBy(xpath = "//label[text()='Action']/following-sibling::select")

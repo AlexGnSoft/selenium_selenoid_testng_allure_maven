@@ -14,6 +14,8 @@
         <driver-manager.version>4.2.2</driver-manager.version>
         <testng.version>7.1.0</testng.version>
         <aspectj.version>1.8.10</aspectj.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -52,7 +54,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
+            <version>2.0.1</version>
         </dependency>
 
         <dependency>

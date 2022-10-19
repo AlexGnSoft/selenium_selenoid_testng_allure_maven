@@ -25,6 +25,10 @@ public class ProgramAutoRespondersPage extends AbstractProgramPage {
     @FindBy(id = "reject-unsolicited")
     public CheckBox rejectSolicitedCheckbox;
 
+    @ElementName("But not from Pending Patients checkbox")
+    @FindBy(id = "accept-pending-user-unsolicited")
+    public CheckBox acceptPendingUserCheckbox;
+
     @ElementName("Accepted message regexp input")
     @FindBy(xpath = "//*[@id='regexRows']//input")
     public Input acceptedMessageRegexInput;

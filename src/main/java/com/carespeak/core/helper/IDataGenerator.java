@@ -75,6 +75,13 @@ public interface IDataGenerator {
     }
 
     /**
+     * Returns random generated string (letters only)
+     */
+    default String getRandomLetters() {
+        return getRandomString(letters, 16);
+    }
+
+    /**
      * Returns timestamp based on the current date and time
      */
     default String getTimestamp() {

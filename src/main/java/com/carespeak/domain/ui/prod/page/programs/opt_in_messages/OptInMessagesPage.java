@@ -59,4 +59,14 @@ public class OptInMessagesPage extends AbstractPage {
     public OptInMessagesPage() {
         addOptInMessagePopup = new AddOptInMessagePopup();
     }
+
+    @Override
+    public boolean isOpened() {
+        return driver.getCurrentUrl().contains("message-logs.page");
+    }
+
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
+
 }
