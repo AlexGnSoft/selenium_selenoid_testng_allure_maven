@@ -24,7 +24,7 @@ import org.testng.annotations.Listeners;
 import java.io.File;
 import java.util.Properties;
 
-//@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
+@Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
 public abstract class BaseTest implements IDataGenerator {
 
     protected static Config config;

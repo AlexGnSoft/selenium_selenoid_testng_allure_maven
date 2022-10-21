@@ -67,5 +67,4 @@ public class ClientAutoResponderTest extends AbstractClientLevelTest {
 //        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
         removeClient(client);
     }
-
 }

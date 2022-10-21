@@ -30,12 +30,12 @@ public abstract class AbstractKeyWordSignUpLevelTest extends BaseTest {
             site.adminToolsSteps()
                     .removeClient(client);
 
-            site.loginSteps()
-                    .openSite()
-                    .loginAs(user, password);
-            Client shouldBeRemoved = site.adminToolsSteps()
-                    .getClientByCode(client.getCode());
-            Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
+//            site.loginSteps()
+//                    .openSite()
+//                    .loginAs(user, password);
+//            Client shouldBeRemoved = site.adminToolsSteps()
+//                    .getClientByCode(client.getCode());
+//            Assert.assertNull(shouldBeRemoved, "Client " + client + " was not removed!");
         }
     }
 }

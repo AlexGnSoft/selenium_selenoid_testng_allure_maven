@@ -2,25 +2,24 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <!-- -Dsurefire.suiteXmlFiles=src/test/resources/smoke-test.xml -->
 <!-- Warning!!! thread-count cannot be overridden from commend line, - it's native testNG behavior-->
-<suite name="Smoke test suite" parallel="classes" thread-count="2">
+<suite name="Smoke test suite" parallel="classes" thread-count="3">
     <test name="Smoke tests">
         <!--
             In suite should be only one <test> tag, otherwise
             TesNG won't perform multi-threading properly
         -->
         <classes>
+            <!--Program level tests-->
+            <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
             <!--Client level tests-->
             <class name="prod.smoke.client_level.ClientManagementTest"/>
             <class name="prod.smoke.client_level.ClientAutoResponderTest"/>
             <class name="prod.smoke.client_level.ClientLevelEndpointsTest"/>
-
             <!--Program level tests-->
             <class name="prod.smoke.program_level.ProgramManagementTest"/>
             <class name="prod.smoke.program_level.ProgramConsentManagementTest"/>
             <class name="prod.smoke.program_level.ProgramOptInMessageTest"/>
             <class name="prod.smoke.program_level.ProgramAutoResponder"/>
-            <!--Program level tests-->
-            <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
         </classes>
     </test>
 </suite>
