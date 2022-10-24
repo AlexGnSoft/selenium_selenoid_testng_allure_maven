@@ -41,15 +41,15 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     }
 
     @Test(description = "Add new client with all modules")
-    public void addNewClient() {
+    public void addNewClient_MHM_T10() {
         Client actualClient = site.adminToolsSteps()
                 .addNewClient(client, Module.CHECK_ALL)
                 .getClientByCode(client.getCode());
         Assert.assertEquals(client, actualClient, "Actual client differs from expected client");
     }
 
-    @Test(description = "Edit clients modules", dependsOnMethods = "addNewClient")
-    public void editClientsModules() {
+    @Test(description = "Edit clients modules", dependsOnMethods = "addNewClient_MHM_T10")
+    public void editClientsModules_MHM_T11() {
         Module[] modulesToSet = {Module.BIOMETRIC, Module.EDUCATION, Module.MOTIVATION};
         client.setModules(modulesToSet);
 
@@ -63,8 +63,8 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Assert.assertTrue(site.messagesSteps().isMessageModulesEqualToClient(modulesToSet, updatedClient), "Client list of modules was not updated");
     }
 
-    @Test(description = "Check client's modules for messages", dependsOnMethods = {"addNewClient", "editClientsModules"})
-    public void checkClientsModulesForMessages() {
+    @Test(description = "Check client's modules for messages", dependsOnMethods = {"addNewClient_MHM_T10", "editClientsModules_MHM_T11"})
+    public void checkClientsModulesForMessages_MHM_T161() {
         List<Module> availableModules = site.messagesSteps()
                 .goToMessagesTab()
                 .getAvailableModules(client.getName());
@@ -75,8 +75,8 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                         "Client modules: " + client.getModules() + "\n");
     }
 
-    @Test(description = "Check client's modules for campaigns", dependsOnMethods = {"addNewClient", "editClientsModules"})
-    public void checkClientsModulesForCampaigns() {
+    @Test(description = "Check client's modules for campaigns", dependsOnMethods = {"addNewClient_MHM_T10", "editClientsModules_MHM_T11"})
+    public void checkClientsModulesForCampaigns_MHM_T160() {
         List<Module> availableModules = site.campaignSteps()
                 .goToCampaignsTab()
                 .getAvailableModules(client.getName());
@@ -88,8 +88,8 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     }
 
 
-    @Test(description = "Add additional language for client", dependsOnMethods = "addNewClient")
-        public void addAdditionalLanguageForClient() {
+    @Test(description = "Add additional language for client", dependsOnMethods = "addNewClient_MHM_T10")
+        public void addAdditionalLanguageForClient_MHM_T12() {
         List<Language> expectedLanguages = Arrays.asList(Language.CH, Language.DU);
 
         List<Language> actualLanguages = site.adminToolsSteps()
@@ -104,8 +104,8 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                         "but additional languages is " + Arrays.toString(actualLanguages.toArray()) + "\n");
     }
 
-    @Test(description = "Remove additional language for client", dependsOnMethods = {"addNewClient", "addAdditionalLanguageForClient"})
-    public void removeAdditionalLanguageForClient() {
+    @Test(description = "Remove additional language for client", dependsOnMethods = {"addNewClient_MHM_T10", "addAdditionalLanguageForClient_MHM_T12"})
+    public void removeAdditionalLanguageForClient_MHM_T162() {
         Language languageToRemove = Language.CH;
 
         List<Language> actualLanguages = site.adminToolsSteps()

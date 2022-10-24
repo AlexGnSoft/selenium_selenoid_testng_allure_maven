@@ -21,7 +21,7 @@ public class ProgramManagementTest extends AbstractProgramLevelTest {
     }
 
     @Test(description = "Add new program")
-    public void addNewProgram() {
+    public void addNewProgram_MHM_T25() {
         site.programSteps().addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC);
 
         String actualProgramName = site.programSteps()
@@ -29,8 +29,8 @@ public class ProgramManagementTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualProgramName, programName, "Actual program differs from expected program");
     }
 
-    @Test(description = "Check that program is set to public", dependsOnMethods = "addNewProgram")
-    public void publicProgram() {
+    @Test(description = "Check that program is set to public", dependsOnMethods = "addNewProgram_MHM_T25")
+    public void publicProgram_MHM_T168() {
         String actualAccess = site.programSteps()
                 .getProgramAccessModifier(client.getName(), ProgramAccess.PUBLIC.getValue() + " (Visit here)");
 

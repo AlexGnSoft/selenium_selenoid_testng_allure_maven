@@ -37,7 +37,7 @@ public class ClientAutoResponderTest extends AbstractClientLevelTest {
     }
 
     @Test(description = "Add Auto Responders and check auto response")
-    public void addAutoResponders() {
+    public void addAutoResponders_MHM_T14() {
         String workingDayMessage = "It's working day!";
         String weekendMessage = "It's WEEKEND, yay!!!";
 

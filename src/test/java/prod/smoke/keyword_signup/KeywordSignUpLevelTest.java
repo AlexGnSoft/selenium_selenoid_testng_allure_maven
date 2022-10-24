@@ -50,7 +50,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Add keyword for Sign Up")
-    public void addKeywordForSignUp() {
+    public void addKeywordForSignUp_MHM_T38() {
         //TODO: Add signup keyword
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
@@ -69,7 +69,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Simulate health alerts subscription confirmation (simulate patient's AGREE response)", dependsOnMethods ="addKeywordForSignUp")
-    public void simulateConfirmation() {
+    public void simulateConfirmation_MHM_T115() {
         //TODO: Simulate AGREE
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, "AGREE");
 
@@ -81,7 +81,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Successful sign up with questions", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation"})
-    public void addSignupQuestions() {
+    public void addSignupQuestions_MHM_T39() {
         //TODO: Set signup keyword and add questions
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -106,7 +106,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Successful sign up with custom fields", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions"})
-    public void addCustomField() {
+    public void addCustomField_MHM_T40() {
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
                 .addCustomFields("Rx Therapy Start Date")
@@ -127,7 +127,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Check if validation message is added using dynamic variables", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions", "addCustomField"})
-    public void addValidationMessage() {
+    public void addValidationMessage_MHM_T56() {
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
                 .addValidationMessage("Please validate the data you've shared with us by texting back Yes or No\n" +
@@ -162,7 +162,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Check if completed message is added", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions", "addCustomField", "addValidationMessage"})
-    public void addCompletedMessage() {
+    public void addCompletedMessage_MHM_T43() {
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
                 .addCompletedMessage(COMPLETED_MESSAGE);
@@ -182,7 +182,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
     }
 
     @Test(description = "Move patient to a specific program based on the keyword answer", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions", "addCustomField", "addValidationMessage", "addCompletedMessage"})
-    public void movePatientToSpecificProgram() {
+    public void movePatientToSpecificProgram_MHM_T141() {
         String SIGN_UP_KEYWORD_2 = getRandomString();
 
         //TODO: Create separate initial program and keyword

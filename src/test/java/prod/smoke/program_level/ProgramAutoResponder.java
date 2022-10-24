@@ -35,7 +35,7 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
     }
 
     @Test(description = "Check the auto responder goes out as expected when send an unrecognized message")
-    public void unrecognizedMessage() {
+    public void unrecognizedMessage_MHM_T163() {
         site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .addNewPatient(patient, client, programName);
@@ -48,8 +48,8 @@ public class ProgramAutoResponder extends AbstractProgramLevelTest {
         Assert.assertEquals(actualSms.getMessage(), AUTO_RESPONDER_MESSAGE_UNRECOGNIZED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check that auto responder sends predefined message at Overridden status", dependsOnMethods = "unrecognizedMessage")
-    public void addAutoResponderOverride() {
+    @Test(description = "Check that auto responder sends predefined message at Overridden status", dependsOnMethods = "unrecognizedMessage_MHM_T163")
+    public void addAutoResponderOverride_MHM_T34() {
         site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .rejectUnsolicitedMessages(client, programName, "Accepted|AGREE");

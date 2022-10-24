@@ -32,7 +32,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
     }
 
     @Test(description = "Add opt-in message")
-    public void addOptInMessageWithConfirmation() {
+    public void addOptInMessageWithConfirmation_MHM_T165() {
         site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
                 .addOptInMessages(filePath, true)
@@ -45,8 +45,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), expectedOptInMessage, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Add opt-in message with 'Do NOT send opt in confirmation message' checkbox", dependsOnMethods = "addOptInMessageWithConfirmation")
-    public void addOptInMessageWithoutConfirmation() {
+    @Test(description = "Add opt-in message with 'Do NOT send opt in confirmation message' checkbox", dependsOnMethods = "addOptInMessageWithConfirmation_MHM_T165")
+    public void addOptInMessageWithoutConfirmation_MHM_T32() {
         site.programSteps()
                 .goToProgramSettings(client.getName(), programName)
                 .addOptInMessages(filePath, false);
@@ -57,15 +57,15 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), "Agree", "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check image is attached opt-in message", dependsOnMethods = {"addOptInMessageWithConfirmation", "addOptInMessageWithoutConfirmation"})
-    public void messageAttachment() {
+    @Test(description = "Check image is attached opt-in message", dependsOnMethods = {"addOptInMessageWithConfirmation_MHM_T165", "addOptInMessageWithoutConfirmation_MHM_T19"})
+    public void messageAttachment_MHM_T164() {
         boolean isImageAttached = site.programSteps().isAttachedImageDisplayed();
 
         Assert.assertTrue(isImageAttached, "Image is not attached");
     }
 
-    @Test(description = "Simulate patient's AGREE response", dependsOnMethods = {"addOptInMessageWithConfirmation", "addOptInMessageWithoutConfirmation", "messageAttachment"} )
-    public void simulateConfirmation() {
+    @Test(description = "Simulate patient's AGREE response", dependsOnMethods = {"addOptInMessageWithConfirmation_MHM_T165", "addOptInMessageWithoutConfirmation_MHM_T19", "messageAttachment_MHM_T164"} )
+    public void simulateConfirmation_MHM_T44() {
         //TODO: Page refresh to make 'Programs' button visible
         site.programSteps().pageRefresh();
         //TODO: Creating a new program and patient (new patient is needed for this test)
@@ -84,8 +84,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Simulate patient's STOP response", dependsOnMethods = "simulateConfirmation")
-    public void simulateStop() {
+    @Test(description = "Simulate patient's STOP response", dependsOnMethods = "simulateConfirmation_MHM_T44")
+    public void simulateStop_MHM_T46() {
 
         MessageLogItem actualOptInMessage  = site.programSteps()
                 .simulateResponseAndGetLastPatientMessage(patient, "Stop");
@@ -93,8 +93,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.UNSUBSCRIBED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Simulate patient's START response", dependsOnMethods = "simulateStop")
-    public void simulateStart() {
+    @Test(description = "Simulate patient's START response", dependsOnMethods = "simulateStop_MHM_T46")
+    public void simulateStart_MHM_T166() {
 
         MessageLogItem actualOptInMessage  = site.programSteps()
                 .simulateResponseAndGetLastPatientMessage(patient, "Start");
@@ -102,8 +102,8 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Simulate patient's HELP response", dependsOnMethods = "simulateStart")
-    public void simulateHelp() {
+    @Test(description = "Simulate patient's HELP response", dependsOnMethods = "simulateStart_MHM_T166")
+    public void simulateHelp_MHM_T47() {
 
         MessageLogItem actualOptInMessage  = site.programSteps()
                 .simulateResponseAndGetLastPatientMessage(patient, "Help");
