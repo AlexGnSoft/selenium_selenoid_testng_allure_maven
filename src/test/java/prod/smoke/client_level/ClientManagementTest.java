@@ -48,9 +48,9 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Assert.assertEquals(client, actualClient, "Actual client differs from expected client");
     }
 
-    @Test(description = "Edit clients modules", dependsOnMethods = "addNewClient_MHM_T10")
+    @Test(description = "Edit clients modules and verify it on Messages level", dependsOnMethods = "addNewClient_MHM_T10")
     public void editClientsModules_MHM_T11() {
-        Module[] modulesToSet = {Module.BIOMETRIC, Module.EDUCATION, Module.MOTIVATION};
+        Module[] modulesToSet = {Module.BIOMETRIC, Module.EDUCATION, Module.MOTIVATION, Module.SURVEY};
         client.setModules(modulesToSet);
 
         Client actualClient = site.adminToolsSteps()
