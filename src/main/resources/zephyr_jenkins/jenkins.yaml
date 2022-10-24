@@ -1,0 +1,913 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - basicSSHUserPrivateKey:
+          description: "Jenkins Main SSH key (/opt/jenkins/.ssh/idrsa)"
+          id: "jenkins-main-ssh-key"
+          privateKeySource:
+            directEntry:
+              privateKey: "{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}"
+          scope: GLOBAL
+          username: "jenkins"
+          usernameSecret: true
+      - basicSSHUserPrivateKey:
+          description: "Jenkins bitbucket connectivity"
+          id: "Jenkins-Bitbucket"
+          privateKeySource:
+            directEntry:
+              privateKey: "{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}"
+          scope: GLOBAL
+          username: "jenkins-bitbucket"
+          usernameSecret: true
+      - basicSSHUserPrivateKey:
+          description: "bitbucket test"
+          id: "bitbucket-test"
+          privateKeySource:
+            directEntry:
+              privateKey: "{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}"
+          scope: GLOBAL
+          username: "vladimir"
+          usernameSecret: true
+      - aws:
+          accessKey: "AKIAT54KGQTTLPCRZXBV"
+          description: "AWS CA access via Keys"
+          id: "AWS CodeArtifcatory"
+          scope: GLOBAL
+          secretKey: "{AQAAABAAAAAw7PCUPj+s/1XYvbc9S5Y2Wc1Cdaru2bIPD83L4eh2SJLhWhJ7D5kLZA05u8AMPVE3lMGW+tODid00XVy3cfVYeA==}"
+      - basicSSHUserPrivateKey:
+          description: "bitbucket test"
+          id: "bitbucket-pipeline-test"
+          privateKeySource:
+            directEntry:
+              privateKey: "{AQAAABAAAAJQS4HFUxE5FpAHWurFmkYWEkdzEShwDIqsPeiyDgmnvHojwYVym5E0vwOSZoVToKrKRWx5ItPtEpxKbHRZKzM87ovO4fG210yw1Za9XUQ1U79F2s5Ic6MuTGtvWdFBSsF7qbYpONbk1WjMJR2Wwq4bR2a1YcDKedfRWbQ2bMXb3VuNL8ivhqFEqxEpXkZ5AC+hyqTm0RZAOV9RO35Vk9SGxI+i9ZgkhFzNOY3shuHxd20apeU2RnPjOjV+7OmIoofgfVNjWLhta1Ppl+9+6IchM2XWgYjucyEqb6A2hb/QqEcF/ZFUK2CfllX+ZLYuLpfF7IFKZBlwRl/1I6PyPNbeTPuxq0JtWE7aSHeAn66Z3P2or8m29k4QK7IcjcSRuW321CkWdDoFK/IH1A3H0fyvoNQTB2XLtWHSIw/VIyWRLbsd81aNhNoqi3EqXk19m36s7m+IDDucuwdGFnQ9UjXb21heQoSKgGNgd5DjUil01JfcDmVv7XF9wDyUI/5S82ZoHmjbAdgGsh22LkeH7J5BCAL8EOMB3ziXpArknbU1GmJWam0KJo/EkTq3uAlz0WiO6NjIYWo5/03zLIFTuAH8WXa2FncmgjFZ2WkbaZJkbyDnIvi8ttkTzUSTp7iDfCQefNuM73aSEFhl3ynCsOoUnnKu8NQgQHZRlfXcCKp6IGSGb/5vi7GjcnF+JnC0UrAubWsTfKbDz4wFK/TkFQNCLPTime9tE4qqLgo/pV2WCU8RWp/MTp/msvVQgXNQX9w9aL06OyEKHYmtrpNZQWFVRaNan/WajugzoDHvWJkXbmw=}"
+          scope: GLOBAL
+          username: "Jenkins"
+          usernameSecret: true
+      - aws:
+          accessKey: "AKIATHNCLKSMC6VDERX2"
+          description: "AWS Carespeak Stage S3"
+          id: "AWS Carespeak Stage S3"
+          scope: GLOBAL
+          secretKey: "{AQAAABAAAAAwVaVste0eToNqosoo/girKctMsnrH1KwucSLWqXpoKWgVMAPgZ63UDyhMgHFr64EoU39gROM7Kd5P4vqz3B6EVQ==}"
+      - aws:
+          accessKey: "AKIA3IYPGNXZXE6VJEE2"
+          description: "AWS Carespeak Production S3"
+          id: "AWS Carespeak Production S3"
+          scope: GLOBAL
+          secretKey: "{AQAAABAAAAAwHYiJdvh+aFLIhRfIX427ZRbz177g2Nasv8KG5AIWfAOinNXC379zI9YZBkDVyOhZSqx9/XGoa1W1ikkmnTF+4Q==}"
+      - string:
+          description: "office365ConnectorUrl"
+          id: "office365ConnectorUrl"
+          scope: GLOBAL
+          secret: "{AQAAABAAAADApf6KRYUP0bYnF8bg3NAf4mQ+pXPs7zORFBnoSaA36wdzH7StTSm6TlChLixC1r7nX6WtHFm7hNoCq0FBAnRlqg1sUJM5O8Tmc9WrYBLNzTerVcV7jDoXUFwQRPLKodblwWaDsrhkQHuLfkBl9L7hWuC8KTaDVh6706Ez/E+h/wAhW0zlWBuAbXq8emkHsGV7sCUoCe14riAd5ysnNGLPojK2s7vA3pNg2+uOeg6RVnie69Xf6B/4R21E4H2KL5f3Mmv7VwzhYl4rN54kit7IVg==}"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+        - assignments:
+          - "test"
+          - "agnuskin"
+          - "siglov"
+          - "kprpic"
+          - "lrasic"
+          name: "QA"
+          pattern: ".*"
+          permissions:
+          - "Overall/Read"
+          - "Job/Create"
+          - "View/Read"
+        - assignments:
+          - "agogna"
+          - "agnuskin"
+          - "dvaishnani"
+          - "tmatkovic"
+          - "vbosnjak"
+          - "hsalopek"
+          name: "admin"
+          pattern: ".*"
+          permissions:
+          - "Overall/Administer"
+        - assignments:
+          - "lmegla"
+          - "skezele"
+          - "kprpic"
+          - "izivkovic"
+          - "lrasic"
+          name: "dev"
+          pattern: ".*"
+          permissions:
+          - "Job/Move"
+          - "Job/Build"
+          - "View/Create"
+          - "Agent/Configure"
+          - "Job/Read"
+          - "Agent/Create"
+          - "Job/Delete"
+          - "Agent/Build"
+          - "View/Configure"
+          - "Agent/Provision"
+          - "SCM/Tag"
+          - "Job/Create"
+          - "Job/Discover"
+          - "Credentials/View"
+          - "Agent/Connect"
+          - "Agent/Delete"
+          - "Agent/Disconnect"
+          - "Run/Delete"
+          - "Job/Cancel"
+          - "Overall/Read"
+          - "Run/Update"
+          - "View/Delete"
+          - "Job/Configure"
+          - "Job/Workspace"
+          - "View/Read"
+        items:
+        - assignments:
+          - "test"
+          - "agnuskin"
+          - "siglov"
+          - "kprpic"
+          - "lrasic"
+          name: "QA"
+          pattern: "(?i).*QA.*"
+          permissions:
+          - "Job/Move"
+          - "Job/Build"
+          - "SCM/Tag"
+          - "Job/Create"
+          - "View/Create"
+          - "Job/Discover"
+          - "Job/Read"
+          - "Credentials/View"
+          - "Run/Delete"
+          - "Job/Cancel"
+          - "Run/Update"
+          - "Job/Delete"
+          - "View/Delete"
+          - "Job/Configure"
+          - "Job/Workspace"
+          - "View/Read"
+          - "View/Configure"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+  - "jenkins.monitor.JavaVersionRecommendationAdminMonitor"
+  - "hudsonHomeIsFull"
+  - "jenkins.diagnostics.ControllerExecutorsNoAgents"
+  - "jenkins.model.BuiltInNodeMigration"
+  - "hudson.diagnosis.ReverseProxySetupMonitor"
+  labelAtoms:
+  - name: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 3
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "agnuskin"
+        name: "Aleksandr Gnuskin"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "agnuskin@optimizerx.com"
+      - id: "agogna"
+        name: "Amit Gogna"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - mailer:
+            emailAddress: "agogna@optimizerx.com"
+        - "favorite"
+        - preferredProvider:
+            providerId: "default"
+      - id: "bdakshina"
+        name: "bdakshina"
+        properties:
+        - "apiToken"
+        - mailer:
+            emailAddress: "bdakshina@optimizerx.com"
+        - preferredProvider:
+            providerId: "default"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "dvaishnani"
+        name: "Dhaval Vaishnani"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - mailer:
+            emailAddress: "dvaishnani@optimizerx.com"
+        - "favorite"
+        - preferredProvider:
+            providerId: "default"
+      - id: "hsalopek"
+        name: "Hrvoje Salopek"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "hsalopek@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "izivkovic"
+        name: "Ivan Zivkovic"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "izivkovic@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "knesek"
+        name: "Kresimir Nesek"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "knesek@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "kprpic"
+        name: "Klaudija Prpić"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "kprpic@optimizerx.com"
+      - id: "ldujmic"
+        name: "Ljubomir Dujmić"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "ldujmic@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "lmegla"
+        name: "Lucija Megla"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "lmegla@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "lpauk"
+        name: "Luka Pauk"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "lpauk@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "lrasic"
+        name: "Luka Rašić"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "lrasic@optimizerx.com"
+      - id: "mzaverukha"
+        name: "Maksym Zaverukha"
+        properties:
+        - "apiToken"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "mzaverukha@optimizerx.com"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "nbabic"
+        name: "Nikola Babić"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - mailer:
+            emailAddress: "nbabic@optimizerx.com"
+        - "favorite"
+        - preferredProvider:
+            providerId: "default"
+      - id: "ooragbade"
+        name: "Olu Oragbade"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "oOragbade@optimizerx.com"
+      - id: "siglov"
+        name: "Sergii Iglov"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "siglov@optimizerx.com"
+      - id: "skezele"
+        name: "Sven Kezele"
+        properties:
+        - "apiToken"
+        - mailer:
+            emailAddress: "skezele@optimizerx.com"
+        - preferredProvider:
+            providerId: "default"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "test"
+        name: "test"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - mailer:
+            emailAddress: "test@test.test"
+        - "favorite"
+        - preferredProvider:
+            providerId: "default"
+      - id: "tmatkovic"
+        name: "Toni Matkovic"
+        properties:
+        - "apiToken"
+        - mailer:
+            emailAddress: "tmatkovic@optimizerx.com"
+        - preferredProvider:
+            providerId: "default"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "tmimica"
+        name: "Tonči Mimica"
+        properties:
+        - "apiToken"
+        - mailer:
+            emailAddress: "tmimica@optimizerx.com"
+        - preferredProvider:
+            providerId: "default"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+      - id: "vbosnjak"
+        name: "Vladimir Bosnjak"
+        properties:
+        - "apiToken"
+        - mailer:
+            emailAddress: "vbosnjak@optimizerx.com"
+        - preferredProvider:
+            providerId: "default"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+  slaveAgentPort: -1
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      description: "View contains all test automation related jobs"
+      jobNames:
+      - "QA-mhm-manual-test-trigger"
+      - "QA-mhm-smoke-test"
+      - "QA-mhm-smoke-test_v2"
+      name: "Automation testing"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      includeRegex: "new"
+      jobNames:
+      - "configverify-build-new"
+      - "epsilon-api-build-new"
+      - "forms-demo-build-new"
+      - "forms-production-build-new"
+      - "integrator-demo-build-new"
+      - "integrator-production-build-new"
+      - "jenkins-tests"
+      - "mhm-demo-build-new"
+      - "mhm-demo-deploy-new"
+      - "mhm-demo-web-deploy-new"
+      - "mhm-pe2-demo-build"
+      - "mhm-pe2-demo-deploy"
+      - "mhm-pe2-test-build"
+      - "mhm-pe2-test-deploy"
+      - "mhm-production-build-new"
+      - "mhm-production-web-deploy-new"
+      - "NA_pe2-mhm-test-build"
+      - "robocare-demo-build-new"
+      - "robocare-production-build-new"
+      - "smssimulator-build-new"
+      - "surveymonkey-integration-build-new"
+      name: "Bitbucket_Jobs"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      description: "Other PE applications that complement the functionality of the\
+        \ core app."
+      jobNames:
+      - "Experience Exchange UI"
+      - "experience-exhange"
+      - "ExperienceXchange Rollback"
+      - "forms-demo-build-new"
+      - "forms-production-build-new"
+      - "integrator-demo-build-new"
+      - "integrator-production-build-new"
+      - "robocare-demo-build-new"
+      - "robocare-production-build-new"
+      - "smssimulator-build-new"
+      name: "PE Apps"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      description: "PE jar artifacts used in the core app\r\nArtifact repository is\
+        \ currently CodeArtifact on AWS"
+      jobNames:
+      - "Connectiverx-integration"
+      - "epsilon-api-build-new"
+      - "surveymonkey-integration-build-new"
+      name: "PE Artifacts"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      description: "PE / Carespeak / MHM core applications:\r\nBackend + Freemarker\
+        \ frontend for v1.0\r\nBackend + Vue.js frontend for v2.0"
+      jobNames:
+      - "MHM-PE2 Backend"
+      - "PE2-UI"
+      - "Watchdog App"
+      name: "PE Core"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      jobNames:
+      - "MHM staging from production branch"
+      - "mhm-pe2-demo-build"
+      - "mhm-pe2-demo-deploy"
+      - "mhm-pe2-sb-demo-build"
+      - "mhm-pe2-sb-demo-deploy"
+      - "mhm-pe2-sb-production-build"
+      - "mhm-pe2-test-build"
+      - "mhm-pe2-test-deploy"
+      - "PE2-UI"
+      name: "PE2"
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+globalCredentialsConfiguration:
+  configuration:
+    providerFilter: "none"
+    typeFilter: "none"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  copyartifact:
+    mode: MIGRATION
+  sSHD:
+    port: -1
+unclassified:
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        manageHooks: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  buildStepOperation:
+    enabled: false
+  defaultFolderConfiguration:
+    healthMetrics:
+    - worstChildHealthMetric:
+        recursive: true
+  email-ext:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultContentType: "text/plain"
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultTriggerIds:
+    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+    mailAccount:
+      smtpPassword: "{AQAAABAAAAAQPCSPFI5rpGFe07NnpcXxZ/tUbSaWDuKdjZyJv9bXuF4=}"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: -1
+    precedenceBulk: false
+    watchingEnabled: false
+  fingerprints:
+    fingerprintCleanupDisabled: false
+    storage: "file"
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    hookUrl: "https://new-jenkins.carespeak.com/github-webhook/"
+  gitSCM:
+    addGitTagAction: false
+    allowSecondFetch: true
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  globalConfigFiles:
+    configs:
+    - mavenSettings:
+        comment: "Authentication for CodeArtifact"
+        content: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<!--\nLicensed to\
+          \ the Apache Software Foundation (ASF) under one\nor more contributor license\
+          \ agreements.  See the NOTICE file\ndistributed with this work for additional\
+          \ information\nregarding copyright ownership.  The ASF licenses this file\n\
+          to you under the Apache License, Version 2.0 (the\n\"License\"); you may\
+          \ not use this file except in compliance\nwith the License.  You may obtain\
+          \ a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\
+          \nUnless required by applicable law or agreed to in writing,\nsoftware distributed\
+          \ under the License is distributed on an\n\"AS IS\" BASIS, WITHOUT WARRANTIES\
+          \ OR CONDITIONS OF ANY\nKIND, either express or implied.  See the License\
+          \ for the\nspecific language governing permissions and limitations\nunder\
+          \ the License.\n-->\n\n<!--\n | This is the configuration file for Maven.\
+          \ It can be specified at two levels:\n |\n |  1. User Level. This settings.xml\
+          \ file provides configuration for a single user, \n |                 and\
+          \ is normally provided in ^${user.home}/.m2/settings.xml.\n |\n |      \
+          \           NOTE: This location can be overridden with the CLI option:\n\
+          \ |\n |                 -s /path/to/user/settings.xml\n |\n |  2. Global\
+          \ Level. This settings.xml file provides configuration for all Maven\n |\
+          \                 users on a machine (assuming they're all using the same\
+          \ Maven\n |                 installation). It's normally provided in \n\
+          \ |                 ^${maven.home}/conf/settings.xml.\n |\n |          \
+          \       NOTE: This location can be overridden with the CLI option:\n |\n\
+          \ |                 -gs /path/to/global/settings.xml\n |\n | The sections\
+          \ in this sample file are intended to give you a running start at\n | getting\
+          \ the most out of your Maven installation. Where appropriate, the default\n\
+          \ | values (values used when the setting is not specified) are provided.\n\
+          \ |\n |-->\n<settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\" \n\
+          \          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n  \
+          \        xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd\"\
+          >\n  <!-- localRepository\n   | The path to the local repository maven will\
+          \ use to store artifacts.\n   |\n   | Default: ~/.m2/repository\n  <localRepository>/path/to/local/repo</localRepository>\n\
+          \  -->\n\n  <!-- interactiveMode\n   | This will determine whether maven\
+          \ prompts you when it needs input. If set to false,\n   | maven will use\
+          \ a sensible default value, perhaps based on some other setting, for\n \
+          \  | the parameter in question.\n   |\n   | Default: true\n  <interactiveMode>true</interactiveMode>\n\
+          \  -->\n\n  <!-- offline\n   | Determines whether maven should attempt to\
+          \ connect to the network when executing a build.\n   | This will have an\
+          \ effect on artifact downloads, artifact deployment, and others.\n   |\n\
+          \   | Default: false\n  <offline>false</offline>\n  -->\n\n  <!-- pluginGroups\n\
+          \   | This is a list of additional group identifiers that will be searched\
+          \ when resolving plugins by their prefix, i.e.\n   | when invoking a command\
+          \ line like \"mvn prefix:goal\". Maven will automatically add the group\
+          \ identifiers\n   | \"org.apache.maven.plugins\" and \"org.codehaus.mojo\"\
+          \ if these are not already contained in the list.\n   |-->\n  <pluginGroups>\n\
+          \    <!-- pluginGroup\n     | Specifies a further group identifier to use\
+          \ for plugin lookup.\n    <pluginGroup>com.your.plugins</pluginGroup>\n\
+          \    -->\n  </pluginGroups>\n\n  <!-- proxies\n   | This is a list of proxies\
+          \ which can be used on this machine to connect to the network.\n   | Unless\
+          \ otherwise specified (by system property or command-line switch), the first\
+          \ proxy\n   | specification in this list marked as active will be used.\n\
+          \   |-->\n  <proxies>\n    <!-- proxy\n     | Specification for one proxy,\
+          \ to be used in connecting to the network.\n     |\n    <proxy>\n      <id>optional</id>\n\
+          \      <active>true</active>\n      <protocol>http</protocol>\n      <username>proxyuser</username>\n\
+          \      <password>proxypass</password>\n      <host>proxy.host.net</host>\n\
+          \      <port>80</port>\n      <nonProxyHosts>local.net|some.host.com</nonProxyHosts>\n\
+          \    </proxy>\n    -->\n  </proxies>\n\n  <!-- servers\n   | This is a list\
+          \ of authentication profiles, keyed by the server-id used within the system.\n\
+          \   | Authentication profiles can be used whenever maven must make a connection\
+          \ to a remote server.\n   |-->\n  <servers>\n\t<server>\n\t\t<id>oprxcodeartifcatory--CareSpeak</id>\n\
+          \t\t<username>aws</username>\n\t\t<password>^${env.CODEARTIFACT_AUTH_TOKEN}</password>\n\
+          \t</server>\n    \n    <!-- server\n     | Specifies the authentication\
+          \ information to use when connecting to a particular server, identified\
+          \ by\n     | a unique name within the system (referred to by the 'id' attribute\
+          \ below).\n     | \n     | NOTE: You should either specify username/password\
+          \ OR privateKey/passphrase, since these pairings are \n     |       used\
+          \ together.\n     |\n    <server>\n      <id>deploymentRepo</id>\n     \
+          \ <username>repouser</username>\n      <password>repopwd</password>\n  \
+          \  </server>\n    -->\n    \n    <!-- Another sample, using keys to authenticate.\n\
+          \    <server>\n      <id>siteServer</id>\n      <privateKey>/path/to/private/key</privateKey>\n\
+          \      <passphrase>optional; leave empty if not used.</passphrase>\n   \
+          \ </server>\n    -->\n  </servers>\n\n  <!-- mirrors\n   | This is a list\
+          \ of mirrors to be used in downloading artifacts from remote repositories.\n\
+          \   | \n   | It works like this: a POM may declare a repository to use in\
+          \ resolving certain artifacts.\n   | However, this repository may have problems\
+          \ with heavy traffic at times, so people have mirrored\n   | it to several\
+          \ places.\n   |\n   | That repository definition will have a unique id,\
+          \ so we can create a mirror reference for that\n   | repository, to be used\
+          \ as an alternate download site. The mirror site will be the preferred \n\
+          \   | server for that repository.\n   |-->\n  <mirrors>\n    <!-- mirror\n\
+          \     | Specifies a repository mirror site to use instead of a given repository.\
+          \ The repository that\n     | this mirror serves has an ID that matches\
+          \ the mirrorOf element of this mirror. IDs are used\n     | for inheritance\
+          \ and direct lookup purposes, and must be unique across the set of mirrors.\n\
+          \     |\n    <mirror>\n      <id>mirrorId</id>\n      <mirrorOf>repositoryId</mirrorOf>\n\
+          \      <name>Human Readable Name for this Mirror.</name>\n      <url>http://my.repository.com/repo/path</url>\n\
+          \    </mirror>\n     -->\n  </mirrors>\n  \n  <!-- profiles\n   | This is\
+          \ a list of profiles which can be activated in a variety of ways, and which\
+          \ can modify\n   | the build process. Profiles provided in the settings.xml\
+          \ are intended to provide local machine-\n   | specific paths and repository\
+          \ locations which allow the build to work in the local environment.\n  \
+          \ |\n   | For example, if you have an integration testing plugin - like\
+          \ cactus - that needs to know where\n   | your Tomcat instance is installed,\
+          \ you can provide a variable here such that the variable is \n   | dereferenced\
+          \ during the build process to configure the cactus plugin.\n   |\n   | As\
+          \ noted above, profiles can be activated in a variety of ways. One way -\
+          \ the activeProfiles\n   | section of this document (settings.xml) - will\
+          \ be discussed later. Another way essentially\n   | relies on the detection\
+          \ of a system property, either matching a particular value for the property,\n\
+          \   | or merely testing its existence. Profiles can also be activated by\
+          \ JDK version prefix, where a \n   | value of '1.4' might activate a profile\
+          \ when the build is executed on a JDK version of '1.4.2_07'.\n   | Finally,\
+          \ the list of active profiles can be specified directly from the command\
+          \ line.\n   |\n   | NOTE: For profiles defined in the settings.xml, you\
+          \ are restricted to specifying only artifact\n   |       repositories, plugin\
+          \ repositories, and free-form properties to be used as configuration\n \
+          \  |       variables for plugins in the POM.\n   |\n   |-->\n  <profiles>\n\
+          \    <!-- profile\n     | Specifies a set of introductions to the build\
+          \ process, to be activated using one or more of the\n     | mechanisms described\
+          \ above. For inheritance purposes, and to activate profiles via <activatedProfiles/>\n\
+          \     | or the command line, profiles have to have an ID that is unique.\n\
+          \     |\n     | An encouraged best practice for profile identification is\
+          \ to use a consistent naming convention\n     | for profiles, such as 'env-dev',\
+          \ 'env-test', 'env-production', 'user-jdcasey', 'user-brett', etc.\n   \
+          \  | This will make it more intuitive to understand what the set of introduced\
+          \ profiles is attempting\n     | to accomplish, particularly when you only\
+          \ have a list of profile id's for debug.\n     |\n     | This profile example\
+          \ uses the JDK version to trigger activation, and provides a JDK-specific\
+          \ repo.\n    <profile>\n      <id>jdk-1.4</id>\n\n      <activation>\n \
+          \       <jdk>1.4</jdk>\n      </activation>\n\n      <repositories>\n  \
+          \      <repository>\n          <id>jdk14</id>\n          <name>Repository\
+          \ for JDK 1.4 builds</name>\n          <url>http://www.myhost.com/maven/jdk14</url>\n\
+          \          <layout>default</layout>\n          <snapshotPolicy>always</snapshotPolicy>\n\
+          \        </repository>\n      </repositories>\n    </profile>\n    -->\n\
+          \n    <!--\n     | Here is another profile, activated by the system property\
+          \ 'target-env' with a value of 'dev',\n     | which provides a specific\
+          \ path to the Tomcat instance. To use this, your plugin configuration\n\
+          \     | might hypothetically look like:\n     |\n     | ...\n     | <plugin>\n\
+          \     |   <groupId>org.myco.myplugins</groupId>\n     |   <artifactId>myplugin</artifactId>\n\
+          \     |   \n     |   <configuration>\n     |     <tomcatLocation>^${tomcatPath}</tomcatLocation>\n\
+          \     |   </configuration>\n     | </plugin>\n     | ...\n     |\n     |\
+          \ NOTE: If you just wanted to inject this configuration whenever someone\
+          \ set 'target-env' to\n     |       anything, you could just leave off the\
+          \ <value/> inside the activation-property.\n     |\n    <profile>\n    \
+          \  <id>env-dev</id>\n\n      <activation>\n        <property>\n        \
+          \  <name>target-env</name>\n          <value>dev</value>\n        </property>\n\
+          \      </activation>\n\n      <properties>\n        <tomcatPath>/path/to/tomcat/instance</tomcatPath>\n\
+          \      </properties>\n    </profile>\n    -->\n  </profiles>\n\n  <!-- activeProfiles\n\
+          \   | List of profiles that are active for all builds.\n   |\n  <activeProfiles>\n\
+          \    <activeProfile>alwaysActiveProfile</activeProfile>\n    <activeProfile>anotherAlwaysActiveProfile</activeProfile>\n\
+          \  </activeProfiles>\n  -->\n</settings>\n"
+        id: "06cf3a06-6a1e-4efb-841f-a6e1bef9658e"
+        isReplaceAll: true
+        name: "CodeArtifact"
+        providerId: "org.jenkinsci.plugins.configfiles.maven.MavenSettingsConfig"
+  junitTestResultStorage:
+    storage: "file"
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "https://new-jenkins.carespeak.com/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  mavenModuleSet:
+    localRepository: "default"
+  pluginImpl:
+    enableCredentialsFromNode: false
+  pollSCM:
+    pollingThreadCount: 10
+  sshPublisher:
+    commonConfig:
+      disableAllExec: false
+      encryptedPassphrase: "{AQAAABAAAAAQ+kP6pLzdXjuu8vniXMUJ3Y2GiFq/QN+3eVvrBnJwCEE=}"
+      key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEogIBAAKCAQEA0sR2/QFNDnWxn7lPnBctrvpwTa3RIidGvl0Uns3ua5PSZSFX
+        8Q9mAuYuFmwr4etEt2Eh9sU/ueTwXKMFYiui7C5gbTeB3EYnU8bbM+dJ6tzXlp3v
+        bLdDcBMk13oLcxOP104ybDoIgNx2/nfpdMLNuOcVsMUnbh7P/HJu9zQi/Vw1ZDKQ
+        Up0WHydXW+YDvyGcsOEdEdhd0NW0XjN+lu189Nqrq/I88FCF/voMYLxhH3cuhPzR
+        CkcKfeTXCuz8LZrTW+H+f60N6Wove04kL5aBPLa5VH3GV2SRCn20PW9kcCqxel67
+        x//O9DbiEvS9rwLM4CRKirsFcLhMt/iIGCBOfQIDAQABAoIBAEFrhdtmKfrRAT8o
+        j9NNRnrHdVBHIWDOfCDeV2YrWVO+4FFPljJWqz0/IRMIpF5NXljlJ1unQe57Zzf5
+        ydP842cXxgpgbkhm5hIU6TklE0Z5Idm4T/aYs6/34TmYwjEH41/a/7+kC7ujsrOt
+        mKMLTDuWTp89ss11du1Ov66vWiT1h84hIqmzmeLhyTREI2ijQ+PJsCC9yo/GXmdn
+        LP2hTkoHBrEygseAip06Y1z0ceDrj1K62ev1dEhymx2fAW3GeyIWmx1wF0SHsECm
+        Lw66cDN1+tW6XwzmzsDCGcP/kcERRT/Xr3i5Cpz9RJ/R5Wse1RKlctMEI0YxwvnK
+        JpUdSMECgYEA65OVTSUZQnNuSZJgPaUUjw803NqtXe4TmbB5rHziDLgbHILsHI7s
+        rUZxxxu71T9cBWCpQWdxuVfDuvImTTSO7zY1x+DTNWKpxAY5i+oJFbzf8/alWALP
+        Agmp7usdtRTBUi3G7yx3bSeBGKwzvSe+TUbI9RDjWs+2iL32nJZhI/UCgYEA5QpE
+        GgpGMRGwZPlaYrJ+qYTPAti7jq2p8Gv2hls0fbYf7LALL5UsJRApBXkOJxRDuyWo
+        gBIxAb12hATqb6/HZK5fQTdjg79SJFLlByhPywTu+vtEHzTSbEzAz72TOtBWMGTr
+        koLPSwvC7hwx7CdEfvnzfaQKLaHs1boQAp8r82kCgYBTX0XlqY2JAQU1MIKzDmt6
+        Pe19hD77ETkKmXRWYVQ3ICkoLAWYDdUhdd7qkpwlWmkc1hrQtOWArNjunqiDhmhX
+        rJ3YAW9+Y06lu3Y+WDOi59dypgXaYhQVKopjrf4zigbpKJ5RIzGZBfQgYUFmXlxx
+        SO3yHWn5R63YMzLGNEpoyQKBgGPGDhad5SfZAdNqwFIAWab1AMzHpySnSEFAdrre
+        nkYpAU00/xpyTDG1EXmd22lwrXSoGff4dLrCUw99qLaQhza3sy0QuNwaiujh530v
+        tVrGQmi47lr9wrCE2vVkKu/S88jPHcPMEgsqC3d4dtLd5DvAHK7dt8VbJXWRQQoz
+        Vo0JAoGAI3UsLMwCEz/m2BkNfal8qKXTXciku0jXFfaAGmF5ej3BZeQ4p4i9/XXW
+        D291W6C6cAZvJC7t6lqgdfGZNvVLwH8IUbfEFyoNebCYjfpcGCXX60krdC9yf6/0
+        iqZD8fEbeKa0MZZ80rTV6OIv8/yXf/qysTSpSfPi8rPaGiXrkNA=
+        -----END RSA PRIVATE KEY-----
+  subversionSCM:
+    workspaceFormat: 8
+  timestamper:
+    allPipelines: false
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+  upstream:
+    globalUpstreamFilterStrategy: UseOldest
+  zephyr-scale:
+    jiraInstances:
+    - jwt: "{AQAAABAAAAGANXk8xT8JuD+nYSDHuc9iz0h9K6LTTXd9aQP5ekv5eEa0sjncJSaxfQr5s6pQI/aBbsdB+HCQ/znepcTRGe9IhH7pEWqKGz2J65G6DOuyYUT2QKJD9Nxi2GFyaIdFZT1YVXEpX/ZWQDvj4yC6D5sA/+9mZAIIvcqZuTF0SvsfoYCb18yc+/uK1alXfneCPiPhUs1yDErgIc/iy9v53TMWB+3EQQjdnEH9nNILWgnvWHkI75GYl9nr78i7DUt9YKIc2we001HOjkkGEXhAocG67oHgXaghPyixikhr98HqEn5Hx54OzVSYnunAoUhF0Tl8oKgFQBDA9kHIfc8P6ngZIWg5PJQ5OqedSAXFXMJUMkJqSQFihEdhBDd9lshkQUDR6FJsgaDmMasqJejdem5eUrCGNW9kipGT1Po5b2OXvIXMaGqELnYH+jN18P1ZP1iYQ90GGPHTn+eUv8kzHQHaf/ur8EC6/PZ9oGH60HlU8Q8sn/UA8KfbDmxAknNg4qq3aFQ7EIXK5IBhxj94iYv5eg==}"
+      value: "cloud"
+tool:
+  allure:
+    installations:
+    - name: "allure"
+      properties:
+      - installSource:
+          installers:
+          - allureCommandlineInstaller:
+              id: "2.15.0"
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  jdk:
+    installations:
+    - home: "/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64"
+      name: "JDK8"
+    - home: "/usr/lib/jvm/java-11-amazon-corretto.x86_64"
+      name: "JDK11"
+  maven:
+    installations:
+    - name: "Maven 3"
+      properties:
+      - installSource:
+          installers:
+          - maven:
+              id: "3.6.3"
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"
+  nodejs:
+    installations:
+    - name: "NodeJS 16.14.0"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "16.14.0"
+              npmPackages: "yarn@1.22.17"
+              npmPackagesRefreshHours: 72
+    - name: "NodeJS 16.13.1"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "16.13.1"
+              npmPackages: "yarn@1.22.15"
+              npmPackagesRefreshHours: 72
+    - name: "NodeJS 14.18.0"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "14.18.0"
+              npmPackages: "yarn@1.22.15"
+              npmPackagesRefreshHours: 72
+    - name: "NodeJS 12.18.2"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "12.18.2"
+              npmPackages: "yarn@1.22.5"
+              npmPackagesRefreshHours: 72
+    - name: "NodeJS 15.0.1"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "15.0.1"
+              npmPackagesRefreshHours: 72
