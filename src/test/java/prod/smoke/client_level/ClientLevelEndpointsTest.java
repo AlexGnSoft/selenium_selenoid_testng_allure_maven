@@ -37,7 +37,7 @@ public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
     }
 
     @Test(description = "Check client level endpoints are available on patient level")
-    public void endpointAvailableOnPatientLevel_MHM_T119() {
+    public void endpointAvailableOnPatientLevel_MHM_T169() {
         List<String> actualEndpoints = site.programSteps()
                 .getEndpointsOnPatientLevel(client, programName, patient);
 

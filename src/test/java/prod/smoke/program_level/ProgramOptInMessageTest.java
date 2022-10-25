@@ -57,14 +57,14 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), "Agree", "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check image is attached opt-in message", dependsOnMethods = {"addOptInMessageWithConfirmation_MHM_T165", "addOptInMessageWithoutConfirmation_MHM_T19"})
+    @Test(description = "Check image is attached opt-in message", dependsOnMethods = {"addOptInMessageWithConfirmation_MHM_T165", "addOptInMessageWithoutConfirmation_MHM_T32"})
     public void messageAttachment_MHM_T164() {
         boolean isImageAttached = site.programSteps().isAttachedImageDisplayed();
 
         Assert.assertTrue(isImageAttached, "Image is not attached");
     }
 
-    @Test(description = "Simulate patient's AGREE response", dependsOnMethods = {"addOptInMessageWithConfirmation_MHM_T165", "addOptInMessageWithoutConfirmation_MHM_T19", "messageAttachment_MHM_T164"} )
+    @Test(description = "Simulate patient's AGREE response", dependsOnMethods = {"addOptInMessageWithConfirmation_MHM_T165", "addOptInMessageWithoutConfirmation_MHM_T32", "messageAttachment_MHM_T164"} )
     public void simulateConfirmation_MHM_T44() {
         //TODO: Page refresh to make 'Programs' button visible
         site.programSteps().pageRefresh();
