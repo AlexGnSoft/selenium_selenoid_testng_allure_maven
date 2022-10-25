@@ -306,6 +306,28 @@ public class ProdProgramSteps implements ProgramSteps {
         addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
         addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
         addPatientsPage.firstNameInput.enterText(patient.getFirstName());
+        addPatientsPage.timezoneDropdown.select(patient.getTimezone());
+        addPatientsPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName) {
+        if (!addPatientsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+            programsPage.programTable.editFirstItemButton().click();
+        }
+        programSettingsPage.sideBarMenu.openItem("Patients");
+        ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
+        patientsTab.addPatientBtn.click();
+        addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
+        addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
+        addPatientsPage.firstNameInput.enterText(patient.getFirstName());
         addPatientsPage.lastNameInput.enterText(patient.getLastName());
         addPatientsPage.emailInput.enterText(patient.getEmail());
         addPatientsPage.emailConfirmationInput.enterText(patient.getEmail());
@@ -334,6 +356,19 @@ public class ProdProgramSteps implements ProgramSteps {
         TableRowItem tableRowItem = programsPage.programTable.searchInTable("Name", programName);
         if (tableRowItem == null) {
             Logger.info("Program was not found by name '" + programName + "'!");
+            return null;
+        }
+        return tableRowItem.getDataByHeader("Name");
+    }
+
+    @Override
+    public String getPatientByName(String clientName, String programName, String patientName) {
+        goToProgramSettings(clientName, programName);
+        programSettingsPage.sideBarMenu.openItem("Patients");
+
+        TableRowItem tableRowItem = programsPatientsPage.patientTable.searchInTable("Name", patientName);
+        if (tableRowItem == null) {
+            Logger.info("Patient was not found by name '" + patientName + "'!");
             return null;
         }
         return tableRowItem.getDataByHeader("Name");

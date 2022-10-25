@@ -26,7 +26,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         programName = getTestProgramByName("OptIn program " + getRandomString(), client);
         patient = new Patient();
         patient.setFirstName("Patient " + getRandomString());
-        patient.setSex(Sex.MALE);
         patient.setCellPhone(getGeneratedPhoneNumber());
         patient.setTimezone("Eastern Time (New York)");
     }

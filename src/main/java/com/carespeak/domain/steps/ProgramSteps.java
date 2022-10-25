@@ -159,6 +159,15 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addNewPatient(Patient patient, Client client, String programName);
 
+    /**
+     * Add patient to specific program with Last name, Email, Sex
+     *
+     * @param client      client to use
+     * @param programName program to be select
+     * @return Program Steps object
+     */
+    ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName);
+
 
     /**
      * Get program by name from column
@@ -168,6 +177,16 @@ public interface ProgramSteps extends BaseSteps {
      * @return program name String
      */
     String getProgramByName(String clientName, String programName);
+
+    /**
+     * Get program by name from column
+     *
+     * @param clientName  client to use
+     * @param programName program name
+     *  @param patientName patient name
+     * @return program name String
+     */
+    String getPatientByName(String clientName, String programName, String patientName);
 
 
     /**
