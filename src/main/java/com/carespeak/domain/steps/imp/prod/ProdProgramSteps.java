@@ -218,7 +218,8 @@ public class ProdProgramSteps implements ProgramSteps {
         if (!programKeywordSignupPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Keyword Signup");
         }
-
+        //programKeywordSignupPage.addQuestionButton.click();
+        programKeywordSignupPage.validationMessageButton.isDisplayed();
         programKeywordSignupPage.validationMessageButton.click();
         programKeywordSignupPage.validationMessageInput.enterText(validationMessage);
         programKeywordSignupPage.saveButton.click();

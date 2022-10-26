@@ -7,6 +7,7 @@ import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import com.carespeak.domain.steps.ProgramSteps;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -47,15 +48,14 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         patient.setSex(Sex.MALE);
         patient.setCellPhone(getGeneratedPhoneNumber());
         patient.setTimezone("Eastern Time (New York)");
+        //TODO: Add signup keyword
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .goToProgramSettings(clientName, programName).addKeywordForSignUp(SIGN_UP_KEYWORD);
     }
 
     @Test(description = "Add keyword for Sign Up")
     public void addKeywordForSignUp_MHM_T38() {
-        //TODO: Add signup keyword
-        site.programSteps()
-                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(clientName, programName)
-                .addKeywordForSignUp(SIGN_UP_KEYWORD);
         //TODO: Simulate Signup of a new patient
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
 
@@ -68,8 +68,11 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), expectedMessage, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Simulate health alerts subscription confirmation (simulate patient's AGREE response)", dependsOnMethods ="addKeywordForSignUp")
+    @Test(description = "Simulate health alerts subscription confirmation (simulate patient's AGREE response)")
     public void simulateConfirmation_MHM_T115() {
+        //TODO: Simulate Signup of a new patient
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER);
         //TODO: Simulate AGREE
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER, TO_ENDPOINT, "AGREE");
 
@@ -80,9 +83,9 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Successful sign up with questions", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation"})
+    @Test(description = "Successful sign up with questions")
     public void addSignupQuestions_MHM_T39() {
-        //TODO: Set signup keyword and add questions
+        //TODO: Add questions
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
                 .addAccountCreationQuestion(false,
@@ -105,7 +108,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Successful sign up with custom fields", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions"})
+    @Test(description = "Successful sign up with custom fields")
     public void addCustomField_MHM_T40() {
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -115,9 +118,10 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                         "Enter your Therapy Start Date, please",
                         "Wrong Start Date, try again");
 
-        //TODO: Simulate sms from patient to client with SignUp, Agree, Patient name, Skip and Start therapy date
+        //TODO: Simulate E2E Signup of a new patient
         site.adminToolsSteps()
-                .initiateKeywordSignupSendAgreeNameAndSkipDate(clientName, programName, FROM_PHONE_NUMBER_3, TO_ENDPOINT, SIGN_UP_KEYWORD, ADD_CUSTOM_FIELD_PATIENT, THERAPY_START_DATE);
+                .initiateKeywordSignupSendAndAgree(clientName, programName,FROM_PHONE_NUMBER_3,TO_ENDPOINT, SIGN_UP_KEYWORD)
+                .simulateSMSToClient(FROM_PHONE_NUMBER_3, TO_ENDPOINT, THERAPY_START_DATE);
 
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -126,33 +130,33 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check if validation message is added using dynamic variables", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions", "addCustomField"})
+    @Test(description = "Check if validation message is added using dynamic variables")
     public void addValidationMessage_MHM_T56() {
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
+                .addCustomFields("Rx Therapy Start Date")
+                .addAccountCreationQuestion(false,
+                        "Event: Rx Therapy Start Date",
+                        "Enter your Therapy Start Date, please",
+                        "Wrong Start Date, try again")
                 .addValidationMessage("Please validate the data you've shared with us by texting back Yes or No\n" +
                         "\n" +
                         "Name: ${p} \n" +
                         "Therapy Start Date: ${event:Rx Therapy Start Date}");
 
-        //TODO: Simulate sms from patient to client with SignUp, Agree, Patient name, Skip and Start therapy date
-        site.adminToolsSteps()
-                .initiateKeywordSignupSendAgreeNameAndSkipDate(clientName, programName, FROM_PHONE_NUMBER_4, TO_ENDPOINT, SIGN_UP_KEYWORD,ADD_VALIDATION_MESSAGE_PATIENT, THERAPY_START_DATE);
+        //TODO: Simulate AGREE
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, SIGN_UP_KEYWORD);
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "AGREE");
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4,TO_ENDPOINT, THERAPY_START_DATE);
+        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
 
         site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "No");
         site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
-
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, ADD_VALIDATION_MESSAGE_PATIENT);
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4,TO_ENDPOINT, THERAPY_START_DATE);
         site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
-
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "SKIP");
-        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
-
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, THERAPY_START_DATE);
-        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(FROM_PHONE_NUMBER_4);
-
-        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4, TO_ENDPOINT, "Yes");
-        site.programSteps().goToProgramSettings(clientName, programName).getLastMessageFromLogsForNumber(ADD_VALIDATION_MESSAGE_PATIENT);
+        site.adminToolsSteps().simulateSMSToClient(FROM_PHONE_NUMBER_4,TO_ENDPOINT, "Yes");
 
         MessageLogItem signupResponse = site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -161,7 +165,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check if completed message is added", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions", "addCustomField", "addValidationMessage"})
+    @Test(description = "Check if completed message is added", dependsOnMethods = {"addKeywordForSignUp_MHM_T38", "simulateConfirmation_MHM_T115", "addSignupQuestions_MHM_T39", "addCustomField_MHM_T40", "addValidationMessage_MHM_T56"})
     public void addCompletedMessage_MHM_T43() {
         site.programSteps()
                 .goToProgramSettings(clientName, programName)
@@ -181,7 +185,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), COMPLETED_MESSAGE, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Move patient to a specific program based on the keyword answer", dependsOnMethods = {"addKeywordForSignUp", "simulateConfirmation", "addSignupQuestions", "addCustomField", "addValidationMessage", "addCompletedMessage"})
+    @Test(description = "Move patient to a specific program based on the keyword answer", dependsOnMethods = {"addKeywordForSignUp_MHM_T38", "simulateConfirmation_MHM_T115", "addSignupQuestions_MHM_T39", "addCustomField_MHM_T40", "addValidationMessage_MHM_T56", "addCompletedMessage_MHM_T43"})
     public void movePatientToSpecificProgram_MHM_T141() {
         String SIGN_UP_KEYWORD_2 = getRandomString();
 

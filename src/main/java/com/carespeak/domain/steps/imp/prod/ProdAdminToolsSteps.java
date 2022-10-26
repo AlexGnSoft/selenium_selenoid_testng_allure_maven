@@ -245,6 +245,17 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         return this;
     }
 
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAndAgree(String clientName, String programName, String phoneNumber, String endpoint, String keyword) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        return this;
+    }
+
     private List<Module> getModulesFromWebElements() {
         clientsPage.sideBarMenu.openItem("Modules");
 

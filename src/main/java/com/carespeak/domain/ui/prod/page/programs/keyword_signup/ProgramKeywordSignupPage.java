@@ -50,6 +50,10 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
     @FindBy(id = "toggleValidationMessageBtn")
     public Button validationMessageButton;
 
+    @ElementName("Validation message button disabled")
+    @FindBy(xpath = "//button[@id='toggleValidationMessageBtn' and @disabled='disabled']")
+    public Button validationMessageDisabledButton;
+
     @ElementName("Validation message input")
     @FindBy(id = "validationMessage")
     public Input validationMessageInput;

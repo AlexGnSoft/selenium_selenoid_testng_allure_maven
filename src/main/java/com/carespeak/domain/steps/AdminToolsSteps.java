@@ -163,4 +163,16 @@ public interface AdminToolsSteps extends BaseSteps {
      */
     AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkipDate(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName, String date);
 
+    /**
+     * Send SMS to specified endpoint from patient to Client, to SignUp and proceed with client <-> patient interaction
+     *
+     * @param clientName   name of the client
+     * @param programName  program name to find and verify message logs status
+     * @param phoneNumber  phone number to send sms from
+     * @param endpoint     endpoint/SMS aggregator for user
+     * @param keyword      keyword of a program to be entered to sign up
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps initiateKeywordSignupSendAndAgree(String clientName, String programName, String phoneNumber, String endpoint, String keyword);
+
 }
