@@ -66,6 +66,7 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
     @FindBy(id = "completedMessage")
     public Input completedMessageInput;
 
+
     public ProgramKeywordSignupPage() {
         accountCreationTable = new AccountCreationTable(By.id("ac-table"));
         statusPopup = new StatusPopup();

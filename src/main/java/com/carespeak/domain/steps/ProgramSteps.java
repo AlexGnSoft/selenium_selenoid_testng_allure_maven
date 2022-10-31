@@ -82,6 +82,16 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps addDestinationProgramQuestionKeywords(String keyword, String programName);
 
     /**
+     * Move patient to another program manually
+     *
+     * @param clientName               client first name
+     * @param landingProgramName       destination program name
+     * @param patientFirstName         patient first name
+     * @return Program Steps object
+     */
+    ProgramSteps movePatientManually(String clientName, String landingProgramName, String patientFirstName);
+
+    /**
      * Add account creation question for keyword sign up.
      *
      * @param isMandatory  is question mandatory ?

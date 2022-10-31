@@ -27,6 +27,7 @@ import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -122,6 +123,20 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.programTable.editFirstItemButton().click();
             programsPage.sideBarMenu.openItem("Consent Management");
         }
+    }
+
+    @Override
+    public ProgramSteps movePatientManually(String clientName, String landingProgramName, String patientFirstName) {
+        programsPage.sideBarMenu.openItem("Patients");
+        ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
+        clickOnPatientCheckbox(patientFirstName);
+        patientsTab.moveToProgramBtn.click();
+        patientsTab.moveSelectedPatientsToProgramDropdown.click();
+        patientsTab.selectProgramByClientAndProgramName(landingProgramName);
+        patientsTab.moveButton.click();
+        patientsTab.confirmMoveButton.click();
+
+        return this;
     }
 
     @Override
@@ -478,6 +493,11 @@ public class ProdProgramSteps implements ProgramSteps {
     private void selectPatientByName(String patientFirstName) {
         programsPatientsPage.goToPatientsTab()
                 .selectPatientByName(patientFirstName);
+    }
+
+    private void clickOnPatientCheckbox(String patientFirstName) {
+        programsPatientsPage.goToPatientsTab()
+                .clickOnPatientCheckbox(patientFirstName);
     }
 
     @Override
