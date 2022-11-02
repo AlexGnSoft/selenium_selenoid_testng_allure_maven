@@ -11,12 +11,13 @@ import com.carespeak.domain.ui.prod.page.AbstractPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MessagesPage extends AbstractPage {
 
     public SearchWithSelection searchClient;
     public SelectModuleActionTypePopup selectModuleActionTypePopup;
-
     public ItemsTable messageTable;
     public Dropdown dropdown;
 
@@ -62,16 +63,41 @@ public class MessagesPage extends AbstractPage {
     @FindBy(xpath = "//tbody/tr[@role='row']/td/strong/a")
     public ClickableElement firstMessageName;
 
+    @ElementName("Text of message")
+    @FindBy(xpath = "//td[@class=' text-wrap']")
+    public ClickableElement messageText;
+
+    @ElementName("Save message button")
+    @FindBy(id = "saveBtn")
+    public Button editMessageButton;
+
+    @ElementName("Sidebar Messages button")
+    @FindBy(xpath = "//div[@id='cs-sidebar']/div/a")
+    public Button sideBarMessagesButton;
+
 
     public MessagesPage() {
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
         messageTable = new ItemsTable(By.id("messagesTableWrapper"));
         searchClient = new SearchWithSelection();
+
     }
 
-    public void findMessageByName(String messageName){
+    public boolean isCreatedMessageDisplayed(String messageName){
         By locator = By.xpath(String.format(MESSAGE_NAME, messageName));
         ClickableElement message = new ClickableElement(driver.findElement(locator), messageName + " button");
-        message.isDisplayed();
+
+        return message.isDisplayed();
+    }
+
+    public String getMessageText(){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(messageText));
+
+        return messageText.getText();
+    }
+
+    public boolean areMessageTextUpdated(String initialMessage, String ExpectedUpdatedMessage){
+        return !initialMessage.equals(ExpectedUpdatedMessage);
     }
 }

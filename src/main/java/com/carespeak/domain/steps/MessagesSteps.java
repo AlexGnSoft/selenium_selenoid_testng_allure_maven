@@ -43,9 +43,43 @@ public interface MessagesSteps extends BaseSteps {
 
     /**
      * Verify that message is created
+     *
      * @param clientName     client name
      * @param messageName    message name
      * @return return true if message is found, otherwise false
      */
     boolean isMessageCreated(String clientName, String messageName);
+
+    /**
+     * Verify that message is created and displayed
+     *
+     * @param messageName    message name
+     * @return return true if message is found, otherwise false
+     */
+    boolean isCreatedMessageDisplayed(String messageName);
+
+    /**
+     * Get text of the created message
+     * @return return String which are body of the message
+     */
+    String getMessageText();
+
+    /**
+     * Verify that message is created and displayed
+     * @param newMessage    new text of a message
+     *
+     * @return return true if message is found, otherwise false
+     */
+    MessagesSteps updateTextMessageBody(String newMessage);
+
+    /**
+     * Verify that messages is equal
+     *
+     * @param initialMessage    new text of a message
+     * @param expectedUpdatedMessage    new text of a message
+     *
+     * @return return true if message is updated, otherwise false
+     */
+    boolean areMessageTextUpdated(String initialMessage, String expectedUpdatedMessage);
+
 }

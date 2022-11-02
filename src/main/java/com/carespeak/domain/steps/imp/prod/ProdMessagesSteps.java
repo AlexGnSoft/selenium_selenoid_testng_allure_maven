@@ -1,6 +1,5 @@
 package com.carespeak.domain.steps.imp.prod;
 
-import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Action;
@@ -8,6 +7,7 @@ import com.carespeak.domain.entities.message.MessageType;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.message.NotificationType;
 import com.carespeak.domain.steps.MessagesSteps;
+import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.messages.MessagesPage;
@@ -18,16 +18,17 @@ import java.util.List;
 
 public class ProdMessagesSteps implements MessagesSteps {
 
-    private DashboardPage dashboardPage;
-    private MessagesPage messagesPage;
-    private SelectModuleActionTypePopup selectModuleActionTypePopup;
-    private Dropdown dropdown;
+    private final DashboardPage dashboardPage;
+    private final MessagesPage messagesPage;
+    private final SelectModuleActionTypePopup selectModuleActionTypePopup;
+    private final SideBarMenu sideBarMenu;
 
 
     public ProdMessagesSteps() {
         dashboardPage = new DashboardPage();
         messagesPage = new MessagesPage();
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
+        sideBarMenu = new SideBarMenu();
     }
 
     @Override
@@ -63,17 +64,13 @@ public class ProdMessagesSteps implements MessagesSteps {
         messagesPage.actionsDropDown.select(action.getValue());
         messagesPage.typeDropDown.select(messageType.getValue());
         messagesPage.modulesDropDown.select(module.getValue());
-
-        String url = dashboardPage.getCurrentUrl();
         selectModuleActionTypePopup.nextButton.click();
-        waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         messagesPage.messageName.enterText(messageName);
         messagesPage.notificationTriggerTypeDropDown.select(notificationType.getValue());
-        String url2 = dashboardPage.getCurrentUrl();
         messagesPage.nextButton.click();
-        waitFor(() -> !dashboardPage.getCurrentUrl().equals(url2), false);
         messagesPage.messageTextField.enterText(smsMessage);
         messagesPage.saveButton.click();
+
         return this;
     }
 
@@ -84,15 +81,40 @@ public class ProdMessagesSteps implements MessagesSteps {
             throw new RuntimeException("Message was not found!");
         }
 
-        findMessageByName(messageName);
+        isCreatedMessageDisplayed(messageName);
 
-        boolean result = messagesPage.firstMessageName.getText().equals(messageName);
+        boolean result = false;
+        String actualSmsName = messagesPage.firstMessageName.getText();
+        if(actualSmsName.equals(messageName))
+            result = true;
 
         Logger.info("Is message'" + messageName + "' is found? '"+ result);
         return result;
     }
 
-    private void findMessageByName(String messageName) {
-        messagesPage.findMessageByName(messageName);
+    @Override
+    public boolean isCreatedMessageDisplayed(String messageName) {
+        return messagesPage.isCreatedMessageDisplayed(messageName);
     }
+
+    @Override
+    public String getMessageText() {
+        return messagesPage.getMessageText();
+    }
+
+    @Override
+    public MessagesSteps updateTextMessageBody(String newMessage) {
+        messagesPage.messageTable.editFirstItemButton().click();
+        sideBarMenu.openItem("SMS");
+        messagesPage.messageTextField.enterText(newMessage);
+        messagesPage.saveButton.click();
+        messagesPage.sideBarMessagesButton.click();
+        return this;
+    }
+
+    @Override
+    public boolean areMessageTextUpdated(String initialMessage, String expectedUpdatedMessage) {
+        return messagesPage.areMessageTextUpdated(initialMessage, expectedUpdatedMessage);
+    }
+
 }
