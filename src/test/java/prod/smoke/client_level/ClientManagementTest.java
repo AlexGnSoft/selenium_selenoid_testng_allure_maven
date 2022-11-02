@@ -3,7 +3,7 @@ package prod.smoke.client_level;
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
-import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.message.*;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.steps.imp.prod.ProdMessagesSteps;
 import org.testng.Assert;
@@ -28,6 +28,9 @@ import java.util.List;
 public class ClientManagementTest extends AbstractClientLevelTest {
 
     private Client client;
+    private String messageName;
+    private String clientName;
+    private String clientCode;
 
     @BeforeClass
     public void prepareClientData() {
@@ -38,13 +41,16 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         client.setName("Automator " + getRandomString());
         client.setEndpoint(twilioSmsSenderEndPoint);
         client.setModules(Module.getAllModules());
+        messageName = getRandomString();
+        clientName = client.getName();
+        clientCode = client.getCode();
     }
 
     @Test(description = "Add new client with all modules")
     public void addNewClient_MHM_T10() {
         Client actualClient = site.adminToolsSteps()
                 .addNewClient(client, Module.CHECK_ALL)
-                .getClientByCode(client.getCode());
+                .getClientByCode(clientCode);
         Assert.assertEquals(client, actualClient, "Actual client differs from expected client");
     }
 
@@ -54,7 +60,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         client.setModules(modulesToSet);
 
         Client actualClient = site.adminToolsSteps()
-                .getClientByCode(client.getCode());
+                .getClientByCode(clientCode);
 
         Client updatedClient = site.adminToolsSteps()
                 .editClientsModules(actualClient.getCode(), modulesToSet)
@@ -67,7 +73,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     public void checkClientsModulesForMessages_MHM_T161() {
         List<Module> availableModules = site.messagesSteps()
                 .goToMessagesTab()
-                .getAvailableModules(client.getName());
+                .getAvailableModules(clientName);
 
         Assert.assertEquals(availableModules, client.getModules(),
                 "Modules available for messaging are not equal to users modules.\n" +
@@ -79,7 +85,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     public void checkClientsModulesForCampaigns_MHM_T160() {
         List<Module> availableModules = site.campaignSteps()
                 .goToCampaignsTab()
-                .getAvailableModules(client.getName());
+                .getAvailableModules(clientName);
 
         Assert.assertEquals(availableModules, client.getModules(),
                 "Modules available for campaigns are not equal to users modules.\n" +
@@ -93,9 +99,9 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         List<Language> expectedLanguages = Arrays.asList(Language.CH, Language.DU);
 
         List<Language> actualLanguages = site.adminToolsSteps()
-                .goToClientSettings(client.getCode())
+                .goToClientSettings(clientCode)
                 .addAdditionalLanguage(expectedLanguages)
-                .goToClientSettings(client.getCode())
+                .goToClientSettings(clientCode)
                 .getAdditionalLanguages();
 
         Assert.assertTrue(actualLanguages.containsAll(expectedLanguages),
@@ -109,15 +115,28 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Language languageToRemove = Language.CH;
 
         List<Language> actualLanguages = site.adminToolsSteps()
-                .goToClientSettings(client.getCode())
+                .goToClientSettings(clientCode)
                 .removeAdditionalLanguage(languageToRemove)
-                .goToClientSettings(client.getCode())
+                .goToClientSettings(clientCode)
                 .getAdditionalLanguages();
 
         Assert.assertFalse(actualLanguages.contains(languageToRemove),
                 "Additional languages should not contain value:\n" +
                         languageToRemove + "\n" +
                         "but additional languages is " + Arrays.toString(actualLanguages.toArray()) + "\n");
+    }
+
+    @Test(description = "Create sms message", dependsOnMethods = "addNewClient_MHM_T10")
+    public void createSmsMessage_MHM_T70() {
+        site.messagesSteps()
+                .addSmsMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, messageName, NotificationType.PAIN,
+                        "${p} , tell us more about your symptoms level today.");
+
+        boolean isMessageCreated = site.messagesSteps()
+                .goToMessagesTab()
+                .isMessageCreated(clientName, messageName);
+
+        Assert.assertTrue(isMessageCreated,"The message was not created!");
     }
 
     @AfterClass(alwaysRun = true)

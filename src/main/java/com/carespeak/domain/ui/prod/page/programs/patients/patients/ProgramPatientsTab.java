@@ -59,8 +59,9 @@ public class ProgramPatientsTab extends AbstractProgramPage {
     }
 
     public void selectProgramByClientAndProgramName(String landingProgramName) {
-       By locator = By.xpath(String.format(CLIENT_PROGRAM_NAME, landingProgramName));
-       WebElement landingProgram = driver.findElement(locator);
-       landingProgram.click();
+        moveSelectedPatientsToProgramDropdown.click();
+        By locator = By.xpath(String.format(CLIENT_PROGRAM_NAME, landingProgramName));
+        WebElement landingProgram = driver.findElement(locator);
+        landingProgram.click();
     }
 }

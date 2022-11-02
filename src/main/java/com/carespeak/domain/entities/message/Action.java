@@ -7,13 +7,13 @@ public enum Action {
     TIMED_CONDITIONAL_ALERT("Timed Conditional Alert"),
     ESCALATION_ALERT("Escalation Alert");
 
-    private String action;
+    private String val;
 
-    private Action(String action) {
-        this.action = action;
+    Action(String action) {
+        this.val = action;
     }
 
-    public String getAction() {
-        return action;
+    public String getValue() {
+        return val;
     }
 }

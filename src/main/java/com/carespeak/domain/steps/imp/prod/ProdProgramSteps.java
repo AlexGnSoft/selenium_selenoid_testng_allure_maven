@@ -131,7 +131,6 @@ public class ProdProgramSteps implements ProgramSteps {
         ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
         clickOnPatientCheckbox(patientFirstName);
         patientsTab.moveToProgramBtn.click();
-        patientsTab.moveSelectedPatientsToProgramDropdown.click();
         patientsTab.selectProgramByClientAndProgramName(landingProgramName);
         patientsTab.moveButton.click();
         patientsTab.confirmMoveButton.click();

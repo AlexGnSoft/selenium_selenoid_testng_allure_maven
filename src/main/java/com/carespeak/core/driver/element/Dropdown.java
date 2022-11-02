@@ -1,10 +1,13 @@
 package com.carespeak.core.driver.element;
 
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
+import com.carespeak.domain.entities.message.Action;
+import com.carespeak.domain.entities.message.MessageType;
+import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.message.NotificationType;
 import org.apache.log4j.Level;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class Dropdown extends ClickableElement {
     private static final String OPTIONS_XPATH = ".//option";
     private static final String LIST_ITEMS_XPATH = ".//li//*";
 
+
     public Dropdown(WebElement element) {
         super(element);
     }
@@ -38,12 +42,29 @@ public class Dropdown extends ClickableElement {
         super(element);
     }
 
-    public void select(String value) {
+    public Dropdown select(String value) {
         if ("select".equals(getTagName())) {
             selectInSelectElement(value);
         } else {
             selectInDropdownElement(this, value);
         }
+        return this;
+    }
+
+    public String getModule(Module module) {
+        return module.toString();
+    }
+
+    public String getAction(Action action) {
+        return action.toString();
+    }
+
+    public String getMessageType(MessageType messageType) {
+        return messageType.toString();
+    }
+
+    public String getNotificationType(NotificationType notificationType) {
+        return notificationType.toString();
     }
 
     /**
