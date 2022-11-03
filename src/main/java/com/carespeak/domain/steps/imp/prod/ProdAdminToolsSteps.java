@@ -140,6 +140,15 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
+    public AdminToolsSteps goToSpecificTab(String specificTab) {
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.adminTools().goToSubMenu(specificTab);
+        waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+
+        return this;
+    }
+
+    @Override
     public AdminToolsSteps addAdditionalLanguage(List<Language> languages) {
         Language[] res = new Language[languages.size()];
         return addAdditionalLanguage(languages.toArray(res));

@@ -76,6 +76,14 @@ public interface AdminToolsSteps extends BaseSteps {
      */
     AdminToolsSteps goToClientSettings(String code);
 
+    /**
+     * Go to specific tab
+     *
+     * @param specificTab a certain tab from the header menu
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps goToSpecificTab(String specificTab);
+
 
     /**
      * Method will work on General Settings view for a client.
@@ -125,6 +133,7 @@ public interface AdminToolsSteps extends BaseSteps {
      * @return client's default language
      */
     Language getDefaultLanguage();
+
 
     /**
      * Send SMS to specified endpoint from simulator

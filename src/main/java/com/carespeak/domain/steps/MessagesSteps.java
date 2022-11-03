@@ -12,6 +12,8 @@ public interface MessagesSteps extends BaseSteps {
 
     MessagesSteps goToMessagesTab();
 
+    MessagesSteps goToEmailTemplatesTab();
+
     /**
      * Retrieves available modules for provided client
      *
@@ -48,7 +50,16 @@ public interface MessagesSteps extends BaseSteps {
      * @param messageName    message name
      * @return return true if message is found, otherwise false
      */
-    boolean isMessageCreated(String clientName, String messageName);
+    boolean isMessageExist(String clientName, String messageName);
+
+    /**
+     * Verify that template is created
+     *
+     * @param clientName     client name
+     * @param templateName    template name
+     * @return return true if message is found, otherwise false
+     */
+    boolean isTemplateExist(String clientName, String templateName);
 
     /**
      * Verify that message is created and displayed
@@ -66,6 +77,7 @@ public interface MessagesSteps extends BaseSteps {
 
     /**
      * Verify that message is created and displayed
+     *
      * @param newMessage    new text of a message
      *
      * @return return true if message is found, otherwise false
@@ -81,5 +93,15 @@ public interface MessagesSteps extends BaseSteps {
      * @return return true if message is updated, otherwise false
      */
     boolean areMessageTextUpdated(String initialMessage, String expectedUpdatedMessage);
+
+    /**
+     * Create a message for a specific Module, Action and Type
+     *
+     * @param clientName         client name for which a template will be created
+     * @param templateName       name of template
+     * @param templateBody       body of template
+     * @return MessagesSteps object
+     */
+    MessagesSteps addEmailTemplate(String clientName, String templateName, String templateBody);
 
 }

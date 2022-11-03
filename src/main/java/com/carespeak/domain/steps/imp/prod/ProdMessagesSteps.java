@@ -6,12 +6,15 @@ import com.carespeak.domain.entities.message.Action;
 import com.carespeak.domain.entities.message.MessageType;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.message.NotificationType;
+import com.carespeak.domain.steps.AdminToolsSteps;
 import com.carespeak.domain.steps.MessagesSteps;
 import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
+import com.carespeak.domain.ui.prod.page.admin_tools.email_templates.EmailTemplatesPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.messages.MessagesPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +23,7 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     private final DashboardPage dashboardPage;
     private final MessagesPage messagesPage;
+    private final EmailTemplatesPage emailTemplatesPage;
     private final SelectModuleActionTypePopup selectModuleActionTypePopup;
     private final SideBarMenu sideBarMenu;
 
@@ -27,6 +31,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     public ProdMessagesSteps() {
         dashboardPage = new DashboardPage();
         messagesPage = new MessagesPage();
+        emailTemplatesPage = new EmailTemplatesPage();
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
         sideBarMenu = new SideBarMenu();
     }
@@ -36,6 +41,12 @@ public class ProdMessagesSteps implements MessagesSteps {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.messagesMenuItem.click();
         waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+        return this;
+    }
+
+    @Override
+    public MessagesSteps goToEmailTemplatesTab() {
+        dashboardPage.headerMenu.adminTools().goToSubMenu("Email Templates");
         return this;
     }
 
@@ -75,7 +86,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
-    public boolean isMessageCreated(String clientName, String messageName) {
+    public boolean isMessageExist(String clientName, String messageName) {
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){
             throw new RuntimeException("Message was not found!");
@@ -89,6 +100,28 @@ public class ProdMessagesSteps implements MessagesSteps {
             result = true;
 
         Logger.info("Is message'" + messageName + "' is found? '"+ result);
+        return result;
+    }
+
+    @Override
+    public boolean isTemplateExist(String clientName, String templateName) {
+        emailTemplatesPage.searchClient.search(clientName);
+        emailTemplatesPage.emailTemplateTable.searchFor(templateName);
+
+        TableRowItem templateRow = emailTemplatesPage.emailTemplateTable.getFirstRowItem();
+        if(templateRow == null){
+            throw new RuntimeException("Template was not found!");
+        }
+
+        boolean result = false;
+        String actualTemplateName = emailTemplatesPage.firstTemplateName.getText();
+        System.out.println("actualTemplateName " + actualTemplateName);
+        System.out.println("templateName " + templateName);
+
+        if(actualTemplateName.equals(templateName))
+            result = true;
+
+        Logger.info("Is template'" + templateName + "' is found? '"+ result);
         return result;
     }
 
@@ -117,4 +150,14 @@ public class ProdMessagesSteps implements MessagesSteps {
         return messagesPage.areMessageTextUpdated(initialMessage, expectedUpdatedMessage);
     }
 
+    @Override
+    public MessagesSteps addEmailTemplate(String clientName, String templateName, String templateBody) {
+        messagesPage.searchClient.search(clientName);
+        emailTemplatesPage.addTemplateButton.click();
+
+        emailTemplatesPage.templateName.enterText(templateName);
+        emailTemplatesPage.contentField.enterText(templateBody);
+        emailTemplatesPage.saveButton.click();
+        return this;
+    }
 }
