@@ -82,6 +82,9 @@ public class MessagesPage extends AbstractPage {
         searchClient = new SearchWithSelection();
 
     }
+    public boolean isOpened() {
+        return driver.getCurrentUrl().contains("messages/list.page");
+    }
 
     public boolean isCreatedMessageDisplayed(String messageName){
         By locator = By.xpath(String.format(MESSAGE_NAME, messageName));

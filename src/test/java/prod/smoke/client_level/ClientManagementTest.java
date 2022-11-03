@@ -126,29 +126,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                         "but additional languages is " + Arrays.toString(actualLanguages.toArray()) + "\n");
     }
 
-    @Test(description = "Create sms message", dependsOnMethods = "addNewClient_MHM_T10")
-    public void createSmsMessage_MHM_T70() {
-        site.messagesSteps()
-                .addSmsMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, messageName, NotificationType.PAIN,
-                        "${p} , tell us more about your symptoms level today.");
-
-        boolean isMessageCreated = site.messagesSteps()
-                .goToMessagesTab()
-                .isMessageCreated(clientName, messageName);
-
-        Assert.assertTrue(isMessageCreated,"The message was not created!");
-    }
-
-    @Test(description = "Edit text of sms message", dependsOnMethods = {"addNewClient_MHM_T10","createSmsMessage_MHM_T70"})
-    public void editSmsMessage_MHM_T81() {
-        String initialMessage = site.messagesSteps().getMessageText();
-        site.messagesSteps().updateTextMessageBody("Updated message");
-        String updatedMessage = site.messagesSteps().getMessageText();
-
-        boolean areMessagesEqual = site.messagesSteps().areMessageTextUpdated(initialMessage, updatedMessage);
-
-        Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
-    }
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {
