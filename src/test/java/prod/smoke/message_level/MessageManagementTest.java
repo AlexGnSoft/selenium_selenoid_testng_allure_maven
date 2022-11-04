@@ -14,6 +14,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
     private Client client;
     private String messageName;
+    private String emailTemplateName;
     private String clientName;
 
     @BeforeClass
@@ -22,6 +23,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
         client = getTestClientByCode("MessageLevel client " + getRandomString());
         clientName = client.getName();
         messageName = getRandomString();
+        emailTemplateName = getRandomString();
     }
 
     @Test(description = "Create sms message")
@@ -50,12 +52,8 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
     @Test(description = "Create email template")
     public void createEmailTemplate_MHM_T87() {
-        //Test data
-        String emailTemplateName = getRandomString();
-        String emailTemplateBody = getRandomString();
-
         site.adminToolsSteps().goToSpecificTab("Email Templates");
-        site.messagesSteps().addEmailTemplate(clientName, emailTemplateName, emailTemplateBody);
+        site.messagesSteps().addEmailTemplate(clientName, emailTemplateName, getRandomString());
 
         boolean isEmailTemplateCreated = site.messagesSteps()
                 .goToEmailTemplatesTab()
@@ -66,7 +64,8 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
     @Test(description = "Create email message")
     public void createEmailMessage_MHM_T84() {
-       //to do
+
+
     }
 
 

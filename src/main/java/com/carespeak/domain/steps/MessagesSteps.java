@@ -44,6 +44,17 @@ public interface MessagesSteps extends BaseSteps {
     MessagesSteps addSmsMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage);
 
     /**
+     * Create a message for a specific Module, Action and Type
+     *
+     * @param module             module
+     * @param messageType        message type
+     * @param notificationType   notification type
+     * @param smsMessage         body of the sms message
+     * @return MessagesSteps object
+     */
+    MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage);
+
+    /**
      * Verify that message is created
      *
      * @param clientName     client name

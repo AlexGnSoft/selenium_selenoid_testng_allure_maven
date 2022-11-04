@@ -14,7 +14,6 @@ import com.carespeak.domain.ui.prod.page.admin_tools.email_templates.EmailTempla
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.messages.MessagesPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,9 +71,9 @@ public class ProdMessagesSteps implements MessagesSteps {
     public MessagesSteps addSmsMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage) {
         goToMessagesTab();
         messagesPage.addButton.click();
+        messagesPage.modulesDropDown.select(module.getValue());
         messagesPage.actionsDropDown.select(action.getValue());
         messagesPage.typeDropDown.select(messageType.getValue());
-        messagesPage.modulesDropDown.select(module.getValue());
         selectModuleActionTypePopup.nextButton.click();
         messagesPage.messageName.enterText(messageName);
         messagesPage.notificationTriggerTypeDropDown.select(notificationType.getValue());
@@ -84,6 +83,23 @@ public class ProdMessagesSteps implements MessagesSteps {
 
         return this;
     }
+
+    @Override
+    public MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage) {
+        goToMessagesTab();
+        messagesPage.addButton.click();
+        messagesPage.modulesDropDown.select(module.getValue());
+        messagesPage.typeDropDown.select(messageType.getValue());
+        selectModuleActionTypePopup.nextButton.click();
+        messagesPage.messageName.enterText(messageName);
+        messagesPage.nextButton.click();
+
+
+
+
+        return this;
+    }
+
 
     @Override
     public boolean isMessageExist(String clientName, String messageName) {
