@@ -75,6 +75,9 @@ public class MessagesPage extends AbstractPage {
     @FindBy(xpath = "//div[@id='cs-sidebar']/div/a")
     public Button sideBarMessagesButton;
 
+    @ElementName("Side bar link button")
+    @FindBy(id = "sidebarLinkEmail")
+    public Button sidebarLinkEmailButton;
 
     public MessagesPage() {
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();

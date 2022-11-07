@@ -23,7 +23,7 @@ public class EmailSettingsPage extends AbstractPage {
     public Input bodyField;
 
     @ElementName("Send test message button")
-    @FindBy(xpath = "//div[@class='note-editable']")
+    @FindBy(id = "send-test-sms-btn")
     public Button sendTestMessageButton;
 
     @ElementName("Save button")
@@ -34,9 +34,13 @@ public class EmailSettingsPage extends AbstractPage {
     @FindBy(xpath = "//button/span[@class='filter-option pull-left']")
     public Dropdown emailsTemplateDropDown;
 
-    @ElementName("Message was saved successfully pop-up")
+    @ElementName("'Message was saved successfully' pop-up")
     @FindBy(xpath = "//div[@class='cs-table-cell top alert-content']")
     public WebElement successPopUp;
+
+    @ElementName("'Test message has been sent successfully' pop-up")
+    @FindBy(xpath = "//div[@class='cs-table-cell top alert-content']")
+    public WebElement testMessageHasBeenSentSuccessfullyPopUp;
 
     @ElementName("to Email Field")
     @FindBy(xpath = "//input[@class='form-control control']")
@@ -45,6 +49,10 @@ public class EmailSettingsPage extends AbstractPage {
     @ElementName("send pop up button")
     @FindBy(xpath = "//button[contains(@class,'success ui-button ui-widget ui')]")
     public Button sendPopUpButton;
+
+    @ElementName("To email field")
+    @FindBy(xpath = "//input[@class='form-control control']")
+    public Input toEmailField;
 
 
 }

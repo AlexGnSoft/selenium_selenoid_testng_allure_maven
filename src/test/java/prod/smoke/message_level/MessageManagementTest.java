@@ -62,10 +62,19 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
         Assert.assertTrue(isEmailTemplateCreated, "The email template was not created!");
     }
 
-    @Test(description = "Create email message")
-    public void createEmailMessage_MHM_T84() {
+    @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87")
+    public void createEmailMessageAndSendIt_MHM_T84() {
+        //Test data
+        String customEmail = getRandomString()+"@gmail.com";
+        String subject = getRandomString();
+        String body = getRandomString();
+        String emailMessageName = getRandomString();
 
+        site.messagesSteps().addEmailMessage(Module.EDUCATION, MessageType.EMAIL, emailMessageName, customEmail, subject, body);
 
+        boolean isMessageWasSent = site.messagesSteps().sendTestMessage(emailMessageName);
+
+        Assert.assertTrue(isMessageWasSent,"The email message was not sent");
     }
 
 
@@ -74,5 +83,4 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
         site.adminToolsSteps()
                 .removeClient(client);
     }
-
 }

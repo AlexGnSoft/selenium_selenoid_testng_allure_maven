@@ -2,7 +2,9 @@ package com.carespeak.domain.entities.message;
 
 public enum MessageType {
     SMS("SMS"),
-    MMS("MMS");
+    MMS("MMS"),
+    EMAIL("E-mail");
+
 
     private String messageType;
 

@@ -48,11 +48,12 @@ public interface MessagesSteps extends BaseSteps {
      *
      * @param module             module
      * @param messageType        message type
-     * @param notificationType   notification type
-     * @param smsMessage         body of the sms message
+     * @param messageName        message name
+     * @param customEmail        custom email
+     * @param subject            body of the email
      * @return MessagesSteps object
      */
-    MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage);
+    MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, String customEmail, String subject, String body);
 
     /**
      * Verify that message is created
@@ -79,6 +80,14 @@ public interface MessagesSteps extends BaseSteps {
      * @return return true if message is found, otherwise false
      */
     boolean isCreatedMessageDisplayed(String messageName);
+
+    /**
+     * Verify that after click on 'Send Test Message' button validation message is displayed
+     *
+     * @param messageName    message name
+     * @return return true if validation message is displayed, otherwise false
+     */
+    boolean sendTestMessage(String messageName);
 
     /**
      * Get text of the created message

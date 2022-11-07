@@ -6,12 +6,12 @@ import com.carespeak.domain.entities.message.Action;
 import com.carespeak.domain.entities.message.MessageType;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.message.NotificationType;
-import com.carespeak.domain.steps.AdminToolsSteps;
 import com.carespeak.domain.steps.MessagesSteps;
 import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.admin_tools.email_templates.EmailTemplatesPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
+import com.carespeak.domain.ui.prod.page.messages.EmailSettingsPage;
 import com.carespeak.domain.ui.prod.page.messages.MessagesPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     private final DashboardPage dashboardPage;
     private final MessagesPage messagesPage;
     private final EmailTemplatesPage emailTemplatesPage;
+    private final EmailSettingsPage emailSettingsPage;
     private final SelectModuleActionTypePopup selectModuleActionTypePopup;
     private final SideBarMenu sideBarMenu;
 
@@ -33,6 +34,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         emailTemplatesPage = new EmailTemplatesPage();
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
         sideBarMenu = new SideBarMenu();
+        emailSettingsPage = new EmailSettingsPage();
     }
 
     @Override
@@ -85,7 +87,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
-    public MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage) {
+    public MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, String customEmail, String subject, String body) {
         goToMessagesTab();
         messagesPage.addButton.click();
         messagesPage.modulesDropDown.select(module.getValue());
@@ -93,9 +95,10 @@ public class ProdMessagesSteps implements MessagesSteps {
         selectModuleActionTypePopup.nextButton.click();
         messagesPage.messageName.enterText(messageName);
         messagesPage.nextButton.click();
-
-
-
+        emailSettingsPage.customEmailField.enterText(customEmail);
+        emailSettingsPage.subject.enterText(subject);
+        emailSettingsPage.bodyField.enterText(body);
+        emailSettingsPage.saveButton.click();
 
         return this;
     }
@@ -144,6 +147,23 @@ public class ProdMessagesSteps implements MessagesSteps {
     @Override
     public boolean isCreatedMessageDisplayed(String messageName) {
         return messagesPage.isCreatedMessageDisplayed(messageName);
+    }
+
+    @Override
+    public boolean sendTestMessage(String messageName) {
+        messagesPage.messageTable.searchFor(messageName);
+        messagesPage.messageTable.editFirstItemButton().click();
+        messagesPage.sidebarLinkEmailButton.click();
+        emailSettingsPage.sendTestMessageButton.click();
+        emailSettingsPage.sendPopUpButton.click();
+        Boolean aBoolean = waitFor(() -> emailSettingsPage.testMessageHasBeenSentSuccessfullyPopUp.isDisplayed());
+        if(aBoolean){
+            emailSettingsPage.saveButton.click();
+            return true;
+        } else{
+            Logger.error("Success message 'Test message has been sent successfully' was not displayed");
+            return false;
+        }
     }
 
     @Override
