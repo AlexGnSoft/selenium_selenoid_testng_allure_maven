@@ -12,7 +12,7 @@ public interface CampaignSteps extends BaseSteps {
 
     List<Module> getAvailableModules(String clientName);
 
-    CampaignSteps addCampaign(Client client, String name, CampaignAccess access, String description, String... tags);
+    CampaignSteps addCampaign(Client client, String name, Module module, CampaignAccess access, String description, String... tags);
 
 
 

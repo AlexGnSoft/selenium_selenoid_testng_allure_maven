@@ -53,7 +53,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
-    public CampaignSteps addCampaign(Client client, String name, CampaignAccess access, String description, String... tags) {
+    public CampaignSteps addCampaign(Client client, String name, Module module, CampaignAccess access, String description, String... tags) {
         if (!campaignsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.campaignsMenuItem.click();
@@ -61,7 +61,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         }
         campaignsPage.addCampaignButton.click();
         campaignsPage.selectModulePopup.waitForDisplayed();
-        campaignsPage.selectModulePopup.moduleDropdown.select("Education");
+        campaignsPage.selectModulePopup.moduleDropdown.select(module.getValue());
         campaignsPage.selectModulePopup.nextButton.click();
         campaignsPage.selectModulePopup.waitForDisappear();
         generalPage.nameInput.enterText(name);

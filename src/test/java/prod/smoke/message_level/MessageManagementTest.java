@@ -77,7 +77,6 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
     }
 
-
     @AfterClass(alwaysRun = true)
     public void removeClient() {
         site.adminToolsSteps()
