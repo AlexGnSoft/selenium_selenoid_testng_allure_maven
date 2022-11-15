@@ -153,7 +153,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                 .addAccountCreationQuestion(false,
                         "Birth Date",
                         "Enter your Birth Date, please",
-                        "Wrong Birth Date, try again")
+                        "Wrong birth day data format, it should be like, mm/dd/yyyy")
                 .addAccountCreationQuestion(false,
                         "Sex",
                         "Enter your Sex, please",
@@ -198,7 +198,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
                 .addAccountCreationQuestion(false,
                         "Birth Date",
                         "Enter your Birth Date, please",
-                        "Wrong Birth Date, try again")
+                        "Wrong birth day data format, it should be like, mm/dd/yyyy")
                 .addCompletedMessage(COMPLETED_MESSAGE);
 
         //TODO: Simulate sms from patient to client with SignUp, Agree, Patient name, Skip and Start therapy date

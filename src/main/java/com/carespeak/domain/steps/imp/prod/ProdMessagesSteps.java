@@ -70,7 +70,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
-    public MessagesSteps addSmsMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage) {
+    public MessagesSteps addBiometricMedicationMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage) {
         goToMessagesTab();
         messagesPage.addButton.click();
         messagesPage.modulesDropDown.select(module.getValue());

@@ -29,7 +29,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
     @Test(description = "Create sms message")
     public void createSmsMessage_MHM_T70() {
         site.messagesSteps()
-                .addSmsMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, messageName, NotificationType.PAIN,
+                .addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, messageName, NotificationType.PAIN,
                         "${p} , tell us more about your symptoms level today.");
 
         boolean isMessageCreated = site.messagesSteps()

@@ -8,6 +8,7 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import com.carespeak.domain.steps.CampaignSteps;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.prod.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
@@ -27,11 +28,12 @@ import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ProdProgramSteps implements ProgramSteps {
 
@@ -75,7 +77,6 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
 
-        dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.searchClient.search(clientName);
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);
@@ -142,13 +143,15 @@ public class ProdProgramSteps implements ProgramSteps {
     public ProgramSteps goToProgramSettings(String clientName, String programName) {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.programsMenuItem.click();
-        programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+        programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
         programsPage.searchClient.search(clientName);
+        programsPage.sleepWait(2000);
         programsPage.programTable.searchFor(programName);
         TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
         if (programRow == null) {
             throw new RuntimeException("Program was not found by name '" + programName + "'!");
         }
+        programsPage.sleepWait(1000);
         programsPage.programTable.editFirstItemButton().click();
         return this;
     }

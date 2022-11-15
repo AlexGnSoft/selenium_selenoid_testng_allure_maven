@@ -1,0 +1,27 @@
+package com.carespeak.domain.ui.prod.page.campaigns.messages;
+
+import com.carespeak.core.driver.annotation.ElementName;
+import com.carespeak.core.driver.element.Button;
+import com.carespeak.domain.ui.prod.page.campaigns.AbstractCampaignsPage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+
+public class CampaignMessagesPage extends AbstractCampaignsPage {
+
+    @ElementName("Allocate messages button")
+    @FindBy(id = "messageAllocateBtn")
+    public Button allocateButton;
+
+    @ElementName("Campaign save button")
+    @FindBy(xpath = "//div[@class='cs-form-element-full-container']/button[@id='campaignSaveBtn']")
+    public Button saveCampaignButton;
+
+    public void clickOnSaveCampaignButton() {
+        driver.navigate().refresh();
+        Actions actions = new Actions(driver);
+        WebElement element = driver.findElement(By.xpath("//div[@class='cs-form-element-full-container']/button[@id='campaignSaveBtn']"));
+        actions.doubleClick(element).perform();
+    }
+}

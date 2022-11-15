@@ -15,6 +15,7 @@ public enum Module {
     RULES("Rules"),
     SURVEY("Survey");
 
+
     private String val;
 
     Module(String moduleType) {

@@ -26,8 +26,8 @@ public class ClientLevelWebHooksTest extends AbstractClientLevelTest {
         String webhookName = "webhookName" + getRandomString();
         site.clientSteps()
                 .addWebhook(client, webhookName, "http://webhooktest.com", null);
-        site.campaignSteps()
-                .addCampaign(client, "AutoTestCampaign", Module.EDUCATION, CampaignAccess.PUBLIC, "Automation created campaign", null);
+        //site.campaignSteps()
+                //.addCampaign(client, "AutoTestCampaign", Module.EDUCATION, CampaignAccess.PUBLIC, "Automation created campaign", null);
         //TODO: implement testcase assertion
         System.out.println();
     }

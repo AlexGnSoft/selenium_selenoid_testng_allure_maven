@@ -1,4 +1,4 @@
-package com.carespeak.domain.ui.prod.page.programs.general.campaign;
+package com.carespeak.domain.ui.prod.page.programs.campaign;
 
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;

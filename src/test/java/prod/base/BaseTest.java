@@ -20,6 +20,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.util.Properties;
@@ -30,7 +31,6 @@ public abstract class BaseTest implements IDataGenerator {
     protected static Config config;
     protected static PropertyFileReader propertyFileReader;
     protected SiteStepsHolder site;
-
     protected String user;
     protected String password;
 

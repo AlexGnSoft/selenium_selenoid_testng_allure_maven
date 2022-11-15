@@ -41,7 +41,7 @@ public interface MessagesSteps extends BaseSteps {
      * @param smsMessage         body of the sms message
      * @return MessagesSteps object
      */
-    MessagesSteps addSmsMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage);
+    MessagesSteps addBiometricMedicationMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage);
 
     /**
      * Create a message for a specific Module, Action and Type
