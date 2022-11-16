@@ -108,42 +108,72 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
         LocalDateTime machineTime = LocalDateTime.now();
         machineTime = machineTime.minusHours(5);
 
-        if(machineTime.getMinute() >= 53)
-            machineTime.plusHours(1);
+        //need to move to next hours, as we can not select a time 55+ minutes in dropdown, and our test execution takes more than 3 minutes
+        if(machineTime.getMinute() >= 53) {
+            machineTime = machineTime.plusHours(1);
+        }
 
         String timeNewYork = machineTime.format(formatter);
-        String hours = timeNewYork.substring(0, 2);
-        return hours;
+        String hoursNewYork = timeNewYork.substring(0, 2);
+
+        return hoursNewYork;
     }
 
     public String minutesDropDownNewYorkTime(){
         int machineCurrentMinute = LocalTime.now().getMinute();
 
+
         if(machineCurrentMinute < 05){
             machineCurrentMinute = 05;
-        } else if(machineCurrentMinute < 7){
+        } else if(machineCurrentMinute <= 7){
             machineCurrentMinute = 10;
-        } else if(machineCurrentMinute < 12) {
+        } else if(machineCurrentMinute <= 12) {
             machineCurrentMinute = 15;
-        } else if(machineCurrentMinute < 18) {
+        } else if(machineCurrentMinute <= 17) {
             machineCurrentMinute = 20;
-        } else if(machineCurrentMinute < 22) {
+        } else if(machineCurrentMinute <= 22) {
             machineCurrentMinute = 25;
-        } else if(machineCurrentMinute < 28){
+        } else if(machineCurrentMinute <= 27){
             machineCurrentMinute = 30;
-        } else if(machineCurrentMinute < 32) {
+        } else if(machineCurrentMinute <= 32) {
             machineCurrentMinute = 35;
-        } else if(machineCurrentMinute < 38) {
+        } else if(machineCurrentMinute <= 37) {
             machineCurrentMinute = 40;
-        } else if(machineCurrentMinute < 42) {
+        } else if(machineCurrentMinute <= 42) {
             machineCurrentMinute = 45;
-        } else if(machineCurrentMinute < 48) {
+        } else if(machineCurrentMinute <= 47) {
             machineCurrentMinute = 50;
-        } else if(machineCurrentMinute < 52) {
+        } else if(machineCurrentMinute <= 52) {
             machineCurrentMinute = 55;
         } else if(machineCurrentMinute >= 53) {
             machineCurrentMinute = 05;
         }
+
+//        if(machineCurrentMinute < 05){
+//            machineCurrentMinute = 05;
+//        } else if(machineCurrentMinute < 7){
+//            machineCurrentMinute = 10;
+//        } else if(machineCurrentMinute < 12) {
+//            machineCurrentMinute = 15;
+//        } else if(machineCurrentMinute < 18) {
+//            machineCurrentMinute = 20;
+//        } else if(machineCurrentMinute < 22) {
+//            machineCurrentMinute = 25;
+//        } else if(machineCurrentMinute < 28){
+//            machineCurrentMinute = 30;
+//        } else if(machineCurrentMinute < 32) {
+//            machineCurrentMinute = 35;
+//        } else if(machineCurrentMinute < 38) {
+//            machineCurrentMinute = 40;
+//        } else if(machineCurrentMinute < 42) {
+//            machineCurrentMinute = 45;
+//        } else if(machineCurrentMinute < 48) {
+//            machineCurrentMinute = 50;
+//        } else if(machineCurrentMinute < 52) {
+//            machineCurrentMinute = 55;
+//        } else if(machineCurrentMinute >= 53) {
+//            machineCurrentMinute = 05;
+//        }
         return String.valueOf(machineCurrentMinute);
     }
 

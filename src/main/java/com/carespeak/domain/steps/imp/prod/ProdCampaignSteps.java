@@ -256,20 +256,34 @@ public class ProdCampaignSteps implements CampaignSteps {
         return result;
     }
 
-        @Override
-    public String doesCampaignMessageArrive(String campaignMessage, String patientFirstName) {
-        String message;
+    @Override
+    public String didCampaignMessageArrive(String expectedCampaignMessage, String patientFirstName) {
+        String actualMessageFromLogs;
 
         long start = System.currentTimeMillis();
+        boolean bol = false;
 
-          do {
-              MessageLogItem lastPatientMessageFromLogs = prodProgramSteps.getLastPatientMessageFromLogs(patientFirstName);
-              message = lastPatientMessageFromLogs.getMessage();
-              prodProgramSteps.pageRefresh();
+        do {
+            MessageLogItem lastPatientMessageFromLogs = prodProgramSteps.getLastPatientMessageFromLogs(patientFirstName);
+            actualMessageFromLogs = lastPatientMessageFromLogs.getMessage();
+            prodProgramSteps.pageRefresh();
 
-          } while (!message.equals(campaignMessage) || (System.currentTimeMillis()-start <= 300000));
+            boolean b1 = !actualMessageFromLogs.equals(expectedCampaignMessage);
+            boolean b2 = (System.currentTimeMillis() - start <= 300000);
+            boolean b22 = (System.currentTimeMillis() - start >= 300000);
+            boolean b11 = actualMessageFromLogs.equals(expectedCampaignMessage);
 
-        return message;
+            if (b11 && b2) {
+                bol = false;
+            }else if (b1 && b2) {
+                bol = true;
+            } else if (b1 && b22) {
+                bol = false;
+            }
+
+        } while (bol);
+
+        return actualMessageFromLogs;
     }
 
     @Override

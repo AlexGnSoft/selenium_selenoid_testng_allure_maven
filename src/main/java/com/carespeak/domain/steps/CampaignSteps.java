@@ -81,7 +81,7 @@ public interface CampaignSteps extends BaseSteps {
      */
     boolean isSameCampaignCannotBeAddedTwice(Module module, String campaignName);
 
-    public String doesCampaignMessageArrive(String campaignMessage, String patientFirstName);
+    public String didCampaignMessageArrive(String campaignMessage, String patientFirstName);
 
     /**
      * Add a campaign to program
