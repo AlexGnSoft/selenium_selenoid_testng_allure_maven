@@ -12,7 +12,9 @@ import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.admin_tools.email_templates.EmailTemplatesPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.messages.EmailSettingsPage;
+import com.carespeak.domain.ui.prod.page.messages.MedicationPage;
 import com.carespeak.domain.ui.prod.page.messages.MessagesPage;
+import com.carespeak.domain.ui.prod.page.programs.opt_in_messages.OptInMessagesPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +24,11 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     private final DashboardPage dashboardPage;
     private final MessagesPage messagesPage;
+    private final MedicationPage medicationPage;
     private final EmailTemplatesPage emailTemplatesPage;
     private final EmailSettingsPage emailSettingsPage;
     private final SelectModuleActionTypePopup selectModuleActionTypePopup;
     private final SideBarMenu sideBarMenu;
-
 
     public ProdMessagesSteps() {
         dashboardPage = new DashboardPage();
@@ -35,6 +37,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
         sideBarMenu = new SideBarMenu();
         emailSettingsPage = new EmailSettingsPage();
+        medicationPage = new MedicationPage();
     }
 
     @Override
@@ -81,6 +84,31 @@ public class ProdMessagesSteps implements MessagesSteps {
         messagesPage.notificationTriggerTypeDropDown.select(notificationType.getValue());
         messagesPage.nextButton.click();
         messagesPage.messageTextField.enterText(smsMessage);
+        messagesPage.saveButton.click();
+
+        return this;
+    }
+
+    @Override
+    public MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath) {
+        goToMessagesTab();
+        messagesPage.addButton.click();
+        messagesPage.modulesDropDown.select(module.getValue());
+        messagesPage.actionsDropDown.select(action.getValue());
+        messagesPage.typeDropDown.select(messageType.getValue());
+        selectModuleActionTypePopup.nextButton.click();
+        messagesPage.messageName.enterText(messageName);
+        messagesPage.nextButton.click();
+        medicationPage.medicationField.enterText(medicationProgram);
+        messagesPage.newMedicationBtn.click();
+        medicationPage.medicationName.enterText(medicationName);
+        medicationPage.nextBtn.click();
+        messagesPage.messageTextField.enterText(smsMessage);
+
+       // messagesPage.selectMmsPicture(filePath);
+       // messagesPage.uploadButton.click();
+
+
         messagesPage.saveButton.click();
 
         return this;

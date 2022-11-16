@@ -47,6 +47,17 @@ public interface MessagesSteps extends BaseSteps {
      * Create a message for a specific Module, Action and Type
      *
      * @param module             module
+     * @param action             action
+     * @param messageType        message type
+     * @param smsMessage         body of the sms message
+     * @return MessagesSteps object
+     */
+    MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath);
+
+    /**
+     * Create a message for a specific Module, Action and Type
+     *
+     * @param module             module
      * @param messageType        message type
      * @param messageName        message name
      * @param customEmail        custom email

@@ -1,18 +1,18 @@
 package com.carespeak.domain.ui.prod.page.messages;
 
 import com.carespeak.core.driver.annotation.ElementName;
-import com.carespeak.core.driver.element.Button;
-import com.carespeak.core.driver.element.ClickableElement;
-import com.carespeak.core.driver.element.Dropdown;
-import com.carespeak.core.driver.element.Input;
+import com.carespeak.core.driver.element.*;
 import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.AbstractPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class MessagesPage extends AbstractPage {
 
@@ -79,6 +79,26 @@ public class MessagesPage extends AbstractPage {
     @FindBy(id = "sidebarLinkEmail")
     public Button sidebarLinkEmailButton;
 
+    @ElementName("Select picture button list")
+    @FindBy(xpath = "//span[@class='btn btn-default file-btn']")
+    public List<WebElement> selectPictureButtonList;
+
+    @ElementName("Upload picture button list")
+    @FindBy(xpath = "//input[@value='Upload']")
+    public List<WebElement> uploadButtonList;
+
+    @ElementName("New Medication button")
+    @FindBy(id = "newMedicationBtn")
+    public Button newMedicationBtn;
+
+    @ElementName("Select Message Attachment")
+    @FindBy(xpath = "//input[@type='file']")
+    public Button selectButton;
+
+    @ElementName("Upload Message Attachment")
+    @FindBy(xpath = "//form//input[@value='Upload']")
+    public Button uploadButton;
+
     public MessagesPage() {
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
         messageTable = new ItemsTable(By.id("messagesTableWrapper"));
@@ -106,4 +126,20 @@ public class MessagesPage extends AbstractPage {
     public boolean areMessageTextUpdated(String initialMessage, String ExpectedUpdatedMessage){
         return !initialMessage.equals(ExpectedUpdatedMessage);
     }
-}
+
+//    public void selectMmsPicture (){
+//        for (int i = 0; i < selectPictureButtonList.size(); i++) {
+//            WebElement button = selectPictureButtonList.get(1);
+//            selectPictureButtonList.get(1).click();
+//            button.sendKeys("src/main/resources/data/picture.png");
+//        }
+//
+//        for (int i = 0; i < uploadButtonList.size(); i++) {
+//            uploadButtonList.get(1).click();
+//        }
+
+        public void selectMmsPicture (String filePath) {
+            selectButton.sendKeys(filePath);
+        }
+    }
+

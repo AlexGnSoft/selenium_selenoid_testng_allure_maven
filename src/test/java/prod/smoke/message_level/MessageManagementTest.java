@@ -17,6 +17,8 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
     private String emailTemplateName;
     private String clientName;
 
+    private final String filePath = getResourcesPath() + "picture.png";
+
     @BeforeClass
     public void prepareClientData() {
 
@@ -76,6 +78,24 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
     }
+
+
+    @Test(description = "Create MMS message with picture - Module Medication")
+    public void createMmsWithPicture_MHM_T71() {
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String smsMessage = getRandomString();
+
+        site.messagesSteps()
+                .addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  smsMessage, filePath);
+
+//        boolean isMmsWithPictureCreated = site.messagesSteps()
+//                .goToMessagesTab()
+//                .isMmsWithPicture(clientName, messageName);
+//
+//        Assert.assertTrue(isMmsWithPictureCreated,"The MMS message was not created!");
+    }
+
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {
