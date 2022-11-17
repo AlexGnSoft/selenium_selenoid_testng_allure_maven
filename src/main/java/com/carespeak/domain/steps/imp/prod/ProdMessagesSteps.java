@@ -7,6 +7,7 @@ import com.carespeak.domain.entities.message.MessageType;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.message.NotificationType;
 import com.carespeak.domain.steps.MessagesSteps;
+import com.carespeak.domain.ui.prod.component.message.StatusMessage;
 import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.admin_tools.email_templates.EmailTemplatesPage;
@@ -104,11 +105,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         medicationPage.medicationName.enterText(medicationName);
         medicationPage.nextBtn.click();
         messagesPage.messageTextField.enterText(smsMessage);
-
-       // messagesPage.selectMmsPicture(filePath);
-       // messagesPage.uploadButton.click();
-
-
+        messagesPage.selectMmsPicture(filePath);
         messagesPage.saveButton.click();
 
         return this;
@@ -148,6 +145,30 @@ public class ProdMessagesSteps implements MessagesSteps {
 
         Logger.info("Is message'" + messageName + "' is found? '"+ result);
         return result;
+    }
+
+    @Override
+    public boolean isMmsWithPictureCreated(String clientName, String messageName) {
+        boolean bolCombined = false;
+        TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
+        if(messageRow == null){
+            throw new RuntimeException("Message was not found!");
+        }
+
+        boolean isMessageCreated = false;
+        String actualSmsName = messagesPage.firstMessageNameWithMms.getText();
+        if(actualSmsName.equals(messageName))
+            isMessageCreated = true;
+        Logger.info("Is message'" + messageName + "' is found? '"+ isMessageCreated);
+
+        boolean isMmsNameIconDisplayed = messagesPage.mmsNameIcon.isDisplayed();
+
+        messagesPage.mmsTextIcon.click();
+        boolean isMmsAttachmentDisplayed = messagesPage.messageAttachmentItem.isDisplayed();
+
+        bolCombined = isMessageCreated & isMmsNameIconDisplayed & isMmsAttachmentDisplayed;
+
+        return bolCombined;
     }
 
     @Override

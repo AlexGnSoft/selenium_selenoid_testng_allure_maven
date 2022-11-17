@@ -63,6 +63,10 @@ public class MessagesPage extends AbstractPage {
     @FindBy(xpath = "//tbody/tr[@role='row']/td/strong/a")
     public ClickableElement firstMessageName;
 
+    @ElementName("Message name with MMS")
+    @FindBy(xpath = "//div[@class='cs-table-cell middle']")
+    public ClickableElement firstMessageNameWithMms;
+
     @ElementName("Text of message")
     @FindBy(xpath = "//td[@class=' text-wrap']")
     public ClickableElement messageText;
@@ -80,7 +84,7 @@ public class MessagesPage extends AbstractPage {
     public Button sidebarLinkEmailButton;
 
     @ElementName("Select picture button list")
-    @FindBy(xpath = "//span[@class='btn btn-default file-btn']")
+    @FindBy(xpath = "//input[@type='file']")
     public List<WebElement> selectPictureButtonList;
 
     @ElementName("Upload picture button list")
@@ -91,13 +95,18 @@ public class MessagesPage extends AbstractPage {
     @FindBy(id = "newMedicationBtn")
     public Button newMedicationBtn;
 
-    @ElementName("Select Message Attachment")
-    @FindBy(xpath = "//input[@type='file']")
-    public Button selectButton;
+    @ElementName("MMS icon on message name")
+    @FindBy(xpath = "//i[@class='far fa-image table-status-icon cs-color-active mms-indicator']")
+    public ClickableElement mmsNameIcon;
 
-    @ElementName("Upload Message Attachment")
-    @FindBy(xpath = "//form//input[@value='Upload']")
-    public Button uploadButton;
+    @ElementName("MMS icon on text column name")
+    @FindBy(xpath = "//div[@class='icon']/i")
+    public Button mmsTextIcon;
+
+    @ElementName("MMS message attachment item")
+    @FindBy(xpath = "//div[@class='message-attachment-item']")
+    public ClickableElement messageAttachmentItem;
+
 
     public MessagesPage() {
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
@@ -105,41 +114,37 @@ public class MessagesPage extends AbstractPage {
         searchClient = new SearchWithSelection();
 
     }
+
     public boolean isOpened() {
         return driver.getCurrentUrl().contains("messages/list.page");
     }
 
-    public boolean isCreatedMessageDisplayed(String messageName){
+    public boolean isCreatedMessageDisplayed(String messageName) {
         By locator = By.xpath(String.format(MESSAGE_NAME, messageName));
         ClickableElement message = new ClickableElement(driver.findElement(locator), messageName + " button");
 
         return message.isDisplayed();
     }
 
-    public String getMessageText(){
+    public String getMessageText() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(messageText));
 
         return messageText.getText();
     }
 
-    public boolean areMessageTextUpdated(String initialMessage, String ExpectedUpdatedMessage){
+    public boolean areMessageTextUpdated(String initialMessage, String ExpectedUpdatedMessage) {
         return !initialMessage.equals(ExpectedUpdatedMessage);
     }
 
-//    public void selectMmsPicture (){
-//        for (int i = 0; i < selectPictureButtonList.size(); i++) {
-//            WebElement button = selectPictureButtonList.get(1);
-//            selectPictureButtonList.get(1).click();
-//            button.sendKeys("src/main/resources/data/picture.png");
-//        }
-//
-//        for (int i = 0; i < uploadButtonList.size(); i++) {
-//            uploadButtonList.get(1).click();
-//        }
+    public void selectMmsPicture(String filePath) {
+        for (int i = 0; i < selectPictureButtonList.size(); i++) {
+            selectPictureButtonList.get(1).sendKeys(filePath);
+        }
 
-        public void selectMmsPicture (String filePath) {
-            selectButton.sendKeys(filePath);
+        for (int i = 0; i < uploadButtonList.size(); i++) {
+            uploadButtonList.get(1).click();
         }
     }
+}
 

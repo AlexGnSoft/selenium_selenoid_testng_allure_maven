@@ -76,6 +76,15 @@ public interface MessagesSteps extends BaseSteps {
     boolean isMessageExist(String clientName, String messageName);
 
     /**
+     * Verify that message is created and contains MMS attributes (icons)
+     *
+     * @param clientName     client name
+     * @param messageName    message name
+     * @return return true if message is found, otherwise false
+     */
+    boolean isMmsWithPictureCreated(String clientName, String messageName);
+
+    /**
      * Verify that template is created
      *
      * @param clientName     client name
