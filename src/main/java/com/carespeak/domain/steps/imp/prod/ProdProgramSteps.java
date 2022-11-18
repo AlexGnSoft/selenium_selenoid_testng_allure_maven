@@ -73,7 +73,7 @@ public class ProdProgramSteps implements ProgramSteps {
     public ProgramSteps addNewProgram(String clientName, String programName, ProgramAccess programAccess) {
         if (!programsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
+            dashboardPage.headerMenu.programsMenuItem.doubleClick();
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
 
@@ -84,7 +84,6 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.saveButton.click();
         programSettingsPage.statusPopup.waitForDisplayed();
         programSettingsPage.statusPopup.close();
-        programSettingsPage.statusPopup.waitForDisappear();
         return this;
     }
 
@@ -145,8 +144,9 @@ public class ProdProgramSteps implements ProgramSteps {
         dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
         programsPage.searchClient.search(clientName);
-        programsPage.sleepWait(2000);
+        programsPage.isClientSelected(clientName);
         programsPage.programTable.searchFor(programName);
+        programsPage.programDataTableWrapper.isDisplayed();
         TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
         if (programRow == null) {
             throw new RuntimeException("Program was not found by name '" + programName + "'!");

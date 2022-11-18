@@ -59,6 +59,10 @@ public class MessagesPage extends AbstractPage {
     @FindBy(id = "saveBtn")
     public Button saveButton;
 
+    @ElementName("Close button of saved message")
+    @FindBy(xpath = "//button[@class='close']")
+    public ClickableElement closeButtonOfSavedMessage;
+
     @ElementName("Message name")
     @FindBy(xpath = "//tbody/tr[@role='row']/td/strong/a")
     public ClickableElement firstMessageName;

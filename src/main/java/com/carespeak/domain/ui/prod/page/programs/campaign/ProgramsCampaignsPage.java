@@ -21,6 +21,11 @@ public class ProgramsCampaignsPage extends AbstractProgramPage {
     @FindBy(id = "campaignAddBtn")
     public Button addButton;
 
+    @ElementName("Search field, used as button")
+    @FindBy(xpath = "//input[@type='search']")
+    public Button searchFieldButton;
+
+
     @ElementName("Campaign add button")
     @FindBy(xpath = "//tbody/tr[@role='row']/td/a")
     public ClickableElement firstAddedCampaignName;

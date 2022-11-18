@@ -26,6 +26,7 @@ import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatie
 import com.carespeak.domain.ui.prod.popup.AddCampaignToPatientPopup;
 import com.carespeak.domain.ui.prod.popup.AddCampaignToProgramPopup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.collections.CollectionUtils;
 
 import java.time.Duration;
@@ -171,7 +172,57 @@ public class ProdCampaignSteps implements CampaignSteps {
         timeTablePage.adjustDateDropDown.select(campaignAdjustDate.getValue());
         timeTablePage.daysDropDown.select(campaignDays.getValue());
         timeTablePage.daysNumberInput.enterText(1);
-        timeTablePage.alertTimeAmPmDropDown.select("AM");
+        timeTablePage.alertTimeAmPmProtocolDropDown.select("AM");
+        timeTablePage.nextButton.click();
+        campaignMessagesPage.allocateButton.click();
+        campaignsPage.availableMessagesPopup.waitForDisplayed();
+        campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
+        campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
+        campaignsPage.availableMessagesPopup.waitForDisappear();
+        campaignMessagesPage.clickOnSaveCampaignButton();
+        campaignMessagesPage.saveCampaignButton.click();
+        campaignsPage.availableMessagesPopup.waitForDisappear();
+        campaignsPage.closeButtonOfCampaignSavedMessage.click();
+        return this;
+    }
+
+    @Override
+    public CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags) {
+        if (!campaignsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.campaignsMenuItem.click();
+            waitFor(() -> !url.equals(campaignsPage.getCurrentUrl()));
+        }
+
+        campaignsPage.searchClient.search(clientName);
+        campaignsPage.addCampaignButton.click();
+        campaignsPage.selectModulePopup.waitForDisplayed();
+        campaignsPage.selectModulePopup.moduleDropdown.select(module.getValue());
+        campaignsPage.selectModulePopup.nextButton.click();
+        campaignsPage.selectModulePopup.waitForDisappear();
+        campaignsGeneralPage.nameInput.enterText(name);
+        campaignsGeneralPage.campaignAccessDropdown.select(access.getValue());
+        campaignsGeneralPage.campaignDescriptionInput.enterText(description);
+        if (tags != null && tags.length > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (String tag : tags) {
+                builder.append(tag);
+                builder.append(" ");
+            }
+            campaignsGeneralPage.tagsInput.enterText(builder.toString());
+        }
+        String url = campaignsPage.getCurrentUrl();
+        campaignsGeneralPage.nextButton.click();
+        waitFor(() -> !url.equals(timeTablePage.getCurrentUrl()));
+        timeTablePage.scheduleTypeDropdown.select(campaignScheduleType.getValue());
+        timeTablePage.anchorDropDown.select(campaignAnchor.getValue());
+        timeTablePage.anchorFixedDateField.enterText(timeTablePage.currentDayMonthYear());
+        timeTablePage.anchorFixedDateField.sendKeys(Keys.ENTER);
+        timeTablePage.intakeUnitsInput.enterText("0");
+        timeTablePage.daysInput.enterText("0");
+        timeTablePage.alertTimeHoursProtocolDropDown.select(timeTablePage.hoursDropDownNewYorkTime());
+        timeTablePage.alertTimeMinutesProtocolDropDown.select(timeTablePage.minutesDropDownNewYorkTime());
+        timeTablePage.alertTimeAmPmProtocolDropDown.select(timeTablePage.amPmDropDownNewYorkTime());
         timeTablePage.nextButton.click();
         campaignMessagesPage.allocateButton.click();
         campaignsPage.availableMessagesPopup.waitForDisplayed();
@@ -207,9 +258,9 @@ public class ProdCampaignSteps implements CampaignSteps {
         waitFor(() -> !url.equals(timeTablePage.getCurrentUrl()));
         timeTablePage.scheduleTypeDropdown.select(campaignScheduleType);
 
-        timeTablePage.alertTimeHoursDropDown.select(timeTablePage.hoursDropDownNewYorkTime());
-        timeTablePage.alertTimeMinutesDropDown.select(timeTablePage.minutesDropDownNewYorkTime());
-        timeTablePage.alertTimeAmPmDropDown.select(timeTablePage.amPmDropDownNewYorkTime());
+        timeTablePage.alertTimeHoursOccasionDropDown.select(timeTablePage.hoursDropDownNewYorkTime());
+        timeTablePage.alertTimeMinutesOccasionDropDown.select(timeTablePage.minutesDropDownNewYorkTime());
+        timeTablePage.alertTimeAmPmOccasionDropDown.select(timeTablePage.amPmDropDownNewYorkTime());
 
         timeTablePage.nextButton.click();
         accountSettingsPage.addQuestionButton.click();
@@ -300,7 +351,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
-    public CampaignSteps addAccountSettingCampaignToProgram(String clientName, String programName, String moduleName, String campaignName) {
+    public CampaignSteps addCampaignToProgram(String clientName, String programName, String moduleName, String campaignName) {
         prodProgramSteps.goToProgramSettings(clientName, programName);
         programGeneralSettingsPage.sideBarMenu.openItem("Campaigns");
         programsCampaignsPage.addButton.click();
@@ -332,7 +383,6 @@ public class ProdCampaignSteps implements CampaignSteps {
 
         programsCampaignsPage.addCampaignToProgramPopup.campaignDropDown.click();
 
-
         List<String> availableOptions = programsCampaignsPage.addCampaignToProgramPopup.campaignDropDown.getAvailableOptions();
         for (String option: availableOptions) {
             if(option.contains(campaignName)){
@@ -342,8 +392,12 @@ public class ProdCampaignSteps implements CampaignSteps {
                 result = true;
             }
         }
-        programsCampaignsPage.addCampaignToProgramPopup.closeButton.click();
 
+        programsCampaignsPage.addCampaignToProgramPopup.campaignDropDown.click();
+        programsCampaignsPage.addCampaignToProgramPopup.closeButtonRedefined.doubleClick();
+        programsCampaignsPage.addCampaignToProgramPopup.waitForDisappear();
+        prodProgramSteps.pageRefresh();
+        programsPage.programListButton.click();
         return result;
     }
 

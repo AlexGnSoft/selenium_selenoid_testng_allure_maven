@@ -81,9 +81,10 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
     @Test(description = "Create MMS message with picture - Module Medication")
     public void createMmsWithPicture_MHM_T71() {
+        //Test data
         String medicationProgram = "Aspirin & Blood Thinner Meds";
         String medicationName = getRandomString();
-        String smsMessage = getRandomString();
+        String smsMessage = "Do not forget to take your pills";
 
         site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  smsMessage, filePath);
 

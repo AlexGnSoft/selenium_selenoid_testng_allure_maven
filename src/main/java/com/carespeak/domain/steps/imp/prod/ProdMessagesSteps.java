@@ -86,7 +86,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         messagesPage.nextButton.click();
         messagesPage.messageTextField.enterText(smsMessage);
         messagesPage.saveButton.click();
-
+        messagesPage.closeButtonOfSavedMessage.click();
         return this;
     }
 

@@ -29,6 +29,10 @@ public class CampaignsPage extends AbstractCampaignsPage {
     @FindBy(id = "campaignAddBtn")
     public Button addCampaignButton;
 
+    @ElementName("Close button of campaign saved message")
+    @FindBy(xpath = "//button[@class='close']")
+    public Button closeButtonOfCampaignSavedMessage;
+
     @ElementName("Campaign name")
     @FindBy(xpath = "//tbody/tr[@role='row']/td/strong/a")
     public ClickableElement firstCampaignName;

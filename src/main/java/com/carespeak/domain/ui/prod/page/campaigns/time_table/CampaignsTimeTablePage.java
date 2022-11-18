@@ -9,6 +9,7 @@ import com.carespeak.domain.ui.prod.page.programs.campaign.AlertTimeComponent;
 import com.carespeak.domain.ui.prod.page.campaigns.AbstractCampaignsPage;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -69,6 +70,10 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
     @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-anchorType")
     public Dropdown anchorDropDown;
 
+    @ElementName("Anchor fixed date field")
+    @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-fixedDate")
+    public Input anchorFixedDateField;
+
     @ElementName("Program dropDown")
     @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-eventDateName")
     public Dropdown programDropDown;
@@ -89,17 +94,37 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
     @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-entryList-protocolEntryList-entry-0-protocolEntry-daysInput")
     public Input daysNumberInput;
 
-    @ElementName("Alert time dropDown")
+    @ElementName("Alert time Occasion dropDown")
     @FindBy(xpath = "//select[contains(@id,'localTimeTableEntry-timePicker-timePicker-hour')]")
-    public Dropdown alertTimeHoursDropDown;
+    public Dropdown alertTimeHoursOccasionDropDown;
 
-    @ElementName("Alert time dropDown")
+    @ElementName("Alert time Protocol dropDown")
+    @FindBy(xpath = "//select[contains(@id,'protocolEntryList-entry-0-protocolEntry-timePicker-timePicker-hour')]")
+    public Dropdown alertTimeHoursProtocolDropDown;
+
+    @ElementName("Alert time Occasion dropDown")
     @FindBy(xpath = "//select[contains(@id,'localTimeTableEntry-timePicker-timePicker-minute')]")
-    public Dropdown alertTimeMinutesDropDown;
+    public Dropdown alertTimeMinutesOccasionDropDown;
 
-    @ElementName("Alert time dropDown")
-    @FindBy(xpath = "//select[contains(@id,'localTimeTableEntry-timePicker-timePicker-ampm')]")
-    public Dropdown alertTimeAmPmDropDown;
+    @ElementName("Alert time Protocol dropDown")
+    @FindBy(xpath = "//select[contains(@id,'protocolEntryList-entry-0-protocolEntry-timePicker-timePicker-minute')]")
+    public Dropdown alertTimeMinutesProtocolDropDown;
+
+    @ElementName("Alert time Protocol dropDown")
+    @FindBy(xpath = "//select[contains(@id,'protocolEntry-timePicker-timePicker-ampm')]")
+    public Dropdown alertTimeAmPmProtocolDropDown;
+
+    @ElementName("Alert time Occasion dropDown")
+    @FindBy(xpath = "//select[contains(@id,'occasionTimeTable-entry-0-localTimeTableEntry-timePicker-timePicker-ampm')]")
+    public Dropdown alertTimeAmPmOccasionDropDown;
+
+    @ElementName("Intake units input")
+    @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-entryList-protocolEntryList-entry-0-protocolEntry-units")
+    public Input intakeUnitsInput;
+
+    @ElementName("Days input")
+    @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-entryList-protocolEntryList-entry-0-protocolEntry-daysInput")
+    public Input daysInput;
 
     public String hoursDropDownNewYorkTime(){
         //Displaying current time in 12 hours format with AM/PM
@@ -148,32 +173,6 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
         } else if(machineCurrentMinute >= 53) {
             machineCurrentMinute = 05;
         }
-
-//        if(machineCurrentMinute < 05){
-//            machineCurrentMinute = 05;
-//        } else if(machineCurrentMinute < 7){
-//            machineCurrentMinute = 10;
-//        } else if(machineCurrentMinute < 12) {
-//            machineCurrentMinute = 15;
-//        } else if(machineCurrentMinute < 18) {
-//            machineCurrentMinute = 20;
-//        } else if(machineCurrentMinute < 22) {
-//            machineCurrentMinute = 25;
-//        } else if(machineCurrentMinute < 28){
-//            machineCurrentMinute = 30;
-//        } else if(machineCurrentMinute < 32) {
-//            machineCurrentMinute = 35;
-//        } else if(machineCurrentMinute < 38) {
-//            machineCurrentMinute = 40;
-//        } else if(machineCurrentMinute < 42) {
-//            machineCurrentMinute = 45;
-//        } else if(machineCurrentMinute < 48) {
-//            machineCurrentMinute = 50;
-//        } else if(machineCurrentMinute < 52) {
-//            machineCurrentMinute = 55;
-//        } else if(machineCurrentMinute >= 53) {
-//            machineCurrentMinute = 05;
-//        }
         return String.valueOf(machineCurrentMinute);
     }
 
@@ -187,5 +186,12 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
         String amPm = timeNewYork.substring(6, 8);
 
         return amPm;
+    }
+
+    public String currentDayMonthYear(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate currentDate = LocalDate.now();
+
+        return currentDate.format(formatter);
     }
 }

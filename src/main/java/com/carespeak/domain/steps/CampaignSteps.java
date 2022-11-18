@@ -42,6 +42,8 @@ public interface CampaignSteps extends BaseSteps {
      */
     CampaignSteps addBiometricAccountSettingCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor, String programName, CampaignAdjustDate campaignAdjustDate, CampaignDays campaignDays, String... tags);
 
+    CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags);
+
     /**
      * Create Biometric or Account Setting campaign with Schedule type: Occasion and campaign questions.
      * Make sure that message with corresponding type is created inh advance.
@@ -101,7 +103,7 @@ public interface CampaignSteps extends BaseSteps {
      * @param campaignName     campaign name
      * @return return true if message is found, otherwise false
      */
-    CampaignSteps addAccountSettingCampaignToProgram(String clientName, String programName, String moduleName, String campaignName);
+    CampaignSteps addCampaignToProgram(String clientName, String programName, String moduleName, String campaignName);
 
     /**
      * Add a campaign to program

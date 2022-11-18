@@ -33,8 +33,12 @@ public class AddCampaignToProgramPopup extends AbstractPopup{
     public Button saveButton;
 
     @ElementName("Add campaign to program Close button")
-    @FindBy(xpath = "//button[contains(@id,'btn-close')]")
+    @FindBy(xpath = "//button[contains(@class,'-button-icon-only ui-dialog-titlebar-close')]")
     public Button closeButton;
+
+    @ElementName("Add campaign to program Close button")
+    @FindBy(xpath = "//button[contains(@class,'-button-icon-only ui-dialog-titlebar-close')]")
+    public Button closeButtonRedefined;
 
     @Override
     public String getPopupName() {
