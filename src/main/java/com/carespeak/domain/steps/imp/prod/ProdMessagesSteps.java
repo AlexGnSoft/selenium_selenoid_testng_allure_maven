@@ -131,6 +131,7 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     @Override
     public boolean isMessageExist(String clientName, String messageName) {
+        messagesPage.messageTable.searchFor(messageName);
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){
             throw new RuntimeException("Message was not found!");
@@ -150,6 +151,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     @Override
     public boolean isMmsWithPictureCreated(String clientName, String messageName) {
         boolean bolCombined = false;
+        //messagesPage.messageTable.searchFor(messageName);
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){
             throw new RuntimeException("Message was not found!");

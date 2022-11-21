@@ -27,15 +27,32 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
         emailTemplateName = getRandomString();
     }
 
+
+    @Test(description = "Create MMS message with picture - Module Medication")
+    public void createMmsWithPicture_MHM_T71() {
+        //Test data
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String smsMessage = "Do not forget to take your pills";
+
+        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  smsMessage, filePath);
+
+        boolean isMmsWithPictureCreated = site.messagesSteps()
+                .isMmsWithPictureCreated(clientName, messageName);
+
+        Assert.assertTrue(isMmsWithPictureCreated,"The MMS message was not created!");
+    }
+
     @Test(description = "Create sms message")
     public void createSmsMessage_MHM_T70() {
+        String medicationName_T70 = getRandomString();
         site.messagesSteps()
-                .addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, messageName, NotificationType.PAIN,
+                .addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, medicationName_T70, NotificationType.PAIN,
                         "${p} , tell us more about your symptoms level today.");
 
         boolean isMessageCreated = site.messagesSteps()
                 .goToMessagesTab()
-                .isMessageExist(clientName, messageName);
+                .isMessageExist(clientName, medicationName_T70);
 
         Assert.assertTrue(isMessageCreated,"The message was not created!");
     }
@@ -77,23 +94,6 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
     }
-
-
-    @Test(description = "Create MMS message with picture - Module Medication")
-    public void createMmsWithPicture_MHM_T71() {
-        //Test data
-        String medicationProgram = "Aspirin & Blood Thinner Meds";
-        String medicationName = getRandomString();
-        String smsMessage = "Do not forget to take your pills";
-
-        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  smsMessage, filePath);
-
-        boolean isMmsWithPictureCreated = site.messagesSteps()
-                .isMmsWithPictureCreated(clientName, messageName);
-
-        Assert.assertTrue(isMmsWithPictureCreated,"The MMS message was not created!");
-    }
-
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {
