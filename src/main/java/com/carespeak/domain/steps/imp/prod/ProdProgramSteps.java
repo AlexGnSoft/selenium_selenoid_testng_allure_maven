@@ -28,6 +28,7 @@ import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -73,10 +74,10 @@ public class ProdProgramSteps implements ProgramSteps {
     public ProgramSteps addNewProgram(String clientName, String programName, ProgramAccess programAccess) {
         if (!programsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.doubleClick();
+            dashboardPage.headerMenu.programsMenuItem.click();
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
-
+        dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.searchClient.search(clientName);
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);
@@ -145,13 +146,9 @@ public class ProdProgramSteps implements ProgramSteps {
         programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
         programsPage.searchClient.search(clientName);
         programsPage.isClientSelected(clientName);
-        programsPage.programTable.searchFor(programName);
         programsPage.programDataTableWrapper.isDisplayed();
-        TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
-        if (programRow == null) {
-            throw new RuntimeException("Program was not found by name '" + programName + "'!");
-        }
-        programsPage.sleepWait(1000);
+        programsPage.programTable.searchFor(programName);
+        programsPage.isProgramDisplayed(programName);
         programsPage.programTable.editFirstItemButton().click();
         return this;
     }
@@ -214,6 +211,7 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         programKeywordSignupPage.keywordInput.enterText(keyword);
         programKeywordSignupPage.saveButton.click();
+        programKeywordSignupPage.statusPopup.close();
         return this;
     }
 
@@ -272,6 +270,7 @@ public class ProdProgramSteps implements ProgramSteps {
         logItem.setDelivery(messageLogRow.getDataByHeader("Delivery"));
         logItem.setStatus(messageLogRow.getDataByHeader("Status"));
         logItem.setMessage(messageLogRow.getDataByHeader("Message"));
+        programsPage.programListButton.click();
         return logItem;
     }
 
