@@ -117,7 +117,7 @@ class TableBody extends AbstractComponent {
             waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
+            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 10, false);
             List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
             return createTableRowItem(rows.get(1), headersMap);
         } catch (Throwable t) {

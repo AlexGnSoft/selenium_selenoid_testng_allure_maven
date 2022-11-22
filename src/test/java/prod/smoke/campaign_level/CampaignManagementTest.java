@@ -97,6 +97,28 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
     }
 
+    @Test(description = "Create campaign - Module Medication")
+    public void createMedicationCampaign_MHM_T89() {
+        //Test data
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String campaignNameDescription = getRandomString();
+        String programName_T89 = "Medication program";
+        String campaignMessage_T89 = "Do not forget to take your pills";
+        String SIGN_UP_KEYWORD_T89 = getRandomString();
+        String FROM_PHONE_NUMBER_T89 = getGeneratedPhoneNumber();
+
+        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T89, filePath);
+        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE);
+        getTestProgram(clientName, programName_T89);
+        site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T89);
+        site.campaignSteps().addCampaignToProgram(clientName, programName_T89, Module.MEDICATION, campaignNameDescription);
+        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_T89, FROM_PHONE_NUMBER_T89, TO_ENDPOINT, SIGN_UP_KEYWORD_T89);
+        String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage_T89, FROM_PHONE_NUMBER_T89);
+
+        Assert.assertEquals(campaignMessage_T89, actualLasLogsMessage, "Campaign message did not arrive to patient");
+    }
+
     @Test(description = "Create campaign - Module Account settings")
     public void createAccountSettingsCampaign_MHM_T99() {
         String programName_MHM_T99 = getRandomString();
@@ -121,28 +143,6 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage_T99, FROM_PHONE_NUMBER_T99);
 
         Assert.assertEquals(campaignMessage_T99, actualLasLogsMessage, "Campaign message did not arrive to patient");
-    }
-
-    @Test(description = "Create campaign - Module Medication")
-    public void createMedicationCampaign_MHM_T89() {
-        //Test data
-        String medicationProgram = "Aspirin & Blood Thinner Meds";
-        String medicationName = getRandomString();
-        String campaignNameDescription = getRandomString();
-        String programName_T89 = "Medication program";
-        String campaignMessage_T89 = "Do not forget to take your pills";
-        String SIGN_UP_KEYWORD_T89 = getRandomString();
-        String FROM_PHONE_NUMBER_T89 = getGeneratedPhoneNumber();
-
-        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T89, filePath);
-        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE);
-        getTestProgram(clientName, programName_T89);
-        site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T89);
-        site.campaignSteps().addCampaignToProgram(clientName, programName_T89, Module.MEDICATION, campaignNameDescription);
-        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_T89, FROM_PHONE_NUMBER_T89, TO_ENDPOINT, SIGN_UP_KEYWORD_T89);
-        String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage_T89, FROM_PHONE_NUMBER_T89);
-
-        Assert.assertEquals(campaignMessage_T89, actualLasLogsMessage, "Campaign message did not arrive to patient");
     }
 
 

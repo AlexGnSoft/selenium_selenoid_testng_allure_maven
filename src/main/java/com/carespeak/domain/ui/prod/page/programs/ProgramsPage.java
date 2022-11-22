@@ -5,6 +5,7 @@ import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
+import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.domain.ui.prod.component.message.StatusMessage;
 import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
@@ -63,6 +64,10 @@ public class ProgramsPage extends AbstractPage {
     public boolean isProgramDisplayed(String programName) {
         try {
             By locator = By.xpath(String.format(PROGRAM_VALUE_XPATH, programName));
+
+            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
+            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
             ClickableElement program = new ClickableElement(driver.findElement(locator), programName + " button");
             return program.isDisplayed();
         } catch (TimeoutException e) {
