@@ -134,6 +134,7 @@ public class ProdProgramSteps implements ProgramSteps {
         patientsTab.moveToProgramBtn.click();
         patientsTab.selectProgramByClientAndProgramName(landingProgramName);
         patientsTab.moveButton.click();
+        waitFor(() -> patientsTab.confirmMoveButton.isVisible());
         patientsTab.confirmMoveButton.click();
 
         return this;
@@ -270,7 +271,8 @@ public class ProdProgramSteps implements ProgramSteps {
         logItem.setDelivery(messageLogRow.getDataByHeader("Delivery"));
         logItem.setStatus(messageLogRow.getDataByHeader("Status"));
         logItem.setMessage(messageLogRow.getDataByHeader("Message"));
-        programsPage.programListButton.click();
+        pageRefresh();
+        programsPage.programListButton.doubleClick();
         return logItem;
     }
 
@@ -281,6 +283,7 @@ public class ProdProgramSteps implements ProgramSteps {
             dashboardPage.headerMenu.programsMenuItem.click();
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
             programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
             programsPage.programTable.editFirstItemButton().click();
             programsPage.sideBarMenu.openItem("Auto Responders");
         }

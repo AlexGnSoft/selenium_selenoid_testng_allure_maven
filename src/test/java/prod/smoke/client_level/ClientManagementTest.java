@@ -28,7 +28,6 @@ import java.util.List;
 public class ClientManagementTest extends AbstractClientLevelTest {
 
     private Client client;
-    private String messageName;
     private String clientName;
     private String clientCode;
 
@@ -41,7 +40,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         client.setName("Automator " + getRandomString());
         client.setEndpoint(twilioSmsSenderEndPoint);
         client.setModules(Module.getAllModules());
-        messageName = getRandomString();
         clientName = client.getName();
         clientCode = client.getCode();
     }

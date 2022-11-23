@@ -16,10 +16,6 @@ public class ItemsTable implements ICanWait {
     protected TableBody tableBody;
     protected TableFooter tableFooter;
 
-    @ElementName("List of messages")
-    @FindBy(xpath = "//td[@class=' text-wrap text-clip']")
-    public List<WebElement> listOfMessages;
-
     public ItemsTable(By tableBodyLocator) {
         tableSearch = new TableSearch();
         tableBody = new TableBody(tableBodyLocator);
@@ -50,6 +46,9 @@ public class ItemsTable implements ICanWait {
         return tableBody.getFirstRowItem();
     }
 
+    public String getFirstRowItemString(){
+        return tableBody.getFirstRowItemString();
+    }
     public ClickableElement editFirstItemButton() {
         return tableBody.editFirstRecordButton();
     }

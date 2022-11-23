@@ -40,7 +40,7 @@ public class ProgramsPage extends AbstractPage {
     public Button addProgramButton;
 
     @ElementName("Program List button")
-    @FindBy(xpath = "//div[@id='cs-sidebar-content']/a")
+    @FindBy(xpath = "//a[@href]//span[@class='cs-back-to-text']")
     public Button programListButton;
 
     @ElementName("Program data table wrapper")

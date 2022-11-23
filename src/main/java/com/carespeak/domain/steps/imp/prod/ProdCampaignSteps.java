@@ -320,8 +320,8 @@ public class ProdCampaignSteps implements CampaignSteps {
             prodProgramSteps.pageRefresh();
 
             boolean b1 = !actualMessageFromLogs.equals(expectedCampaignMessage);
-            boolean b2 = (System.currentTimeMillis() - start <= 300000);
-            boolean b22 = (System.currentTimeMillis() - start >= 300000);
+            boolean b2 = (System.currentTimeMillis() - start <= 360000);
+            boolean b22 = (System.currentTimeMillis() - start >= 360000);
             boolean b11 = actualMessageFromLogs.equals(expectedCampaignMessage);
 
             if (b11 && b2) {

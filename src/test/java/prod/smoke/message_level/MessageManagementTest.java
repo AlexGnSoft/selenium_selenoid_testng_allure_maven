@@ -10,11 +10,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class MessageManagementTest extends AbstractMessageLeveTest{
+public class MessageManagementTest extends AbstractMessageLeveTest {
 
     private Client client;
-    private String messageName;
-    private String emailTemplateName;
     private String clientName;
     private final String filePath = getResourcesPath() + "picture.png";
 
@@ -23,14 +21,13 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
         client = getTestClientByCode("MessageLevel client " + getRandomString());
         clientName = client.getName();
-        messageName = getRandomString();
-        emailTemplateName = getRandomString();
     }
 
 
     @Test(description = "Create MMS message with picture - Module Medication")
     public void createMmsWithPicture_MHM_T71() {
         //Test data
+        String messageName = getRandomString();
         String medicationProgram = "Aspirin & Blood Thinner Meds";
         String medicationName = getRandomString();
         String smsMessage = "Do not forget to take your pills";
@@ -70,6 +67,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest{
 
     @Test(description = "Create email template")
     public void createEmailTemplate_MHM_T87() {
+        String emailTemplateName = getRandomString();
         site.adminToolsSteps().goToSpecificTab("Email Templates");
         site.messagesSteps().addEmailTemplate(clientName, emailTemplateName, getRandomString());
 

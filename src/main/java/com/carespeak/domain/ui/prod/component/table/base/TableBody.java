@@ -1,13 +1,14 @@
 package com.carespeak.domain.ui.prod.component.table.base;
 
+import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,10 @@ class TableBody extends AbstractComponent {
     private static final String TABLE_CELLS = ".//td";
     private static final String TABLE_CELL_LOCATOR = ".//td[%s]";
     private static final String tableLocatorId = "cs-as-table";
+
+    @ElementName("List of messages")
+    @FindBy(xpath = "//td[@class=' text-wrap text-clip']")
+    public List<WebElement> listOfMessages;
 
     private WebElement table;
     private By tableLocator;
@@ -203,4 +208,11 @@ class TableBody extends AbstractComponent {
         return new ClickableElement(element, elementName);
     }
 
+    public String getFirstRowItemString() {
+        String firstRowItemString = null;
+        for (int i = 0; i < listOfMessages.size(); i++) {
+            firstRowItemString = listOfMessages.get(0).getText();
+        }
+        return firstRowItemString;
+    }
 }

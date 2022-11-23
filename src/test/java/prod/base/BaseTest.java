@@ -24,12 +24,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Properties;
 
 @Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
@@ -76,9 +79,16 @@ public abstract class BaseTest implements IDataGenerator {
         }
     }
 
+    @BeforeSuite
+    public void setUp(ITestContext context){
+        //Using stream API we implement re-run failed tests to each test method
+        Arrays.stream(context.getAllTestMethods()).forEach(x->x.setRetryAnalyzerClass(RetryAnalyzer.class));
+    }
+
     @BeforeClass(alwaysRun = true)
     public void beforeClass() {
         site.loginSteps().openSite().loginAs(user, password);
+
     }
 
     @AfterClass(alwaysRun = true)

@@ -21,13 +21,14 @@ public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
 
     @BeforeClass
     public void prepareClientData() {
-        client = getTestClientByCode("ClientLevelTestEndpoints client");
-        programName = getTestProgramByName("ClientLevelTestEndpoints program", client);
+        client = getTestClientByCode("ClientLevelTestEndpoints client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
+        programName = getTestProgramByName("ClientLevelTestEndpoints program " + getFormattedDate("dd-MM-yy-H-mm-ss"), client);
         patient = getTestPatientByName("ClientLevelTestEndpointsPatient", client, programName);
     }
 
     @Test(description = "Check client level endpoints are available on program level")
     public void endpointAvailableOnProgramLevel_MHM_T167() {
+
         List<String> actualEndpoints = site.programSteps()
                 .getEndpointsOnProgramLevel(programName);
 
