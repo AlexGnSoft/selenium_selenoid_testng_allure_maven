@@ -9,7 +9,6 @@ import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.program.Patient;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;

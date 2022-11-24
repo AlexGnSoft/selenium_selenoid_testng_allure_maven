@@ -468,8 +468,20 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage) {
+    public ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage, String clientName, String programName) {
         if (!optInMessagesPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+            programsPage.searchClient.search(clientName);
+            programsPage.programTable.searchFor(programName);
+            TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
+            if (programRow == null) {
+                throw new RuntimeException("Program was not found by name '" + programName + "'!");
+            }
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+            programsPage.programTable.editFirstItemButton().click();
+
             programsPage.sideBarMenu.openItem("Opt-in Messages");
         }
         selectFile(filePath);

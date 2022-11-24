@@ -243,7 +243,7 @@ public interface ProgramSteps extends BaseSteps {
      * @param isSendConfirmMessage true if want to send confirm message, false if not
      * @return Program Steps object
      */
-    ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage);
+    ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage, String client, String programName);
 
 
     /**

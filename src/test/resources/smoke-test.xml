@@ -9,6 +9,11 @@
             TesNG won't perform multi-threading properly
         -->
         <classes>
+            <!--Program level tests-->
+            <class name="prod.smoke.program_level.ProgramConsentManagementTest"/>
+            <class name="prod.smoke.program_level.ProgramAutoResponder"/>
+            <class name="prod.smoke.program_level.ProgramManagementTest"/>
+            <class name="prod.smoke.program_level.ProgramOptInMessageTest"/>
             <!--Campaign level tests-->
             <class name="prod.smoke.campaign_level.CampaignManagementTest"/>
             <!--Client level tests-->
@@ -19,11 +24,7 @@
             <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
             <!--Message level tests-->
             <class name="prod.smoke.message_level.MessageManagementTest"/>
-            <!--Program level tests-->
-            <class name="prod.smoke.program_level.ProgramAutoResponder"/>
-            <class name="prod.smoke.program_level.ProgramConsentManagementTest"/>
-            <class name="prod.smoke.program_level.ProgramManagementTest"/>
-            <class name="prod.smoke.program_level.ProgramOptInMessageTest"/>
+
         </classes>
     </test>
 </suite>

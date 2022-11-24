@@ -38,8 +38,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(client.getName(), programName)
-                .addOptInMessages(filePath, true)
+                .addOptInMessages(filePath, true, clientName, programName)
                 .addNewPatient(patient, client, programName);
 
         String expectedOptInMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
@@ -57,8 +56,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(client.getName(), programName)
-                .addOptInMessages(filePath, false)
+                .addOptInMessages(filePath, false, clientName, programName)
                 .addNewPatient(patient, client, programName);
 
         MessageLogItem actualOptInMessage  = site.programSteps()
@@ -84,7 +82,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(client.getName(), programName)
                 .addNewPatient(patient, client, programName);
 
         MessageLogItem actualOptInMessage = site.programSteps()
@@ -101,7 +98,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(client.getName(), programName)
                 .addNewPatient(patient, client, programName);
 
         site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
@@ -120,7 +116,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(client.getName(), programName)
                 .addNewPatient(patient, client, programName);
 
         site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
@@ -141,7 +136,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .goToProgramSettings(client.getName(), programName)
                 .addNewPatient(patient, client, programName);
 
         site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
