@@ -4,6 +4,7 @@ import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
+import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.programs.AbstractProgramPage;
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -49,7 +51,12 @@ public class ProgramPatientsTab extends AbstractProgramPage {
     public void selectPatientByName(String patientName) {
         By locator = By.xpath(String.format(PATIENT_NAME, patientName));
         ClickableElement patient = new ClickableElement(driver.findElement(locator), patientName + " button");
+
+        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
+        wait.until(ExpectedConditions.elementToBeClickable(patient));
         patient.click();
+
+
     }
 
     public void clickOnPatientCheckbox(String patientName) {

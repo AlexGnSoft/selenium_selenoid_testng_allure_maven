@@ -32,13 +32,13 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @Test(description = "Add opt-in message")
     public void addOptInMessageWithConfirmation_MHM_T165() {
-        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
+        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
         patient.setFirstName("Patient " + getRandomString());
         patient.setCellPhone(getGeneratedPhoneNumber());
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addOptInMessages(filePath, true, clientName, programName)
+                .addOptInMessagesWithoutAttachment(true)
                 .addNewPatient(patient, client, programName);
 
         String expectedOptInMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
@@ -50,13 +50,13 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @Test(description = "Add opt-in message with 'Do NOT send opt in confirmation message' checkbox")
     public void addOptInMessageWithoutConfirmation_MHM_T32() {
-        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
+        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
         patient.setFirstName("Patient " + getRandomString());
         patient.setCellPhone(getGeneratedPhoneNumber());
 
         site.programSteps()
                 .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addOptInMessages(filePath, false, clientName, programName)
+                .addOptInMessagesWithoutAttachment(false)
                 .addNewPatient(patient, client, programName);
 
         MessageLogItem actualOptInMessage  = site.programSteps()
@@ -65,9 +65,19 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), "AGREE", "Received message is not the same as expected!");
     }
 
-    @Test(description = "Check image is attached opt-in message", dependsOnMethods = "addOptInMessageWithoutConfirmation_MHM_T32")
+    @Test(description = "Check image is attached opt-in message")
     public void messageAttachment_MHM_T164() {
-        boolean isImageAttached = site.programSteps().isAttachedImageDisplayed();
+        boolean isImageAttached = false;
+        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addOptInMessagesWithAttachment(filePath, true)
+                .addNewPatient(patient, client, programName);
+
+        isImageAttached = site.programSteps().isAttachedImageDisplayed(patient.getFirstName());
 
         Assert.assertTrue(isImageAttached, "Image is not attached");
     }

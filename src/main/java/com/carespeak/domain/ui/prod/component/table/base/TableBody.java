@@ -55,6 +55,7 @@ class TableBody extends AbstractComponent {
             }
             //skip 0 index here because first tr is filled with th items
             for (int i = 1; i < rows.size(); i++) {
+
                 WebElement td = rows.get(i).findElement(By.xpath(String.format(TABLE_CELL_LOCATOR, tdIndex)));
                 if (valueToSearch.contains(td.getText())) {
                     Logger.info("Item found!");

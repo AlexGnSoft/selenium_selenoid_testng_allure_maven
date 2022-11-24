@@ -59,7 +59,6 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
-
     @Test(description = "Add keyword for Sign Up")
     public void addKeywordForSignUp_MHM_T38() {
         //Test data

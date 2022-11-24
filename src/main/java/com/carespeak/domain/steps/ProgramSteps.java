@@ -237,13 +237,21 @@ public interface ProgramSteps extends BaseSteps {
 
 
     /**
-     * Add program optin messages
+     * Add program optin messages with no attachment
+     *
+     * @param isSendConfirmMessage true if want to send confirm message, false if not
+     * @return Program Steps object
+     */
+    ProgramSteps addOptInMessagesWithoutAttachment(boolean isSendConfirmMessage);
+
+    /**
+     * Add program optin messages with attachment
      *
      * @param filePath             the path to the data file
      * @param isSendConfirmMessage true if want to send confirm message, false if not
      * @return Program Steps object
      */
-    ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage, String client, String programName);
+    ProgramSteps addOptInMessagesWithAttachment(String filePath, boolean isSendConfirmMessage);
 
 
     /**
@@ -303,7 +311,7 @@ public interface ProgramSteps extends BaseSteps {
      *
      * @return true if attached image is displayed otherwise false
      */
-    boolean isAttachedImageDisplayed();
+    boolean isAttachedImageDisplayed(String patientName);
 
     /**
      * Add new Auto Responder on program level
