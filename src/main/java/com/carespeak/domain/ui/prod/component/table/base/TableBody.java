@@ -28,6 +28,10 @@ class TableBody extends AbstractComponent {
     @FindBy(xpath = "//td[@class=' text-wrap text-clip']")
     public List<WebElement> listOfMessages;
 
+    @ElementName("List of patients")
+    @FindBy(xpath = "//tr/td/a[@href]")
+    public List<WebElement> listOfPatients;
+
     private WebElement table;
     private By tableLocator;
 
@@ -209,10 +213,18 @@ class TableBody extends AbstractComponent {
         return new ClickableElement(element, elementName);
     }
 
-    public String getFirstRowItemString() {
+    public String getFirstRowMessageString() {
         String firstRowItemString = null;
         for (int i = 0; i < listOfMessages.size(); i++) {
             firstRowItemString = listOfMessages.get(0).getText();
+        }
+        return firstRowItemString;
+    }
+
+    public String getFirstRowPatientNameString() {
+        String firstRowItemString = null;
+        for (int i = 0; i < listOfPatients.size(); i++) {
+            firstRowItemString = listOfPatients.get(0).getText();
         }
         return firstRowItemString;
     }

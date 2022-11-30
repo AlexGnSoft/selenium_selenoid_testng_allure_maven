@@ -327,4 +327,8 @@ public interface ProgramSteps extends BaseSteps {
     List<Patient> getPatients(Client client, String programName);
 
     ProgramSteps pageRefresh();
+
+    ProgramSteps removePatient(String patientFirstName);
+
+    boolean isPatientRemovedFromUsersPage(String patientFirstName);
 }

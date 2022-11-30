@@ -46,8 +46,12 @@ public class ItemsTable implements ICanWait {
         return tableBody.getFirstRowItem();
     }
 
-    public String getFirstRowItemString(){
-        return tableBody.getFirstRowItemString();
+    public String getFirstRowMessageString(){
+        return tableBody.getFirstRowMessageString();
+    }
+
+    public String getFirstRowPatientNameString(){
+        return tableBody.getFirstRowPatientNameString();
     }
     public ClickableElement editFirstItemButton() {
         return tableBody.editFirstRecordButton();

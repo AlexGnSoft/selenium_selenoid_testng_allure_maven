@@ -1,6 +1,7 @@
 package com.carespeak.domain.ui.prod.page.programs.patients;
 
 import com.carespeak.core.driver.annotation.ElementName;
+import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.domain.ui.prod.component.message.StatusMessage;
 import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
@@ -9,12 +10,16 @@ import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.programs.AbstractProgramPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
 import com.carespeak.domain.ui.prod.popup.ConfirmationPopup;
+import com.carespeak.domain.ui.prod.popup.RemoveSelectedPatientPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 
 public class ProgramsPatientsPage extends AbstractProgramPage {
 
     public ItemsTable patientTable;
+
+    public RemoveSelectedPatientPopup removeSelectedPatientPopup;
+    public ProgramPatientsTab programPatientsTab;
 
     private static final String TAB_LOCATOR = "//ul[@role='tablist']/li//a[contains(text(), '%s')]";
     private static final String ACTIVE_TAB_LOCATOR = "//ul[@role='tablist']//li[contains(@class, 'ui-state-active')]//a[contains(text(), '%s')]";
@@ -23,8 +28,14 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     @FindBy(xpath = "//tbody/tr[@role='row']/td[2]/a[@sortbias]")
     public ClickableElement firstPatientName;
 
+    @ElementName("Remove button")
+    @FindBy(id = "csPatientGroupDelete")
+    public Button removeButton;
+
     public ProgramsPatientsPage() {
-        patientTable = new ItemsTable(By.id("patient_wrapper"));
+        patientTable = new ItemsTable(By.id("patient"));
+        removeSelectedPatientPopup = new RemoveSelectedPatientPopup();
+        programPatientsTab = new ProgramPatientsTab();
     }
 
     public ProgramPatientsTab goToPatientsTab() {

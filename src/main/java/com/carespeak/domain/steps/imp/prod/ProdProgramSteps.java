@@ -8,11 +8,11 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
-import com.carespeak.domain.steps.CampaignSteps;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.prod.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
+import com.carespeak.domain.ui.prod.page.admin_tools.users.UserPatientsPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.prod.page.programs.auto_responders.ProgramAutoRespondersPage;
@@ -28,13 +28,9 @@ import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.collections.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ProdProgramSteps implements ProgramSteps {
 
@@ -52,6 +48,8 @@ public class ProdProgramSteps implements ProgramSteps {
     private ProgramPatientMessageLogsPage patientMessageLogsPage;
     private ProgramCustomFieldsPage programCustomFieldsPage;
     private PatientProfilePage patientProfilePage;
+    private ProgramPatientsTab programPatientsTab;
+    UserPatientsPage userPatientsPage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -68,6 +66,8 @@ public class ProdProgramSteps implements ProgramSteps {
         patientMessageLogsPage = new ProgramPatientMessageLogsPage();
         programCustomFieldsPage = new ProgramCustomFieldsPage();
         patientProfilePage = new PatientProfilePage();
+        programPatientsTab = new ProgramPatientsTab();
+        userPatientsPage = new UserPatientsPage();
     }
 
     @Override
@@ -331,6 +331,40 @@ public class ProdProgramSteps implements ProgramSteps {
         return this;
     }
 
+
+    @Override
+    public ProgramSteps removePatient(String patientFirstName) {
+        programsPatientsPage.patientTable.searchInTable("Name", patientFirstName);
+        String actualPatientFirstName = programsPatientsPage.patientTable.getFirstRowPatientNameString();
+        if(actualPatientFirstName.equals(patientFirstName)){
+            programsPatientsPage.programPatientsTab.clickOnPatientCheckbox(patientFirstName);
+            programsPatientsPage.removeButton.click();
+            programsPatientsPage.removeSelectedPatientPopup.okButton.click();
+            programsPatientsPage.removeSelectedPatientPopup.waitForDisappear();
+        }
+
+        Logger.info("Created patient'" + patientFirstName + "' is not the one we created? '");
+
+        return this;
+    }
+
+    @Override
+    public boolean isPatientRemovedFromUsersPage(String patientFirstName) {
+        boolean result = false;
+        if (!userPatientsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.adminTools().goToSubMenu("Users");
+            userPatientsPage.waitFor(() -> !userPatientsPage.getCurrentUrl().equals(url));
+        }
+
+        TableRowItem patientSearchResult = userPatientsPage.patientsTable.searchInTable("Name", patientFirstName);
+        if(patientSearchResult == null){
+            result = true;
+        }
+        Logger.info("Is patient'" + patientFirstName + "' was deleted? '"+ result);
+        return result;
+    }
+
     @Override
     public ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName) {
         if (!addPatientsPage.isOpened()) {
@@ -510,7 +544,7 @@ public class ProdProgramSteps implements ProgramSteps {
                 .selectPatientByName(patientFirstName);
     }
 
-    private void clickOnPatientCheckbox(String patientFirstName) {
+    public void clickOnPatientCheckbox(String patientFirstName) {
         programsPatientsPage.goToPatientsTab()
                 .clickOnPatientCheckbox(patientFirstName);
     }
