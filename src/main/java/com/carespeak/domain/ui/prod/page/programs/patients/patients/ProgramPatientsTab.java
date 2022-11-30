@@ -55,8 +55,6 @@ public class ProgramPatientsTab extends AbstractProgramPage {
         WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
         wait.until(ExpectedConditions.elementToBeClickable(patient));
         patient.click();
-
-
     }
 
     public void clickOnPatientCheckbox(String patientName) {

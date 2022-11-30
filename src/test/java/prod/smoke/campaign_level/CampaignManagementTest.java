@@ -6,7 +6,9 @@ import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Action;
 import com.carespeak.domain.entities.message.MessageType;
 import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.message.NotificationType;
 import com.carespeak.domain.entities.program.Patient;
+import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -120,6 +122,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
     @Test(description = "Create campaign - Module Account settings")
     public void createAccountSettingsCampaign_MHM_T99() {
+        //Test data
         String programName_MHM_T99 = getRandomString();
         String campaignName_MHM_T99 = getRandomString();
         String campaignDescription = getRandomString();
@@ -142,6 +145,66 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage_T99, FROM_PHONE_NUMBER_T99);
 
         Assert.assertEquals(campaignMessage_T99, actualLasLogsMessage, "Campaign message did not arrive to patient");
+    }
+
+    @Test(description = "Remove campaign from patient")
+    public void removeCampaignFromPatient_MHM_T109() {
+        //Test data
+        String messageName = getRandomString();
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String campaignNameDescription = getRandomString();
+        String programName_T109 = "Remove campaign test patient "+ getRandomString();
+        String campaignMessage_T109 = "Do not forget to take your pills";
+        String SIGN_UP_KEYWORD_T109 = getRandomString();
+        String FROM_PHONE_NUMBER_T109 = getGeneratedPhoneNumber();
+
+        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T109, filePath);
+        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE);
+        site.programSteps().addNewProgram(clientName, programName_T109, ProgramAccess.PUBLIC);
+        site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T109);
+        site.campaignSteps().addCampaignToProgram(clientName, programName_T109, Module.MEDICATION, campaignNameDescription);
+        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_T109, FROM_PHONE_NUMBER_T109, TO_ENDPOINT, SIGN_UP_KEYWORD_T109);
+        site.campaignSteps().removeCampaignFromPatient(campaignNameDescription);
+
+        boolean isCampaignDeletedFromPatient = site.campaignSteps()
+                .isCampaignDeletedFromPatient(campaignNameDescription);
+
+        boolean isSameCampaignCanBeAddedToPatientAfterDeletion = site.campaignSteps()
+                .isSameCampaignCanBeAddedToPatientAfterDeletion(campaignNameDescription);
+
+        softAssert.assertTrue(isCampaignDeletedFromPatient, "Campaign was not deleted from Patient");
+        softAssert.assertTrue(isSameCampaignCanBeAddedToPatientAfterDeletion, "Removed campaign could not be added again. This is an error!");
+    }
+
+    @Test(description = "Remove campaign from program")
+    public void removeCampaignFromProgram_MHM_T110() {
+        //Test data
+        String messageName = getRandomString();
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String campaignNameDescription = getRandomString();
+        String programName_T110 = "Remove campaign test program "+ getRandomString();
+        String campaignMessage_T110 = "Do not forget to take your pills";
+        String SIGN_UP_KEYWORD_T110 = getRandomString();
+        String FROM_PHONE_NUMBER_T110 = getGeneratedPhoneNumber();
+
+        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T110, filePath);
+        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE);
+        site.programSteps().addNewProgram(clientName, programName_T110, ProgramAccess.PUBLIC);
+        site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T110);
+        site.campaignSteps().addCampaignToProgram(clientName, programName_T110, Module.MEDICATION, campaignNameDescription);
+        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_T110, FROM_PHONE_NUMBER_T110, TO_ENDPOINT, SIGN_UP_KEYWORD_T110);
+        site.campaignSteps().removeCampaignFromProgram(campaignNameDescription);
+        site.campaignSteps().goToPatientMedCampaignsTab(FROM_PHONE_NUMBER_T110);
+
+        boolean isCampaignDeletedFromPatient = site.campaignSteps().isCampaignDeletedFromPatient(campaignNameDescription);
+        softAssert.assertTrue(isCampaignDeletedFromPatient, "Campaign was not deleted from Program");
+
+        site.campaignSteps().addCampaignToProgram(clientName, programName_T110, Module.MEDICATION, campaignNameDescription);
+
+        boolean isCampaignAddedToProgramAfterDeletion = site.campaignSteps().isCampaignAddedToProgram(campaignNameDescription);
+        softAssert.assertTrue(isCampaignAddedToProgramAfterDeletion, "Removed campaign could not be added to program again. This is an error!");
     }
 
     @AfterClass(alwaysRun = true)

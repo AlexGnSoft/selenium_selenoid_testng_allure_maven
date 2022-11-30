@@ -1,6 +1,7 @@
 package com.carespeak.domain.ui.prod.component.message;
 
 import com.carespeak.core.driver.annotation.ElementName;
+import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;

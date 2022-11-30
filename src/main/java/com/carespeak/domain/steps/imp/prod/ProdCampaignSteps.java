@@ -25,6 +25,8 @@ import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
 import com.carespeak.domain.ui.prod.popup.AddCampaignToPatientPopup;
 import com.carespeak.domain.ui.prod.popup.AddCampaignToProgramPopup;
+import com.carespeak.domain.ui.prod.popup.DeleteCampaignFromPatientPopup;
+import com.carespeak.domain.ui.prod.popup.DeleteCampaignFromProgramPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.collections.CollectionUtils;
@@ -71,6 +73,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         programsPatientsPage = new ProgramsPatientsPage();
         programPatientsTab = new ProgramPatientsTab();
         addCampaignToPatientPopup = new AddCampaignToPatientPopup();
+        medsCampaignsPage = new MedsCampaignsPage();
 
     }
 
@@ -308,6 +311,18 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
+    public boolean isCampaignDeletedFromPatient(String campaignName) {
+        boolean result = false;
+        medsCampaignsPage.addedCampaignsToPatientTable.searchFor(campaignName);
+
+        if(medsCampaignsPage.emptyTableElement.isDisplayed()){
+            result = true;
+        }
+        Logger.info("Is campaign'" + campaignName + "' deleted from patient? '"+ result);
+        return result;
+    }
+
+    @Override
     public String didCampaignMessageArrive(String expectedCampaignMessage, String patientFirstName) {
         String actualMessageFromLogs;
 
@@ -374,6 +389,41 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
+    public CampaignSteps goToPatientMedCampaignsTab(String patientName) {
+        programsPage.sideBarMenu.openItem("Patients");
+        programPatientsTab.programPatientsTable.searchFor(patientName);
+        prodProgramSteps.selectPatientByName(patientName);
+        programsPage.sideBarMenu.openItem("Meds/Campaigns");
+        waitFor(()-> medsCampaignsPage.isOpened());
+
+        return this;
+    }
+
+    @Override
+    public CampaignSteps removeCampaignFromPatient(String campaignName) {
+        programsPage.sideBarMenu.openItem("Meds/Campaigns");
+        medsCampaignsPage.deleteCampaignButton.click();
+        //medsCampaignsPage.deleteCampaignFromPatientPopup.waitForDisplayed();
+        medsCampaignsPage.deleteCampaignFromPatientPopup.okButton.click();
+        medsCampaignsPage.deleteCampaignFromPatientPopup.waitForDisappear();
+        medsCampaignsPage.statusMessage.waitForDisplayed();
+        medsCampaignsPage.closeStatusMessageButton.click();
+        return this;
+    }
+
+    @Override
+    public CampaignSteps removeCampaignFromProgram(String campaignName) {
+        programsPage.programListButton.click();
+        programsPage.sideBarMenu.openItem("Campaigns");
+        //campaignsPage.campaignTable.searchFor(campaignName);
+        campaignsPage.deleteCampaignButton.click();
+        //campaignsPage.deleteCampaignFromPatientPopup.waitForDisplayed();
+        campaignsPage.deleteCampaignFromProgramPopup.okButton.doubleClick();
+        campaignsPage.deleteCampaignFromProgramPopup.waitForDisappear();
+        return this;
+    }
+
+    @Override
     public boolean isSameCampaignCannotBeAddedTwice(Module module, String campaignName) {
         boolean result = false;
         programsCampaignsPage.addButton.click();
@@ -401,4 +451,21 @@ public class ProdCampaignSteps implements CampaignSteps {
         return result;
     }
 
+    @Override
+    public boolean isSameCampaignCanBeAddedToPatientAfterDeletion(String campaignName) {
+        boolean result = false;
+        medsCampaignsPage.addButton.click();
+        //medsCampaignsPage.addCampaignToProgramPopup.waitForDisplayed();
+        addCampaignToPatientPopup.selectCampaignByName(campaignName);
+        addCampaignToPatientPopup.saveButton.click();
+        medsCampaignsPage.addCampaignToProgramPopup.waitForDisappear();
+
+        String actualCampaign = medsCampaignsPage.firstCampaignName.getText();
+        if(actualCampaign.equals(campaignName)){
+            result = true;
+            Logger.info("Is campaign'" + campaignName + "' could be again added to patient? '"+ result);
+        }
+        Logger.info("Is campaign'" + campaignName + "' could be again added to patient? '"+ result);
+        return result;
+    }
 }

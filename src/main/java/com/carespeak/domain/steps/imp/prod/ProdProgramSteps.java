@@ -505,7 +505,7 @@ public class ProdProgramSteps implements ProgramSteps {
         optInMessagesPage.selectButton.sendKeys(filePath);
     }
 
-    private void selectPatientByName(String patientFirstName) {
+    public void selectPatientByName(String patientFirstName) {
         programsPatientsPage.goToPatientsTab()
                 .selectPatientByName(patientFirstName);
     }

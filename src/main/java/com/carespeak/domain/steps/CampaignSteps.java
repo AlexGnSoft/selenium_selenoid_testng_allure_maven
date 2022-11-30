@@ -76,12 +76,28 @@ public interface CampaignSteps extends BaseSteps {
     boolean isCampaignAddedToProgram(String campaignName);
 
     /**
+     * Verify that campaign is deleted from patient
+     *
+     * @param campaignName    campaign name
+     * @return return true if campaign was deleted, otherwise false
+     */
+    boolean isCampaignDeletedFromPatient(String campaignName);
+
+    /**
      * Verify that same campaign can not be added twice
      *
      * @param campaignName    campaign name
      * @return return true if message is found, otherwise false
      */
     boolean isSameCampaignCannotBeAddedTwice(Module module, String campaignName);
+
+    /**
+     * Verify that same campaign can not be added again to patient after it was deleted
+     *
+     * @param campaignName    campaign name
+     * @return return true if message is found, otherwise false
+     */
+    boolean isSameCampaignCanBeAddedToPatientAfterDeletion(String campaignName);
 
     public String didCampaignMessageArrive(String campaignMessage, String patientFirstName);
 
@@ -106,6 +122,22 @@ public interface CampaignSteps extends BaseSteps {
     CampaignSteps addCampaignToProgram(String clientName, String programName, String moduleName, String campaignName);
 
     /**
+     * Remove campaign from patient
+     *
+     * @param campaignName     campaign name
+     * @return return CampaignSteps object
+     */
+    CampaignSteps removeCampaignFromPatient(String campaignName);
+
+    /**
+     * Remove campaign from program
+     *
+     * @param campaignName     campaign name
+     * @return return CampaignSteps object
+     */
+    CampaignSteps removeCampaignFromProgram(String campaignName);
+
+    /**
      * Add a campaign to program
      *
      * @param patientName      patient name
@@ -113,4 +145,12 @@ public interface CampaignSteps extends BaseSteps {
      * @return return CampaignSteps object
      */
     CampaignSteps addPatientToCampaign(String patientName, String campaignName);
+
+    /**
+     * Remove campaign from program
+     *
+     * @param patientName     patient name
+     * @return return CampaignSteps object
+     */
+    CampaignSteps goToPatientMedCampaignsTab(String patientName);
 }

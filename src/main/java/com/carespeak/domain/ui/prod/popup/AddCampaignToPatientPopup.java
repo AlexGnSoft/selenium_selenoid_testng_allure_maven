@@ -23,10 +23,6 @@ public class AddCampaignToPatientPopup extends AbstractPopup{
     @FindBy(xpath = "//button[contains(@id,'btn-close')]")
     public Button closeButton;
 
-    @ElementName("Campaign option")
-    @FindBy(xpath = "//option[contains(text(),'Account campaign')]")
-    public ClickableElement campaignOption;
-
     @Override
     public String getPopupName() {
         return "Add campaign(s) to patient";
@@ -40,6 +36,6 @@ public class AddCampaignToPatientPopup extends AbstractPopup{
     public void selectCampaignByName(String campaignName) {
         By locator = By.xpath(String.format(CAMPAIGN_NAME, campaignName));
         ClickableElement campaign = new ClickableElement(driver.findElement(locator), campaignName + " button");
-        campaign.click();
+        campaign.doubleClick();
     }
 }

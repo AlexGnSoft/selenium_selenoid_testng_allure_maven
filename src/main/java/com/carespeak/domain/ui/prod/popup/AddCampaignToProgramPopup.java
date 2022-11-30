@@ -12,6 +12,7 @@ public class AddCampaignToProgramPopup extends AbstractPopup{
     @ElementName("Module dropDown")
     @FindBy(xpath = "//div[@class='cs-select']/select[contains(@id,'module')]")
     public Dropdown moduleDropDown;
+
     @ElementName("Module title")
     @FindBy(xpath = "//span[text()='Add campaign to program']")
     public ClickableElement title;
