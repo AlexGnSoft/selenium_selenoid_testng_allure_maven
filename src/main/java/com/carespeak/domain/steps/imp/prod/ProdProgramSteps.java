@@ -5,7 +5,7 @@ import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.AutoRespondersStatus;
-import com.carespeak.domain.entities.program.Patient;
+import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
 import com.carespeak.domain.steps.ProgramSteps;
@@ -16,6 +16,7 @@ import com.carespeak.domain.ui.prod.page.admin_tools.users.UserPatientsPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.prod.page.programs.auto_responders.ProgramAutoRespondersPage;
+import com.carespeak.domain.ui.prod.page.programs.campaign.AlertTimeContainer;
 import com.carespeak.domain.ui.prod.page.programs.consent_management.ProgramConsentManagementPage;
 import com.carespeak.domain.ui.prod.page.programs.consent_management.ProgramOptOutFormPage;
 import com.carespeak.domain.ui.prod.page.programs.custom_fields.ProgramCustomFieldsPage;
@@ -26,6 +27,7 @@ import com.carespeak.domain.ui.prod.page.programs.opt_in_messages.OptInMessagesP
 import com.carespeak.domain.ui.prod.page.programs.patient_message_logs.ProgramPatientMessageLogsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsPage;
+import com.carespeak.domain.ui.prod.page.programs.patients.patients.MonthDayYearContainer;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
 import org.testng.collections.CollectionUtils;
@@ -381,10 +383,13 @@ public class ProdProgramSteps implements ProgramSteps {
         patientsTab.addPatientBtn.click();
         addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
         addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
+        addPatientsPage.timezoneDropdown.select(patient.getTimezone());
         addPatientsPage.firstNameInput.enterText(patient.getFirstName());
         addPatientsPage.lastNameInput.enterText(patient.getLastName());
         addPatientsPage.emailInput.enterText(patient.getEmail());
         addPatientsPage.emailConfirmationInput.enterText(patient.getEmail());
+        addPatientsPage.zipCodeInput.enterText(patient.getZipCode());
+
         if (patient.getSex() != null) {
             if (patient.getSex().equals(Sex.MALE)) {
                 addPatientsPage.maleRadioButtonOption.click();
@@ -392,7 +397,122 @@ public class ProdProgramSteps implements ProgramSteps {
                 addPatientsPage.femaleRadioButtonOption.click();
             }
         }
+
+        List<MonthDayYearContainer> dateContainers = addPatientsPage.monthDayYearComponent.findMonthDayYearContainer();
+        if (!CollectionUtils.hasElements(dateContainers)) {
+            throw new AssertionError("Date containers were not found!");
+        }
+        MonthDayYearContainer firstContainer = dateContainers.get(0);
+        firstContainer.getMonthDropdown().select("March");
+        firstContainer.getDayDropdown().select("5");
+        firstContainer.getYearDropdown().select("2020");
+        addPatientsPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public Patient updatePatientAllFields(Patient patient, Client client, String programName) {
+        if (!addPatientsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+            programsPage.programTable.editFirstItemButton().click();
+            programSettingsPage.sideBarMenu.openItem("Patients");
+        }
+
+        programsPatientsPage.editButton.click();
+
+        addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
+        addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
         addPatientsPage.timezoneDropdown.select(patient.getTimezone());
+        addPatientsPage.firstNameInput.enterText(patient.getFirstName());
+        addPatientsPage.lastNameInput.enterText(patient.getLastName());
+        addPatientsPage.emailInput.enterText(patient.getEmail());
+        addPatientsPage.emailConfirmationInput.enterText(patient.getEmail());
+        addPatientsPage.zipCodeInput.enterText(patient.getZipCode());
+
+//        if (patient.getSex() != null) {
+//            if (patient.getSex().equals(Sex.FEMALE)) {
+//                addPatientsPage.maleRadioButtonOption.click();
+//            } else {
+//                addPatientsPage.femaleRadioButtonOption.click();
+//            }
+//        }
+
+        List<MonthDayYearContainer> dateContainers = addPatientsPage.monthDayYearComponent.findMonthDayYearContainer();
+        if (!CollectionUtils.hasElements(dateContainers)) {
+            throw new AssertionError("Date containers were not found!");
+        }
+        MonthDayYearContainer firstContainer = dateContainers.get(0);
+        firstContainer.getMonthDropdown().select("April");
+        firstContainer.getDayDropdown().select("10");
+        firstContainer.getYearDropdown().select("2021");
+
+        Patient updatedPatient = new Patient();
+        updatedPatient.setCellPhone(addPatientsPage.cellPhoneInput.getAttribute("value"));
+        updatedPatient.setTimezone(addPatientsPage.timezoneDropdownSelected.getText());
+        updatedPatient.setFirstName(addPatientsPage.firstNameInput.getAttribute("value"));
+        updatedPatient.setLastName(addPatientsPage.lastNameInput.getAttribute("value"));
+        updatedPatient.setEmail(addPatientsPage.emailInput.getAttribute("value"));
+        updatedPatient.setZipCode(addPatientsPage.zipCodeInput.getAttribute("value"));
+        updatedPatient.setMonthOfBirth(addPatientsPage.monthInputDropdownSelected.getText());
+        updatedPatient.setDayOfBirth(addPatientsPage.dayInputDropdownSelected.getText());
+        updatedPatient.setYearOfBirth(addPatientsPage.yearInputDropdownSelected.getText());
+        addPatientsPage.saveButton.click();
+
+        return updatedPatient;
+    }
+
+    @Override
+    public Patient getPatientObjectByName(Patient patientName, Client client, String programName) {
+        if (!addPatientsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+            programsPage.programTable.editFirstItemButton().click();
+            programSettingsPage.sideBarMenu.openItem("Patients");
+        }
+
+        programsPatientsPage.editButton.click();
+
+        Patient patientSavedPreviously = new Patient();
+        patientSavedPreviously.setCellPhone(addPatientsPage.cellPhoneInput.getAttribute("value"));
+        patientSavedPreviously.setTimezone(addPatientsPage.timezoneDropdownSelected.getText());
+        patientSavedPreviously.setFirstName(addPatientsPage.firstNameInput.getAttribute("value"));
+        patientSavedPreviously.setLastName(addPatientsPage.lastNameInput.getAttribute("value"));
+        patientSavedPreviously.setEmail(addPatientsPage.emailInput.getAttribute("value"));
+        patientSavedPreviously.setZipCode(addPatientsPage.zipCodeInput.getAttribute("value"));
+        patientSavedPreviously.setMonthOfBirth(addPatientsPage.monthInputDropdownSelected.getText());
+        patientSavedPreviously.setDayOfBirth(addPatientsPage.dayInputDropdownSelected.getText());
+        patientSavedPreviously.setYearOfBirth(addPatientsPage.yearInputDropdownSelected.getText());
+
+        return patientSavedPreviously;
+    }
+
+    @Override
+    public ProgramSteps addNewPatientLimitedFields(Patient patient, Client client, String programName) {
+        if (!addPatientsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+            programsPage.searchClient.search(client.getName());
+            programsPage.programTable.searchFor(programName);
+            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
+            programsPage.programTable.editFirstItemButton().click();
+        }
+        programSettingsPage.sideBarMenu.openItem("Patients");
+        ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
+        patientsTab.addPatientBtn.click();
+        addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
+        addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
+        addPatientsPage.timezoneDropdown.select(patient.getTimezone());
+        addPatientsPage.firstNameInput.enterText(patient.getFirstName());
         addPatientsPage.saveButton.click();
         return this;
     }
@@ -415,6 +535,8 @@ public class ProdProgramSteps implements ProgramSteps {
         return tableRowItem.getDataByHeader("Name");
     }
 
+
+
     @Override
     public String getPatientByName(String clientName, String programName, String patientName) {
         goToProgramSettings(clientName, programName);
@@ -423,6 +545,7 @@ public class ProdProgramSteps implements ProgramSteps {
 
         return programsPatientsPage.firstPatientName.getAttribute("sortbias");
     }
+
 
     @Override
     public String getProgramAccessModifier(String clientName, String accessModifier) {

@@ -3,7 +3,6 @@ package prod.smoke.program_level;
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Module;
-import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import prod.base.BaseTest;
 

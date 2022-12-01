@@ -6,6 +6,7 @@ import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
 import com.carespeak.core.logger.Logger;
+import com.carespeak.domain.ui.prod.page.programs.campaign.AlertTimeComponent;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -14,14 +15,24 @@ import java.util.List;
 
 public class AddPatientsPage extends ProgramPatientsTab {
 
+    public MonthDayYearComponent monthDayYearComponent;
+
+    public AddPatientsPage() {
+        monthDayYearComponent = new MonthDayYearComponent();
+    }
+
     @ElementName("Cell phone input")
     @FindBy(id = "mobile")
     public Input cellPhoneInput;
 
+    @ElementName("Cell phone input")
+    @FindBy(xpath = "//option[contains(text(),'Time') and contains(@selected,'selected')]")
+    public Dropdown timezoneDropdownSelected;
+
+    //option[contains(text(),'Time') and @selected='"selected"']
     @ElementName("Cell phone confirmation input")
     @FindBy(id = "mobileConfirm")
     public Input cellPhoneConfirmationInput;
-
     @ElementName("TimeZone dropdown")
     @FindBy(id = "formUser.timeZone")
     public Dropdown timezoneDropdown;
@@ -33,31 +44,26 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Email status dropdown")
     @FindBy(id = "emailStatus")
     public Dropdown emailStatusDropdown;
-
     @ElementName("First name input")
     @FindBy(id = "formUser.firstName")
     public Input firstNameInput;
-
     @ElementName("Last name input")
     @FindBy(id = "formUser.lastName")
     public Input lastNameInput;
-
     @ElementName("Email input")
     @FindBy(id = "email")
     public Input emailInput;
-
     @ElementName("Email confirmation input")
     @FindBy(id = "emailConfirm")
     public Input emailConfirmationInput;
 
     @ElementName("Zip Code input")
-    @FindBy(id = "formUser.postalCode")
+    @FindBy(xpath = "//input[@id='formUser.postalCode']")
     public Input zipCodeInput;
 
     @ElementName("Phone input")
     @FindBy(id = "formUser.voice")
     public Input phoneInput;
-
     @ElementName("Sex radiobutton option - Male")
     @FindBy(xpath = "//input[@name='formUser.gender' and @value='M']")
     public ClickableElement maleRadioButtonOption;
@@ -66,17 +72,33 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @FindBy(xpath = "//input[@name='formUser.gender' and @value='F']")
     public ClickableElement femaleRadioButtonOption;
 
+    @ElementName("Selected sex radio button")
+    @FindBy(xpath = "//input[@name='formUser.gender' and @checked]")
+    public ClickableElement sexRadioButtonSelected;
+
     @ElementName("Date of Birth Month input")
     @FindBy(id = "formUser.birthDate-month")
-    public Input monthInput;
+    public Dropdown monthInput;
+
+    @ElementName("Cell phone input")
+    @FindBy(xpath = "//select[@id='formUser.birthDate-month']/option[contains(@selected,'selected')]")
+    public Dropdown monthInputDropdownSelected;
 
     @ElementName("Date of Birth Day input")
     @FindBy(id = "formUser.birthDate-day")
-    public Input dayInput;
+    public Dropdown dayInput;
+
+    @ElementName("Cell phone input")
+    @FindBy(xpath = "//select[@id='formUser.birthDate-day']/option[contains(@selected,'selected')]")
+    public Dropdown dayInputDropdownSelected;
 
     @ElementName("Date of Birth Year input")
     @FindBy(id = "formUser.birthDate-year")
-    public Input yearInput;
+    public Dropdown yearInput;
+
+    @ElementName("Cell phone input")
+    @FindBy(xpath = "//select[@id='formUser.birthDate-year']/option[contains(@selected,'selected')]")
+    public Dropdown yearInputDropdownSelected;
 
     @ElementName("Tags input")
     @FindBy(id = "formUser.tags")

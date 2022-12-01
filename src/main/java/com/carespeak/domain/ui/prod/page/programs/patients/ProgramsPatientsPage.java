@@ -32,6 +32,10 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     @FindBy(id = "csPatientGroupDelete")
     public Button removeButton;
 
+    @ElementName("Edit button")
+    @FindBy(xpath = "//a[@class='btn btn-primary']")
+    public Button editButton;
+
     public ProgramsPatientsPage() {
         patientTable = new ItemsTable(By.id("patient"));
         removeSelectedPatientPopup = new RemoveSelectedPatientPopup();

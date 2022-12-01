@@ -3,10 +3,9 @@ package com.carespeak.domain.steps;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.AutoRespondersStatus;
-import com.carespeak.domain.entities.program.Patient;
+import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
-import com.carespeak.domain.steps.imp.prod.ProdProgramSteps;
 
 import java.util.List;
 
@@ -171,13 +170,32 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps addNewPatient(Patient patient, Client client, String programName);
 
     /**
-     * Add patient to specific program with Last name, Email, Sex
+     * Add patient to specific program with all fields
      *
      * @param client      client to use
      * @param programName program to be select
      * @return Program Steps object
      */
     ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName);
+
+    /**
+     * Update patient to specific program with all fields
+     *
+     * @param client      client to use
+     * @param programName program to be select
+     * @return Patient object
+     */
+    Patient updatePatientAllFields(Patient patient, Client client, String programName);
+
+
+    /**
+     * Add patient to specific program with Last name, Email, cellPhone
+     *
+     * @param client      client to use
+     * @param programName program to be select
+     * @return Program Steps object
+     */
+    ProgramSteps addNewPatientLimitedFields(Patient patient, Client client, String programName);
 
 
     /**
@@ -188,6 +206,14 @@ public interface ProgramSteps extends BaseSteps {
      * @return program name String
      */
     String getProgramByName(String clientName, String programName);
+
+    /**
+     * Get all patient attributes by patient name
+     *
+     * @param patientName  patient name
+     * @return Patient object
+     */
+    Patient getPatientObjectByName(Patient patientName, Client client, String programName);
 
     /**
      * Get program by name from column

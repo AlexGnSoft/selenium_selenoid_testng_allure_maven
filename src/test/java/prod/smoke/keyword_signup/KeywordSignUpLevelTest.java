@@ -5,7 +5,7 @@ import com.carespeak.core.constant.Constants;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
-import com.carespeak.domain.entities.program.Patient;
+import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;

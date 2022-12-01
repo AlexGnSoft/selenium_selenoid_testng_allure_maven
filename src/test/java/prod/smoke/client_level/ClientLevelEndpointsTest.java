@@ -2,7 +2,7 @@ package prod.smoke.client_level;
 
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
-import com.carespeak.domain.entities.program.Patient;
+import com.carespeak.domain.entities.patient.Patient;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

@@ -1,4 +1,4 @@
-package com.carespeak.domain.entities.program;
+package com.carespeak.domain.entities.patient;
 
 import com.carespeak.domain.entities.common.Sex;
 
@@ -13,6 +13,45 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String email;
+    private String zipCode;
+
+    private String sexType;
+
+    public String getSexType() {
+        return sexType;
+    }
+
+    public void setSexType(String sexType) {
+        this.sexType = sexType;
+    }
+
+    private String monthOfBirth;
+    private String dayOfBirth;
+    private String yearOfBirth;
+
+    public String getMonthOfBirth() {
+        return monthOfBirth;
+    }
+
+    public void setMonthOfBirth(String monthOfBirth) {
+        this.monthOfBirth = monthOfBirth;
+    }
+
+    public String getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(String dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
+    public String getYearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public void setYearOfBirth(String yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+    }
 
     private Sex sex;
 
@@ -60,6 +99,14 @@ public class Patient {
         this.email = email;
     }
 
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
     public Sex getSex() {
         return sex;
     }
@@ -76,6 +123,10 @@ public class Patient {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", monthOfBirth='" + monthOfBirth + '\'' +
+                ", dayOfBirth='" + dayOfBirth + '\'' +
+                ", yearOfBirth='" + yearOfBirth + '\'' +
                 ", sex=" + sex +
                 '}';
     }
