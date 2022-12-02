@@ -169,23 +169,23 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addNewPatient(Patient patient, Client client, String programName);
 
+
     /**
      * Add patient to specific program with all fields
      *
      * @param client      client to use
      * @param programName program to be select
-     * @return Program Steps object
+     * @return Patient object
      */
     ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName);
 
     /**
      * Update patient to specific program with all fields
      *
-     * @param client      client to use
-     * @param programName program to be select
+     * @param patient      patient object
      * @return Patient object
      */
-    Patient updatePatientAllFields(Patient patient, Client client, String programName);
+    ProgramSteps updatePatientAllFields(Patient patient);
 
 
     /**
@@ -210,10 +210,9 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Get all patient attributes by patient name
      *
-     * @param patientName  patient name
      * @return Patient object
      */
-    Patient getPatientObjectByName(Patient patientName, Client client, String programName);
+    Patient getPatientObject(Patient actualPatient);
 
     /**
      * Get program by name from column

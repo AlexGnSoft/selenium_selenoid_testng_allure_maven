@@ -124,6 +124,10 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @FindBy(xpath = "//button//*[contains(text(), 'Save')]")
     public Button saveButton;
 
+    @ElementName("Program List button")
+    @FindBy(xpath = "//a[@href]//span[@class='cs-back-to-text']")
+    public Button programListButton;
+
     public boolean isOpened() {
         return getCurrentUrl().contains("patients/add/new.page");
     }

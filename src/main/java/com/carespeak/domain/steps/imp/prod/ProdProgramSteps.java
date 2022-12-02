@@ -334,6 +334,7 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
 
+
     @Override
     public ProgramSteps removePatient(String patientFirstName) {
         programsPatientsPage.patientTable.searchInTable("Name", patientFirstName);
@@ -381,6 +382,7 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.sideBarMenu.openItem("Patients");
         ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
         patientsTab.addPatientBtn.click();
+
         addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
         addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
         addPatientsPage.timezoneDropdown.select(patient.getTimezone());
@@ -389,6 +391,15 @@ public class ProdProgramSteps implements ProgramSteps {
         addPatientsPage.emailInput.enterText(patient.getEmail());
         addPatientsPage.emailConfirmationInput.enterText(patient.getEmail());
         addPatientsPage.zipCodeInput.enterText(patient.getZipCode());
+
+        List<MonthDayYearContainer> dateContainers = addPatientsPage.monthDayYearComponent.findMonthDayYearContainer();
+        if (!CollectionUtils.hasElements(dateContainers)) {
+            throw new AssertionError("Date containers were not found!");
+        }
+        MonthDayYearContainer firstContainer = dateContainers.get(0);
+        firstContainer.getMonthDropdown().select(patient.getMonthOfBirth());
+        firstContainer.getYearDropdown().select(patient.getYearOfBirth());
+        firstContainer.getDayDropdown().select(patient.getDayOfBirth());
 
         if (patient.getSex() != null) {
             if (patient.getSex().equals(Sex.MALE)) {
@@ -398,33 +409,15 @@ public class ProdProgramSteps implements ProgramSteps {
             }
         }
 
-        List<MonthDayYearContainer> dateContainers = addPatientsPage.monthDayYearComponent.findMonthDayYearContainer();
-        if (!CollectionUtils.hasElements(dateContainers)) {
-            throw new AssertionError("Date containers were not found!");
-        }
-        MonthDayYearContainer firstContainer = dateContainers.get(0);
-        firstContainer.getMonthDropdown().select("March");
-        firstContainer.getDayDropdown().select("5");
-        firstContainer.getYearDropdown().select("2020");
         addPatientsPage.saveButton.click();
+        waitFor(()-> programsPatientsPage.isOpened());
+
         return this;
     }
 
     @Override
-    public Patient updatePatientAllFields(Patient patient, Client client, String programName) {
-        if (!addPatientsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
-            programSettingsPage.sideBarMenu.openItem("Patients");
-        }
-
+    public ProgramSteps updatePatientAllFields(Patient patient) {
         programsPatientsPage.editButton.click();
-
         addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
         addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
         addPatientsPage.timezoneDropdown.select(patient.getTimezone());
@@ -434,65 +427,48 @@ public class ProdProgramSteps implements ProgramSteps {
         addPatientsPage.emailConfirmationInput.enterText(patient.getEmail());
         addPatientsPage.zipCodeInput.enterText(patient.getZipCode());
 
-//        if (patient.getSex() != null) {
-//            if (patient.getSex().equals(Sex.FEMALE)) {
-//                addPatientsPage.maleRadioButtonOption.click();
-//            } else {
-//                addPatientsPage.femaleRadioButtonOption.click();
-//            }
-//        }
-
         List<MonthDayYearContainer> dateContainers = addPatientsPage.monthDayYearComponent.findMonthDayYearContainer();
         if (!CollectionUtils.hasElements(dateContainers)) {
             throw new AssertionError("Date containers were not found!");
         }
         MonthDayYearContainer firstContainer = dateContainers.get(0);
         firstContainer.getMonthDropdown().select("April");
-        firstContainer.getDayDropdown().select("10");
         firstContainer.getYearDropdown().select("2021");
+        firstContainer.getDayDropdown().select("10");
 
-        Patient updatedPatient = new Patient();
-        updatedPatient.setCellPhone(addPatientsPage.cellPhoneInput.getAttribute("value"));
-        updatedPatient.setTimezone(addPatientsPage.timezoneDropdownSelected.getText());
-        updatedPatient.setFirstName(addPatientsPage.firstNameInput.getAttribute("value"));
-        updatedPatient.setLastName(addPatientsPage.lastNameInput.getAttribute("value"));
-        updatedPatient.setEmail(addPatientsPage.emailInput.getAttribute("value"));
-        updatedPatient.setZipCode(addPatientsPage.zipCodeInput.getAttribute("value"));
-        updatedPatient.setMonthOfBirth(addPatientsPage.monthInputDropdownSelected.getText());
-        updatedPatient.setDayOfBirth(addPatientsPage.dayInputDropdownSelected.getText());
-        updatedPatient.setYearOfBirth(addPatientsPage.yearInputDropdownSelected.getText());
+        if (patient.getSex() != null) {
+            if (patient.getSex().equals(Sex.FEMALE)) {
+                addPatientsPage.maleRadioButtonOption.click();
+            } else {
+                addPatientsPage.femaleRadioButtonOption.click();
+            }
+        }
+
         addPatientsPage.saveButton.click();
+        addPatientsPage.programListButton.click();
+        waitFor(()-> programsPatientsPage.isOpened());
 
-        return updatedPatient;
+        return this;
     }
 
     @Override
-    public Patient getPatientObjectByName(Patient patientName, Client client, String programName) {
-        if (!addPatientsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
-            programSettingsPage.sideBarMenu.openItem("Patients");
-        }
-
+    public Patient getPatientObject(Patient actualPatient) {
         programsPatientsPage.editButton.click();
 
-        Patient patientSavedPreviously = new Patient();
-        patientSavedPreviously.setCellPhone(addPatientsPage.cellPhoneInput.getAttribute("value"));
-        patientSavedPreviously.setTimezone(addPatientsPage.timezoneDropdownSelected.getText());
-        patientSavedPreviously.setFirstName(addPatientsPage.firstNameInput.getAttribute("value"));
-        patientSavedPreviously.setLastName(addPatientsPage.lastNameInput.getAttribute("value"));
-        patientSavedPreviously.setEmail(addPatientsPage.emailInput.getAttribute("value"));
-        patientSavedPreviously.setZipCode(addPatientsPage.zipCodeInput.getAttribute("value"));
-        patientSavedPreviously.setMonthOfBirth(addPatientsPage.monthInputDropdownSelected.getText());
-        patientSavedPreviously.setDayOfBirth(addPatientsPage.dayInputDropdownSelected.getText());
-        patientSavedPreviously.setYearOfBirth(addPatientsPage.yearInputDropdownSelected.getText());
+        actualPatient.setCellPhone(addPatientsPage.cellPhoneInput.getAttribute("value"));
+        actualPatient.setTimezone(addPatientsPage.timezoneDropdownSelected.getText());
+        actualPatient.setFirstName(addPatientsPage.firstNameInput.getAttribute("value"));
+        actualPatient.setLastName(addPatientsPage.lastNameInput.getAttribute("value"));
+        actualPatient.setEmail(addPatientsPage.emailInput.getAttribute("value"));
+        actualPatient.setZipCode(addPatientsPage.zipCodeInput.getAttribute("value"));
+        actualPatient.setMonthOfBirth(addPatientsPage.monthInputDropdownSelected.getText());
+        actualPatient.setYearOfBirth(addPatientsPage.yearInputDropdownSelected.getText());
+        actualPatient.setDayOfBirth(addPatientsPage.dayInputDropdownSelected.getText());
+        actualPatient.setSexType(addPatientsPage.sexRadioButtonSelected.getAttribute("value"));
 
-        return patientSavedPreviously;
+        addPatientsPage.saveButton.click();
+
+        return actualPatient;
     }
 
     @Override
