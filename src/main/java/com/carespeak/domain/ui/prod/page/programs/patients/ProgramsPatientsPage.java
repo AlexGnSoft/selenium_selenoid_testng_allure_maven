@@ -28,9 +28,15 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     @FindBy(xpath = "//tbody/tr[@role='row']/td[2]/a[@sortbias]")
     public ClickableElement firstPatientName;
 
+    @ElementName("Status of patient")
+    @FindBy(xpath = "//td[@class=' nowrap']/span")
+    public ClickableElement statusOfPatient;
+
     @ElementName("Remove button")
     @FindBy(id = "csPatientGroupDelete")
     public Button removeButton;
+
+
 
     @ElementName("Edit button")
     @FindBy(xpath = "//a[@class='btn btn-primary']")

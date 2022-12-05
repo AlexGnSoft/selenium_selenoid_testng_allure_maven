@@ -39,7 +39,7 @@ public class ItemsTable implements ICanWait {
         List<TableRowItem> itemsBefore = tableBody.getItems();
         tableSearch.search(tableValue);
         //TODO: fix minor logging issue here with no rows found
-        waitFor(() -> tableBody.getItems().size() != itemsBefore.size(), 10);
+        waitFor(() -> tableBody.getItems().size() != itemsBefore.size(), 3);
     }
 
     public TableRowItem getFirstRowItem() {

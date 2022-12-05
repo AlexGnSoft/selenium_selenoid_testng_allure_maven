@@ -6,7 +6,9 @@ import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
 import com.carespeak.core.logger.Logger;
+import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.page.programs.campaign.AlertTimeComponent;
+import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -15,10 +17,12 @@ import java.util.List;
 
 public class AddPatientsPage extends ProgramPatientsTab {
 
+    public StatusPopup statusPopup;
     public MonthDayYearComponent monthDayYearComponent;
 
     public AddPatientsPage() {
         monthDayYearComponent = new MonthDayYearComponent();
+        statusPopup = new StatusPopup();
     }
 
     @ElementName("Cell phone input")

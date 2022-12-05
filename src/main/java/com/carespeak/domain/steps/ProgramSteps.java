@@ -2,6 +2,7 @@ package com.carespeak.domain.steps;
 
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
+import com.carespeak.domain.entities.patient.PatientStatus;
 import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
@@ -297,6 +298,14 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps simulateResponse(String patientFirstName, String message);
 
     /**
+     * Update patient status (shorter implementation)
+     *
+     * @param patient         patient first name
+     * @return ProgramSteps object
+     */
+    ProgramSteps updatePatientStatusShort(Patient patient, String patientStatus);
+
+    /**
      * Simulate response and get the last Patient Message Log
      *
      * @param message          text to send
@@ -330,6 +339,13 @@ public interface ProgramSteps extends BaseSteps {
      * @return return true if patient is in the specified program otherwise false
      */
     boolean isInProgram(String newProgramName, String patientName);
+
+    /**
+     * Returns true if patient is in the specified program otherwise false
+     *
+     * @return return true if patient's status was updated otherwise false
+     */
+    boolean isStatusUpdatedOnMessageLogsPage(String patientNewStatus);
 
     /**
      * Returns true if attached image is displayed otherwise false

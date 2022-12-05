@@ -4,6 +4,7 @@ import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
+import com.carespeak.domain.entities.patient.PatientStatus;
 import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
@@ -714,6 +715,39 @@ public class ProdProgramSteps implements ProgramSteps {
         Logger.info("Is patient '" + patientName + "' in '" + newProgramName + "' program? - " + result);
         return result;
     }
+    @Override
+    public ProgramSteps updatePatientStatusShort(Patient patient, String patientStatus) {
+        programsPatientsPage.patientTable.searchFor(patient.getFirstName());
+        programsPatientsPage.editButton.click();
+        if(!addPatientsPage.isOpened()){
+            waitFor(()-> addPatientsPage.isOpened());
+        }
+
+        addPatientsPage.statusDropdown.select(patientStatus);
+        addPatientsPage.saveButton.click();
+        addPatientsPage.statusPopup.waitForDisplayed();
+
+        return this;
+    }
+
+    @Override
+    public boolean isStatusUpdatedOnMessageLogsPage(String patientNewStatus) {
+        boolean result = false;
+        addPatientsPage.sideBarMenu.openItem("Message Logs");
+        if(!programMessageLogsPage.isOpened()){
+            waitFor(()->programMessageLogsPage.isOpened());
+        }
+
+        String actualStatusOnMessageLogsPage = programMessageLogsPage.messageLogsPatientStatus.getText();
+        programsPage.programListButton.click();
+        String actualStatusOnProgramPatientsPage = programsPatientsPage.statusOfPatient.getText();
+
+        if(actualStatusOnMessageLogsPage.equals(patientNewStatus) && actualStatusOnProgramPatientsPage.equals(patientNewStatus))
+            result = true;
+        Logger.info("Is patient status was updated on Message Logs and Program patients page? '" + result);
+        return result;
+    }
+
 
     @Override
     public boolean isAttachedImageDisplayed(String patientName) {
