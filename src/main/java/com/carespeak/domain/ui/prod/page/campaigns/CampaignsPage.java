@@ -41,6 +41,14 @@ public class CampaignsPage extends AbstractCampaignsPage {
     @FindBy(xpath = "//button[contains(@id,'campaignsTableDeleteButton')]")
     public Button deleteCampaignButton;
 
+    @ElementName("Remove message button")
+    @FindBy(id = "messageRemoveBtn")
+    public Button removeMessageButton;
+
+    @ElementName("Empty campaign Messages table")
+    @FindBy(xpath = "//tr[@class='odd ui-droppable']/td")
+    public ClickableElement emptyCampaignMessagesTable;
+
     public CampaignsPage() {
         searchClient = new SearchWithSelection();
         campaignTable = new ItemsTable(By.id("campaignsTableWrapper"));

@@ -136,8 +136,9 @@ public class ProgramManagementTest extends AbstractProgramLevelTest {
         boolean isPatientStatusWasUpdated = site.programSteps().isStatusUpdatedOnMessageLogsPage(patientNewStatus);
 
         softAssert.assertTrue(isPatientStatusWasUpdated, "Patient status was not updated on Message Logs / Program patients page");
-
     }
+
+
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {

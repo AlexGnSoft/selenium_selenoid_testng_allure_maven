@@ -23,12 +23,10 @@ import com.carespeak.domain.ui.prod.page.programs.message_logs.ProgramMessageLog
 import com.carespeak.domain.ui.prod.page.programs.patient_message_logs.ProgramPatientMessageLogsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
-import com.carespeak.domain.ui.prod.popup.AddCampaignToPatientPopup;
-import com.carespeak.domain.ui.prod.popup.AddCampaignToProgramPopup;
-import com.carespeak.domain.ui.prod.popup.DeleteCampaignFromPatientPopup;
-import com.carespeak.domain.ui.prod.popup.DeleteCampaignFromProgramPopup;
+import com.carespeak.domain.ui.prod.popup.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.collections.CollectionUtils;
 
 import java.time.Duration;
@@ -57,6 +55,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     private ProgramPatientsTab programPatientsTab;
     private MedsCampaignsPage medsCampaignsPage;
     private AddCampaignToPatientPopup addCampaignToPatientPopup;
+    private AvailableMessagesPopup availableMessagesPopup;
 
     public ProdCampaignSteps() {
         dashboardPage = new DashboardPage();
@@ -74,7 +73,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         programPatientsTab = new ProgramPatientsTab();
         addCampaignToPatientPopup = new AddCampaignToPatientPopup();
         medsCampaignsPage = new MedsCampaignsPage();
-
+        availableMessagesPopup = new AvailableMessagesPopup();
     }
 
     @Override
@@ -239,6 +238,56 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
+    public CampaignSteps addMedicationCampaignScheduleProtocolWithSeveralMessages(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags) {
+        if (!campaignsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.campaignsMenuItem.click();
+            waitFor(() -> !url.equals(campaignsPage.getCurrentUrl()));
+        }
+
+        campaignsPage.searchClient.search(clientName);
+        campaignsPage.addCampaignButton.click();
+        campaignsPage.selectModulePopup.waitForDisplayed();
+        campaignsPage.selectModulePopup.moduleDropdown.select(module.getValue());
+        campaignsPage.selectModulePopup.nextButton.click();
+        campaignsPage.selectModulePopup.waitForDisappear();
+        campaignsGeneralPage.nameInput.enterText(name);
+        campaignsGeneralPage.campaignAccessDropdown.select(access.getValue());
+        campaignsGeneralPage.campaignDescriptionInput.enterText(description);
+        if (tags != null && tags.length > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (String tag : tags) {
+                builder.append(tag);
+                builder.append(" ");
+            }
+            campaignsGeneralPage.tagsInput.enterText(builder.toString());
+        }
+        String url = campaignsPage.getCurrentUrl();
+        campaignsGeneralPage.nextButton.click();
+        waitFor(() -> !url.equals(timeTablePage.getCurrentUrl()));
+        timeTablePage.scheduleTypeDropdown.select(campaignScheduleType.getValue());
+        timeTablePage.anchorDropDown.select(campaignAnchor.getValue());
+        timeTablePage.anchorFixedDateField.enterText(timeTablePage.currentDayMonthYear());
+        timeTablePage.anchorFixedDateField.sendKeys(Keys.ENTER);
+        timeTablePage.intakeUnitsInput.enterText("0");
+        timeTablePage.daysInput.enterText("0");
+        timeTablePage.alertTimeHoursProtocolDropDown.select(timeTablePage.hoursDropDownNewYorkTime());
+        timeTablePage.alertTimeMinutesProtocolDropDown.select(timeTablePage.minutesDropDownNewYorkTime());
+        timeTablePage.alertTimeAmPmProtocolDropDown.select(timeTablePage.amPmDropDownNewYorkTime());
+        timeTablePage.nextButton.click();
+        campaignMessagesPage.allocateButton.click();
+        campaignsPage.availableMessagesPopup.waitForDisplayed();
+        campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
+        campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
+        campaignMessagesPage.allocateButton.click();
+        campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
+        campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
+        campaignsPage.availableMessagesPopup.waitForDisappear();
+
+        return this;
+    }
+
+    @Override
     public CampaignSteps addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(boolean isMandatory, String clientName, String moduleName, String name, CampaignAccess access, String description, String campaignScheduleType, String dropDownfield, String questionText, String onErrorText) {
         if (!campaignsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
@@ -296,6 +345,33 @@ public class ProdCampaignSteps implements CampaignSteps {
             result = true;
 
         Logger.info("Is campaign'" + campaignName + "' is found? '"+ result);
+        return result;
+    }
+
+    @Override
+    public boolean areMessagesAddedToCampaign(int expectedNumberOfMessages) {
+        boolean result = waitFor(() -> campaignMessagesPage.checkBoxesToSelectMessages.size() == expectedNumberOfMessages);
+
+        int actualNumberOfMessages = campaignMessagesPage.checkBoxesToSelectMessages.size();
+
+        if(actualNumberOfMessages == expectedNumberOfMessages){
+            result = true;
+        }
+        Logger.info("Is number of messages in campaign equals to " + expectedNumberOfMessages + " "+ result);
+        return result;
+    }
+
+    @Override
+    public boolean removeAllMessagesFromCampaign() {
+        boolean result = false;
+        campaignMessagesPage.selectAllMessagesFromCampaign();
+        campaignsPage.removeMessageButton.click();
+
+        waitFor(()-> campaignsPage.emptyCampaignMessagesTable.isDisplayed());
+        if(campaignsPage.emptyCampaignMessagesTable.getText().equals("No data available in table")){
+            result = true;
+        }
+        Logger.info("Are all messages were deleted " + result);
         return result;
     }
 

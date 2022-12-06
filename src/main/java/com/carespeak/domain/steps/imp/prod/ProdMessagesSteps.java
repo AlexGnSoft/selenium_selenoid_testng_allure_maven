@@ -91,7 +91,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
-    public MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath) {
+    public MessagesSteps addMedicationMmsMessageWithAttachment(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath) {
         goToMessagesTab();
         messagesPage.addButton.click();
         messagesPage.modulesDropDown.select(module.getValue());
@@ -106,6 +106,26 @@ public class ProdMessagesSteps implements MessagesSteps {
         medicationPage.nextBtn.click();
         messagesPage.messageTextField.enterText(smsMessage);
         messagesPage.selectMmsPicture(filePath);
+        messagesPage.saveButton.click();
+
+        return this;
+    }
+
+    @Override
+    public MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage) {
+        goToMessagesTab();
+        messagesPage.addButton.click();
+        messagesPage.modulesDropDown.select(module.getValue());
+        messagesPage.actionsDropDown.select(action.getValue());
+        messagesPage.typeDropDown.select(messageType.getValue());
+        selectModuleActionTypePopup.nextButton.click();
+        messagesPage.messageName.enterText(messageName);
+        messagesPage.nextButton.click();
+        medicationPage.medicationField.enterText(medicationProgram);
+        messagesPage.newMedicationBtn.click();
+        medicationPage.medicationName.enterText(medicationName);
+        medicationPage.nextBtn.click();
+        messagesPage.messageTextField.enterText(smsMessage);
         messagesPage.saveButton.click();
 
         return this;

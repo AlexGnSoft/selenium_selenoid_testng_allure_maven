@@ -44,6 +44,17 @@ public interface MessagesSteps extends BaseSteps {
     MessagesSteps addBiometricMedicationMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage);
 
     /**
+     * Create a message for a specific Module, Action and Type and attachment
+     *
+     * @param module             module
+     * @param action             action
+     * @param messageType        message type
+     * @param smsMessage         body of the sms message
+     * @return MessagesSteps object
+     */
+    MessagesSteps addMedicationMmsMessageWithAttachment(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath);
+
+    /**
      * Create a message for a specific Module, Action and Type
      *
      * @param module             module
@@ -52,7 +63,8 @@ public interface MessagesSteps extends BaseSteps {
      * @param smsMessage         body of the sms message
      * @return MessagesSteps object
      */
-    MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath);
+    MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage);
+
 
     /**
      * Create a message for a specific Module, Action and Type
@@ -66,8 +78,9 @@ public interface MessagesSteps extends BaseSteps {
      */
     MessagesSteps addEmailMessage(Module module, MessageType messageType, String messageName, String customEmail, String subject, String body);
 
+
     /**
-     * Verify that message is created
+     * Verify that message was created
      *
      * @param clientName     client name
      * @param messageName    message name

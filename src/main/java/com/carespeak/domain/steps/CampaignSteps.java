@@ -3,6 +3,7 @@ package com.carespeak.domain.steps;
 import com.carespeak.domain.entities.campaign.*;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Module;
+import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
@@ -44,6 +45,8 @@ public interface CampaignSteps extends BaseSteps {
 
     CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags);
 
+    CampaignSteps addMedicationCampaignScheduleProtocolWithSeveralMessages(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags);
+
     /**
      * Create Biometric or Account Setting campaign with Schedule type: Occasion and campaign questions.
      * Make sure that message with corresponding type is created inh advance.
@@ -66,6 +69,13 @@ public interface CampaignSteps extends BaseSteps {
      * @return return true if message is found, otherwise false
      */
     boolean isCampaignExist(String clientName, String campaignName);
+
+    /**
+     * Verify that messages from campaign could be removed
+     *
+     * @return return true if messages are removed, otherwise false
+     */
+    boolean removeAllMessagesFromCampaign();
 
     /**
      * Verify that campaign is added to program
@@ -120,6 +130,14 @@ public interface CampaignSteps extends BaseSteps {
      * @return return true if message is found, otherwise false
      */
     CampaignSteps addCampaignToProgram(String clientName, String programName, String moduleName, String campaignName);
+
+    /**
+     * Verify that several messages are added to campaign
+     *
+     * @param expectedNumberOfMessages    expected number of messages in the list
+     * @return return true if messages are added, otherwise false
+     */
+    boolean areMessagesAddedToCampaign(int expectedNumberOfMessages);
 
     /**
      * Remove campaign from patient

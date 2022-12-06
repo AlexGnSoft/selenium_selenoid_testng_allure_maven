@@ -32,7 +32,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         String medicationName = getRandomString();
         String smsMessage = "Do not forget to take your pills";
 
-        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  smsMessage, filePath);
+        site.messagesSteps().addMedicationMmsMessageWithAttachment(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  smsMessage, filePath);
 
         boolean isMmsWithPictureCreated = site.messagesSteps()
                 .isMmsWithPictureCreated(clientName, messageName);
