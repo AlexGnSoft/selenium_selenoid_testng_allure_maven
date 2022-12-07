@@ -172,16 +172,14 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
                         "Wrong name entered, try again");
 
         site.adminToolsSteps().simulateSMSToClient(phoneNumber, endPoint, signUpKeyWord);
-
-        site.programSteps()
-                .goToProgramSettings(clientName, programName)
-                .simulateResponse(phoneNumber, "AGREE");
+        site.programSteps().goToProgramSettings(clientName, programName);
 
 
-//        MessageLogItem actualOptInMessage  = site.programSteps()
-//                .simulateResponseAndGetLastPatientMessage(patient, "HELP");
-//
-//        Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
+        site.programSteps().simulateResponse(patient.getFirstName(), "AGREE");
+        //MessageLogItem actualOptInMessage  = site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
+        //System.out.println("Message is " + actualOptInMessage);
+
+        //Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
     }
 
     @AfterClass(alwaysRun = true)

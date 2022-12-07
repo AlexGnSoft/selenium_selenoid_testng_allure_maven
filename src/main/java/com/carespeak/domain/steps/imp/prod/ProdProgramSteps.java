@@ -152,7 +152,7 @@ public class ProdProgramSteps implements ProgramSteps {
         programsPage.isClientSelected(clientName);
         programsPage.programDataTableWrapper.isDisplayed();
         programsPage.programTable.searchFor(programName);
-        programsPage.isProgramDisplayed(programName);
+        //programsPage.isProgramDisplayed(programName);
         programsPage.programTable.editFirstItemButton().click();
         return this;
     }
@@ -655,6 +655,7 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.sideBarMenu.openItem("Patients");
             selectPatientByName(patientFirstName);
         }
+
         patientMessageLogsPage.sleepWait(3000); //Preventive measure. Regular waiters are not in 10% of the time with this button.
         patientMessageLogsPage.simulateResponseBtn.click();
         patientMessageLogsPage.simulateResponsePopup.responseInput.enterText(message);

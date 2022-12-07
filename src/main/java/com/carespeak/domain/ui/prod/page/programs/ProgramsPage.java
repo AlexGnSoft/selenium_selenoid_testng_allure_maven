@@ -65,7 +65,7 @@ public class ProgramsPage extends AbstractPage {
         try {
             By locator = By.xpath(String.format(PROGRAM_VALUE_XPATH, programName));
 
-            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
+            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 3);
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 
             ClickableElement program = new ClickableElement(driver.findElement(locator), programName + " button");

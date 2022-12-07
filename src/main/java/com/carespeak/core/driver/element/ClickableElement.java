@@ -200,7 +200,7 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
             scrollIntoView();
         }
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 5);
+            WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOf(innerElement));
             highlight();
             return innerElement.isDisplayed();
