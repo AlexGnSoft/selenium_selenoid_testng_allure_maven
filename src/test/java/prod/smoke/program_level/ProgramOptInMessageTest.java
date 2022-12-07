@@ -1,5 +1,6 @@
 package prod.smoke.program_level;
 
+import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.constant.Constants;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
@@ -13,6 +14,7 @@ import org.testng.annotations.Test;
 public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     private final String filePath = getResourcesPath() + "picture.png";
+    private final String endPoint = PropertyFileReader.getVariableValue("twilioSmsSender");
 
     private Client client;
     private String clientName;
@@ -151,6 +153,35 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
                 .simulateResponseAndGetLastPatientMessage(patient, "HELP");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
+    }
+
+    @Test(description = "Message Logs - Simulate response functionality")
+    public void simulateResponseFunctionality_MHM_T126() {
+        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
+        String signUpKeyWord = getRandomString();
+        String phoneNumber = getGeneratedPhoneNumber();
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addKeywordForSignUp(signUpKeyWord)
+                .addAccountCreationQuestion(false,
+                        "Name and optional surname",
+                        "Enter your name, please",
+                        "Wrong name entered, try again");
+
+        site.adminToolsSteps().simulateSMSToClient(phoneNumber, endPoint, signUpKeyWord);
+
+        site.programSteps()
+                .goToProgramSettings(clientName, programName)
+                .simulateResponse(phoneNumber, "AGREE");
+
+
+//        MessageLogItem actualOptInMessage  = site.programSteps()
+//                .simulateResponseAndGetLastPatientMessage(patient, "HELP");
+//
+//        Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
     }
 
     @AfterClass(alwaysRun = true)
