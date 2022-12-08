@@ -150,7 +150,6 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     @Override
     public boolean isMmsWithPictureCreated(String clientName, String messageName) {
-        boolean bolCombined = false;
         //messagesPage.messageTable.searchFor(messageName);
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){
@@ -168,9 +167,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         messagesPage.mmsTextIcon.click();
         boolean isMmsAttachmentDisplayed = messagesPage.messageAttachmentItem.isDisplayed();
 
-        bolCombined = isMessageCreated & isMmsNameIconDisplayed & isMmsAttachmentDisplayed;
-
-        return bolCombined;
+        return isMessageCreated & isMmsNameIconDisplayed & isMmsAttachmentDisplayed;
     }
 
     @Override

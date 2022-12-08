@@ -312,27 +312,18 @@ public class ProdCampaignSteps implements CampaignSteps {
         String actualMessageFromLogs;
 
         long start = System.currentTimeMillis();
-        boolean bol = false;
+        boolean messageFoundInLogs;
+        boolean searchTakingTooLong;
 
         do {
             MessageLogItem lastPatientMessageFromLogs = prodProgramSteps.getLastPatientMessageFromLogs(patientFirstName);
             actualMessageFromLogs = lastPatientMessageFromLogs.getMessage();
             prodProgramSteps.pageRefresh();
 
-            boolean b1 = !actualMessageFromLogs.equals(expectedCampaignMessage);
-            boolean b2 = (System.currentTimeMillis() - start <= 360000);
-            boolean b22 = (System.currentTimeMillis() - start >= 360000);
-            boolean b11 = actualMessageFromLogs.equals(expectedCampaignMessage);
+            messageFoundInLogs = actualMessageFromLogs.equals(expectedCampaignMessage);
+            searchTakingTooLong = System.currentTimeMillis() - start > 360000;
 
-            if (b11 && b2) {
-                bol = false;
-            }else if (b1 && b2) {
-                bol = true;
-            } else if (b1 && b22) {
-                bol = false;
-            }
-
-        } while (bol);
+        } while (!messageFoundInLogs && !searchTakingTooLong);
 
         return actualMessageFromLogs;
     }
