@@ -155,33 +155,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.HELP, "Received message is not the same as expected!");
     }
 
-    @Test(description = "Message Logs - Simulate response functionality")
-    public void simulateResponseFunctionality_MHM_T126() {
-        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
-        String signUpKeyWord = getRandomString();
-        String phoneNumber = getGeneratedPhoneNumber();
-        patient.setFirstName("Patient " + getRandomString());
-        patient.setCellPhone(getGeneratedPhoneNumber());
-
-        site.programSteps()
-                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addKeywordForSignUp(signUpKeyWord)
-                .addAccountCreationQuestion(false,
-                        "Name and optional surname",
-                        "Enter your name, please",
-                        "Wrong name entered, try again");
-
-        site.adminToolsSteps().simulateSMSToClient(phoneNumber, endPoint, signUpKeyWord);
-        site.programSteps().goToProgramSettings(clientName, programName);
-
-
-        site.programSteps().simulateResponse(patient.getFirstName(), "AGREE");
-        //MessageLogItem actualOptInMessage  = site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
-        //System.out.println("Message is " + actualOptInMessage);
-
-        //Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
-    }
-
     @AfterClass(alwaysRun = true)
     public void removeClient() {
         site.adminToolsSteps()
