@@ -90,7 +90,7 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public ProgramSteps addOptOutHeader(Client client, String programName, String message) {
-        goToConsentManagementPage(client);
+        goToConsentManagementPage(client, programName);
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutHeaderInput.enterText(message);
         consentManagementPage.saveButton.click();
@@ -99,7 +99,7 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public ProgramSteps addOptOutBody(Client client, String programName, String message) {
-        goToConsentManagementPage(client);
+        goToConsentManagementPage(client, programName);
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutBodyInput.enterText(message);
         consentManagementPage.saveButton.click();
@@ -108,20 +108,16 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public ProgramSteps addOptOutFooter(Client client, String programName, String message) {
-        goToConsentManagementPage(client);
+        goToConsentManagementPage(client, programName);
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutFooterInput.enterText(message);
         consentManagementPage.saveButton.click();
         return this;
     }
 
-    private void goToConsentManagementPage(Client client) {
+    private void goToConsentManagementPage(Client client, String programName) {
         if (!consentManagementPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
             programsPage.sideBarMenu.openItem("Consent Management");
         }
     }
@@ -279,12 +275,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps rejectUnsolicitedMessages(Client client, String programName, String messagePattern) {
         if (!programAutoRespondersPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
             programsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.rejectSolicitedCheckbox.check();
@@ -312,13 +303,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps addNewPatient(Patient patient, Client client, String programName) {
         if (!addPatientsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
         }
         programSettingsPage.sideBarMenu.openItem("Patients");
         ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
@@ -334,13 +319,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName) {
         if (!addPatientsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
         }
         programSettingsPage.sideBarMenu.openItem("Patients");
         ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
@@ -405,13 +384,10 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramOptOutForm getProgramOptOutForm(String clientName, String programName) {
+    public ProgramOptOutForm getProgramOptOutForm(Client client, String programName) {
         if (!consentManagementPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(clientName);
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
+
         }
         if (consentManagementPage.statusMessage.getTitleElement().isVisible()) {
             String message = consentManagementPage.statusMessage.getTitleElement().getText();
@@ -444,17 +420,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public List<String> getEndpointsOnPatientLevel(Client client, String programName, Patient patient) {
         if (!programsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
-            if (programRow == null) {
-                throw new RuntimeException("Program was not found by name '" + programName + "'!");
-            }
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
         }
         programsPatientsPage.sideBarMenu.openItem("Patients");
         //TODO: to confirm that it is expected that we cannot search by First + last name
@@ -594,9 +560,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message) {
         if (!programAutoRespondersPage.isOpened()) {
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
             programsPatientsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.statusExpand.select(status.getValue());

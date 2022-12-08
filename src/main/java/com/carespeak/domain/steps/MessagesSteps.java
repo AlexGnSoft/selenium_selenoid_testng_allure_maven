@@ -14,6 +14,8 @@ public interface MessagesSteps extends BaseSteps {
 
     MessagesSteps goToEmailTemplatesTab();
 
+    MessagesSteps addMessageSelectModuleActionType(Module module, Action action, MessageType messageType);
+
     /**
      * Retrieves available modules for provided client
      *

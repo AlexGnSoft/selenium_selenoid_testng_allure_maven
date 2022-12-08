@@ -56,6 +56,17 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
+    public MessagesSteps addMessageSelectModuleActionType(Module module, Action action, MessageType messageType) {
+        messagesPage.addButton.click();
+        messagesPage.modulesDropDown.select(module.getValue());
+        messagesPage.actionsDropDown.select(action.getValue());
+        messagesPage.typeDropDown.select(messageType.getValue());
+        selectModuleActionTypePopup.nextButton.click();
+
+        return this;
+    }
+
+    @Override
     public List<Module> getAvailableModules(String clientName) {
         messagesPage.searchClient.search(clientName);
         messagesPage.addButton.click();
@@ -76,11 +87,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     @Override
     public MessagesSteps addBiometricMedicationMessage(Module module, Action action, MessageType messageType, String messageName, NotificationType notificationType, String smsMessage) {
         goToMessagesTab();
-        messagesPage.addButton.click();
-        messagesPage.modulesDropDown.select(module.getValue());
-        messagesPage.actionsDropDown.select(action.getValue());
-        messagesPage.typeDropDown.select(messageType.getValue());
-        selectModuleActionTypePopup.nextButton.click();
+        addMessageSelectModuleActionType(module, action, messageType);
         messagesPage.messageName.enterText(messageName);
         messagesPage.notificationTriggerTypeDropDown.select(notificationType.getValue());
         messagesPage.nextButton.click();
@@ -93,11 +100,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     @Override
     public MessagesSteps addMedicationMmsMessage(Module module, Action action, MessageType messageType, String messageName, String medicationProgram, String medicationName, String smsMessage, String filePath) {
         goToMessagesTab();
-        messagesPage.addButton.click();
-        messagesPage.modulesDropDown.select(module.getValue());
-        messagesPage.actionsDropDown.select(action.getValue());
-        messagesPage.typeDropDown.select(messageType.getValue());
-        selectModuleActionTypePopup.nextButton.click();
+        addMessageSelectModuleActionType(module, action, messageType);
         messagesPage.messageName.enterText(messageName);
         messagesPage.nextButton.click();
         medicationPage.medicationField.enterText(medicationProgram);

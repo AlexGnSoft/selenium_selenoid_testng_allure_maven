@@ -209,11 +209,4 @@ class TableBody extends AbstractComponent {
         return new ClickableElement(element, elementName);
     }
 
-    public String getFirstRowItemString() {
-        String firstRowItemString = null;
-        for (int i = 0; i < listOfMessages.size(); i++) {
-            firstRowItemString = listOfMessages.get(0).getText();
-        }
-        return firstRowItemString;
-    }
 }

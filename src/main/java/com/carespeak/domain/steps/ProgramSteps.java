@@ -213,10 +213,10 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns OptOut form that set on program level
      *
-     * @param clientName client to use
+     * @param client client object name
      * @return ProgramOptOutForm object
      */
-    ProgramOptOutForm getProgramOptOutForm(String clientName, String programName);
+    ProgramOptOutForm getProgramOptOutForm(Client client, String programName);
 
     /**
      * Get all program endpoints on program level

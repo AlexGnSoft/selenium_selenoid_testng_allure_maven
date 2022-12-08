@@ -32,7 +32,7 @@ public class ProgramConsentManagementTest extends AbstractProgramLevelTest {
         ProgramOptOutForm actualOptOutForm = site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .addOptOutHeader(client, programName, null)
-                .getProgramOptOutForm(client.getName(), programName);
+                .getProgramOptOutForm(client, programName);
 
         Assert.assertEquals(actualOptOutForm, expectedOptOutForm, "OptOutForm not appear on program level");
     }
