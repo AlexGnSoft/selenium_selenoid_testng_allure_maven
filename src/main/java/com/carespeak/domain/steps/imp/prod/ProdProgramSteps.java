@@ -152,7 +152,6 @@ public class ProdProgramSteps implements ProgramSteps {
         programsPage.isClientSelected(clientName);
         programsPage.programDataTableWrapper.isDisplayed();
         programsPage.programTable.searchFor(programName);
-        //programsPage.isProgramDisplayed(programName);
         programsPage.programTable.editFirstItemButton().click();
         return this;
     }
