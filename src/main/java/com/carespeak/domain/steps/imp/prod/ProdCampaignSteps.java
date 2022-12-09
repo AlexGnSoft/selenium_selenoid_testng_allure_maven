@@ -132,7 +132,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
         campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
         campaignsPage.availableMessagesPopup.waitForDisappear();
-        campaignMessagesPage.clickOnSaveCampaignButton();
+        //campaignMessagesPage.clickOnSaveCampaignButton();
         campaignMessagesPage.saveCampaignButton.click();
         return this;
     }
@@ -179,7 +179,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
         campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
         campaignsPage.availableMessagesPopup.waitForDisappear();
-        campaignMessagesPage.clickOnSaveCampaignButton();
+        //campaignMessagesPage.clickOnSaveCampaignButton();
         campaignMessagesPage.saveCampaignButton.click();
         campaignsPage.availableMessagesPopup.waitForDisappear();
         campaignsPage.closeButtonOfCampaignSavedMessage.click();
@@ -229,8 +229,8 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
         campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
         campaignsPage.availableMessagesPopup.waitForDisappear();
-        campaignMessagesPage.clickOnSaveCampaignButton();
-        campaignMessagesPage.saveCampaignButton.click();
+        //campaignMessagesPage.clickOnSaveCampaignButton();
+        campaignMessagesPage.saveCampaignButton.doubleClick();
         campaignsPage.availableMessagesPopup.waitForDisappear();
         return this;
     }
