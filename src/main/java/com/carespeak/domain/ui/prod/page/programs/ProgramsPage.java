@@ -60,21 +60,4 @@ public class ProgramsPage extends AbstractPage {
         ClickableElement client = new ClickableElement(driver.findElement(locator), clientName + " button");
         return client.isDisplayed();
     }
-
-    public boolean isProgramDisplayed(String programName) {
-        try {
-            By locator = By.xpath(String.format(PROGRAM_VALUE_XPATH, programName));
-
-            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), 10);
-            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-
-            ClickableElement program = new ClickableElement(driver.findElement(locator), programName + " button");
-            return program.isDisplayed();
-        } catch (TimeoutException e) {
-            throw new RuntimeException("Program was not found by name '" + programName + "'!");
-        }
-    }
-
-
-
 }
