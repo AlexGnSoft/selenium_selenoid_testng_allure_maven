@@ -32,6 +32,8 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
     @Test(description = "Create campaign - Module Medication")
     public void createMedicationCampaign_MHM_T89() {
         //Test data
+        String campaignLocation = "America/New_York";
+        //String campaignLocation = " America/Panama";
         String messageName = getRandomString();
         String medicationProgram = "Aspirin & Blood Thinner Meds";
         String medicationName = getRandomString();
@@ -42,7 +44,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         String FROM_PHONE_NUMBER_T89 = getGeneratedPhoneNumber();
 
         site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T89, filePath);
-        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE);
+        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE, campaignLocation);
         getTestProgram(clientName, programName_T89);
         site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T89);
         site.campaignSteps().addCampaignToProgram(clientName, programName_T89, Module.MEDICATION, campaignNameDescription);
@@ -120,6 +122,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
     @Test(description = "Create campaign - Module Account settings")
     public void createAccountSettingsCampaign_MHM_T99() {
+        String campaignLocation = "America/New_York";
         String programName_MHM_T99 = getRandomString();
         String campaignName_MHM_T99 = getRandomString();
         String campaignDescription = getRandomString();
@@ -134,7 +137,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         site.programSteps().goToProgramSettings(clientName, programName_MHM_T99).addKeywordForSignUp(SIGN_UP_KEYWORD_T99);
         site.campaignSteps().addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(false, clientName, "Account Settings", campaignName_MHM_T99, CampaignAccess.PUBLIC, campaignDescription, "Occasion",
                         "Birth Date", campaignMessage_T99,
-                        "Wrong birth day data format, it should be like, mm/dd/yyyy")
+                        "Wrong birth day data format, it should be like, mm/dd/yyyy", campaignLocation)
                 .addCampaignToProgram(clientName, programName_MHM_T99, "Account Settings", campaignName_MHM_T99);
 
         site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_MHM_T99, FROM_PHONE_NUMBER_T99, TO_ENDPOINT, SIGN_UP_KEYWORD_T99);

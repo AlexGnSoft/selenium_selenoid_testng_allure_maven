@@ -42,7 +42,7 @@ public interface CampaignSteps extends BaseSteps {
      */
     CampaignSteps addBiometricAccountSettingCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor, String programName, CampaignAdjustDate campaignAdjustDate, CampaignDays campaignDays, String... tags);
 
-    CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags);
+    CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String campaignLocation, String... tags);
 
     /**
      * Create Biometric or Account Setting campaign with Schedule type: Occasion and campaign questions.
@@ -56,7 +56,7 @@ public interface CampaignSteps extends BaseSteps {
      * @param campaignScheduleType     campaign schedule type
      * @return CampaignSteps object
      */
-    CampaignSteps addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(boolean isMandatory, String clientName, String moduleName, String name, CampaignAccess access, String description, String campaignScheduleType, String dropDownfield, String questionText, String onErrorText);
+    CampaignSteps addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(boolean isMandatory, String clientName, String moduleName, String name, CampaignAccess access, String description, String campaignScheduleType, String dropDownfield, String questionText, String onErrorText, String campaignLocation);
 
     /**
      * Verify that campaign is created

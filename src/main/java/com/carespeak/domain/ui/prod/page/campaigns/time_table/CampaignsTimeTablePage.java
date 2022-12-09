@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -129,45 +130,28 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
     @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-entryList-protocolEntryList-entry-0-protocolEntry-daysInput")
     public Input daysInput;
 
-    public String hoursDropDownNewYorkTime(){
-        int winterUtcTimeDifferenceToNewYork = 5;
-        int summerUtcTimeDifferenceToNewYork = 4;
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
-        Date summerUtcTimeStart;
-        try {
-            summerUtcTimeStart = simpleDateFormat.parse("03-13");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        Date summerUtcTimeFinish;
-        try {
-            summerUtcTimeFinish = simpleDateFormat.parse("10-06");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        Date date = new Date();
-        boolean summerUtcMonthDates = date.after(summerUtcTimeStart) && date.before(summerUtcTimeFinish);
-
+    public String hoursDropDownSelectionAtAnyCity(String zoneId){
         LocalDateTime machineTime = LocalDateTime.now();
-        if(summerUtcMonthDates){
-            machineTime = machineTime.minusHours(summerUtcTimeDifferenceToNewYork);
-        }else{
-            machineTime = machineTime.minusHours(winterUtcTimeDifferenceToNewYork);
-        }
-
         //need to move to next hour, as we can not select a time 55+ minutes in dropdown, and our test execution takes more than 3 minutes
         if(machineTime.getMinute() >= 53) {
             machineTime = machineTime.plusHours(1);
         }
 
+        ZoneId machineTimeZone = ZoneId.systemDefault();
+        ZoneId cityTimeZone = ZoneId.of(zoneId);
+
         //Displaying current time in 12 hours format with AM/PM
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-        String timeNewYork = machineTime.format(formatter);
-        String hoursNewYork = timeNewYork.substring(0, 2);
 
-        return hoursNewYork;
+        LocalDateTime cityTime = machineTime.atZone(machineTimeZone)
+                .withZoneSameInstant(cityTimeZone)
+                .toLocalDateTime();
+
+        String cityTimeHoursMinutes = cityTime.format(formatter);
+
+        String cityHours = cityTimeHoursMinutes.substring(0, 2);
+
+        return cityHours;
     }
 
     public String minutesDropDownNewYorkTime(){

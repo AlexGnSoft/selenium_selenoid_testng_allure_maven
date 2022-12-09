@@ -187,7 +187,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
-    public CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor,  String... tags) {
+    public CampaignSteps addMedicationCampaignScheduleProtocol(String clientName, Module module, String name, CampaignAccess access, String description, CampaignScheduleType campaignScheduleType, CampaignAnchor campaignAnchor, String campaignLocation, String... tags) {
         if (!campaignsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.campaignsMenuItem.click();
@@ -220,7 +220,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         timeTablePage.anchorFixedDateField.sendKeys(Keys.ENTER);
         timeTablePage.intakeUnitsInput.enterText("0");
         timeTablePage.daysInput.enterText("0");
-        timeTablePage.alertTimeHoursProtocolDropDown.select(timeTablePage.hoursDropDownNewYorkTime());
+        timeTablePage.alertTimeHoursProtocolDropDown.select(timeTablePage.hoursDropDownSelectionAtAnyCity(campaignLocation));
         timeTablePage.alertTimeMinutesProtocolDropDown.select(timeTablePage.minutesDropDownNewYorkTime());
         timeTablePage.alertTimeAmPmProtocolDropDown.select(timeTablePage.amPmDropDownNewYorkTime());
         timeTablePage.nextButton.click();
@@ -236,7 +236,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
-    public CampaignSteps addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(boolean isMandatory, String clientName, String moduleName, String name, CampaignAccess access, String description, String campaignScheduleType, String dropDownfield, String questionText, String onErrorText) {
+    public CampaignSteps addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(boolean isMandatory, String clientName, String moduleName, String name, CampaignAccess access, String description, String campaignScheduleType, String dropDownfield, String questionText, String onErrorText, String campaignLocation) {
         if (!campaignsPage.isOpened()) {
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.campaignsMenuItem.click();
@@ -258,7 +258,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         waitFor(() -> !url.equals(timeTablePage.getCurrentUrl()));
         timeTablePage.scheduleTypeDropdown.select(campaignScheduleType);
 
-        timeTablePage.alertTimeHoursOccasionDropDown.select(timeTablePage.hoursDropDownNewYorkTime());
+        timeTablePage.alertTimeHoursOccasionDropDown.select(timeTablePage.hoursDropDownSelectionAtAnyCity(campaignLocation));
         timeTablePage.alertTimeMinutesOccasionDropDown.select(timeTablePage.minutesDropDownNewYorkTime());
         timeTablePage.alertTimeAmPmOccasionDropDown.select(timeTablePage.amPmDropDownNewYorkTime());
 
