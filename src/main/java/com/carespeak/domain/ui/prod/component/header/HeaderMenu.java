@@ -28,6 +28,10 @@ public class HeaderMenu extends AbstractComponent {
     @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Programs') and contains(@href,'list.page')]")
     public ClickableElement programsMenuItem;
 
+    @ElementName("Programs")
+    @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Programs') and contains(@href,'list.page')]")
+    public ClickableElement programsMenuItemRedefined;
+
     @ElementName("Patient Lists")
     @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Patient Lists')]")
     public ClickableElement patientListsMenuItem;

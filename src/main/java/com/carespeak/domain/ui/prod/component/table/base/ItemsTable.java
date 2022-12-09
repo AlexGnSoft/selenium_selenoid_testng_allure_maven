@@ -1,9 +1,12 @@
 package com.carespeak.domain.ui.prod.component.table.base;
 
+import com.carespeak.core.driver.annotation.ElementName;
+import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.helper.ICanWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
@@ -62,6 +65,5 @@ public class ItemsTable implements ICanWait {
     public List<TableRowItem> getItems() {
         return tableBody.getItems();
     }
-
 
 }

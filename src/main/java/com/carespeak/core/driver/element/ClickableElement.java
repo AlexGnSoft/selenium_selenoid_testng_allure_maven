@@ -83,6 +83,27 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
         });
     }
 
+    public void doubleClick() {
+        ElementActionsReporter.report("Double click on " + name, () -> {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.elementToBeClickable(innerElement));
+            if (!isVisible()) {
+                scrollIntoView();
+            }
+            highlight();
+            try {
+                LOG.log(LOG_NAME, Level.INFO, "Double click on " + name, null);
+                Actions actions = new Actions(driver);
+                actions.moveToElement(innerElement).doubleClick().build().perform();
+            } catch (Throwable ex) {
+                LOG.log(LOG_NAME, Level.ERROR, name + " was not able to be double-clicked.", ex);
+                ex.printStackTrace();
+                throw ex;
+            }
+            return null;
+        });
+    }
+
     @Override
     public void submit() {
         ElementActionsReporter.report("Submit " + name, () -> {
@@ -179,7 +200,7 @@ public class ClickableElement implements WebElement, Locatable, WrapsElement, IC
             scrollIntoView();
         }
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 3);
+            WebDriverWait wait = new WebDriverWait(driver, 5);
             wait.until(ExpectedConditions.visibilityOf(innerElement));
             highlight();
             return innerElement.isDisplayed();

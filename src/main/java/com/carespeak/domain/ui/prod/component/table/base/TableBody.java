@@ -1,13 +1,14 @@
 package com.carespeak.domain.ui.prod.component.table.base;
 
+import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,10 @@ class TableBody extends AbstractComponent {
     private static final String TABLE_CELLS = ".//td";
     private static final String TABLE_CELL_LOCATOR = ".//td[%s]";
     private static final String tableLocatorId = "cs-as-table";
+
+    @ElementName("List of messages")
+    @FindBy(xpath = "//td[@class=' text-wrap text-clip']")
+    public List<WebElement> listOfMessages;
 
     private WebElement table;
     private By tableLocator;
@@ -50,6 +55,7 @@ class TableBody extends AbstractComponent {
             }
             //skip 0 index here because first tr is filled with th items
             for (int i = 1; i < rows.size(); i++) {
+
                 WebElement td = rows.get(i).findElement(By.xpath(String.format(TABLE_CELL_LOCATOR, tdIndex)));
                 if (valueToSearch.contains(td.getText())) {
                     Logger.info("Item found!");
@@ -117,7 +123,7 @@ class TableBody extends AbstractComponent {
             waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
-            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 5, false);
+            waitFor(() -> table.findElements(By.xpath(TABLE_ROWS)).size() == 2, 10, false);
             List<WebElement> rows = table.findElements(By.xpath(TABLE_ROWS));
             return createTableRowItem(rows.get(1), headersMap);
         } catch (Throwable t) {

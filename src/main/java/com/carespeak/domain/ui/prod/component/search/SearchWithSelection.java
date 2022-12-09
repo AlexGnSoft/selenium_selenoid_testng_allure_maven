@@ -23,6 +23,7 @@ public class SearchWithSelection extends AbstractComponent {
     private Input searchInput;
 
     public void search(String text) {
+        waitFor(()-> expandElement.isDisplayed());
         if (expandElement.getText().equals(text)) {
             Logger.info("Value '" + text + "' already selected in search dropdown. No actions required");
             return;

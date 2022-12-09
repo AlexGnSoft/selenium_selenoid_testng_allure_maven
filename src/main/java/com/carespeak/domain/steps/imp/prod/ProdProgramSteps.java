@@ -8,6 +8,7 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import com.carespeak.domain.steps.CampaignSteps;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.prod.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
@@ -27,10 +28,13 @@ import com.carespeak.domain.ui.prod.page.programs.patients.ProgramsPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsPage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ProdProgramSteps implements ProgramSteps {
 
@@ -73,7 +77,6 @@ public class ProdProgramSteps implements ProgramSteps {
             dashboardPage.headerMenu.programsMenuItem.click();
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
-
         dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.searchClient.search(clientName);
         programsPage.addProgramButton.click();
@@ -82,13 +85,12 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.saveButton.click();
         programSettingsPage.statusPopup.waitForDisplayed();
         programSettingsPage.statusPopup.close();
-        programSettingsPage.statusPopup.waitForDisappear();
         return this;
     }
 
     @Override
     public ProgramSteps addOptOutHeader(Client client, String programName, String message) {
-        goToConsentManagementPage(client);
+        goToConsentManagementPage(client, programName);
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutHeaderInput.enterText(message);
         consentManagementPage.saveButton.click();
@@ -97,7 +99,7 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public ProgramSteps addOptOutBody(Client client, String programName, String message) {
-        goToConsentManagementPage(client);
+        goToConsentManagementPage(client, programName);
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutBodyInput.enterText(message);
         consentManagementPage.saveButton.click();
@@ -106,35 +108,44 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public ProgramSteps addOptOutFooter(Client client, String programName, String message) {
-        goToConsentManagementPage(client);
+        goToConsentManagementPage(client, programName);
         consentManagementPage.enableOptOutCheckbox.check();
         consentManagementPage.optOutFooterInput.enterText(message);
         consentManagementPage.saveButton.click();
         return this;
     }
 
-    private void goToConsentManagementPage(Client client) {
+    private void goToConsentManagementPage(Client client, String programName) {
         if (!consentManagementPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
             programsPage.sideBarMenu.openItem("Consent Management");
         }
+    }
+
+    @Override
+    public ProgramSteps movePatientManually(String clientName, String landingProgramName, String patientFirstName) {
+        programsPage.sideBarMenu.openItem("Patients");
+        ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
+        clickOnPatientCheckbox(patientFirstName);
+        patientsTab.moveToProgramBtn.click();
+        patientsTab.selectProgramByClientAndProgramName(landingProgramName);
+        patientsTab.moveButton.click();
+        waitFor(() -> patientsTab.confirmMoveButton.isVisible());
+        patientsTab.confirmMoveButton.click();
+
+        return this;
     }
 
     @Override
     public ProgramSteps goToProgramSettings(String clientName, String programName) {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.programsMenuItem.click();
-        programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+        programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
         programsPage.searchClient.search(clientName);
+        programsPage.isClientSelected(clientName);
+        programsPage.programDataTableWrapper.isDisplayed();
         programsPage.programTable.searchFor(programName);
-        TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
-        if (programRow == null) {
-            throw new RuntimeException("Program was not found by name '" + programName + "'!");
-        }
+        programsPage.isProgramDisplayed(programName);
         programsPage.programTable.editFirstItemButton().click();
         return this;
     }
@@ -197,6 +208,7 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         programKeywordSignupPage.keywordInput.enterText(keyword);
         programKeywordSignupPage.saveButton.click();
+        programKeywordSignupPage.statusPopup.close();
         return this;
     }
 
@@ -218,7 +230,8 @@ public class ProdProgramSteps implements ProgramSteps {
         if (!programKeywordSignupPage.isOpened()) {
             programsPage.sideBarMenu.openItem("Keyword Signup");
         }
-
+        //programKeywordSignupPage.addQuestionButton.click();
+        programKeywordSignupPage.validationMessageButton.isDisplayed();
         programKeywordSignupPage.validationMessageButton.click();
         programKeywordSignupPage.validationMessageInput.enterText(validationMessage);
         programKeywordSignupPage.saveButton.click();
@@ -254,17 +267,15 @@ public class ProdProgramSteps implements ProgramSteps {
         logItem.setDelivery(messageLogRow.getDataByHeader("Delivery"));
         logItem.setStatus(messageLogRow.getDataByHeader("Status"));
         logItem.setMessage(messageLogRow.getDataByHeader("Message"));
+        pageRefresh();
+        programsPage.programListButton.doubleClick();
         return logItem;
     }
 
     @Override
     public ProgramSteps rejectUnsolicitedMessages(Client client, String programName, String messagePattern) {
         if (!programAutoRespondersPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
             programsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.rejectSolicitedCheckbox.check();
@@ -292,13 +303,23 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps addNewPatient(Patient patient, Client client, String programName) {
         if (!addPatientsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
+        }
+        programSettingsPage.sideBarMenu.openItem("Patients");
+        ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
+        patientsTab.addPatientBtn.click();
+        addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
+        addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
+        addPatientsPage.firstNameInput.enterText(patient.getFirstName());
+        addPatientsPage.timezoneDropdown.select(patient.getTimezone());
+        addPatientsPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName) {
+        if (!addPatientsPage.isOpened()) {
+            goToProgramSettings(client.getName(), programName);
         }
         programSettingsPage.sideBarMenu.openItem("Patients");
         ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
@@ -340,6 +361,15 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public String getPatientByName(String clientName, String programName, String patientName) {
+        goToProgramSettings(clientName, programName);
+        programSettingsPage.sideBarMenu.openItem("Patients");
+        programsPatientsPage.patientTable.searchFor(patientName);
+
+        return programsPatientsPage.firstPatientName.getAttribute("sortbias");
+    }
+
+    @Override
     public String getProgramAccessModifier(String clientName, String accessModifier) {
         goToProgramTab();
         programsPage.searchClient.search(clientName);
@@ -354,13 +384,10 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramOptOutForm getProgramOptOutForm(String clientName, String programName) {
+    public ProgramOptOutForm getProgramOptOutForm(Client client, String programName) {
         if (!consentManagementPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            dashboardPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
-            programsPage.searchClient.search(clientName);
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
+
         }
         if (consentManagementPage.statusMessage.getTitleElement().isVisible()) {
             String message = consentManagementPage.statusMessage.getTitleElement().getText();
@@ -393,17 +420,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public List<String> getEndpointsOnPatientLevel(Client client, String programName, Patient patient) {
         if (!programsPage.isOpened()) {
-            String url = dashboardPage.getCurrentUrl();
-            dashboardPage.headerMenu.programsMenuItem.click();
-            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            TableRowItem programRow = programsPage.programTable.searchInTable("Name", programName);
-            if (programRow == null) {
-                throw new RuntimeException("Program was not found by name '" + programName + "'!");
-            }
-            waitFor(() -> programsPage.programTable.editFirstItemButton().isDisplayed());
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
         }
         programsPatientsPage.sideBarMenu.openItem("Patients");
         //TODO: to confirm that it is expected that we cannot search by First + last name
@@ -415,18 +432,33 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage) {
-        if (!optInMessagesPage.isOpened()) {
-            programsPage.sideBarMenu.openItem("Opt-in Messages");
-        }
-        selectFile(filePath);
-        optInMessagesPage.uploadButton.click();
+    public ProgramSteps addOptInMessagesWithoutAttachment(boolean isSendConfirmMessage) {
+        programsPage.sideBarMenu.openItem("Opt-in Messages");
 
         if (isSendConfirmMessage) {
             optInMessagesPage.dontSendMessageCheckBox.uncheck();
         } else {
             optInMessagesPage.dontSendMessageCheckBox.check();
         }
+
+        optInMessagesPage.saveButton.click();
+        optInMessagesPage.addOptInMessagePopup.closePopupButton.click();
+        optInMessagesPage.addOptInMessagePopup.waitForDisappear();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addOptInMessagesWithAttachment(String filePath, boolean isSendConfirmMessage) {
+        programsPage.sideBarMenu.openItem("Opt-in Messages");
+
+        if (isSendConfirmMessage) {
+            optInMessagesPage.dontSendMessageCheckBox.uncheck();
+        } else {
+            optInMessagesPage.dontSendMessageCheckBox.check();
+        }
+
+        selectFile(filePath);
+        optInMessagesPage.uploadButton.click();
 
         optInMessagesPage.saveButton.click();
         optInMessagesPage.addOptInMessagePopup.closePopupButton.click();
@@ -442,6 +474,11 @@ public class ProdProgramSteps implements ProgramSteps {
     private void selectPatientByName(String patientFirstName) {
         programsPatientsPage.goToPatientsTab()
                 .selectPatientByName(patientFirstName);
+    }
+
+    private void clickOnPatientCheckbox(String patientFirstName) {
+        programsPatientsPage.goToPatientsTab()
+                .clickOnPatientCheckbox(patientFirstName);
     }
 
     @Override
@@ -478,6 +515,8 @@ public class ProdProgramSteps implements ProgramSteps {
             selectPatientByName(patientFirstName);
         }
 
+        waitFor(()-> patientMessageLogsPage.isOpened());
+
         TableRowItem messageLogRow = patientMessageLogsPage.patientMessageTable.getFirstRowItem();
         if (messageLogRow == null) {
             throw new RuntimeException("Message log was not found!");
@@ -510,7 +549,9 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public boolean isAttachedImageDisplayed() {
+    public boolean isAttachedImageDisplayed(String patientName) {
+        programsPatientsPage.patientTable.searchFor(patientName);
+        selectPatientByName(patientName);
         patientMessageLogsPage.attachmentButton.click();
         waitFor(patientMessageLogsPage.attachmentSideBar.attachment::isDisplayed);
         return patientMessageLogsPage.attachmentSideBar.isImageDisplayed(patientMessageLogsPage.attachmentSideBar.attachment);
@@ -519,9 +560,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message) {
         if (!programAutoRespondersPage.isOpened()) {
-            programsPage.searchClient.search(client.getName());
-            programsPage.programTable.searchFor(programName);
-            programsPage.programTable.editFirstItemButton().click();
+            goToProgramSettings(client.getName(), programName);
             programsPatientsPage.sideBarMenu.openItem("Auto Responders");
         }
         programAutoRespondersPage.statusExpand.select(status.getValue());

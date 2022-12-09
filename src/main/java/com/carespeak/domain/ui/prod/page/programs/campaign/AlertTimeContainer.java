@@ -1,4 +1,4 @@
-package com.carespeak.domain.ui.prod.page.programs.general.campaign;
+package com.carespeak.domain.ui.prod.page.programs.campaign;
 
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;
@@ -12,6 +12,10 @@ public class AlertTimeContainer extends AbstractComponent {
     AlertTimeContainer(Dropdown hourDropdown, Dropdown minuteDropdown, Dropdown amPmDropdown) {
         this.hourDropdown = hourDropdown;
         this.minuteDropdown = minuteDropdown;
+        this.amPmDropdown = amPmDropdown;
+    }
+
+    AlertTimeContainer( Dropdown amPmDropdown) {
         this.amPmDropdown = amPmDropdown;
     }
 

@@ -8,7 +8,10 @@ import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.AbstractPage;
 import com.carespeak.domain.ui.prod.popup.SimulateResponsePopup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class ProgramPatientMessageLogsPage extends AbstractPage {
 
@@ -32,6 +35,10 @@ public class ProgramPatientMessageLogsPage extends AbstractPage {
     @FindBy(xpath = "//table[@id='csMessagesLogsTable']//i[contains(@class, 'message-attachment')]")
     public Button attachmentButton;
 
+    @ElementName("List of messages")
+    @FindBy(xpath = "//td[@class=' text-wrap text-clip']")
+    public List<WebElement> listOfMessages;
+
     public ProgramPatientMessageLogsPage() {
         patientMessageTable = new ItemsTable(By.id("csMessagesLogsTable_wrapper"));
         simulateResponsePopup = new SimulateResponsePopup();
@@ -42,4 +49,5 @@ public class ProgramPatientMessageLogsPage extends AbstractPage {
         String url = getCurrentUrl();
         return url.contains("programs") && url.contains("message-logs.page");
     }
+
 }

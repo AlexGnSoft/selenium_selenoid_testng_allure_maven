@@ -140,6 +140,15 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
+    public AdminToolsSteps goToSpecificTab(String specificTab) {
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.adminTools().goToSubMenu(specificTab);
+        waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+
+        return this;
+    }
+
+    @Override
     public AdminToolsSteps addAdditionalLanguage(List<Language> languages) {
         Language[] res = new Language[languages.size()];
         return addAdditionalLanguage(languages.toArray(res));
@@ -211,14 +220,14 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
-    public AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkip(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName) {
+    public AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkip(String clientName, String programName, String phoneNumber, String endpoint, String keyword) {
         simulateSMSToClient(phoneNumber, endpoint, keyword);
         prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
         simulateSMSToClient(phoneNumber, endpoint, "AGREE");
         prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
-        simulateSMSToClient(phoneNumber, endpoint, patientName);
+        simulateSMSToClient(phoneNumber, endpoint, "Name");
         prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
         simulateSMSToClient(phoneNumber, endpoint, "SKIP");
@@ -241,6 +250,64 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
         simulateSMSToClient(phoneNumber, endpoint, date);
+
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps initiateSmsFirstLastNameDateSex(String clientName, String programName, String phoneNumber, String endpoint,String sex) {
+
+        simulateSMSToClient(phoneNumber, endpoint, "Tom Cruise");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "10/12/22");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, sex);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps initiateSignUpAgreeFirstLastNameDate(String clientName, String programName, String phoneNumber, String endpoint,String keyword) {
+
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "Bob Marley");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "10/11/22");
+        prodProgramSteps.goToProgramSettings(clientName, programName);
+
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAndAgreeTherapyStartDate(String clientName, String programName, String phoneNumber, String endpoint, String keyword) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "10/10/22");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps initiateKeywordSignupSendAndAgree(String clientName, String programName, String phoneNumber, String endpoint, String keyword) {
+        simulateSMSToClient(phoneNumber, endpoint, keyword);
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
+
+        simulateSMSToClient(phoneNumber, endpoint, "AGREE");
+        prodProgramSteps.goToProgramSettings(clientName, programName).getLastPatientMessageFromLogs(phoneNumber);
 
         return this;
     }

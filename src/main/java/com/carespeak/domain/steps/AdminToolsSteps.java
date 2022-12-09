@@ -76,6 +76,14 @@ public interface AdminToolsSteps extends BaseSteps {
      */
     AdminToolsSteps goToClientSettings(String code);
 
+    /**
+     * Go to specific tab
+     *
+     * @param specificTab a certain tab from the header menu
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps goToSpecificTab(String specificTab);
+
 
     /**
      * Method will work on General Settings view for a client.
@@ -126,6 +134,7 @@ public interface AdminToolsSteps extends BaseSteps {
      */
     Language getDefaultLanguage();
 
+
     /**
      * Send SMS to specified endpoint from simulator
      *
@@ -144,10 +153,9 @@ public interface AdminToolsSteps extends BaseSteps {
      * @param phoneNumber  phone number to send sms from
      * @param endpoint     endpoint/SMS aggregator for user
      * @param keyword      keyword of a program to be entered to sign up
-     * @param patientName  name of the patient
      * @return AdminToolsSteps object
      */
-    AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkip(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName);
+    AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkip(String clientName, String programName, String phoneNumber, String endpoint, String keyword);
 
     /**
      * Send SMS to specified endpoint from patient to Client, to SignUp and proceed with client <-> patient interaction
@@ -162,5 +170,53 @@ public interface AdminToolsSteps extends BaseSteps {
      * @return AdminToolsSteps object
      */
     AdminToolsSteps initiateKeywordSignupSendAgreeNameAndSkipDate(String clientName, String programName, String phoneNumber, String endpoint, String keyword, String patientName, String date);
+
+    /**
+     * Send SMS to specified endpoint from patient to Client, to SignUp and proceed with client <-> patient interaction
+     *
+     * @param clientName   name of the client
+     * @param programName  program name to find and verify message logs status
+     * @param phoneNumber  phone number to send sms from
+     * @param endpoint     endpoint/SMS aggregator for user
+     * @param keyword      keyword of a program to be entered to sign up
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps initiateKeywordSignupSendAndAgreeTherapyStartDate(String clientName, String programName, String phoneNumber, String endpoint, String keyword);
+
+    /**
+     * Send SMS to specified endpoint from patient to Client, to SignUp and proceed with client <-> patient interaction
+     *
+     * @param clientName   name of the client
+     * @param programName  program name to find and verify message logs status
+     * @param phoneNumber  phone number to send sms from
+     * @param endpoint     endpoint/SMS aggregator for user
+     * @param keyword      keyword of a program to be entered to sign up
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps initiateKeywordSignupSendAndAgree(String clientName, String programName, String phoneNumber, String endpoint, String keyword);
+
+    /**
+     * Send SMS to specified endpoint from patient to Client, to SignUp and proceed with client <-> patient interaction
+     *
+     * @param clientName   name of the client
+     * @param programName  program name to find and verify message logs status
+     * @param phoneNumber  phone number to send sms from
+     * @param endpoint     endpoint/SMS aggregator for user
+     * @param sex          patient sex
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps initiateSmsFirstLastNameDateSex(String clientName, String programName, String phoneNumber, String endpoint,String sex);
+
+    /**
+     * Send SMS to specified endpoint from patient to Client, to SignUp and proceed with client <-> patient interaction
+     *
+     * @param clientName   name of the client
+     * @param programName  program name to find and verify message logs status
+     * @param phoneNumber  phone number to send sms from
+     * @param endpoint     endpoint/SMS aggregator for user
+     * @param keyword      keyword to sign up
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps initiateSignUpAgreeFirstLastNameDate(String clientName, String programName, String phoneNumber, String endpoint,String keyword);
 
 }

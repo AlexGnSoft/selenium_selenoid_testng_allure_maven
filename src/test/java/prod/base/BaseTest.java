@@ -3,7 +3,10 @@ package prod.base;
 import com.carespeak.core.config.Config;
 import com.carespeak.core.config.ConfigProvider;
 import com.carespeak.core.config.PropertyFileReader;
+import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.decorator.CustomDecorator;
+import com.carespeak.core.driver.element.Button;
+import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.core.driver.reporter.ElementActionsReporter;
 import com.carespeak.core.driver.reporter.IElementInteractionsReporter;
@@ -14,14 +17,22 @@ import com.carespeak.core.listener.ExecutionTestOrderInterceptor;
 import com.carespeak.domain.steps.holders.SiteStepsHolder;
 import io.qameta.allure.testng.AllureTestNg;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Properties;
 
 @Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
@@ -30,7 +41,6 @@ public abstract class BaseTest implements IDataGenerator {
     protected static Config config;
     protected static PropertyFileReader propertyFileReader;
     protected SiteStepsHolder site;
-
     protected String user;
     protected String password;
 
@@ -69,9 +79,16 @@ public abstract class BaseTest implements IDataGenerator {
         }
     }
 
+    @BeforeSuite
+    public void setUp(ITestContext context){
+        //Using stream API we implement re-run failed tests to each test method
+        Arrays.stream(context.getAllTestMethods()).forEach(x->x.setRetryAnalyzerClass(RetryAnalyzer.class));
+    }
+
     @BeforeClass(alwaysRun = true)
     public void beforeClass() {
         site.loginSteps().openSite().loginAs(user, password);
+
     }
 
     @AfterClass(alwaysRun = true)

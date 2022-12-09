@@ -13,7 +13,7 @@ public class StatusPopup extends AbstractPopup {
     private ClickableElement statusMessage;
 
     @ElementName("Close status popup")
-    @FindBy(xpath = "//*[contains(@id,'cs-alert-container')]//button")
+    @FindBy(xpath = "//button[@class='close']")
     private Button closeButton;
 
     @Override

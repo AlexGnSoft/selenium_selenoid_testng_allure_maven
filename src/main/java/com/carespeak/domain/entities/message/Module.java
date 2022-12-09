@@ -4,16 +4,27 @@ import java.util.*;
 
 public enum Module {
 
-    CHECK_ALL,
-    APPOINTMENT,
-    BIOMETRIC,
-    EDUCATION,
-    INCENTIVE,
-    JOURNAL,
-    MEDICATION,
-    MOTIVATION,
-    RULES,
-    SURVEY;
+    CHECK_ALL("Check all"),
+    APPOINTMENT("Appointment"),
+    BIOMETRIC("Biometric"),
+    EDUCATION("Education"),
+    INCENTIVE("Incentive"),
+    JOURNAL("Journal"),
+    MEDICATION("Medication"),
+    MOTIVATION("Motivation"),
+    RULES("Rules"),
+    SURVEY("Survey");
+
+
+    private String val;
+
+    Module(String moduleType) {
+        this.val = moduleType;
+    }
+
+    public String getValue() {
+        return val;
+    }
 
     //Returns all modules except Check All value
     public static List<Module> getAllModules() {
@@ -38,4 +49,5 @@ public enum Module {
         }
         return res;
     }
+
 }

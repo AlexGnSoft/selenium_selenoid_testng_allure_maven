@@ -6,6 +6,7 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import com.carespeak.domain.steps.imp.prod.ProdProgramSteps;
 
 import java.util.List;
 
@@ -80,6 +81,16 @@ public interface ProgramSteps extends BaseSteps {
      * @return Program Steps object
      */
     ProgramSteps addDestinationProgramQuestionKeywords(String keyword, String programName);
+
+    /**
+     * Move patient to another program manually
+     *
+     * @param clientName               client first name
+     * @param landingProgramName       destination program name
+     * @param patientFirstName         patient first name
+     * @return Program Steps object
+     */
+    ProgramSteps movePatientManually(String clientName, String landingProgramName, String patientFirstName);
 
     /**
      * Add account creation question for keyword sign up.
@@ -159,6 +170,15 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addNewPatient(Patient patient, Client client, String programName);
 
+    /**
+     * Add patient to specific program with Last name, Email, Sex
+     *
+     * @param client      client to use
+     * @param programName program to be select
+     * @return Program Steps object
+     */
+    ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName);
+
 
     /**
      * Get program by name from column
@@ -168,6 +188,16 @@ public interface ProgramSteps extends BaseSteps {
      * @return program name String
      */
     String getProgramByName(String clientName, String programName);
+
+    /**
+     * Get program by name from column
+     *
+     * @param clientName  client to use
+     * @param programName program name
+     *  @param patientName patient name
+     * @return program name String
+     */
+    String getPatientByName(String clientName, String programName, String patientName);
 
 
     /**
@@ -183,10 +213,10 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns OptOut form that set on program level
      *
-     * @param clientName client to use
+     * @param client client object name
      * @return ProgramOptOutForm object
      */
-    ProgramOptOutForm getProgramOptOutForm(String clientName, String programName);
+    ProgramOptOutForm getProgramOptOutForm(Client client, String programName);
 
     /**
      * Get all program endpoints on program level
@@ -207,13 +237,21 @@ public interface ProgramSteps extends BaseSteps {
 
 
     /**
-     * Add program optin messages
+     * Add program optin messages with no attachment
+     *
+     * @param isSendConfirmMessage true if want to send confirm message, false if not
+     * @return Program Steps object
+     */
+    ProgramSteps addOptInMessagesWithoutAttachment(boolean isSendConfirmMessage);
+
+    /**
+     * Add program optin messages with attachment
      *
      * @param filePath             the path to the data file
      * @param isSendConfirmMessage true if want to send confirm message, false if not
      * @return Program Steps object
      */
-    ProgramSteps addOptInMessages(String filePath, boolean isSendConfirmMessage);
+    ProgramSteps addOptInMessagesWithAttachment(String filePath, boolean isSendConfirmMessage);
 
 
     /**
@@ -273,7 +311,7 @@ public interface ProgramSteps extends BaseSteps {
      *
      * @return true if attached image is displayed otherwise false
      */
-    boolean isAttachedImageDisplayed();
+    boolean isAttachedImageDisplayed(String patientName);
 
     /**
      * Add new Auto Responder on program level

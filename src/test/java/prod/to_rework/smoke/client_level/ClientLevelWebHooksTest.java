@@ -2,6 +2,7 @@ package prod.to_rework.smoke.client_level;
 
 import com.carespeak.domain.entities.campaign.CampaignAccess;
 import com.carespeak.domain.entities.client.Client;
+import com.carespeak.domain.entities.message.Module;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import prod.smoke.client_level.AbstractClientLevelTest;
@@ -21,11 +22,12 @@ public class ClientLevelWebHooksTest extends AbstractClientLevelTest {
     @Test(description = "Add a link and webhook name, try adding it to an SMS message to check if the shortened link that goes out leads to a needed link")
     public void addedFooterAppearsOnWebForm() {
         //TODO: remove once webhook issue naming will be resolved
-        String webhookName = "webhookName" + getPersistentCounter("webhook");
+        //String webhookName = "webhookName" + getPersistentCounter("webhook");
+        String webhookName = "webhookName" + getRandomString();
         site.clientSteps()
                 .addWebhook(client, webhookName, "http://webhooktest.com", null);
-        site.campaignSteps()
-                .addCampaign(client, "AutoTestCampaign", CampaignAccess.PUBLIC, "Automation created campaign", null);
+        //site.campaignSteps()
+                //.addCampaign(client, "AutoTestCampaign", Module.EDUCATION, CampaignAccess.PUBLIC, "Automation created campaign", null);
         //TODO: implement testcase assertion
         System.out.println();
     }
