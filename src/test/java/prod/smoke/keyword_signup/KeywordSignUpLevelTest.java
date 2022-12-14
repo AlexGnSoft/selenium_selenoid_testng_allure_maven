@@ -178,7 +178,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
 //
 //        Assert.assertEquals(signupResponse.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
 //    }
-
+//
 //    @Test(description = "Check if completed message is added")
 //    public void addCompletedMessage_MHM_T43() {
 //        //Test data

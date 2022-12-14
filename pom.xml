@@ -12,7 +12,7 @@
         <java.version>1.8</java.version>
         <selenium.version>3.141.59</selenium.version>
         <driver-manager.version>4.2.2</driver-manager.version>
-        <testng.version>7.6.1</testng.version>
+        <testng.version>7.1.0</testng.version>
         <aspectj.version>1.8.10</aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

@@ -93,6 +93,31 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 //
 //        Assert.assertTrue(isCampaignCreated, "Campaign was not created");
 //    }
+//
+//    @Test(description = "Assign Campaign to Program")
+//    public void assignCampaignToProgram_MHM_T104() {
+//        //Test data
+//        String messageName_MHM_T104 = getRandomString();
+//        String programName_MHM_T104 = getRandomString();
+//        String campaignName_MHM_T104 = getRandomString();
+//        String campaignDescription = getRandomString();
+//
+//        getTestProgram(clientName, programName_MHM_T104);
+//        getTestBiometricMedicationMessage(messageName_MHM_T104);
+//        site.campaignSteps()
+//                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName_MHM_T104, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName_MHM_T104, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER,
+//                        null)
+//                .addCampaignToProgram(clientName, programName_MHM_T104, Module.BIOMETRIC, campaignName_MHM_T104);
+//
+//        boolean isCampaignAddedToProgram = site.campaignSteps()
+//                .isCampaignAddedToProgram(campaignName_MHM_T104);
+//
+//        boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
+//                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName_MHM_T104);
+//
+//        softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
+//        softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
+//    }
 
     @Test(description = "Create campaign - Module Account settings")
     public void createAccountSettingsCampaign_MHM_T99() {
@@ -120,31 +145,6 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
         Assert.assertEquals(campaignMessage_T99, actualLasLogsMessage, "Campaign message did not arrive to patient");
     }
-
-//    @Test(description = "Assign Campaign to Program")
-//    public void assignCampaignToProgram_MHM_T104() {
-//        //Test data
-//        String messageName_MHM_T104 = getRandomString();
-//        String programName_MHM_T104 = getRandomString();
-//        String campaignName_MHM_T104 = getRandomString();
-//        String campaignDescription = getRandomString();
-//
-//        getTestProgram(clientName, programName_MHM_T104);
-//        getTestBiometricMedicationMessage(messageName_MHM_T104);
-//        site.campaignSteps()
-//                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName_MHM_T104, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName_MHM_T104, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER,
-//                        null)
-//                .addCampaignToProgram(clientName, programName_MHM_T104, Module.BIOMETRIC, campaignName_MHM_T104);
-//
-//        boolean isCampaignAddedToProgram = site.campaignSteps()
-//                .isCampaignAddedToProgram(campaignName_MHM_T104);
-//
-//        boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
-//                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName_MHM_T104);
-//
-//        softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
-//        softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
-//    }
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {
