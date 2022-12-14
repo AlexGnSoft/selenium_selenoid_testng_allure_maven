@@ -365,7 +365,7 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.sideBarMenu.openItem("Patients");
         programsPatientsPage.patientTable.searchFor(patientName);
 
-        return programsPatientsPage.firstPatientName.getAttribute("sortbias");
+        return programsPatientsPage.firstPatientName.getText();
     }
 
     @Override

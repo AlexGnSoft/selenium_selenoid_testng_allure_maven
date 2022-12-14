@@ -20,7 +20,7 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     private static final String ACTIVE_TAB_LOCATOR = "//ul[@role='tablist']//li[contains(@class, 'ui-state-active')]//a[contains(text(), '%s')]";
 
     @ElementName("First patient name")
-    @FindBy(xpath = "//tbody/tr[@role='row']/td[2]/a[@sortbias]")
+    @FindBy(xpath = "//table[@id='patient']//td[2]/a")
     public ClickableElement firstPatientName;
 
     public ProgramsPatientsPage() {
