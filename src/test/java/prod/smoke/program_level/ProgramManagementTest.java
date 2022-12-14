@@ -3,7 +3,6 @@ package prod.smoke.program_level;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.patient.Patient;
-import com.carespeak.domain.entities.patient.PatientStatus;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;

@@ -79,12 +79,13 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         isImageAttached = site.programSteps().isAttachedImageDisplayed(patient.getFirstName());
 
         Assert.assertTrue(isImageAttached, "Image is not attached");
+
+        //TODO: Page refresh to make 'Next actions possible' and all header buttons visible
+        site.programSteps().pageRefresh();
     }
 
     @Test(description = "Simulate patient's AGREE response")
     public void simulateConfirmation_MHM_T44() {
-        //TODO: Page refresh to make 'Programs' button visible
-        site.programSteps().pageRefresh();
         String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
         patient.setFirstName("Patient " + getRandomString());
         patient.setCellPhone(getGeneratedPhoneNumber());
