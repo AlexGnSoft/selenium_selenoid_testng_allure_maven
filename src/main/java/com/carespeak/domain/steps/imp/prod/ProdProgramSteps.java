@@ -364,11 +364,12 @@ public class ProdProgramSteps implements ProgramSteps {
     public String getPatientByName(String clientName, String programName, String patientName) {
         goToProgramSettings(clientName, programName);
         programSettingsPage.sideBarMenu.openItem("Patients");
+        waitFor(()->programsPatientsPage.isOpened());
         programsPatientsPage.patientTable.searchFor(patientName);
 
         TableRowItem tableRowItem = programsPatientsPage.patientTable.searchInTable("Name", patientName);
         if (tableRowItem == null) {
-            Logger.info("Program was not found by name '" + programName + "'!");
+            Logger.info("Patient was not found by name '" + patientName + "'!");
             return null;
         }
 
