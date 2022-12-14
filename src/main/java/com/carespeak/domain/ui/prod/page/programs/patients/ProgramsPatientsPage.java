@@ -19,10 +19,6 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     private static final String TAB_LOCATOR = "//ul[@role='tablist']/li//a[contains(text(), '%s')]";
     private static final String ACTIVE_TAB_LOCATOR = "//ul[@role='tablist']//li[contains(@class, 'ui-state-active')]//a[contains(text(), '%s')]";
 
-    @ElementName("First patient name")
-    @FindBy(xpath = "//table[@id='patient']//td[2]/a")
-    public ClickableElement firstPatientName;
-
     public ProgramsPatientsPage() {
         patientTable = new ItemsTable(By.id("patient_wrapper"));
     }

@@ -10,21 +10,13 @@
         -->
         <classes>
             <!--Program level tests-->
-            <class name="prod.smoke.program_level.ProgramConsentManagementTest"/>
-            <class name="prod.smoke.program_level.ProgramAutoResponder"/>
-            <class name="prod.smoke.program_level.ProgramManagementTest"/>
             <class name="prod.smoke.program_level.ProgramOptInMessageTest"/>
             <!--Campaign level tests-->
             <class name="prod.smoke.campaign_level.CampaignManagementTest"/>
-            <!--Client level tests-->
-            <class name="prod.smoke.client_level.ClientManagementTest"/>
-            <class name="prod.smoke.client_level.ClientAutoResponderTest"/>
-            <class name="prod.smoke.client_level.ClientLevelEndpointsTest"/>
             <!--Program level tests-->
             <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
             <!--Message level tests-->
             <class name="prod.smoke.message_level.MessageManagementTest"/>
-
         </classes>
     </test>
 </suite>

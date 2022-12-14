@@ -321,7 +321,7 @@ public class ProdCampaignSteps implements CampaignSteps {
             prodProgramSteps.pageRefresh();
 
             messageFoundInLogs = actualMessageFromLogs.equals(expectedCampaignMessage);
-            searchTakingTooLong = System.currentTimeMillis() - start > 360000;
+            searchTakingTooLong = System.currentTimeMillis() - start > 420000;
 
         } while (!messageFoundInLogs && !searchTakingTooLong);
 

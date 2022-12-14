@@ -78,6 +78,7 @@ public class ProdProgramSteps implements ProgramSteps {
             programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
         }
         dashboardPage.headerMenu.programsMenuItem.click();
+        waitFor(()->programsPage.isOpened());
         programsPage.searchClient.search(clientName);
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);
@@ -365,7 +366,13 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.sideBarMenu.openItem("Patients");
         programsPatientsPage.patientTable.searchFor(patientName);
 
-        return programsPatientsPage.firstPatientName.getText();
+        TableRowItem tableRowItem = programsPatientsPage.patientTable.searchInTable("Name", patientName);
+        if (tableRowItem == null) {
+            Logger.info("Program was not found by name '" + programName + "'!");
+            return null;
+        }
+
+        return tableRowItem.getDataByHeader("Name");
     }
 
     @Override
@@ -549,6 +556,7 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public boolean isAttachedImageDisplayed(String patientName) {
+        waitFor(()->programsPatientsPage.isOpened());
         programsPatientsPage.patientTable.searchFor(patientName);
         selectPatientByName(patientName);
         patientMessageLogsPage.attachmentButton.click();
