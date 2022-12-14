@@ -4,14 +4,10 @@ import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.*;
-import com.carespeak.domain.entities.program.ProgramAccess;
-import com.carespeak.domain.steps.imp.prod.ProdMessagesSteps;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import java.util.Arrays;
 import java.util.List;
 

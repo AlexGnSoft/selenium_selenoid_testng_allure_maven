@@ -2,7 +2,6 @@ package prod.smoke.program_level;
 
 import com.carespeak.core.constant.Constants;
 import com.carespeak.domain.entities.client.Client;
-import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.program.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
@@ -10,8 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
@@ -47,77 +44,77 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
         Assert.assertTrue(isImageAttached, "Image is not attached");
     }
 
-//    @Test(description = "Add opt-in message")
-//    public void addOptInMessageWithConfirmation_MHM_T165() {
-//        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
-//        patient.setFirstName("Patient " + getRandomString());
-//        patient.setCellPhone(getGeneratedPhoneNumber());
-//
-//        site.programSteps()
-//                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-//                .addOptInMessagesWithoutAttachment(true)
-//                .addNewPatient(patient, client, programName);
-//
-//        String expectedOptInMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
-//
-//        MessageLogItem actualOptInMessage = site.programSteps().getLastPatientMessage(patient);
-//
-//        Assert.assertEquals(actualOptInMessage.getMessage(), expectedOptInMessage, "Received message is not the same as expected!");
-//    }
-//
-//    @Test(description = "Add opt-in message with 'Do NOT send opt in confirmation message' checkbox")
-//    public void addOptInMessageWithoutConfirmation_MHM_T32() {
-//        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
-//        patient.setFirstName("Patient " + getRandomString());
-//        patient.setCellPhone(getGeneratedPhoneNumber());
-//
-//        site.programSteps()
-//                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-//                .addOptInMessagesWithoutAttachment(false)
-//                .addNewPatient(patient, client, programName);
-//
-//        MessageLogItem actualOptInMessage  = site.programSteps()
-//                .simulateResponseAndGetLastPatientMessage(patient, "AGREE");
-//
-//        Assert.assertEquals(actualOptInMessage.getMessage(), "AGREE", "Received message is not the same as expected!");
-//    }
-//
-//    @Test(description = "Simulate patient's AGREE response")
-//    public void simulateConfirmation_MHM_T44() {
-//        //TODO: Page refresh to make 'Programs' button visible
-//        site.programSteps().pageRefresh();
-//        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
-//        patient.setFirstName("Patient " + getRandomString());
-//        patient.setCellPhone(getGeneratedPhoneNumber());
-//
-//        site.programSteps()
-//                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-//                .addNewPatient(patient, client, programName);
-//
-//        MessageLogItem actualOptInMessage = site.programSteps()
-//                .simulateResponseAndGetLastPatientMessage(patient, "AGREE");
-//
-//        Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
-//    }
-//
-//    @Test(description = "Simulate patient's STOP response")
-//    public void simulateStop_MHM_T46() {
-//        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
-//        patient.setFirstName("Patient " + getRandomString());
-//        patient.setCellPhone(getGeneratedPhoneNumber());
-//
-//        site.programSteps()
-//                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-//                .addNewPatient(patient, client, programName);
-//
-//        site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
-//
-//        MessageLogItem actualOptInMessage  = site.programSteps()
-//                .simulateResponseAndGetLastPatientMessage(patient, "STOP");
-//
-//        Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.UNSUBSCRIBED, "Received message is not the same as expected!");
-//    }
-//
+    @Test(description = "Add opt-in message")
+    public void addOptInMessageWithConfirmation_MHM_T165() {
+        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addOptInMessagesWithoutAttachment(true)
+                .addNewPatient(patient, client, programName);
+
+        String expectedOptInMessage = String.format(Constants.MessageTemplate.CONFIRM_SUBSCRIPTION, programName);
+
+        MessageLogItem actualOptInMessage = site.programSteps().getLastPatientMessage(patient);
+
+        Assert.assertEquals(actualOptInMessage.getMessage(), expectedOptInMessage, "Received message is not the same as expected!");
+    }
+
+    @Test(description = "Add opt-in message with 'Do NOT send opt in confirmation message' checkbox")
+    public void addOptInMessageWithoutConfirmation_MHM_T32() {
+        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addOptInMessagesWithoutAttachment(false)
+                .addNewPatient(patient, client, programName);
+
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "AGREE");
+
+        Assert.assertEquals(actualOptInMessage.getMessage(), "AGREE", "Received message is not the same as expected!");
+    }
+
+    @Test(description = "Simulate patient's AGREE response")
+    public void simulateConfirmation_MHM_T44() {
+        //TODO: Page refresh to make 'Programs' button visible
+        site.programSteps().pageRefresh();
+        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addNewPatient(patient, client, programName);
+
+        MessageLogItem actualOptInMessage = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "AGREE");
+
+        Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.ACCOUNT_ACTIVATED, "Received message is not the same as expected!");
+    }
+
+    @Test(description = "Simulate patient's STOP response")
+    public void simulateStop_MHM_T46() {
+        String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addNewPatient(patient, client, programName);
+
+        site.programSteps().simulateResponseAndGetLastPatientMessage(patient, "AGREE");
+
+        MessageLogItem actualOptInMessage  = site.programSteps()
+                .simulateResponseAndGetLastPatientMessage(patient, "STOP");
+
+        Assert.assertEquals(actualOptInMessage.getMessage(), Constants.MessageTemplate.UNSUBSCRIBED, "Received message is not the same as expected!");
+    }
+
     @Test(description = "Simulate patient's START response")
     public void simulateStart_MHM_T166() {
         String programName = "OptIn program  " + getFormattedDate("dd-MM-yy-H-mm");

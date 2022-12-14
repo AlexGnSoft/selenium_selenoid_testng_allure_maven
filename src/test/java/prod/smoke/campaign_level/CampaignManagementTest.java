@@ -29,95 +29,95 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert = new SoftAssert();
     }
 
-//    @Test(description = "Create campaign - Module Educational")
-//    public void createEducationalCampaign_MHM_T83() {
-//        //Test data
-//        String campaignName = getRandomString();
-//        String campaignDescription = getRandomString();
-//        String messageName = getRandomString();
-//
-//        getTestEducationalEmailMessage(messageName);
-//
-//        site.campaignSteps()
-//                .goToCampaignsTab()
-//                .addEducationalSurveyCampaign(clientName, Module.EDUCATION, campaignName, CampaignAccess.PUBLIC, campaignDescription, null);
-//
-//        boolean isCampaignCreated = site.campaignSteps()
-//                .isCampaignExist(clientName, campaignName);
-//
-//        Assert.assertTrue(isCampaignCreated, "Campaign was not created");
-//    }
-//
-//    @Test(description = "Create campaign - Module Medication")
-//    public void createMedicationCampaign_MHM_T89() {
-//        //Test data
-//        String campaignLocation = "America/New_York";
-//        String messageName = getRandomString();
-//        String medicationProgram = "Aspirin & Blood Thinner Meds";
-//        String medicationName = getRandomString();
-//        String campaignNameDescription = getRandomString();
-//        String programName_T89 = "Medication program "+ getRandomString();
-//        String campaignMessage_T89 = "Do not forget to take your pills";
-//        String SIGN_UP_KEYWORD_T89 = getRandomString();
-//        String FROM_PHONE_NUMBER_T89 = getGeneratedPhoneNumber();
-//
-//        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T89, filePath);
-//        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE, campaignLocation);
-//        getTestProgram(clientName, programName_T89);
-//        site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T89);
-//        site.campaignSteps().addCampaignToProgram(clientName, programName_T89, Module.MEDICATION, campaignNameDescription);
-//        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_T89, FROM_PHONE_NUMBER_T89, TO_ENDPOINT, SIGN_UP_KEYWORD_T89);
-//        String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage_T89, FROM_PHONE_NUMBER_T89);
-//
-//        Assert.assertEquals(actualLasLogsMessage, campaignMessage_T89, "Campaign message did not arrive to patient");
-//    }
-//
-//    @Test(description = "Create campaign - Module Biometric")
-//    public void createBiometricCampaign_MHM_T88() {
-//        //Test data
-//        String messageName_MHM_T88 = getRandomString();
-//        String programName_MHM_T88 = getRandomString();
-//        String campaignName_MHM_T88 = getRandomString();
-//        String campaignDescription = getRandomString();
-//
-//        getTestBiometricMedicationMessage(messageName_MHM_T88);
-//        getTestProgram(clientName, programName_MHM_T88);
-//
-//        site.campaignSteps()
-//                .goToCampaignsTab()
-//                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName_MHM_T88, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName_MHM_T88, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER,
-//                        null);
-//
-//        boolean isCampaignCreated = site.campaignSteps()
-//                .isCampaignExist(clientName, campaignName_MHM_T88);
-//
-//        Assert.assertTrue(isCampaignCreated, "Campaign was not created");
-//    }
-//
-//    @Test(description = "Assign Campaign to Program")
-//    public void assignCampaignToProgram_MHM_T104() {
-//        //Test data
-//        String messageName_MHM_T104 = getRandomString();
-//        String programName_MHM_T104 = getRandomString();
-//        String campaignName_MHM_T104 = getRandomString();
-//        String campaignDescription = getRandomString();
-//
-//        getTestProgram(clientName, programName_MHM_T104);
-//        getTestBiometricMedicationMessage(messageName_MHM_T104);
-//        site.campaignSteps()
-//                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName_MHM_T104, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName_MHM_T104, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER,
-//                        null)
-//                .addCampaignToProgram(clientName, programName_MHM_T104, Module.BIOMETRIC, campaignName_MHM_T104);
-//
-//        boolean isCampaignAddedToProgram = site.campaignSteps()
-//                .isCampaignAddedToProgram(campaignName_MHM_T104);
-//
-//        boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
-//                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName_MHM_T104);
-//
-//        softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
-//        softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
-//    }
+    @Test(description = "Create campaign - Module Educational")
+    public void createEducationalCampaign_MHM_T83() {
+        //Test data
+        String campaignName = getRandomString();
+        String campaignDescription = getRandomString();
+        String messageName = getRandomString();
+
+        getTestEducationalEmailMessage(messageName);
+
+        site.campaignSteps()
+                .goToCampaignsTab()
+                .addEducationalSurveyCampaign(clientName, Module.EDUCATION, campaignName, CampaignAccess.PUBLIC, campaignDescription, null);
+
+        boolean isCampaignCreated = site.campaignSteps()
+                .isCampaignExist(clientName, campaignName);
+
+        Assert.assertTrue(isCampaignCreated, "Campaign was not created");
+    }
+
+    @Test(description = "Create campaign - Module Medication")
+    public void createMedicationCampaign_MHM_T89() {
+        //Test data
+        String campaignLocation = "America/New_York";
+        String messageName = getRandomString();
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String campaignNameDescription = getRandomString();
+        String programName_T89 = "Medication program "+ getRandomString();
+        String campaignMessage_T89 = "Do not forget to take your pills";
+        String SIGN_UP_KEYWORD_T89 = getRandomString();
+        String FROM_PHONE_NUMBER_T89 = getGeneratedPhoneNumber();
+
+        site.messagesSteps().addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName, medicationProgram, medicationName,  campaignMessage_T89, filePath);
+        site.campaignSteps().addMedicationCampaignScheduleProtocol(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE, campaignLocation);
+        getTestProgram(clientName, programName_T89);
+        site.programSteps().addKeywordForSignUp(SIGN_UP_KEYWORD_T89);
+        site.campaignSteps().addCampaignToProgram(clientName, programName_T89, Module.MEDICATION, campaignNameDescription);
+        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName_T89, FROM_PHONE_NUMBER_T89, TO_ENDPOINT, SIGN_UP_KEYWORD_T89);
+        String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage_T89, FROM_PHONE_NUMBER_T89);
+
+        Assert.assertEquals(actualLasLogsMessage, campaignMessage_T89, "Campaign message did not arrive to patient");
+    }
+
+    @Test(description = "Create campaign - Module Biometric")
+    public void createBiometricCampaign_MHM_T88() {
+        //Test data
+        String messageName_MHM_T88 = getRandomString();
+        String programName_MHM_T88 = getRandomString();
+        String campaignName_MHM_T88 = getRandomString();
+        String campaignDescription = getRandomString();
+
+        getTestBiometricMedicationMessage(messageName_MHM_T88);
+        getTestProgram(clientName, programName_MHM_T88);
+
+        site.campaignSteps()
+                .goToCampaignsTab()
+                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName_MHM_T88, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName_MHM_T88, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER,
+                        null);
+
+        boolean isCampaignCreated = site.campaignSteps()
+                .isCampaignExist(clientName, campaignName_MHM_T88);
+
+        Assert.assertTrue(isCampaignCreated, "Campaign was not created");
+    }
+
+    @Test(description = "Assign Campaign to Program")
+    public void assignCampaignToProgram_MHM_T104() {
+        //Test data
+        String messageName_MHM_T104 = getRandomString();
+        String programName_MHM_T104 = getRandomString();
+        String campaignName_MHM_T104 = getRandomString();
+        String campaignDescription = getRandomString();
+
+        getTestProgram(clientName, programName_MHM_T104);
+        getTestBiometricMedicationMessage(messageName_MHM_T104);
+        site.campaignSteps()
+                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName_MHM_T104, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName_MHM_T104, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER,
+                        null)
+                .addCampaignToProgram(clientName, programName_MHM_T104, Module.BIOMETRIC, campaignName_MHM_T104);
+
+        boolean isCampaignAddedToProgram = site.campaignSteps()
+                .isCampaignAddedToProgram(campaignName_MHM_T104);
+
+        boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
+                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName_MHM_T104);
+
+        softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
+        softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
+    }
 
     @Test(description = "Create campaign - Module Account settings")
     public void createAccountSettingsCampaign_MHM_T99() {
