@@ -21,7 +21,7 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @BeforeClass
     public void prepareClientData() {
-        client = getTestClientByCode("ProgramLevelTestOptIn client");
+        client = getTestClientByCode("ProgramLevelTestOptIn client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
         clientName = client.getName();
         patient = new Patient();
         patient.setTimezone("Eastern Time (New York)");

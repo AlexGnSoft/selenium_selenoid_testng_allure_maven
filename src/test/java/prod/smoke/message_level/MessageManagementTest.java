@@ -19,7 +19,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
     @BeforeClass
     public void prepareClientData() {
 
-        client = getTestClientByCode("MessageLevel client " + getRandomString());
+        client = getTestClientByCode("MessageLevel client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
         clientName = client.getName();
     }
 

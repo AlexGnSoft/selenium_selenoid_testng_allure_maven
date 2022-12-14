@@ -23,7 +23,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
     @BeforeClass
     public void prepareClientData() {
-        client = getTestClientByCode("CampaignLevel client " + getRandomString());
+        client = getTestClientByCode("CampaignLevel client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
         clientName = client.getName();
         getEmailTemplate(clientName);
         softAssert = new SoftAssert();
