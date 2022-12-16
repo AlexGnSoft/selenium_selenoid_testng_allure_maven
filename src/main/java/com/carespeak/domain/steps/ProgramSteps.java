@@ -2,12 +2,10 @@ package com.carespeak.domain.steps;
 
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
-import com.carespeak.domain.entities.patient.PatientStatus;
 import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
-
 import java.util.List;
 
 public interface ProgramSteps extends BaseSteps {
@@ -239,10 +237,10 @@ public interface ProgramSteps extends BaseSteps {
     /**
      * Returns OptOut form that set on program level
      *
-     * @param clientName client to use
+     * @param client client object name
      * @return ProgramOptOutForm object
      */
-    ProgramOptOutForm getProgramOptOutForm(String clientName, String programName);
+    ProgramOptOutForm getProgramOptOutForm(Client client, String programName);
 
     /**
      * Get all program endpoints on program level

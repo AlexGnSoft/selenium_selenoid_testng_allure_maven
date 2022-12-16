@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AddCampaignToProgramPopup extends AbstractPopup{
-
     @ElementName("Module dropDown")
     @FindBy(xpath = "//div[@class='cs-select']/select[contains(@id,'module')]")
     public Dropdown moduleDropDown;

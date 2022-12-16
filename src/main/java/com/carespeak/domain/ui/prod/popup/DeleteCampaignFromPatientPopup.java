@@ -20,7 +20,6 @@ public class DeleteCampaignFromPatientPopup extends AbstractPopup{
     @FindBy(xpath = "//button[@class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']")
     public Button cancelButton;
 
-
     @Override
     public String getPopupName() {
         return "Mobile Health Manager:";

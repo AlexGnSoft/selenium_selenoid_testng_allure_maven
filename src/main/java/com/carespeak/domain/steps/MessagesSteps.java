@@ -5,7 +5,6 @@ import com.carespeak.domain.entities.message.Action;
 import com.carespeak.domain.entities.message.MessageType;
 import com.carespeak.domain.entities.message.Module;
 import com.carespeak.domain.entities.message.NotificationType;
-
 import java.util.List;
 
 public interface MessagesSteps extends BaseSteps {
@@ -13,6 +12,8 @@ public interface MessagesSteps extends BaseSteps {
     MessagesSteps goToMessagesTab();
 
     MessagesSteps goToEmailTemplatesTab();
+
+    MessagesSteps addMessageSelectModuleActionType(Module module, Action action, MessageType messageType);
 
     /**
      * Retrieves available modules for provided client

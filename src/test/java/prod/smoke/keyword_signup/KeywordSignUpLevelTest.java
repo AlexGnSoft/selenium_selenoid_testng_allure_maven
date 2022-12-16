@@ -243,6 +243,7 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertTrue(isPatientMoved, "The patient was not moved!");
     }
 
+
     @Test(description = "Move patient to a specific program under the same client")
     public void movePatientToSpecificProgram_MHM_T141() {
         //Test data
@@ -269,8 +270,10 @@ public class KeywordSignUpLevelTest extends AbstractKeyWordSignUpLevelTest {
         Assert.assertTrue(isPatientMoved, "The patient was not moved!");
     }
 
+
     @AfterClass(alwaysRun = true)
-    public void cleanUpClientData() {
-        removeClient(client);
+    public void removeClient() {
+        site.adminToolsSteps()
+                .removeClient(client);
     }
 }

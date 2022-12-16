@@ -18,16 +18,12 @@ public class RemoveSelectedPatientPopup extends AbstractPopup{
     @ElementName("Cancel button")
     @FindBy(xpath = "//button[@class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']")
     public Button cancelButton;
-
-
     @Override
     public String getPopupName() {
         return "Remove selected patients";
     }
-
     @Override
     public ClickableElement getTitleElement() {
         return title;
     }
-
 }

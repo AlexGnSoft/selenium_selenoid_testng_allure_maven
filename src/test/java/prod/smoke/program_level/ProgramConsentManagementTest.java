@@ -8,8 +8,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
 public class ProgramConsentManagementTest extends AbstractProgramLevelTest {
 
     private Client client;
@@ -32,7 +30,7 @@ public class ProgramConsentManagementTest extends AbstractProgramLevelTest {
         ProgramOptOutForm actualOptOutForm = site.programSteps()
                 .addNewProgram(client.getName(), programName, ProgramAccess.PUBLIC)
                 .addOptOutHeader(client, programName, null)
-                .getProgramOptOutForm(client.getName(), programName);
+                .getProgramOptOutForm(client, programName);
 
         Assert.assertEquals(actualOptOutForm, expectedOptOutForm, "OptOutForm not appear on program level");
     }

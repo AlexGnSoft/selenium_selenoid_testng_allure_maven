@@ -9,10 +9,14 @@ import com.carespeak.domain.ui.prod.page.programs.campaign.AlertTimeComponent;
 import com.carespeak.domain.ui.prod.page.campaigns.AbstractCampaignsPage;
 import org.openqa.selenium.support.FindBy;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class CampaignsTimeTablePage extends AbstractCampaignsPage {
 
@@ -126,29 +130,34 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
     @FindBy(id = "timeTable-timeTablePicker-timeTable-protocolTimeTable-entryList-protocolEntryList-entry-0-protocolEntry-daysInput")
     public Input daysInput;
 
-    public String hoursDropDownNewYorkTime(){
-        //Displaying current time in 12 hours format with AM/PM
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-
+    public String hoursDropDownSelectionAtAnyCity(String zoneId){
         LocalDateTime machineTime = LocalDateTime.now();
-        machineTime = machineTime.minusHours(5);
-
-        //need to move to next hours, as we can not select a time 55+ minutes in dropdown, and our test execution takes more than 3 minutes
+        //need to move to next hour, as we can not select a time 55+ minutes in dropdown, and our test execution takes more than 3 minutes
         if(machineTime.getMinute() >= 53) {
             machineTime = machineTime.plusHours(1);
         }
 
-        String timeNewYork = machineTime.format(formatter);
-        String hoursNewYork = timeNewYork.substring(0, 2);
+        ZoneId machineTimeZone = ZoneId.systemDefault();
+        ZoneId cityTimeZone = ZoneId.of(zoneId);
 
-        return hoursNewYork;
+        //Displaying current time in 12 hours format with AM/PM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+        LocalDateTime cityTime = machineTime.atZone(machineTimeZone)
+                .withZoneSameInstant(cityTimeZone)
+                .toLocalDateTime();
+
+        String cityTimeHoursMinutes = cityTime.format(formatter);
+
+        String cityHours = cityTimeHoursMinutes.substring(0, 2);
+
+        return cityHours;
     }
 
     public String minutesDropDownNewYorkTime(){
         int machineCurrentMinute = LocalTime.now().getMinute();
 
-
-        if(machineCurrentMinute < 05){
+        if(machineCurrentMinute < 5){
             machineCurrentMinute = 05;
         } else if(machineCurrentMinute <= 7){
             machineCurrentMinute = 10;
@@ -171,7 +180,7 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
         } else if(machineCurrentMinute <= 52) {
             machineCurrentMinute = 55;
         } else if(machineCurrentMinute >= 53) {
-            machineCurrentMinute = 05;
+            machineCurrentMinute = 5;
         }
         return String.valueOf(machineCurrentMinute);
     }

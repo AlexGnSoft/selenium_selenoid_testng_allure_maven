@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     private final String filePath = getResourcesPath() + "picture.png";
-    private final String endPoint = PropertyFileReader.getVariableValue("twilioSmsSender");
 
     private Client client;
     private String clientName;
@@ -23,10 +22,30 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
 
     @BeforeClass
     public void prepareClientData() {
-        client = getTestClientByCode("ProgramLevelTestOptIn client");
+        client = getTestClientByCode("ProgramLevelTestOptIn client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
         clientName = client.getName();
         patient = new Patient();
         patient.setTimezone("Eastern Time (New York)");
+    }
+
+    @Test(description = "Check image is attached opt-in message")
+    public void messageAttachment_MHM_T164() {
+        boolean isImageAttached = false;
+        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
+        patient.setFirstName("Patient " + getRandomString());
+        patient.setCellPhone(getGeneratedPhoneNumber());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addOptInMessagesWithAttachment(filePath, true)
+                .addNewPatient(patient, client, programName);
+
+        isImageAttached = site.programSteps().isAttachedImageDisplayed(patient.getFirstName());
+
+        Assert.assertTrue(isImageAttached, "Image is not attached");
+
+        //TODO: Page refresh to make 'Next actions possible' and all header buttons visible
+        site.programSteps().pageRefresh();
     }
 
     @Test(description = "Add opt-in message")
@@ -62,26 +81,6 @@ public class ProgramOptInMessageTest extends AbstractProgramLevelTest {
                 .simulateResponseAndGetLastPatientMessage(patient, "AGREE");
 
         Assert.assertEquals(actualOptInMessage.getMessage(), "AGREE", "Received message is not the same as expected!");
-    }
-
-    @Test(description = "Check image is attached opt-in message")
-    public void messageAttachment_MHM_T164() {
-        boolean isImageAttached = false;
-        String programName = "OptIn program " + getFormattedDate("dd-MM-yy-H-mm");
-        patient.setFirstName("Patient " + getRandomString());
-        patient.setCellPhone(getGeneratedPhoneNumber());
-
-        site.programSteps()
-                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addOptInMessagesWithAttachment(filePath, true)
-                .addNewPatient(patient, client, programName);
-
-        isImageAttached = site.programSteps().isAttachedImageDisplayed(patient.getFirstName());
-
-        Assert.assertTrue(isImageAttached, "Image is not attached");
-
-        //TODO: Page refresh to make 'Next actions possible' and all header buttons visible
-        site.programSteps().pageRefresh();
     }
 
     @Test(description = "Simulate patient's AGREE response")

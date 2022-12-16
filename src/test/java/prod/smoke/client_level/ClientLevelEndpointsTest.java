@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,6 +51,7 @@ public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
 //        site.programSteps().removeProgram(client, programName);
 //        List<String> programs = site.programSteps().getProgramsForClient(client);
 //        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
-        removeClient(client);
+        site.adminToolsSteps()
+                .removeClient(client);
     }
 }

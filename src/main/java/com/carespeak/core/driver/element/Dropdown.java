@@ -51,22 +51,6 @@ public class Dropdown extends ClickableElement {
         return this;
     }
 
-    public String getModule(Module module) {
-        return module.toString();
-    }
-
-    public String getAction(Action action) {
-        return action.toString();
-    }
-
-    public String getMessageType(MessageType messageType) {
-        return messageType.toString();
-    }
-
-    public String getNotificationType(NotificationType notificationType) {
-        return notificationType.toString();
-    }
-
     /**
      * Some dropdowns, are quite complicated so you need to click on some "expand"
      * element before you see the dropdown, sometimes it is completely different DOM elements.

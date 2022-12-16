@@ -11,7 +11,6 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class CampaignMessagesPage extends AbstractCampaignsPage {
-
     @ElementName("Allocate messages button")
     @FindBy(id = "messageAllocateBtn")
     public Button allocateButton;

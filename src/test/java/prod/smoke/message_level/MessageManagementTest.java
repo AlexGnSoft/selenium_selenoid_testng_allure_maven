@@ -19,8 +19,21 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
     @BeforeClass
     public void prepareClientData() {
 
-        client = getTestClientByCode("MessageLevel client " + getRandomString());
+        client = getTestClientByCode("MessageLevel client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
         clientName = client.getName();
+    }
+
+    @Test(description = "Create email template")
+    public void createEmailTemplate_MHM_T87() {
+        String emailTemplateName = getRandomString();
+        site.adminToolsSteps().goToSpecificTab("Email Templates");
+        site.messagesSteps().addEmailTemplate(clientName, emailTemplateName, getRandomString());
+
+        boolean isEmailTemplateCreated = site.messagesSteps()
+                .goToEmailTemplatesTab()
+                .isTemplateExist(clientName, emailTemplateName);
+
+        Assert.assertTrue(isEmailTemplateCreated, "The email template was not created!");
     }
 
 
@@ -54,30 +67,6 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isMessageCreated,"The message was not created!");
     }
 
-    @Test(description = "Edit text of sms message", dependsOnMethods = "createSmsMessage_MHM_T70")
-    public void editSmsMessage_MHM_T81() {
-        String initialMessage = site.messagesSteps().getMessageText();
-        site.messagesSteps().updateTextMessageBody("Updated message");
-        String updatedMessage = site.messagesSteps().getMessageText();
-
-        boolean areMessagesEqual = site.messagesSteps().areMessageTextUpdated(initialMessage, updatedMessage);
-
-        Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
-    }
-
-    @Test(description = "Create email template")
-    public void createEmailTemplate_MHM_T87() {
-        String emailTemplateName = getRandomString();
-        site.adminToolsSteps().goToSpecificTab("Email Templates");
-        site.messagesSteps().addEmailTemplate(clientName, emailTemplateName, getRandomString());
-
-        boolean isEmailTemplateCreated = site.messagesSteps()
-                .goToEmailTemplatesTab()
-                .isTemplateExist(clientName, emailTemplateName);
-
-        Assert.assertTrue(isEmailTemplateCreated, "The email template was not created!");
-    }
-
     @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87")
     public void createEmailMessageAndSendIt_MHM_T84() {
         //Test data
@@ -91,6 +80,22 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         boolean isMessageWasSent = site.messagesSteps().sendTestMessage(emailMessageName);
 
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
+    }
+
+    @Test(description = "Edit text of sms message")
+    public void editSmsMessage_MHM_T81() {
+        String medicationName_T81 = getRandomString();
+
+        site.messagesSteps().addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, medicationName_T81, NotificationType.PAIN,
+                "${p} , tell us more about your symptoms level today.");
+
+        String initialMessage = site.messagesSteps().getMessageText();
+        site.messagesSteps().updateTextMessageBody("Updated message");
+        String updatedMessage = site.messagesSteps().getMessageText();
+
+        boolean areMessagesEqual = site.messagesSteps().areMessageTextUpdated(initialMessage, updatedMessage);
+
+        Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
     }
 
     @AfterClass(alwaysRun = true)

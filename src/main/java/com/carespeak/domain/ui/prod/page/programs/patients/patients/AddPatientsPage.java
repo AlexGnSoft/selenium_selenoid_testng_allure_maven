@@ -6,12 +6,9 @@ import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
 import com.carespeak.core.logger.Logger;
-import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
-import com.carespeak.domain.ui.prod.page.programs.campaign.AlertTimeComponent;
 import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +26,15 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @FindBy(id = "mobile")
     public Input cellPhoneInput;
 
-    @ElementName("Cell phone input")
+    @ElementName("Time zone dropdown selected element")
     @FindBy(xpath = "//option[contains(text(),'Time') and contains(@selected,'selected')]")
     public Dropdown timezoneDropdownSelected;
-
-    //option[contains(text(),'Time') and @selected='"selected"']
     @ElementName("Cell phone confirmation input")
     @FindBy(id = "mobileConfirm")
     public Input cellPhoneConfirmationInput;
     @ElementName("TimeZone dropdown")
     @FindBy(id = "formUser.timeZone")
     public Dropdown timezoneDropdown;
-
     @ElementName("Status dropdown")
     @FindBy(id = "formUser.status")
     public Dropdown statusDropdown;
@@ -60,7 +54,6 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Email confirmation input")
     @FindBy(id = "emailConfirm")
     public Input emailConfirmationInput;
-
     @ElementName("Zip Code input")
     @FindBy(xpath = "//input[@id='formUser.postalCode']")
     public Input zipCodeInput;
@@ -71,11 +64,9 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Sex radiobutton option - Male")
     @FindBy(xpath = "//input[@name='formUser.gender' and @value='M']")
     public ClickableElement maleRadioButtonOption;
-
     @ElementName("Sex radiobutton option - Female")
     @FindBy(xpath = "//input[@name='formUser.gender' and @value='F']")
     public ClickableElement femaleRadioButtonOption;
-
     @ElementName("Selected sex radio button")
     @FindBy(xpath = "//input[@name='formUser.gender' and @checked]")
     public ClickableElement sexRadioButtonSelected;
@@ -83,23 +74,20 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Date of Birth Month input")
     @FindBy(id = "formUser.birthDate-month")
     public Dropdown monthInput;
-
-    @ElementName("Cell phone input")
+    @ElementName("Month input dropdown selected element")
     @FindBy(xpath = "//select[@id='formUser.birthDate-month']/option[contains(@selected,'selected')]")
     public Dropdown monthInputDropdownSelected;
 
     @ElementName("Date of Birth Day input")
     @FindBy(id = "formUser.birthDate-day")
     public Dropdown dayInput;
-
-    @ElementName("Cell phone input")
+    @ElementName("Day input dropdown selected element")
     @FindBy(xpath = "//select[@id='formUser.birthDate-day']/option[contains(@selected,'selected')]")
     public Dropdown dayInputDropdownSelected;
 
     @ElementName("Date of Birth Year input")
     @FindBy(id = "formUser.birthDate-year")
     public Dropdown yearInput;
-
     @ElementName("Cell phone input")
     @FindBy(xpath = "//select[@id='formUser.birthDate-year']/option[contains(@selected,'selected')]")
     public Dropdown yearInputDropdownSelected;
@@ -111,7 +99,6 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Endpoint dropdown")
     @FindBy(id = "endpoint")
     public Dropdown endpointDropdown;
-
     @ElementName("Endpoint list")
     @FindBy(xpath = "//select[@id='endpoint']/option")
     public List<WebElement> endpointList;
@@ -127,7 +114,6 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Save button")
     @FindBy(xpath = "//button//*[contains(text(), 'Save')]")
     public Button saveButton;
-
     @ElementName("Program List button")
     @FindBy(xpath = "//a[@href]//span[@class='cs-back-to-text']")
     public Button programListButton;

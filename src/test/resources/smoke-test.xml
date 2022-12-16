@@ -24,7 +24,6 @@
             <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
             <!--Message level tests-->
             <class name="prod.smoke.message_level.MessageManagementTest"/>
-
         </classes>
     </test>
 </suite>

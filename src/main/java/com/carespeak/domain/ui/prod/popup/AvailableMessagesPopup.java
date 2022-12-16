@@ -2,12 +2,9 @@ package com.carespeak.domain.ui.prod.popup;
 
 import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
-import com.carespeak.core.driver.element.CheckBox;
 import com.carespeak.core.driver.element.ClickableElement;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
 
 public class AvailableMessagesPopup extends AbstractPopup{
 

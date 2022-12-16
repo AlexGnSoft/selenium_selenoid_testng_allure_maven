@@ -11,9 +11,7 @@ public class UserPatientsPage extends AbstractUsersPage {
     public HeaderMenu headerMenu;
 
     public SideBarMenu sideBarMenu;
-
     public ItemsTable patientsTable;
-
     public ConfirmationPopup confirmationPopup;
 
     public UserPatientsPage() {

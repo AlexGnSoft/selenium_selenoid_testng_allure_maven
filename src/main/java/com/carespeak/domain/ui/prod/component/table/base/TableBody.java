@@ -24,10 +24,6 @@ class TableBody extends AbstractComponent {
     private static final String TABLE_CELL_LOCATOR = ".//td[%s]";
     private static final String tableLocatorId = "cs-as-table";
 
-    @ElementName("List of messages")
-    @FindBy(xpath = "//td[@class=' text-wrap text-clip']")
-    public List<WebElement> listOfMessages;
-
     @ElementName("List of patients")
     @FindBy(xpath = "//tr/td/a[@href]")
     public List<WebElement> listOfPatients;
@@ -38,6 +34,14 @@ class TableBody extends AbstractComponent {
 
     public TableBody(By tableLocator) {
         this.tableLocator = tableLocator;
+    }
+
+    public String getFirstRowPatientNameString() {
+        String firstRowItemString = null;
+        for (int i = 0; i < listOfPatients.size(); i++) {
+            firstRowItemString = listOfPatients.get(0).getText();
+        }
+        return firstRowItemString;
     }
 
     public TableRowItem findItemBy(String tableHeader, String valueToSearch) {
@@ -213,19 +217,4 @@ class TableBody extends AbstractComponent {
         return new ClickableElement(element, elementName);
     }
 
-    public String getFirstRowMessageString() {
-        String firstRowItemString = null;
-        for (int i = 0; i < listOfMessages.size(); i++) {
-            firstRowItemString = listOfMessages.get(0).getText();
-        }
-        return firstRowItemString;
-    }
-
-    public String getFirstRowPatientNameString() {
-        String firstRowItemString = null;
-        for (int i = 0; i < listOfPatients.size(); i++) {
-            firstRowItemString = listOfPatients.get(0).getText();
-        }
-        return firstRowItemString;
-    }
 }
