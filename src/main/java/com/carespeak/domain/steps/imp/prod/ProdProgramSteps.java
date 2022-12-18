@@ -50,7 +50,8 @@ public class ProdProgramSteps implements ProgramSteps {
     private ProgramCustomFieldsPage programCustomFieldsPage;
     private PatientProfilePage patientProfilePage;
     private ProgramPatientsTab programPatientsTab;
-    UserPatientsPage userPatientsPage;
+    private UserPatientsPage userPatientsPage;
+    private ProgramSteps programSteps;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -69,6 +70,7 @@ public class ProdProgramSteps implements ProgramSteps {
         patientProfilePage = new PatientProfilePage();
         programPatientsTab = new ProgramPatientsTab();
         userPatientsPage = new UserPatientsPage();
+        programSteps = new ProdProgramSteps();
     }
 
     @Override
@@ -89,6 +91,29 @@ public class ProdProgramSteps implements ProgramSteps {
         //programSettingsPage.statusPopup.close();
         return this;
     }
+
+    @Override
+    public ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1, String programName2) {
+        programSettingsPage.programTypeDropDown.select("Caregiver program");
+        programSettingsPage.linkedPatientProgramDropDown.click();
+        programSettingsPage.selectLinkedPatientProgram(programName1);
+        programSettingsPage.saveButton.click();
+
+        return this;
+    }
+
+    @Override
+    public boolean isProgramLinked(String clientName, String programName1, String programName2) {
+        programSteps.goToProgramSettings(clientName, programName1);
+        String actualLinkedProgram = programSettingsPage.linkedCaregiverProgramElement.getText();
+
+        if(actualLinkedProgram.equals(programName2)){
+            return true;
+        }
+
+        return false;
+    }
+
 
     @Override
     public ProgramSteps addOptOutHeader(Client client, String programName, String message) {
@@ -723,8 +748,8 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public boolean isAttachedImageDisplayed(String patientName) {
-        waitFor(()->programsPatientsPage.isOpened());
-        programsPatientsPage.patientTable.searchFor(patientName);
+        waitFor(()-> programsPatientsPage.isOpened());
+        programsPatientsPage.patientTable.searchInTable("Name", patientName);
         selectPatientByName(patientName);
         patientMessageLogsPage.attachmentButton.click();
         waitFor(patientMessageLogsPage.attachmentSideBar.attachment::isDisplayed);
