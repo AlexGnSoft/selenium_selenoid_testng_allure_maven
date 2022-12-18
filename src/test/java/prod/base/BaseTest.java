@@ -70,7 +70,6 @@ public abstract class BaseTest implements IDataGenerator {
     public void setUp(ITestContext context){
         //Using stream API we implement re-run failed tests to each test method
         //Arrays.stream(context.getAllTestMethods()).forEach(x->x.setRetryAnalyzerClass(RetryAnalyzer.class));
-        Arrays.stream(context.getAllTestMethods()).forEach(x->x.setRetryAnalyzerClass(RetryAnalyzer.class));
     }
 
     @BeforeClass(alwaysRun = true)

@@ -8,6 +8,7 @@ import com.carespeak.domain.ui.prod.component.sidebar.SideBarMenu;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.popup.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CampaignsPage extends AbstractCampaignsPage {
@@ -33,6 +34,10 @@ public class CampaignsPage extends AbstractCampaignsPage {
     @FindBy(xpath = "//button[@class='close']")
     public Button closeButtonOfCampaignSavedMessage;
 
+    @ElementName("Campaign data table wrapper")
+    @FindBy(id = "campaignsTableWrapper")
+    public WebElement campaignDataTableWrapper;
+
     @ElementName("Campaign name")
     @FindBy(xpath = "//tbody/tr[@role='row']/td/strong/a")
     public ClickableElement firstCampaignName;
@@ -51,7 +56,7 @@ public class CampaignsPage extends AbstractCampaignsPage {
 
     public CampaignsPage() {
         searchClient = new SearchWithSelection();
-        campaignTable = new ItemsTable(By.id("campaignsTableWrapper"));
+        campaignTable = new ItemsTable(By.id("campaignList"));
         sideBarMenu = new SideBarMenu();
         selectModulePopup = new SelectModulePopup();
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();

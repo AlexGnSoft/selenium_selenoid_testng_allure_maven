@@ -124,8 +124,9 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
         campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
         campaignsPage.availableMessagesPopup.waitForDisappear();
-        //campaignMessagesPage.clickOnSaveCampaignButton();
-        campaignMessagesPage.saveCampaignButton.click();
+        campaignsPage.sleepWait(1000);
+        campaignMessagesPage.saveCampaignButton.doubleClick();
+        campaignsPage.sleepWait(1000);
         return this;
     }
 
@@ -171,10 +172,9 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.availableMessagesPopup.checkBoxToSelectMessage.click();
         campaignsPage.availableMessagesPopup.allocateButtonOnPopup.click();
         campaignsPage.availableMessagesPopup.waitForDisappear();
-        //campaignMessagesPage.clickOnSaveCampaignButton();
-        campaignMessagesPage.saveCampaignButton.click();
-        campaignsPage.availableMessagesPopup.waitForDisappear();
-        campaignsPage.closeButtonOfCampaignSavedMessage.click();
+        campaignsPage.sleepWait(1000);
+        campaignMessagesPage.saveCampaignButton.doubleClick();
+        campaignsPage.sleepWait(1000);
         return this;
     }
 
@@ -319,21 +319,21 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
-    public boolean isCampaignExist(String clientName, String campaignName) {
+    public boolean isCampaignExist(String clientName, String expectedCampaignName) {
+        boolean result = false;
+        waitFor(()->campaignsPage.isOpened());
+        campaignsPage.campaignTable.searchInTable("Name", expectedCampaignName);
+        campaignsPage.campaignDataTableWrapper.isDisplayed();
         TableRowItem messageRow = campaignsPage.campaignTable.getFirstRowItem();
         if(messageRow == null){
             throw new RuntimeException("Campaign was not found!");
         }
 
-        campaignsPage.searchClient.search(clientName);
-        campaignsPage.campaignTable.searchFor(campaignName);
-
-        boolean result = false;
-        String actualSmsName = campaignsPage.firstCampaignName.getText();
-        if(actualSmsName.equals(campaignName))
+        String actualCampaignName = messageRow.getDataByHeader("Name");
+        if(actualCampaignName.equals(expectedCampaignName))
             result = true;
 
-        Logger.info("Is campaign'" + campaignName + "' is found? '"+ result);
+        Logger.info("Is campaign'" + expectedCampaignName + "' is found? '"+ result);
         return result;
     }
 
@@ -354,6 +354,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     @Override
     public boolean isCampaignAddedToProgram(String campaignName) {
         boolean result = false;
+        programsCampaignsPage.addedCampaignsToProgramTable.searchInTable("Name", campaignName);
         TableRowItem tableRowItem = programsCampaignsPage.addedCampaignsToProgramTable.getFirstRowItem();
         if(tableRowItem.getDataByHeader("Name").equals(campaignName))
             result = true;

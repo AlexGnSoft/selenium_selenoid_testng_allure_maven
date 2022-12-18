@@ -86,7 +86,7 @@ public class ProdProgramSteps implements ProgramSteps {
         programSettingsPage.programAccessDropDown.select(programAccess.getValue());
         programSettingsPage.saveButton.click();
         programSettingsPage.statusPopup.waitForDisplayed();
-        programSettingsPage.statusPopup.close();
+        //programSettingsPage.statusPopup.close();
         return this;
     }
 

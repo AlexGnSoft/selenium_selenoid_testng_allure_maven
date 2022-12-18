@@ -82,7 +82,6 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         String campaignDescription = getRandomString();
 
         getTestBiometricMedicationMessage(messageName);
-        getTestProgram(clientName, programName);
         site.campaignSteps()
                 .goToCampaignsTab()
                 .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER);
