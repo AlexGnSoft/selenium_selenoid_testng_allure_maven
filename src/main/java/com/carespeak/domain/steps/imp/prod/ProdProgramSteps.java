@@ -70,7 +70,6 @@ public class ProdProgramSteps implements ProgramSteps {
         patientProfilePage = new PatientProfilePage();
         programPatientsTab = new ProgramPatientsTab();
         userPatientsPage = new UserPatientsPage();
-        programSteps = new ProdProgramSteps();
     }
 
     @Override

@@ -66,6 +66,7 @@ public class CustomDecorator implements FieldDecorator {
     }
 
     protected boolean isDecoratableList(Field field) {
+
         if (!List.class.isAssignableFrom(field.getType())) {
             return false;
         } else {
