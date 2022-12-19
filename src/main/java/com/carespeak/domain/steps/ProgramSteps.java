@@ -20,24 +20,6 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addNewProgram(String clientName, String programName, ProgramAccess programAccess);
 
-    /**
-     * Creates new Program for provided client.
-     *
-     * @param programName1   program name of first program
-     * @param programName2   program name of second program
-     * @return ProgramSteps object
-     */
-    ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1, String programName2);
-
-    /**
-     * Creates new Program for provided client.
-     *
-     * @param programName1   program name of first program
-     * @param programName2   program name of second program
-     * @return ProgramSteps object
-     */
-    boolean isProgramLinked(String clientName, String programName1, String programName2);
-
 
     /**
      * Adds OptOut Header for specified client and program with specified message
