@@ -354,6 +354,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     @Override
     public boolean isCampaignAddedToProgram(String campaignName) {
         boolean result = false;
+        waitFor(() -> programsCampaignsPage.searchFieldButton.isVisible());
         programsCampaignsPage.addedCampaignsToProgramTable.searchInTable("Name", campaignName);
         TableRowItem tableRowItem = programsCampaignsPage.addedCampaignsToProgramTable.getFirstRowItem();
         if(tableRowItem.getDataByHeader("Name").equals(campaignName))

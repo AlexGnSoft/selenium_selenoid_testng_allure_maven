@@ -16,6 +16,7 @@ public class SiteStepsHolder {
     private MessagesSteps messagesSteps;
     private ClientSteps clientSteps;
     private CampaignSteps campaignSteps;
+    private PatientSteps patientSteps;
 
     public SiteStepsHolder(Config config, IStepsReporter reporter) {
         this.config = config;
@@ -48,6 +49,14 @@ public class SiteStepsHolder {
             programSteps = reporter.createStepProxy(clazz);
         }
         return programSteps;
+    }
+
+    public PatientSteps patientSteps() {
+        if (patientSteps == null) {
+            Class clazz = isCurrentProdVersion() ? ProdPatientSteps.class : null;
+            patientSteps = reporter.createStepProxy(clazz);
+        }
+        return patientSteps;
     }
 
     public MessagesSteps messagesSteps() {

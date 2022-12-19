@@ -78,6 +78,7 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     public void selectLinkedPatientProgram(String program1) {
         By locator = By.xpath(String.format(LINKED_PATIENT_PROGRAM_DROPDOWN_VALUE_XPATH, program1));
         ClickableElement program = new ClickableElement(driver.findElement(locator), program1 + " dropDownElement");
+        waitFor(program::isDisplayed);
         program.click();
     }
 

@@ -1,9 +1,8 @@
-package prod.patient_level;
+package prod.smoke.patient_level;
 
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.patient.Patient;
-import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -22,25 +21,19 @@ public class PatientManagementTest extends AbstractPatientLevelTest {
         client = getTestClientByCode("PatientLevelTest client " + getFormattedDate("dd-MM-yy-H-mm"));
         clientName = client.getName();
         patient = new Patient();
-        patient.setFirstName("PatientFirstName" + getRandomString());
-        patient.setLastName("PatientLastName" + getRandomString());
-        patient.setEmail(getRandomString()+"@optimizerx.com");
-        patient.setZipCode("77777");
-        patient.setCellPhone(getGeneratedPhoneNumber());
-        patient.setTimezone("Eastern Time (New York)");
-        patient.setMonthOfBirth("March");
-        patient.setDayOfBirth("5");
-        patient.setYearOfBirth("1980");
-        patient.setSex(Sex.MALE);
-        softAssert = new SoftAssert();
     }
 
     @Test(description = "Create patient list")
     public void createPatientList_MHM_T150(){
+        //Test data
+        String patientListName = getRandomString();
+        patient.setFirstName("PatientManagementTestPatient-" + getRandomString());
 
+        site.patientSteps().addPatientList(clientName, patientListName);
 
+        boolean isPatientListCreated = site.patientSteps().isPatientListCreated(patientListName);
 
-
+        Assert.assertTrue(isPatientListCreated, "Patient list was not created");
     }
 
 

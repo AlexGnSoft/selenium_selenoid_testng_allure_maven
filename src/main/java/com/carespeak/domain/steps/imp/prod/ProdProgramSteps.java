@@ -14,6 +14,7 @@ import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.admin_tools.users.UserPatientsPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
+import com.carespeak.domain.ui.prod.page.patient_lists.PatientListsPage;
 import com.carespeak.domain.ui.prod.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.prod.page.programs.auto_responders.ProgramAutoRespondersPage;
 import com.carespeak.domain.ui.prod.page.programs.consent_management.ProgramConsentManagementPage;
@@ -51,7 +52,7 @@ public class ProdProgramSteps implements ProgramSteps {
     private PatientProfilePage patientProfilePage;
     private ProgramPatientsTab programPatientsTab;
     private UserPatientsPage userPatientsPage;
-    private ProgramSteps programSteps;
+    private PatientListsPage patientListsPage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -96,6 +97,7 @@ public class ProdProgramSteps implements ProgramSteps {
     public ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1, String programName2) {
         programSettingsPage.programTypeDropDown.select("Caregiver program");
         programSettingsPage.linkedPatientProgramDropDown.click();
+
         programSettingsPage.selectLinkedPatientProgram(programName1);
         programSettingsPage.saveButton.click();
 
@@ -166,7 +168,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public ProgramSteps goToProgramSettings(String clientName, String programName) {
         String url = dashboardPage.getCurrentUrl();
-        dashboardPage.headerMenu.programsMenuItem.click();
+        dashboardPage.headerMenu.programsMenuItemRedefined.click();
         programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
         waitFor(()-> programsPage.isOpened());
         programsPage.searchClient.search(clientName);
@@ -576,7 +578,11 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public List<String> getEndpointsOnProgramLevel(String programName) {
-        dashboardPage.headerMenu.programsMenuItem.click();
+        String url = dashboardPage.getCurrentUrl();
+        dashboardPage.headerMenu.programsMenuItemRedefined.click();
+        programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
+        waitFor(()-> programsPage.isOpened());
+        programsPage.programTable.searchFor(programName);
         programsPage.programTable.editFirstItemButton().click();
         programSettingsPage.programEndpointDropdown.click();
         return programSettingsPage.getEndpoints();

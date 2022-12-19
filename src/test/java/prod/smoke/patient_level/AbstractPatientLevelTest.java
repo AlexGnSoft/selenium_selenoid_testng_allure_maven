@@ -1,4 +1,4 @@
-package prod.patient_level;
+package prod.smoke.patient_level;
 
 import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
