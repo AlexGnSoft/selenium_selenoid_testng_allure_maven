@@ -103,13 +103,13 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public boolean isProgramLinked(String clientName, String programName1, String programName2) {
-        programSteps.goToProgramSettings(clientName, programName1);
+        goToProgramSettings(clientName, programName1);
         String actualLinkedProgram = programSettingsPage.linkedCaregiverProgramElement.getText();
 
         if(actualLinkedProgram.equals(programName2)){
+            Logger.info("Caregiver program " + programName2 + " was linked to Patient program");
             return true;
         }
-
         return false;
     }
 
