@@ -81,6 +81,7 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         dashboardPage.headerMenu.programsMenuItem.click();
         //programsPage.searchClient.search(clientName);
+        waitFor(()-> programsPage.isOpened());
         programsPage.addProgramButton.isDisplayed();
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);
@@ -167,8 +168,9 @@ public class ProdProgramSteps implements ProgramSteps {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.programsMenuItem.click();
         programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
+        waitFor(()-> programsPage.isOpened());
         programsPage.searchClient.search(clientName);
-        programsPage.isClientSelected(clientName);
+        //programsPage.isClientSelected(clientName);
         programsPage.programDataTableWrapper.isDisplayed();
         programsPage.programTable.searchFor(programName);
         programsPage.programTable.editFirstItemButton().click();
