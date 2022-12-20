@@ -4,6 +4,7 @@ import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;
+import com.carespeak.domain.ui.prod.page.programs.ProgramsPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,6 +24,7 @@ class TableBody extends AbstractComponent {
     private static final String TABLE_CELLS = ".//td";
     private static final String TABLE_CELL_LOCATOR = ".//td[%s]";
     private static final String tableLocatorId = "cs-as-table";
+    private static final ProgramsPage programPage = new ProgramsPage();
 
     @ElementName("List of patients")
     @FindBy(xpath = "//tr/td/a[@href]")
@@ -47,6 +49,7 @@ class TableBody extends AbstractComponent {
     public TableRowItem findItemBy(String tableHeader, String valueToSearch) {
         Logger.info("Searching for '" + valueToSearch + "' in column '" + tableHeader + "'");
         try {
+            programPage.sleepWait(1500);
             waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();
@@ -128,6 +131,7 @@ class TableBody extends AbstractComponent {
     public TableRowItem getFirstRowItem() {
         Logger.info("Receiving first row item...");
         try {
+            programPage.sleepWait(1500);
             waitFor(() -> driver.findElement(tableLocator) != null);
             table = driver.findElement(tableLocator);
             Map<String, Integer> headersMap = getHeadersMap();

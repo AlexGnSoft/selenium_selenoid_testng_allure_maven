@@ -82,8 +82,8 @@ public class ProdProgramSteps implements ProgramSteps {
         }
         dashboardPage.headerMenu.programsMenuItem.click();
         //programsPage.searchClient.search(clientName);
-        waitFor(()-> programsPage.isOpened());
-        programsPage.addProgramButton.isDisplayed();
+        //waitFor(()-> programsPage.isOpened());
+        programsPage.sleepWait(2000);
         programsPage.addProgramButton.click();
         programSettingsPage.programNameInput.enterText(programName);
         programSettingsPage.programAccessDropDown.select(programAccess.getValue());
@@ -159,8 +159,10 @@ public class ProdProgramSteps implements ProgramSteps {
         patientsTab.moveToProgramBtn.click();
         patientsTab.selectProgramByClientAndProgramName(landingProgramName);
         patientsTab.moveButton.click();
-        waitFor(() -> patientsTab.confirmMoveButton.isVisible());
-        patientsTab.confirmMoveButton.click();
+        programsPage.sleepWait(1500);
+        //waitFor(() -> patientsTab.confirmMoveButton.isVisible());  this waiter doesn't work, that is why sleepWait was added
+        patientsTab.confirmMoveButton.doubleClick();
+        programsPage.sleepWait(1000);
 
         return this;
     }

@@ -38,7 +38,7 @@ public class ProdPatientSteps implements PatientSteps {
         boolean result = false;
         waitFor(() -> patientListsPage.isOpened());
         patientListsPage.patientListTable.searchInTable("Name", patientListName);
-        patientListsPage.patientDataTableWrapper.isDisplayed();
+        patientListsPage.sleepWait(2000);
 
         TableRowItem tableRowItem = patientListsPage.patientListTable.getFirstRowItem();
         if(tableRowItem == null){
