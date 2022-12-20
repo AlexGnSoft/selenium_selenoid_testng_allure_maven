@@ -18,4 +18,5 @@ public interface PatientSteps extends BaseSteps {
      * @return ProgramSteps object
      */
     boolean isPatientListCreated(String patientListName);
+
 }

@@ -7,6 +7,8 @@ import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.factory.DriverFactory;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.programs.AbstractProgramPage;
+import com.carespeak.domain.ui.prod.page.programs.ProgramsPage;
+import com.carespeak.domain.ui.prod.popup.AddSelectedPatientToPatientListPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,6 +37,11 @@ public class ProgramPatientsTab extends AbstractProgramPage {
     @ElementName("Move to program button")
     @FindBy(xpath = "//span[@id='csPatientGroupMove']")
     public Button moveToProgramBtn;
+
+    @ElementName("Add to patient list button")
+    @FindBy(id = "csPatientListAdd")
+    public Button addToPatientListBtn;
+
 
     @ElementName("Move selected patients to program button")
     @FindBy(xpath = "//select[contains(@name, 'programSelect')]")

@@ -24,6 +24,7 @@ public class ProgramsPage extends AbstractPage {
 
     public ConfirmationPopup confirmationPopup;
 
+
     public StatusMessage statusMessage;
 
     private static final String CAMPAIGN_DROPDOWN_VALUE_XPATH = "//span[contains(text(),'%s')]";

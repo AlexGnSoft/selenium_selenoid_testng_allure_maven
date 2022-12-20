@@ -501,6 +501,33 @@ public class ProdProgramSteps implements ProgramSteps {
         return this;
     }
 
+    @Override
+    public ProgramSteps addNewPatientLimitedFieldsInner(Patient patient) {
+        programSettingsPage.sideBarMenu.openItem("Patients");
+        ProgramPatientsTab patientsTab = programsPatientsPage.goToPatientsTab();
+        patientsTab.addPatientBtn.click();
+        addPatientsPage.cellPhoneInput.enterText(patient.getCellPhone());
+        addPatientsPage.cellPhoneConfirmationInput.enterText(patient.getCellPhone());
+        addPatientsPage.timezoneDropdown.select(patient.getTimezone());
+        addPatientsPage.firstNameInput.enterText(patient.getFirstName());
+        addPatientsPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public ProgramSteps addPatientToList(String patientName, String patientListName) {
+        programsPage.sleepWait(1000);
+        programsPatientsPage.checkboxOfFirstPatient.check();
+        programsPatientsPage.addToPatientListBtn.click();
+        //programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.click();
+        //programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDown.select(programsPatientsPage.addSelectedPatientToPatientListPopup.patientListExpand, patientListName);
+
+        waitFor(() -> !programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.isDisplayed());
+        programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.click();
+
+        return this;
+    }
+
     public void goToProgramTab() {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.programsMenuItem.click();

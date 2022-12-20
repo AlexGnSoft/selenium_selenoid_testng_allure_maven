@@ -214,6 +214,22 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addNewPatientLimitedFields(Patient patient, Client client, String programName);
 
+    /**
+     * Add patient to specific program with Last name, Email, cellPhone as an inner method
+     *
+     * @return Program Steps object
+     */
+    ProgramSteps addNewPatientLimitedFieldsInner(Patient patient);
+
+    /**
+     * Add patient to patient list
+     *
+     * @param patientName           patient name
+     * @param patientListName       patient list name
+     * @return ProgramSteps object
+     */
+    ProgramSteps addPatientToList(String patientName, String patientListName);
+
 
     /**
      * Get program by name from column
