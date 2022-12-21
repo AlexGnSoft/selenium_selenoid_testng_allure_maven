@@ -17,7 +17,7 @@ public interface ICanWait {
      * @return true if wait was successful
      */
     default Boolean waitFor(Callable<Boolean> func) {
-        return waitFor(func, 5);
+        return waitFor(func, 4);
     }
 
     /**

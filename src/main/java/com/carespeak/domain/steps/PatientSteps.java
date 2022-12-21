@@ -20,12 +20,22 @@ public interface PatientSteps extends BaseSteps {
     boolean isPatientListCreated(String patientListName);
 
     /**
-     * Add patient to patient list
+     * To verify that patient is added to patient list
      *
      * @param patientName           patient name
      * @param patientListName       patient list name
      * @return ProgramSteps object
      */
     boolean isPatientAddedToPatientList(String patientName, String patientListName);
+
+    /**
+     * To verify that patients are added to patient list
+     *
+     * @param patientsNumber           number of patients
+     * @param patientFirst             first Patient
+     * @param patientSecond            second Patient
+     * @return ProgramSteps object
+     */
+    boolean arePatientsAddedToPatientList(int patientsNumber, String patientFirst, String patientSecond);
 
 }

@@ -245,7 +245,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     @Override
     public MessagesSteps updateTextMessageBody(String newMessage) {
         messagesPage.messageTable.editFirstItemButton().click();
-        messagesPage.messageName.isDisplayed();
+        waitFor(() -> messagesPage.messageName.isDisplayed());
         sideBarMenu.openItem("SMS");
         messagesPage.messageTextField.enterText(newMessage);
         messagesPage.saveButton.click();

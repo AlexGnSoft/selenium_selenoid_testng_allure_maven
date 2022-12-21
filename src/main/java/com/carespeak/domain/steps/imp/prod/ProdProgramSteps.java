@@ -528,6 +528,17 @@ public class ProdProgramSteps implements ProgramSteps {
         return this;
     }
 
+    @Override
+    public ProgramSteps addMultiplePatientsToList(int numberOFPatients) {
+        waitFor(() -> programsPatientsPage.checkboxesListOfPatients.size() == numberOFPatients);
+        programsPatientsPage.selectMultiplePatients(numberOFPatients);
+        programsPatientsPage.addToPatientListBtn.click();
+        waitFor(() -> !programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.isDisplayed());
+        programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.click();
+
+        return this;
+    }
+
     public void goToProgramTab() {
         String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.programsMenuItem.click();

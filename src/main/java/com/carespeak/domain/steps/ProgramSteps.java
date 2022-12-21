@@ -230,6 +230,14 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addPatientToList(String patientName, String patientListName);
 
+    /**
+     * Add patient to patient list
+     *
+     * @param numberOFPatients      number of patients
+     * @return ProgramSteps object
+     */
+    ProgramSteps addMultiplePatientsToList(int numberOFPatients);
+
 
     /**
      * Get program by name from column

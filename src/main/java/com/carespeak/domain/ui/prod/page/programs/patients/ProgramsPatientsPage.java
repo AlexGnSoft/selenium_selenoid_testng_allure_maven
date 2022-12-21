@@ -10,7 +10,10 @@ import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatie
 import com.carespeak.domain.ui.prod.popup.AddSelectedPatientToPatientListPopup;
 import com.carespeak.domain.ui.prod.popup.RemoveSelectedPatientPopup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class ProgramsPatientsPage extends AbstractProgramPage {
 
@@ -39,6 +42,10 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     @FindBy(xpath = "//input[contains(@id,'user-')]")
     public CheckBox checkboxOfFirstPatient;
 
+    @ElementName("Checkbox of the all patient")
+    @FindBy(xpath = "//input[contains(@id,'user-')]")
+    public List<WebElement> checkboxesListOfPatients;
+
     public ProgramsPatientsPage() {
         patientTable = new ItemsTable(By.id("patient"));
         removeSelectedPatientPopup = new RemoveSelectedPatientPopup();
@@ -58,7 +65,13 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
         waitForTabToBecomeActive(tabName);
     }
 
-    private void waitForTabToBecomeActive(String tabName) {
+    protected void waitForTabToBecomeActive(String tabName) {
         waitFor(() -> driver.findElement(By.xpath(String.format(ACTIVE_TAB_LOCATOR, tabName))).isDisplayed());
+    }
+
+    public void selectMultiplePatients(int numberOfPatients) {
+        for (int i = 0; i < numberOfPatients; i++) {
+            checkboxesListOfPatients.get(i).click();
+        }
     }
 }

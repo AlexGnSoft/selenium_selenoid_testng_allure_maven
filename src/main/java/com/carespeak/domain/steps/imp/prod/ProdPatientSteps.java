@@ -66,7 +66,6 @@ public class ProdPatientSteps implements PatientSteps {
         patientListsPage.sleepWait(1000);
         //patientListsPage.patientDataTableWrapper.searchInTable("Name", patientName); //search module does not work (bug is created)
 
-
         TableRowItem patientData = patientListsPage.patientListTable.getFirstRowItem();
         if(patientData == null){
             throw  new RuntimeException("Patient was not found in patient list");
@@ -76,7 +75,21 @@ public class ProdPatientSteps implements PatientSteps {
         if(actualPatientName.equals(patientName))
             isPatientAddedToPatientList = true;
 
-        Logger.info("Is patient found found? '" + isPatientAddedToPatientList);
+        Logger.info("Is patient found? '" + isPatientAddedToPatientList);
         return isPatientAddedToPatientList;
+    }
+
+    @Override
+    public boolean arePatientsAddedToPatientList(int numberOfPatients, String patientOne, String patientListName) {
+        if(!patientListsPage.isOpened()){
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.patientListsMenuItem.click();
+            patientListsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+        }
+
+        patientListsPage.firstPatientList.click();
+        String[] patientArray = {patientOne, patientListName, "", ""};
+
+        return patientListsPage.isPatientListContainsPatients(numberOfPatients, patientArray);
     }
 }
