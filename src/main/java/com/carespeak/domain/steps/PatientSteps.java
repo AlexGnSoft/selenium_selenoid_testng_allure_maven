@@ -19,4 +19,13 @@ public interface PatientSteps extends BaseSteps {
      */
     boolean isPatientListCreated(String patientListName);
 
+    /**
+     * Add patient to patient list
+     *
+     * @param patientName           patient name
+     * @param patientListName       patient list name
+     * @return ProgramSteps object
+     */
+    boolean isPatientAddedToPatientList(String patientName, String patientListName);
+
 }

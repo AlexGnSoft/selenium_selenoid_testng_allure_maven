@@ -25,7 +25,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
 
     @Test(description = "Create email template")
     public void createEmailTemplate_MHM_T87() {
-        String emailTemplateName = getRandomString();
+        String emailTemplateName = "Email template name " + getFormattedDate("dd-MM-yy-H-mm");
         site.adminToolsSteps().goToSpecificTab("Email Templates");
         site.messagesSteps().addEmailTemplate(clientName, emailTemplateName, getRandomString());
 

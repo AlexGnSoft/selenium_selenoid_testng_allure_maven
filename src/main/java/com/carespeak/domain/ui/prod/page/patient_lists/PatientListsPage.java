@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 public class PatientListsPage extends AbstractPage {
 
     public SearchWithSelection searchClient;
+    public ItemsTable patientDataTableWrapper;
     public ItemsTable patientListTable;
     public NewPatientListPopup newPatientListPopup;
 
@@ -20,13 +21,18 @@ public class PatientListsPage extends AbstractPage {
     @FindBy(id = "pl-add-btn")
     public Button newButton;
 
-    @ElementName("Patient table wrapper button")
-    @FindBy(id="patient-list-table_wrapper")
-    public ClickableElement patientDataTableWrapper;
+    @ElementName("First patient list button")
+    @FindBy(xpath = "//tr[@role='row']//td/a")
+    public ClickableElement firstPatientList;
+
+//    @ElementName("Patient table wrapper button")
+//    @FindBy(id="patient-list-table_wrapper")
+//    public ClickableElement patientDataTableWrapper;
 
     public PatientListsPage() {
         searchClient = new SearchWithSelection();
-        patientListTable = new ItemsTable(By.id("patient-list-table"));
+        patientDataTableWrapper = new ItemsTable(By.id("patient-list-table_wrapper"));
+        patientListTable = new ItemsTable(By.id("patient-list-items-table"));
         newPatientListPopup = new NewPatientListPopup();
 
     }

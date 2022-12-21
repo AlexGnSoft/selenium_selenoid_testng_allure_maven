@@ -204,6 +204,7 @@ class TableBody extends AbstractComponent {
     }
 
     public ClickableElement editFirstRecordButton() {
+        waitFor(() -> table.isDisplayed());
         By locator = By.xpath("//*[contains(@class, 'cell-controls')]//a");
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.elementToBeClickable(locator));

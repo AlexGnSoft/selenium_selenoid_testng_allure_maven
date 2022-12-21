@@ -35,21 +35,48 @@ public class ProdPatientSteps implements PatientSteps {
 
     @Override
     public boolean isPatientListCreated(String patientListName) {
-        boolean result = false;
+        boolean isPatientListCreated = false;
         waitFor(() -> patientListsPage.isOpened());
-        patientListsPage.patientListTable.searchInTable("Name", patientListName);
+        patientListsPage.patientDataTableWrapper.searchInTable("Name", patientListName);
         patientListsPage.sleepWait(2000);
 
-        TableRowItem tableRowItem = patientListsPage.patientListTable.getFirstRowItem();
+        TableRowItem tableRowItem = patientListsPage.patientDataTableWrapper.getFirstRowItem();
         if(tableRowItem == null){
             throw new RuntimeException("Patient list was not found!");
         }
 
         String actualPatientListName = tableRowItem.getDataByHeader("Name");
         if(actualPatientListName.equals(patientListName))
-            result = true;
+            isPatientListCreated = true;
 
-        Logger.info("Is patient list'" + patientListName + "' is found? '"+ result);
-        return result;
+        Logger.info("Is patient list'" + patientListName + "' is found? '"+ isPatientListCreated);
+        return isPatientListCreated;
+    }
+
+    @Override
+    public boolean isPatientAddedToPatientList(String patientName, String patientListName) {
+        boolean isPatientAddedToPatientList = false;
+        if(!patientListsPage.isOpened()){
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.patientListsMenuItem.click();
+            patientListsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+        }
+
+        patientListsPage.firstPatientList.click();
+        patientListsPage.sleepWait(1000);
+        //patientListsPage.patientDataTableWrapper.searchInTable("Name", patientName); //search module does not work (bug is created)
+
+
+        TableRowItem patientData = patientListsPage.patientListTable.getFirstRowItem();
+        if(patientData == null){
+            throw  new RuntimeException("Patient was not found in patient list");
+        }
+
+        String actualPatientName = patientData.getDataByHeader("Name");
+        if(actualPatientName.equals(patientName))
+            isPatientAddedToPatientList = true;
+
+        Logger.info("Is patient found found? '" + isPatientAddedToPatientList);
+        return isPatientAddedToPatientList;
     }
 }

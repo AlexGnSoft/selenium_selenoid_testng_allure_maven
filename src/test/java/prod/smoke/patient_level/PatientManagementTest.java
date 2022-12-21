@@ -1,7 +1,6 @@
 package prod.smoke.patient_level;
 
 import com.carespeak.domain.entities.client.Client;
-import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import org.testng.Assert;
@@ -28,7 +27,7 @@ public class PatientManagementTest extends AbstractPatientLevelTest {
     @Test(description = "Create patient list")
     public void createPatientList_MHM_T150(){
         //Test data
-        String patientListName = getRandomString();
+        String patientListName = "Patient list name " + getFormattedDate("dd-MM-yy-H-mm");
         patient.setFirstName("PatientManagementTestPatient-" + getRandomString());
 
         site.patientSteps().addPatientList(clientName, patientListName);
@@ -41,7 +40,7 @@ public class PatientManagementTest extends AbstractPatientLevelTest {
     @Test(description = "Add patient to a patient list")
     public void addPatientToList_MHM_T151(){
         //Test data
-        String programName = getRandomString();
+        String programName = "Patient program " + getFormattedDate("dd-MM-yy-H-mm");
         String patientListName = getRandomString();
         patient.setCellPhone(getGeneratedPhoneNumber());
 
@@ -53,15 +52,10 @@ public class PatientManagementTest extends AbstractPatientLevelTest {
                 .addPatientToList(patient.getFirstName(), patientListName);
 
         boolean isPatientAddedToPatientList =
-                site.patientSteps().isPatientAddedToPatientList(patientListName, patient.getFirstName());
+                site.patientSteps().isPatientAddedToPatientList(patient.getCellPhone(), patient.getFirstName());
 
-       // Assert.assertTrue(isPatientAddedToList, " Patient was not added to list");
+        Assert.assertTrue(isPatientAddedToPatientList, " Patient was not added to list");
     }
-
-
-
-
-
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {

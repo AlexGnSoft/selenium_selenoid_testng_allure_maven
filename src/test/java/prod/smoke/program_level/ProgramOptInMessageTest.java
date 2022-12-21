@@ -1,6 +1,5 @@
 package prod.smoke.program_level;
 
-import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.core.constant.Constants;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.MessageLogItem;
