@@ -63,7 +63,7 @@ public class ProdPatientSteps implements PatientSteps {
         }
 
         patientListsPage.firstPatientList.click();
-        patientListsPage.sleepWait(1000);
+        waitFor(()-> !patientListsPage.firstPatientList.isVisible());
         //patientListsPage.patientDataTableWrapper.searchInTable("Name", patientName); //search module does not work (bug is created)
 
         TableRowItem patientData = patientListsPage.patientListTable.getFirstRowItem();

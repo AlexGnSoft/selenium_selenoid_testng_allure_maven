@@ -97,7 +97,6 @@ public class ProdProgramSteps implements ProgramSteps {
     public ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1, String programName2) {
         programSettingsPage.programTypeDropDown.select("Caregiver program");
         programSettingsPage.linkedPatientProgramDropDown.click();
-
         programSettingsPage.selectLinkedPatientProgram(programName1);
         programSettingsPage.saveButton.click();
 

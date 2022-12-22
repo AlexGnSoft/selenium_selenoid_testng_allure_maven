@@ -51,6 +51,10 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     @FindBy(xpath = "//body/div/div[@role='combobox']//span[@class='text']")
     public List<WebElement> endpointList;
 
+    @ElementName("Linked patient programs list")
+    @FindBy(xpath = "//ul[@aria-expanded='true']/li/a/span[@class='text']")
+    public List<WebElement> linkedPatientProgramsList;
+
     @ElementName("Save program button")
     @FindBy(id = "programGeneralSaveBtn")
     public Button saveButton;
@@ -76,11 +80,11 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     }
 
     public void selectLinkedPatientProgram(String program1) {
-        waitFor(()-> programEndpointDropdown.isVisible());
-        By locator = By.xpath(String.format(LINKED_PATIENT_PROGRAM_DROPDOWN_VALUE_XPATH, program1));
-        ClickableElement program = new ClickableElement(driver.findElement(locator), program1 + " dropDownElement");
-        waitFor(program::isDisplayed);
-        program.click();
+        for (int i = 0; i <linkedPatientProgramsList.size(); i++) {
+            if(linkedPatientProgramsList.get(i).getText().contains(program1))
+                linkedPatientProgramsList.get(i).click();
+            break;
+        }
     }
 
 }
