@@ -405,11 +405,27 @@ public interface ProgramSteps extends BaseSteps {
      */
     ProgramSteps addAutoResponder(Client client, String programName, AutoRespondersStatus status, String message);
 
+
+    /**
+     * To verify that patient was removed from Uses page
+     *
+     * @param patientFirstName      patient name
+     * @return Program Steps Object
+     */
+    boolean isPatientRemovedFromUsersPage(String patientFirstName);
+
+    /**
+     * To verify that patient was removed from program page
+     *
+     * @param programName           program name
+     * @param patientFirstName      patient name
+     * @return Program Steps Object
+     */
+    boolean isPatientRemovedFromProgramPage(Client client,String programName, String patientFirstName);
+
     List<Patient> getPatients(Client client, String programName);
 
     ProgramSteps pageRefresh();
 
     ProgramSteps removePatient(String patientFirstName);
-
-    boolean isPatientRemovedFromUsersPage(String patientFirstName);
 }

@@ -22,6 +22,7 @@ public class PatientManagementTest extends AbstractPatientLevelTest {
         clientName = client.getName();
         patient = new Patient();
         patient.setTimezone("Eastern Time (New York)");
+        softAssert = new SoftAssert();
     }
 
     @Test(description = "Create patient list")
@@ -81,6 +82,30 @@ public class PatientManagementTest extends AbstractPatientLevelTest {
                 site.patientSteps().arePatientsAddedToPatientList(numberOfPatients, patient.getCellPhone(), patient2.getCellPhone());
 
         Assert.assertTrue(isPatientAddedToPatientList, " Patient was not added to list");
+    }
+
+    @Test(description = "Delete patient from patient list")
+    public void deletePatientFromPatientList_MHM_T155(){
+        //Test data
+        String programName = "Patient program " + getFormattedDate("dd-MM-yy-H-mm");
+        String patientListName = getRandomString();
+        patient.setCellPhone(getGeneratedPhoneNumber());
+        patient.setFirstName(getRandomString());
+
+        site.patientSteps().addPatientList(clientName, patientListName);
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addNewPatientLimitedFieldsInner(patient)
+                .addPatientToList(patient.getFirstName(), patientListName);
+
+        site.patientSteps().deletePatientFromPatientList(patient.getFirstName(), patientListName);
+
+        boolean isPatientRemovedFromUsersPage = site.programSteps().isPatientRemovedFromUsersPage(patient.getFirstName());
+        boolean isPatientRemovedFromProgramPage = site.programSteps().isPatientRemovedFromProgramPage(client, programName, patient.getFirstName());
+
+        softAssert.assertTrue(isPatientRemovedFromUsersPage, "Patient was not deleted from Users page");
+        softAssert.assertTrue(isPatientRemovedFromProgramPage, "Patient was not deleted from program page");
     }
 
     @AfterClass(alwaysRun = true)

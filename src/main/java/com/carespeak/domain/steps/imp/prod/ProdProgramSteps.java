@@ -383,6 +383,22 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public boolean isPatientRemovedFromProgramPage(Client client,String programName, String patientFirstName) {
+        boolean isPatientRemovedFromProgramPage = false;
+        if (!programsPatientsPage.isOpened()) {
+            goToProgramSettings(client.getName(), programName);
+        }
+        programsPatientsPage.sideBarMenu.openItem("Patients");
+        TableRowItem tableRowItem = programsPatientsPage.programPatientsTab.programPatientsTable.searchInTable("Name", patientFirstName);
+        if(tableRowItem == null) {
+            isPatientRemovedFromProgramPage = true;
+            Logger.info("Patient was removed from program patient page!");
+        }
+
+        return isPatientRemovedFromProgramPage;
+    }
+
+    @Override
     public ProgramSteps addNewPatientAllFields(Patient patient, Client client, String programName) {
         if (!addPatientsPage.isOpened()) {
             goToProgramSettings(client.getName(), programName);

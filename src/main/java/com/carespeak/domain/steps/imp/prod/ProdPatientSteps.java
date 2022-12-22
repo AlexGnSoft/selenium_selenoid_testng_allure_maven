@@ -80,6 +80,38 @@ public class ProdPatientSteps implements PatientSteps {
     }
 
     @Override
+    public PatientSteps deletePatientFromPatientList(String patientName, String patientListName) {
+        if(!patientListsPage.isOpened()){
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.patientListsMenuItem.click();
+            patientListsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
+        }
+
+        patientListsPage.firstPatientList.click();
+        patientListsPage.sleepWait(1000);
+        //patientListsPage.patientDataTableWrapper.searchInTable("Name", patientName); //search module does not work (bug is created)
+
+        patientListsPage.checkBoxOfFirstPatient.click();
+        patientListsPage.deletePatientButton.click();
+        waitFor(()->patientListsPage.deleteSelectedPatientPopup.okButton.isVisible());
+        patientListsPage.deleteSelectedPatientPopup.okButton.click();
+        waitFor(() -> !patientListsPage.checkBoxOfFirstPatient.isDisplayed());
+
+        return this;
+    }
+
+    @Override
+    public boolean isPatientDeletedFromUsersPage(String programName, String patientName) {
+
+
+
+
+
+
+        return false;
+    }
+
+    @Override
     public boolean arePatientsAddedToPatientList(int numberOfPatients, String patientOne, String patientListName) {
         if(!patientListsPage.isOpened()){
             String url = dashboardPage.getCurrentUrl();
