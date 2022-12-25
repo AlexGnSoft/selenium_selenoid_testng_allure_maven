@@ -14,7 +14,6 @@ import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.admin_tools.users.UserPatientsPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
-import com.carespeak.domain.ui.prod.page.patient_lists.PatientListsPage;
 import com.carespeak.domain.ui.prod.page.programs.ProgramsPage;
 import com.carespeak.domain.ui.prod.page.programs.auto_responders.ProgramAutoRespondersPage;
 import com.carespeak.domain.ui.prod.page.programs.consent_management.ProgramConsentManagementPage;
@@ -52,7 +51,6 @@ public class ProdProgramSteps implements ProgramSteps {
     private PatientProfilePage patientProfilePage;
     private ProgramPatientsTab programPatientsTab;
     private UserPatientsPage userPatientsPage;
-    private PatientListsPage patientListsPage;
 
     public ProdProgramSteps() {
         dashboardPage = new DashboardPage();
@@ -531,24 +529,31 @@ public class ProdProgramSteps implements ProgramSteps {
 
     @Override
     public ProgramSteps addPatientToList(String patientName, String patientListName) {
-        programsPage.sleepWait(1000);
+        waitFor(()-> programsPatientsPage.checkboxOfFirstPatient.isDisplayed());
         programsPatientsPage.checkboxOfFirstPatient.check();
         programsPatientsPage.addToPatientListBtn.click();
         //programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.click();
         //programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDown.select(programsPatientsPage.addSelectedPatientToPatientListPopup.patientListExpand, patientListName);
 
-        waitFor(() -> !programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.isDisplayed());
+        waitFor(() -> !programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.isDisplayed());
+        programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.click();
+        programsPatientsPage.addSelectedPatientToPatientListPopup.selectPatientList(patientListName);
+        waitFor(() -> programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.isDisplayed());
         programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.click();
 
         return this;
     }
 
     @Override
-    public ProgramSteps addMultiplePatientsToList(int numberOFPatients) {
+    public ProgramSteps addMultiplePatientsToList(int numberOFPatients, String patientListName) {
         waitFor(() -> programsPatientsPage.checkboxesListOfPatients.size() == numberOFPatients);
         programsPatientsPage.selectMultiplePatients(numberOFPatients);
+
         programsPatientsPage.addToPatientListBtn.click();
-        waitFor(() -> !programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.isDisplayed());
+        waitFor(() -> !programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.isDisplayed());
+        programsPatientsPage.addSelectedPatientToPatientListPopup.patientListDropDownButton.click();
+        programsPatientsPage.addSelectedPatientToPatientListPopup.selectPatientList(patientListName);
+        waitFor(() -> programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.isDisplayed());
         programsPatientsPage.addSelectedPatientToPatientListPopup.addButton.click();
 
         return this;

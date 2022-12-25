@@ -40,20 +40,21 @@ public interface PatientSteps extends BaseSteps {
     /**
      * To verify that patient is deleted from patient list
      *
-     * @param patientName           patient list name
      * @param patientName           patient name
+     * @param patientCellPhone       patient list name
      * @return ProgramSteps object
      */
-    boolean isPatientDeletedFromUsersPage(String programName, String patientName);
+    PatientSteps deletePatientFromAdmitToolsUsers(String patientName, String patientCellPhone);
+
 
     /**
      * To verify that patients are added to patient list
      *
-     * @param patientsNumber           number of patients
+     * @param numberOfPatients           number of patients
      * @param patientFirst             first Patient
      * @param patientSecond            second Patient
      * @return ProgramSteps object
      */
-    boolean arePatientsAddedToPatientList(int patientsNumber, String patientFirst, String patientSecond);
+    boolean arePatientsAddedToPatientList(int numberOfPatients, String patientFirst, String patientSecond, String patientListName);
 
 }

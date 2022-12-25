@@ -3,6 +3,7 @@ package com.carespeak.domain.steps.imp.prod;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.steps.PatientSteps;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
+import com.carespeak.domain.ui.prod.page.admin_tools.users.UserPatientsPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.patient_lists.PatientListsPage;
 
@@ -10,11 +11,13 @@ public class ProdPatientSteps implements PatientSteps {
 
     private PatientListsPage patientListsPage;
     private DashboardPage dashboardPage;
+    private UserPatientsPage userPatientsPage;
 
 
     public ProdPatientSteps() {
         patientListsPage = new PatientListsPage();
         dashboardPage = new DashboardPage();
+        userPatientsPage = new UserPatientsPage();
     }
 
     @Override
@@ -29,7 +32,7 @@ public class ProdPatientSteps implements PatientSteps {
         patientListsPage.newPatientListPopup.waitForDisplayed();
         patientListsPage.newPatientListPopup.nameInput.enterText(patientListName);
         patientListsPage.newPatientListPopup.saveButton.click();
-        patientListsPage.newPatientListPopup.waitForDisplayed();
+        patientListsPage.newPatientListPopup.waitForDisappear();
         return this;
     }
 
@@ -63,7 +66,7 @@ public class ProdPatientSteps implements PatientSteps {
         }
 
         patientListsPage.firstPatientList.click();
-        waitFor(()-> !patientListsPage.firstPatientList.isVisible());
+        patientListsPage.sleepWait(1500);
         //patientListsPage.patientDataTableWrapper.searchInTable("Name", patientName); //search module does not work (bug is created)
 
         TableRowItem patientData = patientListsPage.patientListTable.getFirstRowItem();
@@ -80,6 +83,22 @@ public class ProdPatientSteps implements PatientSteps {
     }
 
     @Override
+    public PatientSteps deletePatientFromAdmitToolsUsers(String patientName, String patientCellPhone) {
+        if (!userPatientsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.adminTools().goToSubMenu("Users");
+            userPatientsPage.waitFor(() -> !userPatientsPage.getCurrentUrl().equals(url));
+        }
+
+        userPatientsPage.searchClient.search("All");
+        userPatientsPage.patientsTable.searchFor(patientCellPhone);
+        userPatientsPage.deletePatientButton.click();
+        waitFor(() -> userPatientsPage.mobileHealthManagerPatientsPopup.okButton.isDisplayed());
+        userPatientsPage.mobileHealthManagerPatientsPopup.okButton.click();
+        return this;
+    }
+
+    @Override
     public PatientSteps deletePatientFromPatientList(String patientName, String patientListName) {
         if(!patientListsPage.isOpened()){
             String url = dashboardPage.getCurrentUrl();
@@ -88,7 +107,7 @@ public class ProdPatientSteps implements PatientSteps {
         }
 
         patientListsPage.firstPatientList.click();
-        patientListsPage.sleepWait(1000);
+        waitFor(()-> patientListsPage.checkBoxOfFirstPatient.isDisplayed());
         //patientListsPage.patientDataTableWrapper.searchInTable("Name", patientName); //search module does not work (bug is created)
 
         patientListsPage.checkBoxOfFirstPatient.click();
@@ -100,27 +119,19 @@ public class ProdPatientSteps implements PatientSteps {
         return this;
     }
 
-    @Override
-    public boolean isPatientDeletedFromUsersPage(String programName, String patientName) {
-
-
-
-
-
-
-        return false;
-    }
 
     @Override
-    public boolean arePatientsAddedToPatientList(int numberOfPatients, String patientOne, String patientListName) {
+    public boolean arePatientsAddedToPatientList(int numberOfPatients, String patientFirst, String patientSecond, String patientListName) {
         if(!patientListsPage.isOpened()){
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.patientListsMenuItem.click();
             patientListsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url));
         }
 
+        patientListsPage.patientListTable.searchFor(patientListName);
+        //waitFor(()-> patientListsPage.firstPatientList.isVisible());
         patientListsPage.firstPatientList.click();
-        String[] patientArray = {patientOne, patientListName, "", ""};
+        String[] patientArray = {patientFirst, patientSecond, "", ""};
 
         return patientListsPage.isPatientListContainsPatients(numberOfPatients, patientArray);
     }
