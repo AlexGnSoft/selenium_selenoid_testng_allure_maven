@@ -3,6 +3,7 @@ package com.carespeak.domain.steps;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.staff.StaffManager;
 
 import java.util.List;
 
@@ -219,4 +220,12 @@ public interface AdminToolsSteps extends BaseSteps {
      */
     AdminToolsSteps initiateSignUpAgreeFirstLastNameDate(String clientName, String programName, String phoneNumber, String endpoint,String keyword);
 
+
+    /**
+     * Add new user with provided parameters
+     *
+     * @param staffManager     staff manager object
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole);
 }

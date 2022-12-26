@@ -4,6 +4,7 @@ import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.*;
+import com.carespeak.domain.entities.staff.StaffManager;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ClientManagementTest extends AbstractClientLevelTest {
 
     private Client client;
+    private StaffManager staffManager;
     private String clientName;
     private String clientCode;
 
@@ -118,6 +120,23 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                 "Additional languages should not contain value:\n" +
                         languageToRemove + "\n" +
                         "but additional languages is " + Arrays.toString(actualLanguages.toArray()) + "\n");
+    }
+
+    @Test(description = "Create client level program staff manager - Multi client program manager")
+    public void createClientLevelProgramStaffManager_MHM_T45() {
+        //Test data
+        staffManager = new StaffManager();
+        staffManager.setFirstName(getRandomString());
+        staffManager.setLastName(getRandomString());
+        staffManager.setEmail(getRandomString() + "@gmail.com");
+        staffManager.setTimezone("Eastern Time (New York)");
+        String MULTI_CLIENT_ADMIN = "Multi client program manager";
+        String ROLE_PROGRAM_ADMIN = "Client level program manager";
+        String ROLE_PROGRAM_STAFF = "Regular staff program manager";
+        String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
+
+        client = getTestClientByCode(clientCode);
+        site.adminToolsSteps().addStaffManager(staffManager, MULTI_CLIENT_ADMIN);
     }
 
 

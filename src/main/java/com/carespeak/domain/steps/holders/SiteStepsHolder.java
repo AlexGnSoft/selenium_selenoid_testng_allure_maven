@@ -9,7 +9,6 @@ public class SiteStepsHolder {
 
     private Config config;
     private IStepsReporter reporter;
-
     private LoginSteps loginSteps;
     private AdminToolsSteps adminToolsSteps;
     private ProgramSteps programSteps;

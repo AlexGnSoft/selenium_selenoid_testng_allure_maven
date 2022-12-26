@@ -25,7 +25,6 @@ public class AddPatientsPage extends ProgramPatientsTab {
     @ElementName("Cell phone input")
     @FindBy(id = "mobile")
     public Input cellPhoneInput;
-
     @ElementName("Time zone dropdown selected element")
     @FindBy(xpath = "//option[contains(text(),'Time') and contains(@selected,'selected')]")
     public Dropdown timezoneDropdownSelected;

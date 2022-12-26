@@ -4,6 +4,7 @@ import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.staff.StaffManager;
 import com.carespeak.domain.steps.AdminToolsSteps;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
 import com.carespeak.domain.ui.prod.page.admin_tools.clients.ClientsPage;
@@ -12,6 +13,7 @@ import com.carespeak.domain.ui.prod.page.admin_tools.clients.language_settings.C
 import com.carespeak.domain.ui.prod.page.admin_tools.clients.modules.ClientModulesPage;
 import com.carespeak.domain.ui.prod.page.admin_tools.sms_send_simulator.SendSMSSimulatorPage;
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
+import com.carespeak.domain.ui.prod.page.staff.StaffPage;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     private ClientLanguageSettingsPage clientLanguageSettingsPage;
     private SendSMSSimulatorPage sendSMSSimulatorPage;
     private ProdProgramSteps prodProgramSteps;
+    private StaffPage staffPage;
 
     public ProdAdminToolsSteps() {
         clientsPage = new ClientsPage();
@@ -35,6 +38,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         clientModulesPage = new ClientModulesPage();
         clientLanguageSettingsPage = new ClientLanguageSettingsPage();
         sendSMSSimulatorPage = new SendSMSSimulatorPage();
+        staffPage = new StaffPage();
         prodProgramSteps = new ProdProgramSteps();
     }
 
@@ -283,6 +287,31 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
 
         simulateSMSToClient(phoneNumber, endpoint, "10/11/22");
         prodProgramSteps.goToProgramSettings(clientName, programName);
+
+        return this;
+    }
+
+    @Override
+    public AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole) {
+        if(!staffPage.isOpened()){
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.staffMenuItem.click();
+            staffPage.waitFor(()-> !dashboardPage.getCurrentUrl().equals(url), false);
+        }
+
+        staffPage.addButton.click();
+        staffPage.firstNameInput.enterText(staffManager.getFirstName());
+        staffPage.lastNameInput.enterText(staffManager.getLastName());
+        staffPage.emailInput.enterText(staffManager.getEmail());
+        staffPage.emailConfirmationInput.enterText(staffManager.getEmail());
+
+
+        staffPage.timezoneDropdown.select(staffManager.getTimezone());
+
+
+        staffPage.selectSecurityRole(requiredRole);
+        staffPage.saveButton.click();
+
 
         return this;
     }
