@@ -136,17 +136,16 @@ public interface MessagesSteps extends BaseSteps {
      *
      * @return return true if message is found, otherwise false
      */
-    MessagesSteps updateTextMessageBody(String newMessage);
+    MessagesSteps updateTextMessageBody(String medicationName, String newMessage);
 
     /**
      * Verify that messages is equal
      *
      * @param initialMessage    new text of a message
-     * @param expectedUpdatedMessage    new text of a message
      *
      * @return return true if message is updated, otherwise false
      */
-    boolean areMessageTextUpdated(String initialMessage, String expectedUpdatedMessage);
+    boolean areMessageTextUpdated(String medicationName_T81, String initialMessage);
 
     /**
      * Create a message for a specific Module, Action and Type

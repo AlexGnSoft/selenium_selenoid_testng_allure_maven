@@ -23,7 +23,7 @@ public class SideBarMenu extends AbstractComponent {
         waitFor(() -> driver.findElements(By.xpath(DISPLAYED_ITEMS_LOCATOR)).size() > 0, false);
         List<WebElement> menuItems = driver.findElements(By.xpath(DISPLAYED_ITEMS_LOCATOR));
         for (WebElement menuItem : menuItems) {
-            if (itemName.toLowerCase().equals(menuItem.getText().trim().toLowerCase())) {
+            if (itemName.equalsIgnoreCase(menuItem.getText().trim())) {
                 return new ClickableElement(menuItem, itemName + " menu item ");
             }
         }

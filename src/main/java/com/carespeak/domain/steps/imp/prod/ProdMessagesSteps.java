@@ -243,9 +243,9 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
-    public MessagesSteps updateTextMessageBody(String newMessage) {
+    public MessagesSteps updateTextMessageBody(String medicationName, String newMessage) {
+        messagesPage.messageTable.searchFor(medicationName);
         messagesPage.messageTable.editFirstItemButton().click();
-        waitFor(() -> messagesPage.messageName.isDisplayed());
         sideBarMenu.openItem("SMS");
         messagesPage.messageTextField.enterText(newMessage);
         messagesPage.saveButton.click();
@@ -254,7 +254,10 @@ public class ProdMessagesSteps implements MessagesSteps {
     }
 
     @Override
-    public boolean areMessageTextUpdated(String initialMessage, String expectedUpdatedMessage) {
+    public boolean areMessageTextUpdated(String medicationName_T81, String initialMessage) {
+        messagesPage.messageTable.searchFor(medicationName_T81);
+        String expectedUpdatedMessage = getMessageText();
+
         return messagesPage.areMessageTextUpdated(initialMessage, expectedUpdatedMessage);
     }
 

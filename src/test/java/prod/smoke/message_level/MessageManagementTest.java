@@ -36,7 +36,6 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isEmailTemplateCreated, "The email template was not created!");
     }
 
-
     @Test(description = "Create MMS message with picture - Module Medication")
     public void createMmsWithPicture_MHM_T71() {
         //Test data
@@ -67,6 +66,21 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isMessageCreated,"The message was not created!");
     }
 
+    @Test(description = "Edit text of sms message")
+    public void editSmsMessage_MHM_T81() {
+        String medicationName_T81 = getRandomString();
+
+        site.messagesSteps().addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, medicationName_T81, NotificationType.PAIN,
+                "${p} , tell us more about your symptoms level today.");
+
+        String initialMessage = site.messagesSteps().getMessageText();
+        site.messagesSteps().updateTextMessageBody(medicationName_T81, "Updated message");
+
+        boolean areMessagesEqual = site.messagesSteps().areMessageTextUpdated(medicationName_T81, initialMessage);
+
+        Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
+    }
+
     @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87")
     public void createEmailMessageAndSendIt_MHM_T84() {
         //Test data
@@ -80,22 +94,6 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         boolean isMessageWasSent = site.messagesSteps().sendTestMessage(emailMessageName);
 
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
-    }
-
-    @Test(description = "Edit text of sms message")
-    public void editSmsMessage_MHM_T81() {
-        String medicationName_T81 = getRandomString();
-
-        site.messagesSteps().addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, medicationName_T81, NotificationType.PAIN,
-                "${p} , tell us more about your symptoms level today.");
-
-        String initialMessage = site.messagesSteps().getMessageText();
-        site.messagesSteps().updateTextMessageBody("Updated message");
-        String updatedMessage = site.messagesSteps().getMessageText();
-
-        boolean areMessagesEqual = site.messagesSteps().areMessageTextUpdated(initialMessage, updatedMessage);
-
-        Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
     }
 
     @AfterClass(alwaysRun = true)

@@ -104,6 +104,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public boolean isProgramLinked(String clientName, String programName1, String programName2) {
         goToProgramSettings(clientName, programName1);
+        waitFor(()-> programSettingsPage.linkedCaregiverProgramElement.isDisplayed());
         String actualLinkedProgram = programSettingsPage.linkedCaregiverProgramElement.getText();
 
         if(actualLinkedProgram.equals(programName2)){
