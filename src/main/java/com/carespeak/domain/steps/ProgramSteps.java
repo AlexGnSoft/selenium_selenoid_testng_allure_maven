@@ -24,10 +24,9 @@ public interface ProgramSteps extends BaseSteps {
      * Creates new Program for provided client.
      *
      * @param programName1   program name of first program
-     * @param programName2   program name of second program
      * @return ProgramSteps object
      */
-    ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1, String programName2);
+    ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1);
 
     /**
      * Creates new Program for provided client.

@@ -92,9 +92,8 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
-    public ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1, String programName2) {
+    public ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1) {
         programSettingsPage.programTypeDropDown.select("Caregiver program");
-        programSettingsPage.linkedPatientProgramDropDown.click();
         programSettingsPage.selectLinkedPatientProgram(programName1);
         programSettingsPage.saveButton.click();
 

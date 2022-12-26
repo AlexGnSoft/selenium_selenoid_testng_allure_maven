@@ -9,10 +9,8 @@ import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.page.programs.AbstractProgramPage;
 import com.carespeak.domain.ui.prod.popup.StatusPopup;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +19,9 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     public StatusPopup statusPopup;
     public SearchWithSelection searchClient;
 
-    private static final String LINKED_PATIENT_PROGRAM_DROPDOWN_VALUE_XPATH = "//a[@aria-selected='true']/span[contains(text(),'%s')]";
-
     @ElementName("Program name input")
     @FindBy(id = "programName")
     public Input programNameInput;
-
-    @ElementName("Program URL name input")
-    @FindBy(id = "programUrlName")
-    public Input programUrlNameInput;
 
     @ElementName("Program access dropdown")
     @FindBy(id = "programAccess")
@@ -38,10 +30,6 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     @ElementName("Program type dropdown")
     @FindBy(id = "programType")
     public Dropdown programTypeDropDown;
-
-    @ElementName("Linked patient program dropdown")
-    @FindBy(xpath = "//button[@data-id='patientProgram']")
-    public Dropdown linkedPatientProgramDropDown;
 
     @ElementName("Endpoint dropdown")
     @FindBy(xpath = "//*[@data-id='endpoints']")
@@ -55,6 +43,11 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     @FindBy(xpath = "//ul[@aria-expanded='true']/li/a/span[@class='text']")
     public List<WebElement> linkedPatientProgramsList;
 
+    @ElementName("Programs dropdown button")
+    @FindBy(xpath = "//div[@id='patient-program-wrapper']//button")
+    public ClickableElement linkedPatientProgramExpandButton;
+
+
     @ElementName("Save program button")
     @FindBy(id = "programGeneralSaveBtn")
     public Button saveButton;
@@ -62,7 +55,6 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     @ElementName("Linked caregiver program element")
     @FindBy(xpath = "//div[contains(@class,'cs-form-element')]/a[@href]")
     public WebElement linkedCaregiverProgramElement;
-
 
 
     public ProgramGeneralSettingsPage() {
@@ -80,11 +72,11 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     }
 
     public void selectLinkedPatientProgram(String program1) {
-        for (int i = 0; i <linkedPatientProgramsList.size(); i++) {
-            if(linkedPatientProgramsList.get(i).getText().contains(program1))
-                linkedPatientProgramsList.get(i).click();
+        linkedPatientProgramExpandButton.click();
+        for (WebElement option: linkedPatientProgramsList) {
+            if(option.getText().equals(program1))
+                option.click();
             break;
         }
     }
-
 }

@@ -22,7 +22,6 @@ public class ClientSettingsPage extends AbstractClientPage {
     @FindBy(id = "notes")
     public Input notesInput;
 
-    //region Endpoints dropdown
     @ElementName("Endpoints dropdown button")
     @FindBy(xpath = "//*[@data-id='endpoints']")
     public ClickableElement endpointsExpand;
@@ -30,7 +29,6 @@ public class ClientSettingsPage extends AbstractClientPage {
     @ElementName("Endpoints dropdown")
     @FindBy(xpath = "//ul[@role='listbox']")
     public Dropdown endpointsDropdown;
-    //endregion Endpoints dropdown
 
     @ElementName("Next button")
     @FindBy(id = "nextBtn")
