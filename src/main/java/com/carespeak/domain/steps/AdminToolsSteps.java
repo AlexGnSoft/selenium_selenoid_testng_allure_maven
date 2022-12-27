@@ -222,12 +222,20 @@ public interface AdminToolsSteps extends BaseSteps {
 
 
     /**
-     * Add new user with provided parameters
+     * Add new staff manager
      *
      * @param staffManager     staff manager object
      * @return AdminToolsSteps object
      */
     AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole, String timeZone);
+
+    /**
+     * Delete new user with provided parameters
+     *
+     * @param staffManager     staff manager object
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps deleteStaffManager(StaffManager staffManager);
 
     /**
      * Verify that staff manager is created and exist of the staff table list

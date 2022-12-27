@@ -314,6 +314,13 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
+    public AdminToolsSteps deleteStaffManager(StaffManager staffManager){
+
+
+        return this;
+    }
+
+    @Override
     public boolean isStaffManagerCreated(String clientName, String staffEmail) {
         boolean result = false;
 

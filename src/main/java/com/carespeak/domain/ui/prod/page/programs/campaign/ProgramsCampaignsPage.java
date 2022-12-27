@@ -31,7 +31,8 @@ public class ProgramsCampaignsPage extends AbstractProgramPage {
     public ClickableElement firstAddedCampaignName;
 
     public ProgramsCampaignsPage() {
-        addedCampaignsToProgramTable = new ItemsTable(By.id("programCampaigns_wrapper"));
+        addedCampaignsToProgramTable = new ItemsTable(By.id("programCampaigns"));
+        //addedCampaignsToProgramTable = new ItemsTable(By.id("programCampaigns_wrapper"));
         addCampaignToProgramPopup = new AddCampaignToProgramPopup();
     }
 }
