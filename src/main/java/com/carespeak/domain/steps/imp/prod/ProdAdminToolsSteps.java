@@ -56,7 +56,6 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         clientSettingsPage.nextButton.click();
         clientModulesPage.check(modules);
         clientModulesPage.saveButton.click();
-
         clientModulesPage.statusPopup.waitForDisplayed();
         clientModulesPage.statusPopup.close();
         clientModulesPage.statusPopup.waitForDisappear();
@@ -292,7 +291,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
-    public AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole) {
+    public AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole, String timeZone) {
         if(!staffPage.isOpened()){
             String url = dashboardPage.getCurrentUrl();
             dashboardPage.headerMenu.staffMenuItem.click();
@@ -304,16 +303,34 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         staffPage.lastNameInput.enterText(staffManager.getLastName());
         staffPage.emailInput.enterText(staffManager.getEmail());
         staffPage.emailConfirmationInput.enterText(staffManager.getEmail());
-
-
-        staffPage.timezoneDropdown.select(staffManager.getTimezone());
-
-
+        staffPage.timeZoneDropdown.select(timeZone);
         staffPage.selectSecurityRole(requiredRole);
         staffPage.saveButton.click();
-
+        staffPage.statusPopup.waitForDisplayed();
+        staffPage.statusPopup.close();
+        staffPage.statusPopup.waitForDisappear();
 
         return this;
+    }
+
+    @Override
+    public boolean isStaffManagerCreated(String clientName, String staffEmail) {
+        boolean result = false;
+
+        staffPage.staffListBackButton.click();
+        staffPage.staffManagersTable.searchFor(staffEmail);
+
+        TableRowItem tableRowItem = staffPage.staffManagersTable.getFirstRowItem();
+        if(tableRowItem == null){
+            throw new RuntimeException("Staff manager was not found by email '" + staffEmail + "'!");
+        }
+
+        String actualEmail = tableRowItem.getDataByHeader("Email");
+        if(actualEmail.equals(staffEmail))
+            return true;
+
+        Logger.info("Is staff manager email '" + staffEmail + "' is found? '"+ result);
+        return result;
     }
 
     @Override

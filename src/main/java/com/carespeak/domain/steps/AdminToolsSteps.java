@@ -227,5 +227,13 @@ public interface AdminToolsSteps extends BaseSteps {
      * @param staffManager     staff manager object
      * @return AdminToolsSteps object
      */
-    AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole);
+    AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole, String timeZone);
+
+    /**
+     * Verify that staff manager is created and exist of the staff table list
+     *
+     * @param staffEmail     email of staff manager
+     * @return 'true' if staff manager was found, otherwise 'false'
+     */
+    boolean isStaffManagerCreated(String clientName, String staffEmail);
 }

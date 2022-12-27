@@ -205,8 +205,6 @@ public class ProdMessagesSteps implements MessagesSteps {
 
         boolean result = false;
         String actualTemplateName = emailTemplatesPage.firstTemplateName.getText();
-        System.out.println("actualTemplateName " + actualTemplateName);
-        System.out.println("templateName " + templateName);
 
         if(actualTemplateName.equals(templateName))
             result = true;

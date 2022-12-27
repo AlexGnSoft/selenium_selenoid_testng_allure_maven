@@ -5,21 +5,36 @@ import com.carespeak.core.driver.element.Button;
 import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.driver.element.Input;
+import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.header.HeaderMenu;
+import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
+import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.AbstractPage;
+import com.carespeak.domain.ui.prod.popup.StatusPopup;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import java.util.List;
 
 public class StaffPage extends AbstractPage {
 
     public HeaderMenu headerMenu;
+    public ItemsTable staffManagersTable;
+    public SearchWithSelection searchClient;
+    public StatusPopup statusPopup;
+
+    public StaffPage() {
+        headerMenu = new HeaderMenu();
+        staffManagersTable = new ItemsTable(By.id("staffTableWrapper"));
+        searchClient = new SearchWithSelection();
+        statusPopup = new StatusPopup();
+    }
 
     private static final String MULTI_CLIENT_ADMIN = "Multi client program manager";
     private static final String ROLE_PROGRAM_ADMIN = "Client level program manager";
     private static final String ROLE_PROGRAM_STAFF = "Regular staff program manager";
     private static final String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
+
 
     @ElementName("Add button")
     @FindBy(xpath = "//*[@id='staffTableButtonsContainer']//*[text()='Add']")
@@ -29,15 +44,17 @@ public class StaffPage extends AbstractPage {
     @FindBy(id = "mobile")
     public Input cellPhoneInput;
 
-    @ElementName("Time zone dropdown selected element")
-    @FindBy(xpath = "")
-    public Dropdown timezoneDropdownSelected;
+    @ElementName("Tim Zone dropdown")
+    @FindBy(id = "formUser.timeZone")
+    public Dropdown timeZoneDropdown;
+
+    @ElementName("Time zone list dropdown")
+    @FindBy(xpath = "//span[@class='text' and contains(text(),'Time')]")
+    public List<WebElement> timeZoneListDropDownOptions;
+
     @ElementName("Cell phone confirmation input")
     @FindBy(id = "mobileConfirm")
     public Input cellPhoneConfirmationInput;
-    @ElementName("TimeZone dropdown")
-    @FindBy(xpath = "//button[@data-id='formUser.timeZone']")
-    public Dropdown timezoneDropdown;
 
     @ElementName("Status dropdown")
     @FindBy(xpath= "//button[@data-id='formUser.status']")
@@ -50,7 +67,6 @@ public class StaffPage extends AbstractPage {
     @ElementName("Last name input")
     @FindBy(xpath = "//input[@id='formUser.lastName']")
     public Input lastNameInput;
-
     @ElementName("Email input")
     @FindBy(id = "email")
     public Input emailInput;
@@ -91,10 +107,9 @@ public class StaffPage extends AbstractPage {
     @FindBy(xpath = "//button//*[contains(text(), 'Save')]")
     public Button saveButton;
 
-
-    public StaffPage() {
-        headerMenu = new HeaderMenu();
-    }
+    @ElementName("Staff List Back Button")
+    @FindBy(xpath = "//a[@class='cs-back-to btn btn-danger']")
+    public Button staffListBackButton;
 
     public void selectSecurityRole(String requiredRole){
         switch (requiredRole) {
@@ -110,6 +125,8 @@ public class StaffPage extends AbstractPage {
             case ROLE_AGGREGATE_ONLY_STAFF:
                 staffDashBoardReadOnlyProgramManagerRadioButton.click();
                 break;
+            default:
+                Logger.error("Staff role does not match with available list of roles");
         }
     }
 }

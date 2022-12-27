@@ -136,7 +136,12 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
 
         client = getTestClientByCode(clientCode);
-        site.adminToolsSteps().addStaffManager(staffManager, MULTI_CLIENT_ADMIN);
+        site.adminToolsSteps().addStaffManager(staffManager, MULTI_CLIENT_ADMIN, staffManager.getTimezone());
+
+        boolean isStaffManagerCreated =
+                site.adminToolsSteps().isStaffManagerCreated(client.getName(), staffManager.getEmail());
+
+        Assert.assertTrue(isStaffManagerCreated, "Staff manager was not created");
     }
 
 

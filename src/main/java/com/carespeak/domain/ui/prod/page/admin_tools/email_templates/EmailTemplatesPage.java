@@ -17,7 +17,6 @@ public class EmailTemplatesPage extends AbstractPage {
     public SearchWithSelection searchClient;
     public ItemsTable emailTemplateTable;
 
-
     @ElementName("Add template button")
     @FindBy(id = "email-template-add-btn")
     public Button addTemplateButton;
