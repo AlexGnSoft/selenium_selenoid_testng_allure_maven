@@ -315,6 +315,19 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
 
     @Override
     public AdminToolsSteps deleteStaffManager(StaffManager staffManager){
+        staffPage.staffListBackButton.click();
+        staffPage.staffManagersTable.searchFor(staffManager.getEmail());
+
+        staffPage.deleteFirstStaffManagerButton.click();
+        if(staffPage.deleteStaffManagerOkButton.isDisplayed()){
+            staffPage.deleteStaffManagerOkButton.click();
+            waitFor(()-> !staffPage.deleteStaffManagerOkButton.isVisible());
+        }else {
+            waitFor(()-> staffPage.deleteStaffManagerOkButton.isVisible());
+            staffPage.deleteStaffManagerOkButton.click();
+            waitFor(()-> !staffPage.deleteStaffManagerOkButton.isVisible());
+        }
+
 
 
         return this;
@@ -338,6 +351,20 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
 
         Logger.info("Is staff manager email '" + staffEmail + "' is found? '"+ result);
         return result;
+    }
+
+    @Override
+    public boolean isStaffManagerDeleted(StaffManager staffManager){
+        boolean result = false;
+
+        TableRowItem firstRowItem = staffPage.staffManagersTable.getFirstRowItem();
+        if(firstRowItem == null){
+            result = true;
+        }
+
+        Logger.info("Is staff manager was deleted? " + result);
+        return result;
+
     }
 
     @Override

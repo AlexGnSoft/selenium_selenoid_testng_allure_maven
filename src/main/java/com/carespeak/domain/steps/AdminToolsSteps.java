@@ -244,4 +244,12 @@ public interface AdminToolsSteps extends BaseSteps {
      * @return 'true' if staff manager was found, otherwise 'false'
      */
     boolean isStaffManagerCreated(String clientName, String staffEmail);
+
+    /**
+     * Verify that staff manager is created and exist of the staff table list
+     *
+     * @param staffManager     staff manager object
+     * @return 'true' if staff manager was deleted, otherwise 'false'
+     */
+    boolean isStaffManagerDeleted(StaffManager staffManager);
 }

@@ -39,6 +39,13 @@ public class StaffPage extends AbstractPage {
     @ElementName("Add button")
     @FindBy(xpath = "//*[@id='staffTableButtonsContainer']//*[text()='Add']")
     public Button addButton;
+    @ElementName("Delete first staff manager button")
+    @FindBy(xpath = "//button[@class='btn btn-danger btn-sm delete-btn']")
+    public Button deleteFirstStaffManagerButton;
+
+    @ElementName("Delete first staff manager button")
+    @FindBy(xpath = "//button[contains(@class,'success ui-button')]")
+    public Button deleteStaffManagerOkButton;
 
     @ElementName("Cell phone input")
     @FindBy(id = "mobile")
@@ -86,19 +93,15 @@ public class StaffPage extends AbstractPage {
     @ElementName("Staff Security Roles")
     @FindBy(xpath = "//input[@name='staffRole']")
     public List<ClickableElement> staffSecurityRolesRadioButtons;
-
     @ElementName("Multi client program manager (can manage all programs within assigned clients)")
     @FindBy(xpath = "//input[@value='MULTI_CLIENT_ADMIN']")
     public ClickableElement multiClientProgramManagerRadioButton;
-
     @ElementName("Client level program manager")
     @FindBy(xpath = "//input[@value='ROLE_PROGRAM_ADMIN']")
     public ClickableElement clientLevelProgramManagerRadioButton;
-
     @ElementName("Regular staff program manager")
     @FindBy(xpath = "//input[@value='ROLE_PROGRAM_STAFF']")
     public ClickableElement regularStaffProgramManagerRadioButton;
-
     @ElementName("Staff dashboard read-only")
     @FindBy(xpath = "//input[@value='ROLE_AGGREGATE_ONLY_STAFF']")
     public ClickableElement staffDashBoardReadOnlyProgramManagerRadioButton;
@@ -106,7 +109,6 @@ public class StaffPage extends AbstractPage {
     @ElementName("Save button")
     @FindBy(xpath = "//button//*[contains(text(), 'Save')]")
     public Button saveButton;
-
     @ElementName("Staff List Back Button")
     @FindBy(xpath = "//a[@class='cs-back-to btn btn-danger']")
     public Button staffListBackButton;
