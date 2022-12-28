@@ -167,6 +167,30 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         Assert.assertTrue(isStaffManagerDeleted, "Staff manager was not deleted");
     }
 
+    @Test(description = "Impersonate a Staff member - Client level program manager")
+    public void impersonateStaffMember_MHM_T55() {
+        //Test data
+        staffManager = new StaffManager();
+        staffManager.setFirstName(getRandomString());
+        staffManager.setLastName(getRandomString());
+        staffManager.setEmail(getRandomString() + "@gmail.com");
+        staffManager.setTimezone("Eastern Time (New York)");
+        String MULTI_CLIENT_ADMIN = "Multi client program manager";
+        String ROLE_PROGRAM_ADMIN = "Client level program manager";
+        String ROLE_PROGRAM_STAFF = "Regular staff program manager";
+        String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
+
+        client = getTestClientByCode(clientCode);
+        site.adminToolsSteps()
+                .addStaffManager(staffManager, ROLE_PROGRAM_ADMIN, staffManager.getTimezone())
+                .impersonateStaffMember(staffManager);
+
+
+        boolean isStaffManagerImpersonated = site.adminToolsSteps().isStaffManagerImpersonated(staffManager);
+
+        Assert.assertTrue(isStaffManagerImpersonated, "Staff manager was not impersonated");
+    }
+
 
 
 

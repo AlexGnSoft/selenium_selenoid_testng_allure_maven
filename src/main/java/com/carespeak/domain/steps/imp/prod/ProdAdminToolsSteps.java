@@ -314,6 +314,36 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
+    public AdminToolsSteps impersonateStaffMember(StaffManager staffManager) {
+        staffPage.staffListBackButton.click();
+        staffPage.staffManagersTable.searchFor(staffManager.getEmail());
+
+        staffPage.impersonateStaffMemberIcon.click();
+
+        return this;
+    }
+
+    @Override
+    public boolean isStaffManagerImpersonated(StaffManager staffManager){
+        boolean result = false;
+
+        staffPage.waitFor(()-> staffPage.profileButton.isDisplayed());
+        String profileFullName = staffPage.profileButton.getText().trim();
+        String expectedProfileFullName = staffManager.getFirstName() + " " + staffManager.getLastName();
+
+        if(profileFullName.equals(expectedProfileFullName)){
+            staffPage.profileButton.click();
+            staffPage.returnToAdminButton.click();
+            result = true;
+        } else {
+            staffPage.profileButton.click();
+            staffPage.returnToAdminButton.click();
+        }
+        Logger.info("Is staff manager was impersonated? " + result);
+        return result;
+    }
+
+    @Override
     public AdminToolsSteps deleteStaffManager(StaffManager staffManager){
         staffPage.staffListBackButton.click();
         staffPage.staffManagersTable.searchFor(staffManager.getEmail());
@@ -327,8 +357,6 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
             staffPage.deleteStaffManagerOkButton.click();
             waitFor(()-> !staffPage.deleteStaffManagerOkButton.isVisible());
         }
-
-
 
         return this;
     }

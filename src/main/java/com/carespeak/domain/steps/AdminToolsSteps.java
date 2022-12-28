@@ -230,6 +230,22 @@ public interface AdminToolsSteps extends BaseSteps {
     AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole, String timeZone);
 
     /**
+     * Impersonate a Staff member
+     *
+     * @param staffManager     staff manager object
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps impersonateStaffMember(StaffManager staffManager);
+
+    /**
+     * Verify that staff manager is impersonated
+     *
+     * @param staffManager     staff manager object
+     * @return AdminToolsSteps object
+     */
+    boolean isStaffManagerImpersonated(StaffManager staffManager);
+
+    /**
      * Delete new user with provided parameters
      *
      * @param staffManager     staff manager object

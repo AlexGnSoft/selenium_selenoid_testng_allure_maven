@@ -47,10 +47,13 @@ public class StaffPage extends AbstractPage {
     @FindBy(xpath = "//button[contains(@class,'success ui-button')]")
     public Button deleteStaffManagerOkButton;
 
+    @ElementName("Impersonate this staff member icon")
+    @FindBy(xpath = "//a[@href]/img[@alt='Impersonate this staff member']")
+    public Button impersonateStaffMemberIcon;
+
     @ElementName("Cell phone input")
     @FindBy(id = "mobile")
     public Input cellPhoneInput;
-
     @ElementName("Tim Zone dropdown")
     @FindBy(id = "formUser.timeZone")
     public Dropdown timeZoneDropdown;
@@ -112,6 +115,14 @@ public class StaffPage extends AbstractPage {
     @ElementName("Staff List Back Button")
     @FindBy(xpath = "//a[@class='cs-back-to btn btn-danger']")
     public Button staffListBackButton;
+
+    @ElementName("Profile Button")
+    @FindBy(xpath = "//a[@id='actions-user']//span")
+    public WebElement profileButton;
+
+    @ElementName("Return to Admin Button")
+    @FindBy(xpath = "//ul[@class='dropdown-menu']//a[@href='/carespeak/adminExitUser']")
+    public Button returnToAdminButton;
 
     public void selectSecurityRole(String requiredRole){
         switch (requiredRole) {
