@@ -154,15 +154,16 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     @Override
     public boolean isMessageExist(String clientName, String messageName) {
+        boolean result = false;
         messagesPage.messageTable.searchFor(messageName);
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){
-            throw new RuntimeException("Message was not found!");
+            Logger.info("Message was not found!");
+            return false;
         }
 
         isCreatedMessageDisplayed(messageName);
 
-        boolean result = false;
         String actualSmsName = messagesPage.firstMessageName.getText();
         if(actualSmsName.equals(messageName))
             result = true;
@@ -267,6 +268,24 @@ public class ProdMessagesSteps implements MessagesSteps {
         emailTemplatesPage.templateName.enterText(templateName);
         emailTemplatesPage.contentField.enterText(templateBody);
         emailTemplatesPage.saveButton.click();
+        return this;
+    }
+
+    @Override
+    public MessagesSteps deleteMessage(String messageName) {
+        messagesPage.messageTable.searchFor(messageName);
+
+        if(!messagesPage.deleteMessageButton.isDisplayed()){
+            waitFor(()-> messagesPage.deleteMessageButton.isVisible());
+        }
+        messagesPage.deleteMessageButton.click();
+
+        if(!messagesPage.deleteMessageOkButton.isDisplayed()){
+            waitFor(()-> messagesPage.deleteMessageOkButton.isVisible());
+        }
+        messagesPage.deleteMessageOkButton.click();
+        waitFor(() -> !messagesPage.deleteMessageOkButton.isVisible());
+
         return this;
     }
 }

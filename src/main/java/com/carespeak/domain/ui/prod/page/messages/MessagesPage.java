@@ -79,6 +79,14 @@ public class MessagesPage extends AbstractPage {
     @FindBy(id = "saveBtn")
     public Button editMessageButton;
 
+    @ElementName("Delete message button")
+    @FindBy(xpath = "//button[@class='btn btn-danger btn-sm delete-btn']")
+    public Button deleteMessageButton;
+
+    @ElementName("Delete message Ok button")
+    @FindBy(xpath = "//button[contains(@class,'success ui-button')]")
+    public Button deleteMessageOkButton;
+
     @ElementName("Sidebar Messages button")
     @FindBy(xpath = "//div[@id='cs-sidebar']/div/a")
     public Button sideBarMessagesButton;

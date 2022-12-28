@@ -349,14 +349,11 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         staffPage.staffManagersTable.searchFor(staffManager.getEmail());
 
         staffPage.deleteFirstStaffManagerButton.click();
-        if(staffPage.deleteStaffManagerOkButton.isDisplayed()){
-            staffPage.deleteStaffManagerOkButton.click();
-            waitFor(()-> !staffPage.deleteStaffManagerOkButton.isVisible());
-        }else {
-            waitFor(()-> staffPage.deleteStaffManagerOkButton.isVisible());
-            staffPage.deleteStaffManagerOkButton.click();
-            waitFor(()-> !staffPage.deleteStaffManagerOkButton.isVisible());
+        if (!staffPage.deleteStaffManagerOkButton.isDisplayed()) {
+            waitFor(() -> staffPage.deleteStaffManagerOkButton.isVisible());
         }
+        staffPage.deleteStaffManagerOkButton.click();
+        waitFor(()-> !staffPage.deleteStaffManagerOkButton.isVisible());
 
         return this;
     }

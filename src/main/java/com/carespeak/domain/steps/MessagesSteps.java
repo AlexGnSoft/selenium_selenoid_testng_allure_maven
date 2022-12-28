@@ -157,4 +157,12 @@ public interface MessagesSteps extends BaseSteps {
      */
     MessagesSteps addEmailTemplate(String clientName, String templateName, String templateBody);
 
+    /**
+     * Delete a message from the message list
+     *
+     * @param messageName       message name to be deleted
+     * @return MessagesSteps object
+     */
+    MessagesSteps deleteMessage(String messageName);
+
 }

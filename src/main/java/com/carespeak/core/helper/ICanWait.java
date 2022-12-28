@@ -42,7 +42,7 @@ public interface ICanWait {
      * @return true if wait was successful
      */
     default Boolean waitFor(Callable<Boolean> func, boolean enableLogging) {
-        return waitFor(func, 30, enableLogging);
+        return waitFor(func, 10, enableLogging);
     }
 
     /**

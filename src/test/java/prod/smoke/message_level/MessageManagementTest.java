@@ -96,6 +96,20 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
     }
 
+    @Test(description = "Delete message")
+    public void deleteMessage_MHM_T82() {
+        String messageName = getRandomString();
+        site.messagesSteps()
+                .addBiometricMedicationMessage(Module.BIOMETRIC, Action.TIMED_ALERT, MessageType.SMS, messageName, NotificationType.PAIN,
+                        "${p} , tell us more about your symptoms level today.");
+
+        site.messagesSteps().deleteMessage(messageName);
+
+        boolean isMessageDeleted = site.messagesSteps().goToMessagesTab().isMessageExist(clientName, messageName);
+
+        Assert.assertFalse(isMessageDeleted,"The message was not deleted!");
+    }
+
     @AfterClass(alwaysRun = true)
     public void removeClient() {
         site.adminToolsSteps()

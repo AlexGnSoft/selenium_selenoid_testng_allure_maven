@@ -185,7 +185,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                 .addStaffManager(staffManager, ROLE_PROGRAM_ADMIN, staffManager.getTimezone())
                 .impersonateStaffMember(staffManager);
 
-
         boolean isStaffManagerImpersonated = site.adminToolsSteps().isStaffManagerImpersonated(staffManager);
 
         Assert.assertTrue(isStaffManagerImpersonated, "Staff manager was not impersonated");
