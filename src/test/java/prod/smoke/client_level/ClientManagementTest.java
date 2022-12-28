@@ -162,8 +162,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
                 .addStaffManager(staffManager, ROLE_PROGRAM_ADMIN, staffManager.getTimezone())
                 .deleteStaffManager(staffManager);
 
-        boolean isStaffManagerDeleted =
-                site.adminToolsSteps().isStaffManagerDeleted(staffManager);
+        boolean isStaffManagerDeleted = site.adminToolsSteps().isStaffManagerDeleted(staffManager);
 
         Assert.assertTrue(isStaffManagerDeleted, "Staff manager was not deleted");
     }
