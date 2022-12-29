@@ -8,6 +8,7 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import com.carespeak.domain.entities.program.ProgramType;
 import com.carespeak.domain.steps.ProgramSteps;
 import com.carespeak.domain.ui.prod.component.container.AutoResponderContainer;
 import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
@@ -29,8 +30,10 @@ import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsP
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.MonthDayYearContainer;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
+import org.openqa.selenium.WebElement;
 import org.testng.collections.CollectionUtils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProdProgramSteps implements ProgramSteps {
@@ -92,12 +95,59 @@ public class ProdProgramSteps implements ProgramSteps {
     }
 
     @Override
+    public ProgramSteps addNewCustomizedTypeProgram(String clientName, String programName, ProgramAccess programAccess, ProgramType programType) {
+        if (!programsPage.isOpened()) {
+            String url = dashboardPage.getCurrentUrl();
+            dashboardPage.headerMenu.programsMenuItem.click();
+            programsPage.waitFor(() -> !dashboardPage.getCurrentUrl().equals(url), false);
+        }
+        dashboardPage.headerMenu.programsMenuItem.click();
+        //programsPage.searchClient.search(clientName);
+        //waitFor(()-> programsPage.isOpened());
+        programsPage.sleepWait(2000);
+        programsPage.addProgramButton.click();
+        programSettingsPage.programNameInput.enterText(programName);
+        programSettingsPage.programTypeDropDown.select(programType.getValue());
+        programSettingsPage.programAccessDropDown.select(programAccess.getValue());
+        programSettingsPage.saveButton.click();
+        programSettingsPage.statusPopup.waitForDisplayed();
+        //programSettingsPage.statusPopup.close();
+        return this;
+    }
+
+    @Override
     public ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1) {
         programSettingsPage.programTypeDropDown.select("Caregiver program");
         programSettingsPage.selectLinkedPatientProgram(programName1);
         programSettingsPage.saveButton.click();
 
         return this;
+    }
+
+    @Override
+    public boolean isOnlyRegularProgramsCouldBeLinkedToCaregiverProgram(String clientName, String regularProgramFirst, String regularProgramSecond, ProgramType programType) {
+        boolean result = true;
+        ArrayList<String> expectedList = new ArrayList<>();
+        expectedList.add(clientName + " - " + regularProgramFirst);
+        expectedList.add(clientName + " - " + regularProgramSecond);
+
+        ArrayList<String> actualList = new ArrayList<>();
+
+        programSettingsPage.programTypeDropDown.select(programType.getValue());
+        programSettingsPage.linkedPatientProgramExpandButton.click();
+
+        for (int i = 0; i < programSettingsPage.linkedPatientProgramsList.size(); i++) {
+            actualList.add(programSettingsPage.linkedPatientProgramsList.get(i).getText().toLowerCase());
+        }
+
+        for (int i = 0; i < expectedList.size(); i++) {
+            if(!actualList.contains(expectedList.get(i).toLowerCase()))
+                result = false;
+            break;
+        }
+
+        Logger.info("Is only regular programs could be added to caregiver program? " + result);
+        return result;
     }
 
     @Override

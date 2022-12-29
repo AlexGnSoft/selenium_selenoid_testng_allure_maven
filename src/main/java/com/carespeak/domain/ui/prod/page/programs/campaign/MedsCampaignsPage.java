@@ -6,6 +6,7 @@ import com.carespeak.core.driver.element.ClickableElement;
 import com.carespeak.domain.ui.prod.component.message.StatusMessage;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.programs.AbstractProgramPage;
+import com.carespeak.domain.ui.prod.popup.AddCampaignToPatientPopup;
 import com.carespeak.domain.ui.prod.popup.AddCampaignToProgramPopup;
 import com.carespeak.domain.ui.prod.popup.DeleteCampaignFromPatientPopup;
 import com.carespeak.domain.ui.prod.popup.DeleteCampaignFromProgramPopup;
@@ -17,6 +18,7 @@ public class MedsCampaignsPage extends AbstractProgramPage {
 
     public ItemsTable addedCampaignsToPatientTable;
     public AddCampaignToProgramPopup addCampaignToProgramPopup;
+    public AddCampaignToPatientPopup addCampaignToPatientPopup;
     public DeleteCampaignFromPatientPopup deleteCampaignFromPatientPopup;
     public DeleteCampaignFromProgramPopup deleteCampaignFromProgramPopup;
     public StatusMessage statusMessage;
@@ -46,6 +48,7 @@ public class MedsCampaignsPage extends AbstractProgramPage {
         addCampaignToProgramPopup = new AddCampaignToProgramPopup();
         deleteCampaignFromPatientPopup = new DeleteCampaignFromPatientPopup();
         deleteCampaignFromProgramPopup = new DeleteCampaignFromProgramPopup();
+        addCampaignToPatientPopup = new AddCampaignToPatientPopup();
         statusMessage = new StatusMessage();
     }
 }

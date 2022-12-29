@@ -4,6 +4,7 @@ import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Sex;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
+import com.carespeak.domain.entities.program.ProgramType;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -149,6 +150,25 @@ public class ProgramManagementTest extends AbstractProgramLevelTest {
         boolean isProgramLinked = site.programSteps().isProgramLinked(client.getName(), programName1, programName2);
 
         Assert.assertTrue(isProgramLinked, "Patient program was linked");
+    }
+
+    @Test(description = "Program level feature - Linking caregiver program to regular program")
+    public void linkCaregiverProgramToRegularProgram_MHM_T144() {
+        //Test data
+        String programName1 = "Caregiver program 1 " + getFormattedDate("dd-MM-yy-H-mm-ss");
+        String programName2 = "Caregiver program 2 " + getFormattedDate("dd-MM-yy-H-mm-ss");
+        String programName3 = "Regular program 1 " + getFormattedDate("dd-MM-yy-H-mm-ss");
+        String programName4 = "Regular program 2 " + getFormattedDate("dd-MM-yy-H-mm-ss");
+
+        site.programSteps()
+                .addNewCustomizedTypeProgram(clientName, programName1, ProgramAccess.PUBLIC, ProgramType.CAREGIVER_PROGRAM)
+                .addNewCustomizedTypeProgram(clientName, programName2, ProgramAccess.PUBLIC, ProgramType.CAREGIVER_PROGRAM)
+                .addNewProgram(clientName, programName3, ProgramAccess.PUBLIC)
+                .addNewProgram(clientName, programName4, ProgramAccess.PUBLIC);
+
+        boolean isOnlyRegularProgramsCouldBeLinkedToCaregiverProgram = site.programSteps().isOnlyRegularProgramsCouldBeLinkedToCaregiverProgram(clientName, programName3, programName4, ProgramType.CAREGIVER_PROGRAM);
+
+        Assert.assertTrue(isOnlyRegularProgramsCouldBeLinkedToCaregiverProgram, "Caregiver programs are only displayed for Caregiver program dropdown");
     }
 
     @AfterClass(alwaysRun = true)

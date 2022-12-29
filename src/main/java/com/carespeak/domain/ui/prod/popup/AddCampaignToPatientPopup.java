@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 
 public class AddCampaignToPatientPopup extends AbstractPopup{
-    private static final String CAMPAIGN_NAME = "//option[contains(text(),'%s')]";
+    private static final String CAMPAIGN_NAME = "//select[@id='csCampaignSelection']//option[contains(text(),'%s')]";
 
     @ElementName("Module title")
     @FindBy(xpath = "//span[text()='Add campaign(s) to patient']")

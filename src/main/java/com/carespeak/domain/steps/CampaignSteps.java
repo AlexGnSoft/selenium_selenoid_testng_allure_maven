@@ -3,6 +3,7 @@ package com.carespeak.domain.steps;
 import com.carespeak.domain.entities.campaign.*;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.patient.Patient;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -86,12 +87,28 @@ public interface CampaignSteps extends BaseSteps {
     boolean isCampaignAddedToProgram(String campaignName);
 
     /**
+     * Add campaign to Patient
+     *
+     * @param campaignName    campaign name
+     * @return CampaignSteps object
+     */
+    CampaignSteps addCampaignToPatient(Patient patient, String campaignName);
+
+    /**
      * Verify that campaign is deleted from patient
      *
      * @param campaignName    campaign name
      * @return return true if campaign was deleted, otherwise false
      */
     boolean isCampaignDeletedFromPatient(String campaignName);
+
+    /**
+     * Verify that campaign is added to patient
+     *
+     * @param campaignName    campaign name
+     * @return return true if campaign was deleted, otherwise false
+     */
+    boolean isCampaignAddedToPatient(String campaignName);
 
     /**
      * Verify that same campaign can not be added twice
@@ -151,7 +168,7 @@ public interface CampaignSteps extends BaseSteps {
      * Remove campaign from program
      *
      * @param campaignName     campaign name
-     * @return return CampaignSteps object
+     * @return CampaignSteps object
      */
     CampaignSteps removeCampaignFromProgram(String campaignName);
 

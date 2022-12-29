@@ -6,12 +6,14 @@ import com.carespeak.domain.entities.program.AutoRespondersStatus;
 import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.program.ProgramOptOutForm;
+import com.carespeak.domain.entities.program.ProgramType;
+
 import java.util.List;
 
 public interface ProgramSteps extends BaseSteps {
 
     /**
-     * Creates new Program for provided client.
+     * Creates new Regular Program for provided client.
      *
      * @param clientName    client name
      * @param programName   program name
@@ -21,12 +23,32 @@ public interface ProgramSteps extends BaseSteps {
     ProgramSteps addNewProgram(String clientName, String programName, ProgramAccess programAccess);
 
     /**
+     * Creates new customized type Program for provided client.
+     *
+     * @param clientName    client name
+     * @param programName   program name
+     * @param programType   program type
+     * @param programAccess program access type
+     * @return ProgramSteps object
+     */
+    ProgramSteps addNewCustomizedTypeProgram(String clientName, String programName, ProgramAccess programAccess, ProgramType programType);
+
+    /**
      * Creates new Program for provided client.
      *
      * @param programName1   program name of first program
      * @return ProgramSteps object
      */
     ProgramSteps linkedOneProgramToAnotherPatientProgram(String programName1);
+
+    /**
+     * Verify that only regular programs could be added to caregiver program
+     *
+     * @param regularProgramFirst    first regular program name
+     * @param regularProgramSecond   second regular program name
+     * @return ProgramSteps object
+     */
+    boolean isOnlyRegularProgramsCouldBeLinkedToCaregiverProgram(String clientName, String regularProgramFirst, String regularProgramSecond, ProgramType programType);
 
     /**
      * Creates new Program for provided client.

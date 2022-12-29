@@ -18,6 +18,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
     private Client client;
     private String clientName;
+    private Patient patient;
     private SoftAssert softAssert;
     private final String TO_ENDPOINT = PropertyFileReader.getVariableValue("twilioSmsSender");
     private final String filePath = getResourcesPath() + "picture.png";
@@ -27,6 +28,34 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         client = getTestClientByCode("CampaignLevel client " + getFormattedDate("dd-MM-yy-H-mm-ss"));
         clientName = client.getName();
         softAssert = new SoftAssert();
+        patient = new Patient();
+        patient.setTimezone("Eastern Time (New York)");
+    }
+
+    @Test(description = "Assign Campaign to Patient")
+    public void assignCampaignToPatient_MHM_T107() {
+        //Test data
+        String messageName = getRandomString();
+        String programName = "Program "+ getRandomString();
+        String campaignName = getRandomString();
+        String campaignDescription = getRandomString();
+        patient.setCellPhone(getGeneratedPhoneNumber());
+        patient.setFirstName(getRandomString());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addNewPatientLimitedFieldsInner(patient);
+
+        getTestBiometricMedicationMessage(messageName);
+        site.campaignSteps()
+                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER)
+                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName)
+                .addCampaignToPatient(patient, campaignName);
+
+        boolean isCampaignAssignedToPatient = site.campaignSteps()
+                .isCampaignAddedToPatient(campaignName);
+
+        Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
     }
 
     @Test(description = "Create campaign - Module Educational")
@@ -77,7 +106,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
     public void createBiometricCampaign_MHM_T88() {
         //Test data
         String messageName = getRandomString();
-        String programName = getRandomString();
+        String programName = "Program "+ getRandomString();
         String campaignName = getRandomString();
         String campaignDescription = getRandomString();
 
@@ -96,7 +125,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
     public void assignCampaignToProgram_MHM_T104() {
         //Test data
         String messageName = getRandomString();
-        String programName = getRandomString();
+        String programName = "Program "+ getRandomString();
         String campaignName = getRandomString();
         String campaignDescription = getRandomString();
 

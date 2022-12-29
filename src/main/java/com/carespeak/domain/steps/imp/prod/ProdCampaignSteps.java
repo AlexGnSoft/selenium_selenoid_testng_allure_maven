@@ -4,6 +4,7 @@ import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.entities.campaign.*;
 import com.carespeak.domain.entities.message.MessageLogItem;
 import com.carespeak.domain.entities.message.Module;
+import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.steps.CampaignSteps;
 import com.carespeak.domain.ui.prod.component.table.QuestionRowItem;
 import com.carespeak.domain.ui.prod.component.table.base.TableRowItem;
@@ -365,6 +366,14 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
+    public CampaignSteps addCampaignToPatient(Patient patient, String campaignName) {
+        goToPatientMedCampaignsTab(patient.getFirstName());
+        addPatientToCampaign(patient.getFirstName(), campaignName);
+
+        return this;
+    }
+
+    @Override
     public boolean isCampaignDeletedFromPatient(String campaignName) {
         boolean result = false;
         medsCampaignsPage.addedCampaignsToPatientTable.searchFor(campaignName);
@@ -373,6 +382,21 @@ public class ProdCampaignSteps implements CampaignSteps {
             result = true;
         }
         Logger.info("Is campaign'" + campaignName + "' deleted from patient? '"+ result);
+        return result;
+    }
+
+    @Override
+    public boolean isCampaignAddedToPatient(String campaignName) {
+        boolean result = false;
+        medsCampaignsPage.addedCampaignsToPatientTable.searchFor(campaignName);
+
+        TableRowItem firstRowItem = medsCampaignsPage.addedCampaignsToPatientTable.getFirstRowItem();
+        String actualCampaign = firstRowItem.getDataByHeader("Campaign");
+
+        if(actualCampaign.equals(campaignName))
+            result = true;
+
+        Logger.info("Is campaign'" + campaignName + "' added to patient? '"+ result);
         return result;
     }
 
@@ -462,9 +486,9 @@ public class ProdCampaignSteps implements CampaignSteps {
 
     @Override
     public CampaignSteps addPatientToCampaign(String patientName, String campaignName) {
-        programsPage.sideBarMenu.openItem("Meds/Campaigns");
+        //programsPage.sideBarMenu.openItem("Meds/Campaigns");
         medsCampaignsPage.addButton.click();
-        medsCampaignsPage.addCampaignToProgramPopup.waitForDisplayed();
+        medsCampaignsPage.addCampaignToPatientPopup.waitForDisplayed();
         addCampaignToPatientPopup.selectCampaignByName(campaignName);
         addCampaignToPatientPopup.saveButton.click();
         return this;

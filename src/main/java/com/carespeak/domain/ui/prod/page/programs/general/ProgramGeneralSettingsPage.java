@@ -23,13 +23,14 @@ public class ProgramGeneralSettingsPage extends AbstractProgramPage {
     @FindBy(id = "programName")
     public Input programNameInput;
 
+    @ElementName("Program type dropdown")
+    @FindBy(id = "programType")
+    public Dropdown programTypeDropDown;
+
     @ElementName("Program access dropdown")
     @FindBy(id = "programAccess")
     public Dropdown programAccessDropDown;
 
-    @ElementName("Program type dropdown")
-    @FindBy(id = "programType")
-    public Dropdown programTypeDropDown;
 
     @ElementName("Endpoint dropdown")
     @FindBy(xpath = "//*[@data-id='endpoints']")
