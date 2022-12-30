@@ -230,12 +230,29 @@ public interface AdminToolsSteps extends BaseSteps {
     AdminToolsSteps addStaffManager(StaffManager staffManager, String requiredRole, String timeZone);
 
     /**
+     * Add two staff managers
+     *
+     * @return AdminToolsSteps object
+     */
+    AdminToolsSteps addMultipleStaffManagers(StaffManager staffManager1, StaffManager staffManager2, String requiredRole, String timeZone);
+
+    /**
      * Impersonate a Staff member
      *
      * @param staffManager     staff manager object
      * @return AdminToolsSteps object
      */
     AdminToolsSteps impersonateStaffMember(StaffManager staffManager);
+
+    /**
+     * Verify the two staff managers with the same permission can only edit itself,
+     * can not delete itself and another staff manager as well
+     *
+     * @param staffManager      first staff manager object
+     * @param staffManager2     second staff manager object
+     * @return 'true' if one staff manager can only edit itself and can't delete itself of another staff manager, otherwise 'false'
+     */
+    boolean permissionsOfStaffMember(StaffManager staffManager, StaffManager staffManager2);
 
     /**
      * Verify that staff manager is impersonated

@@ -15,7 +15,6 @@ import com.carespeak.domain.ui.prod.page.admin_tools.sms_send_simulator.SendSMSS
 import com.carespeak.domain.ui.prod.page.dashboard.DashboardPage;
 import com.carespeak.domain.ui.prod.page.staff.StaffPage;
 import org.openqa.selenium.WebElement;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -314,6 +313,15 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
     }
 
     @Override
+    public AdminToolsSteps addMultipleStaffManagers(StaffManager staffManager1, StaffManager staffManager2, String requiredRole, String timeZone) {
+        addStaffManager(staffManager1, requiredRole, timeZone);
+        staffPage.staffListBackButton.click();
+        addStaffManager(staffManager2, requiredRole, timeZone);
+
+        return this;
+    }
+
+    @Override
     public AdminToolsSteps impersonateStaffMember(StaffManager staffManager) {
         staffPage.staffListBackButton.click();
         staffPage.staffManagersTable.searchFor(staffManager.getEmail());
@@ -321,6 +329,20 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         staffPage.impersonateStaffMemberIcon.click();
 
         return this;
+    }
+
+    @Override
+    public boolean permissionsOfStaffMember(StaffManager staffManager, StaffManager staffManager2) {
+        boolean result = true;
+        staffPage.staffManagersTable.searchFor(staffManager.getEmail());
+        staffPage.impersonateStaffMemberIcon.click();
+        dashboardPage.headerMenu.staffMenuItem.click();
+
+        
+
+
+
+        return result;
     }
 
     @Override

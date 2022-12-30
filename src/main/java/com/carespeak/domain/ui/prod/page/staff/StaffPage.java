@@ -14,6 +14,7 @@ import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import java.util.List;
 
 public class StaffPage extends AbstractPage {
@@ -123,6 +124,14 @@ public class StaffPage extends AbstractPage {
     @ElementName("Return to Admin Button")
     @FindBy(xpath = "//ul[@class='dropdown-menu']//a[@href='/carespeak/adminExitUser']")
     public Button returnToAdminButton;
+
+    @ElementName("Can not delete self")
+    @FindBy(xpath = "//div[text()='Can not delete self']")
+    public WebElement canNotDeleteSelfMessage;
+
+//    @ElementName("You don't have permission to delete this staff message")
+//    @FindBy(xpath = "//button[@class='btn btn-danger btn-sm disabled']")
+//    public List<WebElement> youDonotHavePermissionToDeleteThisStaffMessage;
 
     public void selectSecurityRole(String requiredRole){
         switch (requiredRole) {

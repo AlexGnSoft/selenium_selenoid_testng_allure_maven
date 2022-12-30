@@ -357,6 +357,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         boolean result = false;
         waitFor(() -> programsCampaignsPage.searchFieldButton.isVisible());
         programsCampaignsPage.addedCampaignsToProgramTable.searchInTable("Name", campaignName);
+        programsPage.sleepWait(1000);
         TableRowItem tableRowItem = programsCampaignsPage.addedCampaignsToProgramTable.getFirstRowItem();
         if(tableRowItem.getDataByHeader("Name").equals(campaignName))
             result = true;
