@@ -14,6 +14,9 @@ import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -44,6 +47,10 @@ public class StaffPage extends AbstractPage {
     @FindBy(xpath = "//button[@class='btn btn-danger btn-sm delete-btn']")
     public Button deleteFirstStaffManagerButton;
 
+    @ElementName("Edit staff button")
+    @FindBy(xpath = "//div[@class='control ']/a")
+    public Button editStaffButton;
+
     @ElementName("Delete first staff manager button")
     @FindBy(xpath = "//button[contains(@class,'success ui-button')]")
     public Button deleteStaffManagerOkButton;
@@ -68,20 +75,18 @@ public class StaffPage extends AbstractPage {
     public Input cellPhoneConfirmationInput;
 
     @ElementName("Status dropdown")
-    @FindBy(xpath= "//button[@data-id='formUser.status']")
+    @FindBy(xpath = "//button[@data-id='formUser.status']")
     public Dropdown statusDropdown;
 
     @ElementName("First name input")
     @FindBy(xpath = "//input[@id='formUser.firstName']")
     public Input firstNameInput;
-
     @ElementName("Last name input")
     @FindBy(xpath = "//input[@id='formUser.lastName']")
     public Input lastNameInput;
     @ElementName("Email input")
     @FindBy(id = "email")
     public Input emailInput;
-
     @ElementName("Email confirmation input")
     @FindBy(id = "emailConfirm")
     public Input emailConfirmationInput;
@@ -125,15 +130,11 @@ public class StaffPage extends AbstractPage {
     @FindBy(xpath = "//ul[@class='dropdown-menu']//a[@href='/carespeak/adminExitUser']")
     public Button returnToAdminButton;
 
-    @ElementName("Can not delete self")
-    @FindBy(xpath = "//div[text()='Can not delete self']")
-    public WebElement canNotDeleteSelfMessage;
+    @ElementName("You don't have permission to delete this staff message")
+    @FindBy(xpath = "//button[@class='btn btn-danger btn-sm disabled']")
+    public List<WebElement> youDoNotHavePermissionToDeleteThisStaffMessage;
 
-//    @ElementName("You don't have permission to delete this staff message")
-//    @FindBy(xpath = "//button[@class='btn btn-danger btn-sm disabled']")
-//    public List<WebElement> youDonotHavePermissionToDeleteThisStaffMessage;
-
-    public void selectSecurityRole(String requiredRole){
+    public void selectSecurityRole(String requiredRole) {
         switch (requiredRole) {
             case MULTI_CLIENT_ADMIN:
                 multiClientProgramManagerRadioButton.click();
@@ -150,5 +151,17 @@ public class StaffPage extends AbstractPage {
             default:
                 Logger.error("Staff role does not match with available list of roles");
         }
+    }
+
+    public boolean findUnlikableElements() {
+        boolean res = false;
+
+        int numberOfUnClickableDeleteButtons = youDoNotHavePermissionToDeleteThisStaffMessage.size();
+
+        if(numberOfUnClickableDeleteButtons == 2)
+            Logger.info("Is there only 2 elements which are unclickable? " + res);
+            res = true;
+
+        return res;
     }
 }

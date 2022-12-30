@@ -255,6 +255,14 @@ public interface AdminToolsSteps extends BaseSteps {
     boolean permissionsOfStaffMember(StaffManager staffManager, StaffManager staffManager2);
 
     /**
+     * Update name of the staff member
+     *
+     * @param staffManager      first staff manager object
+     * @return 'true' if it was possible, otherwise 'false'
+     */
+    boolean updateStaffManagerEmail(StaffManager staffManager);
+
+    /**
      * Verify that staff manager is impersonated
      *
      * @param staffManager     staff manager object

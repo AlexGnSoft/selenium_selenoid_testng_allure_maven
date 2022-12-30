@@ -4,11 +4,14 @@ import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.*;
+import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.staff.StaffManager;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +31,12 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     private StaffManager staffManager;
     private String clientName;
     private String clientCode;
+    private SoftAssert softAssert;
+
+    private final String MULTI_CLIENT_ADMIN = "Multi client program manager";
+    String ROLE_PROGRAM_ADMIN = "Client level program manager";
+    String ROLE_PROGRAM_STAFF = "Regular staff program manager";
+    String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
 
     @BeforeClass
     public void prepareClientData() {
@@ -40,6 +49,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         client.setModules(Module.getAllModules());
         clientName = client.getName();
         clientCode = client.getCode();
+        softAssert = new SoftAssert();
     }
 
     @Test(description = "Add new client with all modules")
@@ -130,10 +140,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         staffManager.setLastName(getRandomString());
         staffManager.setEmail(getRandomString() + "@gmail.com");
         staffManager.setTimezone("Eastern Time (New York)");
-        String MULTI_CLIENT_ADMIN = "Multi client program manager";
-        String ROLE_PROGRAM_ADMIN = "Client level program manager";
-        String ROLE_PROGRAM_STAFF = "Regular staff program manager";
-        String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
 
         client = getTestClientByCode(clientCode);
         site.adminToolsSteps().addStaffManager(staffManager, MULTI_CLIENT_ADMIN, staffManager.getTimezone());
@@ -152,10 +158,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         staffManager.setLastName(getRandomString());
         staffManager.setEmail(getRandomString() + "@gmail.com");
         staffManager.setTimezone("Eastern Time (New York)");
-        String MULTI_CLIENT_ADMIN = "Multi client program manager";
-        String ROLE_PROGRAM_ADMIN = "Client level program manager";
-        String ROLE_PROGRAM_STAFF = "Regular staff program manager";
-        String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
 
         client = getTestClientByCode(clientCode);
         site.adminToolsSteps()
@@ -175,10 +177,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         staffManager.setLastName(getRandomString());
         staffManager.setEmail(getRandomString() + "@gmail.com");
         staffManager.setTimezone("Eastern Time (New York)");
-        String MULTI_CLIENT_ADMIN = "Multi client program manager";
-        String ROLE_PROGRAM_ADMIN = "Client level program manager";
-        String ROLE_PROGRAM_STAFF = "Regular staff program manager";
-        String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
 
         client = getTestClientByCode(clientCode);
         site.adminToolsSteps()
@@ -203,23 +201,20 @@ public class ClientManagementTest extends AbstractClientLevelTest {
         staffManager2.setLastName(getRandomString());
         staffManager2.setEmail(getRandomString() + "@gmail.com");
         staffManager2.setTimezone("Eastern Time (New York)");
-        String MULTI_CLIENT_ADMIN = "Multi client program manager";
-        String ROLE_PROGRAM_ADMIN = "Client level program manager";
-        String ROLE_PROGRAM_STAFF = "Regular staff program manager";
-        String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
+        String programName = "Program " + getFormattedDate("dd-MM-yy-H-mm");
 
         client = getTestClientByCode(clientCode);
-        site.adminToolsSteps()
-                .addMultipleStaffManagers(staffManager, staffManager2, MULTI_CLIENT_ADMIN, staffManager.getTimezone());
+        site.programSteps().addNewProgram(clientName, programName, ProgramAccess.PUBLIC);
+        site.adminToolsSteps().addMultipleStaffManagers(staffManager, staffManager2, MULTI_CLIENT_ADMIN, staffManager.getTimezone());
 
 
-        boolean isStaffManagerImpersonated = site.adminToolsSteps().permissionsOfStaffMember(staffManager, staffManager2);
+        boolean permissionsOfStaffMember = site.adminToolsSteps().permissionsOfStaffMember(staffManager, staffManager2);
+        boolean isItPossibleToEditStaffManagerData = site.adminToolsSteps().updateStaffManagerEmail(staffManager);
 
-        //Assert.assertTrue(isStaffManagerImpersonated, "Staff manager was not impersonated");
+        softAssert.assertTrue(permissionsOfStaffMember, "It is impossible to edit staff member data");
+        softAssert.assertTrue(isItPossibleToEditStaffManagerData, "There are errors with staff managers permissions");
+
     }
-
-
-
 
     @AfterClass(alwaysRun = true)
     public void removeClient() {

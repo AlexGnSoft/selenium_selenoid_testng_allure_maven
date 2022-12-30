@@ -317,6 +317,7 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         addStaffManager(staffManager1, requiredRole, timeZone);
         staffPage.staffListBackButton.click();
         addStaffManager(staffManager2, requiredRole, timeZone);
+        staffPage.staffListBackButton.click();
 
         return this;
     }
@@ -336,11 +337,36 @@ public class ProdAdminToolsSteps implements AdminToolsSteps {
         boolean result = true;
         staffPage.staffManagersTable.searchFor(staffManager.getEmail());
         staffPage.impersonateStaffMemberIcon.click();
+        String url = dashboardPage.getCurrentUrl();
         dashboardPage.headerMenu.staffMenuItem.click();
+        waitFor(()-> !dashboardPage.getCurrentUrl().equals(url));
 
-        
+        staffPage.findUnlikableElements();
 
+        return result;
+    }
 
+    @Override
+    public boolean updateStaffManagerEmail(StaffManager staffManager) {
+        boolean result = true;
+        String newEmail = "updated@gmail.com";
+
+        staffPage.editStaffButton.click();
+        staffPage.emailInput.enterText(newEmail);
+        staffPage.emailConfirmationInput.enterText(newEmail);
+        staffPage.saveButton.click();
+        String url = dashboardPage.getCurrentUrl();
+        staffPage.staffListBackButton.click();
+        waitFor(()-> !dashboardPage.getCurrentUrl().equals(url));
+
+        String actualEmail = staffPage.staffManagersTable.getFirstRowItem().getDataByHeader("Email");
+
+        if(!actualEmail.equals(newEmail))
+            result = false;
+            Logger.error("Staff manager email was not updated");
+
+        staffPage.profileButton.click();
+        staffPage.returnToAdminButton.click();
 
         return result;
     }
