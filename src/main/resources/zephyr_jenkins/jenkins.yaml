@@ -85,19 +85,17 @@ jenkins:
           - "agogna"
           - "agnuskin"
           - "dvaishnani"
-          - "tmatkovic"
           - "vbosnjak"
-          - "hsalopek"
           name: "admin"
           pattern: ".*"
           permissions:
           - "Overall/Administer"
         - assignments:
           - "lmegla"
+          - "tmatkovic"
           - "skezele"
-          - "kprpic"
           - "izivkovic"
-          - "lrasic"
+          - "hsalopek"
           name: "dev"
           pattern: ".*"
           permissions:
@@ -206,17 +204,6 @@ jenkins:
         - "favorite"
         - preferredProvider:
             providerId: "default"
-      - id: "bdakshina"
-        name: "bdakshina"
-        properties:
-        - "apiToken"
-        - mailer:
-            emailAddress: "bdakshina@optimizerx.com"
-        - preferredProvider:
-            providerId: "default"
-        - favoriting:
-            autofavoriteEnabled: true
-        - "favorite"
       - id: "dvaishnani"
         name: "Dhaval Vaishnani"
         properties:
@@ -254,19 +241,6 @@ jenkins:
         - favoriting:
             autofavoriteEnabled: true
         - "favorite"
-      - id: "knesek"
-        name: "Kresimir Nesek"
-        properties:
-        - "apiToken"
-        - "myView"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-        - mailer:
-            emailAddress: "knesek@optimizerx.com"
-        - favoriting:
-            autofavoriteEnabled: true
-        - "favorite"
       - id: "kprpic"
         name: "Klaudija Prpić"
         properties:
@@ -280,19 +254,6 @@ jenkins:
         - "timezone"
         - mailer:
             emailAddress: "kprpic@optimizerx.com"
-      - id: "ldujmic"
-        name: "Ljubomir Dujmić"
-        properties:
-        - "apiToken"
-        - "myView"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-        - mailer:
-            emailAddress: "ldujmic@optimizerx.com"
-        - favoriting:
-            autofavoriteEnabled: true
-        - "favorite"
       - id: "lmegla"
         name: "Lucija Megla"
         properties:
@@ -345,17 +306,6 @@ jenkins:
         - favoriting:
             autofavoriteEnabled: true
         - "favorite"
-      - id: "nbabic"
-        name: "Nikola Babić"
-        properties:
-        - "apiToken"
-        - favoriting:
-            autofavoriteEnabled: true
-        - mailer:
-            emailAddress: "nbabic@optimizerx.com"
-        - "favorite"
-        - preferredProvider:
-            providerId: "default"
       - id: "ooragbade"
         name: "Olu Oragbade"
         properties:
@@ -404,17 +354,6 @@ jenkins:
         - "favorite"
         - preferredProvider:
             providerId: "default"
-      - id: "tmatkovic"
-        name: "Toni Matkovic"
-        properties:
-        - "apiToken"
-        - mailer:
-            emailAddress: "tmatkovic@optimizerx.com"
-        - preferredProvider:
-            providerId: "default"
-        - favoriting:
-            autofavoriteEnabled: true
-        - "favorite"
       - id: "tmimica"
         name: "Tonči Mimica"
         properties:
@@ -456,7 +395,7 @@ jenkins:
       jobNames:
       - "QA-mhm-manual-test-trigger"
       - "QA-mhm-smoke-test"
-      - "QA-mhm-smoke-test_v2"
+      - "QA-mhm-smoke-test_zc_reporting"
       name: "Automation testing"
   - list:
       columns:
@@ -500,6 +439,18 @@ jenkins:
       - "lastFailure"
       - "lastDuration"
       - "buildButton"
+      - "favoriteColumn"
+      includeRegex: ".*lambda.*"
+      name: "Lambdas"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
       description: "Other PE applications that complement the functionality of the\
         \ core app."
       jobNames:
@@ -510,6 +461,8 @@ jenkins:
       - "forms-production-build-new"
       - "integrator-demo-build-new"
       - "integrator-production-build-new"
+      - "mhm-demo-web-deploy-new"
+      - "mhm-production-web-deploy-new"
       - "robocare-demo-build-new"
       - "robocare-production-build-new"
       - "smssimulator-build-new"
@@ -799,7 +752,7 @@ unclassified:
   sshPublisher:
     commonConfig:
       disableAllExec: false
-      encryptedPassphrase: "{AQAAABAAAAAQ+kP6pLzdXjuu8vniXMUJ3Y2GiFq/QN+3eVvrBnJwCEE=}"
+      encryptedPassphrase: "{AQAAABAAAAAQAOiCCUFQBxLZWkzo4b+F4XFp83518YiStav+sTRUut8=}"
       key: |
         -----BEGIN RSA PRIVATE KEY-----
         MIIEogIBAAKCAQEA0sR2/QFNDnWxn7lPnBctrvpwTa3RIidGvl0Uns3ua5PSZSFX
@@ -838,8 +791,10 @@ unclassified:
     globalUpstreamFilterStrategy: UseOldest
   zephyr-scale:
     jiraInstances:
-    - jwt: "{AQAAABAAAAGANXk8xT8JuD+nYSDHuc9iz0h9K6LTTXd9aQP5ekv5eEa0sjncJSaxfQr5s6pQI/aBbsdB+HCQ/znepcTRGe9IhH7pEWqKGz2J65G6DOuyYUT2QKJD9Nxi2GFyaIdFZT1YVXEpX/ZWQDvj4yC6D5sA/+9mZAIIvcqZuTF0SvsfoYCb18yc+/uK1alXfneCPiPhUs1yDErgIc/iy9v53TMWB+3EQQjdnEH9nNILWgnvWHkI75GYl9nr78i7DUt9YKIc2we001HOjkkGEXhAocG67oHgXaghPyixikhr98HqEn5Hx54OzVSYnunAoUhF0Tl8oKgFQBDA9kHIfc8P6ngZIWg5PJQ5OqedSAXFXMJUMkJqSQFihEdhBDd9lshkQUDR6FJsgaDmMasqJejdem5eUrCGNW9kipGT1Po5b2OXvIXMaGqELnYH+jN18P1ZP1iYQ90GGPHTn+eUv8kzHQHaf/ur8EC6/PZ9oGH60HlU8Q8sn/UA8KfbDmxAknNg4qq3aFQ7EIXK5IBhxj94iYv5eg==}"
-      value: "cloud"
+    - password: "a37gmNofl"
+      serverAddress: "https://optimizerx.atlassian.net"
+      username: "Alex Gnuskin"
+      value: "server"
 tool:
   allure:
     installations:
