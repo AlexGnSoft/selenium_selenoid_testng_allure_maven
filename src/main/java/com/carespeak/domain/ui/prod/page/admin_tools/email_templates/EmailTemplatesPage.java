@@ -9,6 +9,7 @@ import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.AbstractPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class EmailTemplatesPage extends AbstractPage {
@@ -37,10 +38,15 @@ public class EmailTemplatesPage extends AbstractPage {
     @FindBy(xpath = "//td[@class='sorting_1']")
     public ClickableElement firstTemplateName;
 
+    @ElementName("email templates table wrapper")
+    @FindBy(id = "email-template-table_wrapper")
+    public WebElement emailTemplatesTableWrapper;
+
     public EmailTemplatesPage() {
         headerMenu = new HeaderMenu();
         searchClient = new SearchWithSelection();
-        emailTemplateTable = new ItemsTable(By.id("email-template-table-wrapper"));
+        emailTemplateTable = new ItemsTable(By.id("email-template-table"));
+        //emailTemplateTable = new ItemsTable(By.id("email-template-table-wrapper"));
     }
 
     @Override

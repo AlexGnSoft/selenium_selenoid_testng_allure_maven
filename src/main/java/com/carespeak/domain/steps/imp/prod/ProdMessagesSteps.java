@@ -196,13 +196,10 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     @Override
     public boolean isTemplateExist(String clientName, String templateName) {
-        emailTemplatesPage.searchClient.search(clientName);
-        emailTemplatesPage.emailTemplateTable.searchFor(templateName);
-
-        TableRowItem templateRow = emailTemplatesPage.emailTemplateTable.getFirstRowItem();
-        if(templateRow == null){
-            throw new RuntimeException("Template was not found!");
-        }
+        //emailTemplatesPage.searchClient.search(clientName);
+        waitFor(emailTemplatesPage::isOpened);
+        emailTemplatesPage.emailTemplateTable.searchInTable("Name", templateName);
+        emailTemplatesPage.emailTemplatesTableWrapper.isDisplayed();
 
         boolean result = false;
         String actualTemplateName = emailTemplatesPage.firstTemplateName.getText();
