@@ -287,6 +287,7 @@ public class ProdProgramSteps implements ProgramSteps {
         programKeywordSignupPage.keywordInput.enterText(keyword);
         programKeywordSignupPage.saveButton.click();
         programKeywordSignupPage.statusPopup.close();
+        programKeywordSignupPage.refreshPage();
         return this;
     }
 

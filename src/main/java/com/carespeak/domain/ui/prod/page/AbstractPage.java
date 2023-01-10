@@ -70,4 +70,8 @@ public abstract class AbstractPage implements ICanWait {
         }
     }
 
+    public void refreshPage(){
+        driver.navigate().refresh();
+    }
+
 }

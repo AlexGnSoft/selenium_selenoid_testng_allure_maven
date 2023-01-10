@@ -77,5 +77,4 @@ public class ProgramKeywordSignupPage extends AbstractProgramPage {
         ClickableElement program = new ClickableElement(driver.findElement(locator), programName + " button");
         program.click();
     }
-
 }
