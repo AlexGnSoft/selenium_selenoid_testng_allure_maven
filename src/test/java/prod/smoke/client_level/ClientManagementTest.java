@@ -11,7 +11,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -213,7 +212,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
 
         softAssert.assertTrue(permissionsOfStaffMember, "It is impossible to edit staff member data");
         softAssert.assertTrue(isItPossibleToEditStaffManagerData, "There are errors with staff managers permissions");
-
     }
 
     @AfterClass(alwaysRun = true)

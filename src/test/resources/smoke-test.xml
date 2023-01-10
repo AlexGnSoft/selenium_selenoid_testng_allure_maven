@@ -20,7 +20,7 @@
             <class name="prod.smoke.client_level.ClientManagementTest"/>
             <class name="prod.smoke.client_level.ClientAutoResponderTest"/>
             <class name="prod.smoke.client_level.ClientLevelEndpointsTest"/>
-            <!--Program level tests-->
+            <!--Keyword Sign Up level tests-->
             <class name="prod.smoke.keyword_signup.KeywordSignUpLevelTest"/>
             <!--Message level tests-->
             <class name="prod.smoke.message_level.MessageManagementTest"/>
