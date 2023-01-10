@@ -7,6 +7,8 @@ import com.carespeak.core.driver.element.Dropdown;
 import com.carespeak.core.logger.Logger;
 import com.carespeak.domain.ui.prod.component.AbstractComponent;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 
 public class HeaderMenu extends AbstractComponent {
@@ -47,7 +49,8 @@ public class HeaderMenu extends AbstractComponent {
 
     @ElementName("Messages")
     @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Messages')]")
-    public ClickableElement messagesMenuItem;
+    @CacheLookup
+    public WebElement messagesMenuItem;
 
     @ElementName("Reports dropdown")
     @FindBy(xpath = "//*[@id='cs-main-menu']//li/*[contains(text(), 'Reports')]/..")
