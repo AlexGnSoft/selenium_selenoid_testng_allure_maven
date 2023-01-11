@@ -10,7 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class ProgramAutoResponder extends AbstractProgramLevelTest {
+public class ProgramAutoResponderTest extends AbstractProgramLevelTest {
 
     private static final String AUTO_RESPONDER_MESSAGE = "Your message cannot be processed. Please call 911 if this is an emergency.";
     private static final String AUTO_RESPONDER_MESSAGE_UNRECOGNIZED = "Unrecognized";

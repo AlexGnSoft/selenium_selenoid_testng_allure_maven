@@ -49,8 +49,8 @@ public class HeaderMenu extends AbstractComponent {
 
     @ElementName("Messages")
     @FindBy(xpath = "//*[@id='cs-main-menu']//li//*[contains(text(), 'Messages')]")
-    @CacheLookup
-    public WebElement messagesMenuItem;
+    //@CacheLookup
+    public ClickableElement messagesMenuItem;
 
     @ElementName("Reports dropdown")
     @FindBy(xpath = "//*[@id='cs-main-menu']//li/*[contains(text(), 'Reports')]/..")
