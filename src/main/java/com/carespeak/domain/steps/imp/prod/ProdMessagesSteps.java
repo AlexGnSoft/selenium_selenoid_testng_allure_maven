@@ -146,7 +146,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         emailSettingsPage.customEmailField.enterText(customEmail);
         emailSettingsPage.subject.enterText(subject);
         emailSettingsPage.bodyField.enterText(body);
-        emailSettingsPage.saveButton.click();
+        emailSettingsPage.saveButton.click();  //this button is missing. Bug is reported
 
         return this;
     }
@@ -174,7 +174,8 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     @Override
     public boolean isMmsWithPictureCreated(String clientName, String messageName) {
-        //messagesPage.messageTable.searchFor(messageName);
+        messagesPage.searchClient.search(clientName);
+        messagesPage.messageTable.searchFor(messageName);
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){
             throw new RuntimeException("Message was not found!");

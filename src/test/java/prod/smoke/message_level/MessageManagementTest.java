@@ -36,7 +36,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isEmailTemplateCreated, "The email template was not created!");
     }
 
-    @Test(description = "Create MMS message with picture - Module Medication", enabled = false)
+    @Test(description = "Create MMS message with picture - Module Medication")
     public void createMmsWithPicture_MHM_T71() {
         //Test data
         String messageName = getRandomString();
@@ -83,6 +83,9 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
 
     @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87", enabled = false)
     public void createEmailMessageAndSendIt_MHM_T84() {
+        //Buttons (Save button..) are missing on the Email setting page - bug is reported by Luka.
+        // That is why, the auto-test will fail.
+
         //Test data
         String customEmail = getRandomString()+"@gmail.com";
         String subject = getRandomString();

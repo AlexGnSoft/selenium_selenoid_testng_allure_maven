@@ -44,7 +44,7 @@ public class MedsCampaignsPage extends AbstractProgramPage {
     public WebElement emptyTableElement;
 
     public MedsCampaignsPage() {
-        addedCampaignsToPatientTable = new ItemsTable(By.id("csPatientAlertsTable_wrapper"));
+        addedCampaignsToPatientTable = new ItemsTable(By.id("csPatientAlertsTable"));
         addCampaignToProgramPopup = new AddCampaignToProgramPopup();
         deleteCampaignFromPatientPopup = new DeleteCampaignFromPatientPopup();
         deleteCampaignFromProgramPopup = new DeleteCampaignFromProgramPopup();

@@ -224,6 +224,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.availableMessagesPopup.waitForDisappear();
         campaignMessagesPage.saveCampaignButton.doubleClick();
         campaignsPage.availableMessagesPopup.waitForDisappear();
+        campaignsPage.refreshPage();
         return this;
     }
 
@@ -356,9 +357,8 @@ public class ProdCampaignSteps implements CampaignSteps {
     public boolean isCampaignAddedToProgram(String campaignName) {
         boolean result = false;
         waitFor(() -> programsCampaignsPage.searchFieldButton.isVisible());
-        programsCampaignsPage.addedCampaignsToProgramTable.searchInTable("Name", campaignName);
+        TableRowItem tableRowItem = programsCampaignsPage.addedCampaignsToProgramTable.searchInTable("Name", campaignName);
         programsPage.sleepWait(1000);
-        TableRowItem tableRowItem = programsCampaignsPage.addedCampaignsToProgramTable.getFirstRowItem();
         if(tableRowItem.getDataByHeader("Name").equals(campaignName))
             result = true;
 
@@ -491,7 +491,8 @@ public class ProdCampaignSteps implements CampaignSteps {
         medsCampaignsPage.addButton.click();
         medsCampaignsPage.addCampaignToPatientPopup.waitForDisplayed();
         addCampaignToPatientPopup.selectCampaignByName(campaignName);
-        addCampaignToPatientPopup.saveButton.click();
+        addCampaignToPatientPopup.saveButton.doubleClick();
+        medsCampaignsPage.refreshPage();
         return this;
     }
 
@@ -540,11 +541,13 @@ public class ProdCampaignSteps implements CampaignSteps {
 
         medsCampaignsPage.addButton.click();
         medsCampaignsPage.addCampaignToProgramPopup.waitForDisplayed();
-        addCampaignToPatientPopup.selectCampaignByName(campaignName);
-        addCampaignToPatientPopup.saveButton.click();
+        medsCampaignsPage.addCampaignToPatientPopup.selectCampaignByName(campaignName);
+        medsCampaignsPage.addCampaignToPatientPopup.saveButton.click();
         medsCampaignsPage.addCampaignToProgramPopup.waitForDisappear();
+        medsCampaignsPage.refreshPage();
 
-        String actualCampaign = medsCampaignsPage.firstCampaignName.getText();
+        TableRowItem tableRowItem = medsCampaignsPage.addedCampaignsToPatientTable.searchInTable("Campaign", campaignName);
+        String actualCampaign = tableRowItem.getDataByHeader("Campaign");
         if(actualCampaign.equals(campaignName)){
             result = true;
             Logger.info("Is campaign'" + campaignName + "' could be again added to patient? '"+ result);

@@ -32,33 +32,65 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         patient.setTimezone("Eastern Time (New York)");
     }
 
-    @Test(description = "Assign Campaign to Patient", enabled = false)
-    public void assignCampaignToPatient_MHM_T107() {
+    @Test(description = "Assign Campaign to Program")
+    public void assignCampaignToProgram_MHM_T104() {
         //Test data
         String messageName = getRandomString();
         String programName = "Program "+ getRandomString();
         String campaignName = getRandomString();
         String campaignDescription = getRandomString();
-        patient.setCellPhone(getGeneratedPhoneNumber());
-        patient.setFirstName(getRandomString());
 
-        site.programSteps()
-                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addNewPatientLimitedFieldsInner(patient);
-
+        getTestProgram(clientName, programName);
         getTestBiometricMedicationMessage(messageName);
         site.campaignSteps()
                 .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER)
-                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName)
-                .addCampaignToPatient(patient, campaignName);
+                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName);
 
-        boolean isCampaignAssignedToPatient = site.campaignSteps()
-                .isCampaignAddedToPatient(campaignName);
+        boolean isCampaignAddedToProgram = site.campaignSteps()
+                .isCampaignAddedToProgram(campaignName);
 
-        Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
+        boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
+                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName);
+
+        softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
+        softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
     }
 
-    @Test(description = "Create campaign - Module Educational")
+    @Test(description = "Remove campaign from program")
+    public void removeCampaignFromProgram_MHM_T110() {
+        //Test data
+        String campaignLocation = "America/New_York";
+        String campaignNameDescription = getRandomString();
+        String programName = "Remove campaign test program "+ getRandomString();
+        String campaignMessage = "Do not forget to take your pills";
+        String SIGN_UP_KEYWORD = getRandomString();
+        String FROM_PHONE_NUMBER = getGeneratedPhoneNumber();
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addKeywordForSignUp(SIGN_UP_KEYWORD);
+
+        site.campaignSteps().addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(false, clientName, "Account Settings", campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, "Occasion",
+                        "Birth Date", campaignMessage,
+                        "Wrong birth day data format, it should be like, mm/dd/yyyy", campaignLocation)
+                .addCampaignToProgram(clientName, programName, "Account Settings", campaignNameDescription);
+
+        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName, FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
+
+        site.campaignSteps()
+                .removeCampaignFromProgram(campaignNameDescription)
+                .goToPatientMedCampaignsTab(FROM_PHONE_NUMBER);
+
+        boolean isCampaignDeletedFromPatient = site.campaignSteps().isCampaignDeletedFromPatient(campaignNameDescription);
+        softAssert.assertTrue(isCampaignDeletedFromPatient, "Campaign was not deleted from Program");
+
+        site.campaignSteps().addCampaignToProgram(clientName, programName, "Account Settings", campaignNameDescription);
+        boolean isCampaignAddedToProgramAfterDeletion = site.campaignSteps().isCampaignAddedToProgram(campaignNameDescription);
+        softAssert.assertTrue(isCampaignAddedToProgramAfterDeletion, "Removed campaign could not be added to program again. This is an error!");
+    }
+
+    @Test(description = "Create campaign - Module Educational", enabled = false)
+    //Wait for dev to fix Email Setting Page. Method addEmailMessage() is affected. No Save Button on the page.
     public void createEducationalCampaign_MHM_T83() {
         //Test data
         String campaignName = getRandomString();
@@ -76,8 +108,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
-
-    @Test(description = "Create campaign - Module Medication", enabled = false)
+    @Test(description = "Create campaign - Module Medication")
     public void createMedicationCampaign_MHM_T89() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -121,35 +152,61 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-    @Test(description = "Assign Campaign to Program")
-    public void assignCampaignToProgram_MHM_T104() {
+   @Test(description = "Allocate multiple messages to campaign and remove them")
+    public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
+        //Test data
+        String campaignLocation = "America/New_York";
+        String messageName1 = getRandomString();
+        String messageName2 = getRandomString();
+        String medicationProgram = "Aspirin & Blood Thinner Meds";
+        String medicationName = getRandomString();
+        String campaignNameDescription = getRandomString();
+        String campaignMessage = "Do not forget to take your pills";
+
+        site.messagesSteps()
+                .addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName1, medicationProgram, medicationName,  campaignMessage)
+                .addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName2, medicationProgram, medicationName,  campaignMessage);
+
+        site.campaignSteps().addMedicationCampaignScheduleProtocolWithSeveralMessages(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE, campaignLocation);
+
+        boolean areMessagesAddedToCampaign = site.campaignSteps().areMessagesAddedToCampaign(2);
+        boolean areAllMessagesRemoved = site.campaignSteps().removeAllMessagesFromCampaign();
+
+        softAssert.assertTrue(areMessagesAddedToCampaign, "Multiple messages were not added to campaign");
+        softAssert.assertTrue(areAllMessagesRemoved, "Multiple messages were not deleted to campaign");
+    }
+
+   // @Test(description = "Assign Campaign to Patient")
+    public void assignCampaignToPatient_MHM_T107() {
         //Test data
         String messageName = getRandomString();
         String programName = "Program "+ getRandomString();
         String campaignName = getRandomString();
         String campaignDescription = getRandomString();
+        patient.setCellPhone(getGeneratedPhoneNumber());
+        patient.setFirstName(getRandomString());
 
-        getTestProgram(clientName, programName);
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addNewPatientLimitedFieldsInner(patient);
+
         getTestBiometricMedicationMessage(messageName);
         site.campaignSteps()
                 .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER)
-                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName);
+                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName)
+                .addCampaignToPatient(patient, campaignName);
 
-        boolean isCampaignAddedToProgram = site.campaignSteps()
-                .isCampaignAddedToProgram(campaignName);
+        boolean isCampaignAssignedToPatient = site.campaignSteps()
+                .isCampaignAddedToPatient(campaignName);
 
-        boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
-                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName);
-
-        softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
-        softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
+        Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
     }
 
-    @Test(description = "Create campaign - Module Account settings") //excluded this test, as it fails on Jenkins, and works Locally
+    @Test(description = "Create campaign - Module Account settings", enabled = false) //excluded this test, as it fails on Jenkins, and works Locally
     public void createAccountSettingsCampaign_MHM_T99() {
         //Test data
         String campaignLocation = "America/New_York";
-        String programName = getRandomString();
+        String programName = "Program "+ getRandomString();
         String campaignName = getRandomString();
         String campaignDescription = getRandomString();
         String campaignMessage = "When is you birthday?";
@@ -175,7 +232,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertEquals(campaignMessage, actualLasLogsMessage, "Campaign message did not arrive to patient");
     }
 
-    @Test(description = "Remove campaign from patient", enabled = false)
+    @Test(description = "Remove campaign from patient")
     public void removeCampaignFromPatient_MHM_T109() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -206,62 +263,6 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
         softAssert.assertTrue(isCampaignDeletedFromPatient, "Campaign was not deleted from Patient");
         softAssert.assertTrue(isSameCampaignCanBeAddedToPatientAfterDeletion, "Removed campaign could not be added again. This is an error!");
-    }
-    @Test(description = "Remove campaign from program")
-    public void removeCampaignFromProgram_MHM_T110() {
-        //Test data
-        String campaignLocation = "America/New_York";
-        String campaignNameDescription = getRandomString();
-        String programName = "Remove campaign test program "+ getRandomString();
-        String campaignMessage = "Do not forget to take your pills";
-        String SIGN_UP_KEYWORD = getRandomString();
-        String FROM_PHONE_NUMBER = getGeneratedPhoneNumber();
-
-        site.programSteps()
-                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addKeywordForSignUp(SIGN_UP_KEYWORD);
-
-        site.campaignSteps().addBiometricAccountSettingCampaignScheduleOccasionWithQuestions(false, clientName, "Account Settings", campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, "Occasion",
-                        "Birth Date", campaignMessage,
-                        "Wrong birth day data format, it should be like, mm/dd/yyyy", campaignLocation)
-                .addCampaignToProgram(clientName, programName, "Account Settings", campaignNameDescription);
-
-        site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName, FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
-
-        site.campaignSteps()
-                .removeCampaignFromProgram(campaignNameDescription)
-                .goToPatientMedCampaignsTab(FROM_PHONE_NUMBER);
-
-        boolean isCampaignDeletedFromPatient = site.campaignSteps().isCampaignDeletedFromPatient(campaignNameDescription);
-        softAssert.assertTrue(isCampaignDeletedFromPatient, "Campaign was not deleted from Program");
-
-        site.campaignSteps().addCampaignToProgram(clientName, programName, "Account Settings", campaignNameDescription);
-        boolean isCampaignAddedToProgramAfterDeletion = site.campaignSteps().isCampaignAddedToProgram(campaignNameDescription);
-        softAssert.assertTrue(isCampaignAddedToProgramAfterDeletion, "Removed campaign could not be added to program again. This is an error!");
-    }
-
-    @Test(description = "Allocate multiple messages to campaign and remove them")
-    public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
-        //Test data
-        String campaignLocation = "America/New_York";
-        String messageName1 = getRandomString();
-        String messageName2 = getRandomString();
-        String medicationProgram = "Aspirin & Blood Thinner Meds";
-        String medicationName = getRandomString();
-        String campaignNameDescription = getRandomString();
-        String campaignMessage = "Do not forget to take your pills";
-
-        site.messagesSteps()
-                .addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName1, medicationProgram, medicationName,  campaignMessage)
-                .addMedicationMmsMessage(Module.MEDICATION, Action.TIMED_ALERT, MessageType.MMS, messageName2, medicationProgram, medicationName,  campaignMessage);
-
-        site.campaignSteps().addMedicationCampaignScheduleProtocolWithSeveralMessages(clientName, Module.MEDICATION, campaignNameDescription, CampaignAccess.PUBLIC, campaignNameDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.FIXED_DATE, campaignLocation);
-
-        boolean areMessagesAddedToCampaign = site.campaignSteps().areMessagesAddedToCampaign(2);
-        boolean areAllMessagesRemoved = site.campaignSteps().removeAllMessagesFromCampaign();
-
-        softAssert.assertTrue(areMessagesAddedToCampaign, "Multiple messages were not added to campaign");
-        softAssert.assertTrue(areAllMessagesRemoved, "Multiple messages were not deleted to campaign");
     }
 
     @AfterClass(alwaysRun = true)
