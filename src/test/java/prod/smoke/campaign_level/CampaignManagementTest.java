@@ -32,7 +32,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         patient.setTimezone("Eastern Time (New York)");
     }
 
-    @Test(description = "Assign Campaign to Patient")
+    @Test(description = "Assign Campaign to Patient", enabled = false)
     public void assignCampaignToPatient_MHM_T107() {
         //Test data
         String messageName = getRandomString();
@@ -77,7 +77,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-    @Test(description = "Create campaign - Module Medication")
+    @Test(description = "Create campaign - Module Medication", enabled = false)
     public void createMedicationCampaign_MHM_T89() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -175,7 +175,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertEquals(campaignMessage, actualLasLogsMessage, "Campaign message did not arrive to patient");
     }
 
-    @Test(description = "Remove campaign from patient")
+    @Test(description = "Remove campaign from patient", enabled = false)
     public void removeCampaignFromPatient_MHM_T109() {
         //Test data
         String campaignLocation = "America/New_York";

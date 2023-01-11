@@ -12,15 +12,15 @@ public class ProgramCustomFieldsPage extends AbstractProgramPage {
     public StatusPopup statusPopup;
 
     @ElementName("Custom field name input")
-    @FindBy(id = "value1_n0")
+    @FindBy(xpath = "//input[@class='form-control cs-custom-field-name' and @value='']")
     public Input fieldNameInput;
 
     @ElementName("Add Custom Field button")
-    @FindBy(xpath = "//div[@id='cs-content']//a[contains(@class, 'addCustomField')]")
+    @FindBy(xpath = "//a[contains(@class, 'cs-new-custom-field-btn')]/i")
     public Button addCustomFieldBtn;
 
     @ElementName("Save button")
-    @FindBy(id = "csCustomFieldsBtn")
+    @FindBy(id = "saveBtn")
     public Button saveButton;
 
     public ProgramCustomFieldsPage() {

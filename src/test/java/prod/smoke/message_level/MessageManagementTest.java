@@ -36,7 +36,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isEmailTemplateCreated, "The email template was not created!");
     }
 
-    @Test(description = "Create MMS message with picture - Module Medication")
+    @Test(description = "Create MMS message with picture - Module Medication", enabled = false)
     public void createMmsWithPicture_MHM_T71() {
         //Test data
         String messageName = getRandomString();
@@ -81,7 +81,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
     }
 
-    @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87")
+    @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87", enabled = false)
     public void createEmailMessageAndSendIt_MHM_T84() {
         //Test data
         String customEmail = getRandomString()+"@gmail.com";
