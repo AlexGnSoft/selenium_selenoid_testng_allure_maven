@@ -389,6 +389,7 @@ public class ProdCampaignSteps implements CampaignSteps {
     @Override
     public boolean isCampaignAddedToPatient(String campaignName) {
         boolean result = false;
+        medsCampaignsPage.sleepWait(1500);
         medsCampaignsPage.addedCampaignsToPatientTable.searchFor(campaignName);
 
         TableRowItem firstRowItem = medsCampaignsPage.addedCampaignsToPatientTable.getFirstRowItem();
@@ -487,12 +488,14 @@ public class ProdCampaignSteps implements CampaignSteps {
 
     @Override
     public CampaignSteps addPatientToCampaign(String patientName, String campaignName) {
-        //programsPage.sideBarMenu.openItem("Meds/Campaigns");
         medsCampaignsPage.addButton.click();
-        medsCampaignsPage.addCampaignToPatientPopup.waitForDisplayed();
-        addCampaignToPatientPopup.selectCampaignByName(campaignName);
-        addCampaignToPatientPopup.saveButton.doubleClick();
+        medsCampaignsPage.addCampaignToProgramPopup.waitForDisplayed();
+        //medsCampaignsPage.addCampaignToPatientPopup.selectCampaignByName(campaignName);
+        medsCampaignsPage.addCampaignToPatientPopup.campaignFromPopUp.doubleClick();
+        medsCampaignsPage.addCampaignToPatientPopup.saveButton.click();
+        //medsCampaignsPage.addCampaignToProgramPopup.waitForDisappear();
         medsCampaignsPage.refreshPage();
+
         return this;
     }
 
@@ -536,16 +539,23 @@ public class ProdCampaignSteps implements CampaignSteps {
     }
 
     @Override
-    public boolean isSameCampaignCanBeAddedToPatientAfterDeletion(String campaignName) {
-        boolean result = false;
-
+    public CampaignSteps addCampaignAfterDeletion(String campaignName) {
         medsCampaignsPage.addButton.click();
         medsCampaignsPage.addCampaignToProgramPopup.waitForDisplayed();
-        medsCampaignsPage.addCampaignToPatientPopup.selectCampaignByName(campaignName);
+        //medsCampaignsPage.addCampaignToPatientPopup.selectCampaignByName(campaignName);
+        medsCampaignsPage.addCampaignToPatientPopup.campaignFromPopUp.doubleClick();
         medsCampaignsPage.addCampaignToPatientPopup.saveButton.click();
-        medsCampaignsPage.addCampaignToProgramPopup.waitForDisappear();
+        //medsCampaignsPage.addCampaignToProgramPopup.waitForDisappear();
         medsCampaignsPage.refreshPage();
 
+        return this;
+    }
+
+
+    @Override
+    public boolean isSameCampaignCanBeAddedToPatientAfterDeletion(String campaignName) {
+        boolean result = false;
+        medsCampaignsPage.sleepWait(1500);
         TableRowItem tableRowItem = medsCampaignsPage.addedCampaignsToPatientTable.searchInTable("Campaign", campaignName);
         String actualCampaign = tableRowItem.getDataByHeader("Campaign");
         if(actualCampaign.equals(campaignName)){
@@ -555,6 +565,4 @@ public class ProdCampaignSteps implements CampaignSteps {
         Logger.info("Is campaign'" + campaignName + "' could be again added to patient? '"+ result);
         return result;
     }
-
-
 }

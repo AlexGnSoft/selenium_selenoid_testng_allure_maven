@@ -14,6 +14,10 @@ public class AddCampaignToPatientPopup extends AbstractPopup{
     @FindBy(xpath = "//span[text()='Add campaign(s) to patient']")
     public ClickableElement title;
 
+    @ElementName("Campaign from Add campaign to patient pop-up")
+    @FindBy(xpath = "//select[@id='csCampaignSelection']/option[@value]")
+    public ClickableElement campaignFromPopUp;
+
     @ElementName("Add campaign to patient Save button")
     @FindBy(xpath = "//button[contains(@class,'success btn-save ui-button')]")
     public Button saveButton;

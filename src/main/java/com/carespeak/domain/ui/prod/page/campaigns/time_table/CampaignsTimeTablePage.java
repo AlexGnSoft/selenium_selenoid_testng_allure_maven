@@ -188,11 +188,18 @@ public class CampaignsTimeTablePage extends AbstractCampaignsPage {
     public String amPmDropDownNewYorkTime(){
         //Displaying current time in 12 hours format with AM/PM
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        int timeDiffEuroVsNewYork = 6;
 
-        LocalDateTime machineTime = LocalDateTime.now();
-        machineTime = machineTime.minusHours(5);
+        LocalDateTime machineTime = (LocalDateTime.now()).minusHours(timeDiffEuroVsNewYork);
+        int currentMinutes = machineTime.getMinute();
         String timeNewYork = machineTime.format(formatter);
-        String amPm = timeNewYork.substring(6, 8);
+        String amPm = "";
+
+        if(currentMinutes > 57 & (timeNewYork.contains("AM"))){
+            amPm = "PM";
+        } else {
+            amPm = timeNewYork.substring(6, 8);
+        }
 
         return amPm;
     }

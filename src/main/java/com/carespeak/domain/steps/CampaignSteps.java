@@ -126,6 +126,14 @@ public interface CampaignSteps extends BaseSteps {
      */
     boolean isSameCampaignCanBeAddedToPatientAfterDeletion(String campaignName);
 
+    /**
+     * Add campaign after deletion
+     *
+     * @param campaignName    campaign name
+     * @return return CampaignSteps object
+     */
+    CampaignSteps addCampaignAfterDeletion(String campaignName);
+
     public String didCampaignMessageArrive(String campaignMessage, String patientFirstName);
 
     /**
