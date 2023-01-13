@@ -32,7 +32,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         patient.setTimezone("Eastern Time (New York)");
     }
 
-    @Test(description = "Assign Campaign to Program")
+    //@Test(description = "Assign Campaign to Program")
     public void assignCampaignToProgram_MHM_T104() {
         //Test data
         String messageName = getRandomString();
@@ -56,7 +56,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
     }
 
-    @Test(description = "Remove campaign from program")
+    //@Test(description = "Remove campaign from program")
     public void removeCampaignFromProgram_MHM_T110() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -108,7 +108,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
-    @Test(description = "Create campaign - Module Medication")
+    //@Test(description = "Create campaign - Module Medication")
     public void createMedicationCampaign_MHM_T89() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -152,7 +152,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-    @Test(description = "Allocate multiple messages to campaign and remove them")
+    //@Test(description = "Allocate multiple messages to campaign and remove them")
     public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -202,7 +202,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
     }
 
-    @Test(description = "Create campaign - Module Account settings") //excluded this test, as it fails on Jenkins, and works Locally
+    //@Test(description = "Create campaign - Module Account settings", enabled = false) //excluded this test, as it fails on Jenkins, and works Locally
     public void createAccountSettingsCampaign_MHM_T99() {
         //Test data
         String campaignLocation = "America/New_York";

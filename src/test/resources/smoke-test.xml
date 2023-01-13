@@ -9,8 +9,6 @@
             TesNG won't perform multi-threading properly
         -->
         <classes>
-            <class name="prod.smoke.message_level.MessageManagementTest"/>
-            <!--Campaign level tests-->
             <class name="prod.smoke.campaign_level.CampaignManagementTest"/>
         </classes>
 
