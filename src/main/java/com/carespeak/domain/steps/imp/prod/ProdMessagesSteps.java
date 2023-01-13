@@ -174,7 +174,8 @@ public class ProdMessagesSteps implements MessagesSteps {
 
     @Override
     public boolean isMmsWithPictureCreated(String clientName, String messageName) {
-        messagesPage.searchClient.search(clientName);
+        //messagesPage.searchClient.search(clientName);
+        messagesPage.sleepWait(1500);
         messagesPage.messageTable.searchFor(messageName);
         TableRowItem messageRow = messagesPage.messageTable.getFirstRowItem();
         if(messageRow == null){

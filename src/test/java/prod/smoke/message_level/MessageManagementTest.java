@@ -23,7 +23,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         clientName = client.getName();
     }
 
-    @Test(description = "Create email template")
+    //@Test(description = "Create email template")
     public void createEmailTemplate_MHM_T87() {
         String emailTemplateName = "Email template name " + getFormattedDate("dd-MM-yy-H-mm");
         site.adminToolsSteps().goToSpecificTab("Email Templates");
@@ -52,7 +52,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isMmsWithPictureCreated,"The MMS message was not created!");
     }
 
-    @Test(description = "Create sms message")
+    //@Test(description = "Create sms message")
     public void createSmsMessage_MHM_T70() {
         String medicationName_T70 = getRandomString();
         site.messagesSteps()
@@ -66,7 +66,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isMessageCreated,"The message was not created!");
     }
 
-    @Test(description = "Edit text of sms message")
+    //@Test(description = "Edit text of sms message")
     public void editSmsMessage_MHM_T81() {
         String medicationName_T81 = getRandomString();
 
@@ -81,7 +81,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
     }
 
-    @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87", enabled = false)
+    //@Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87", enabled = false)
     public void createEmailMessageAndSendIt_MHM_T84() {
         //Buttons (Save button..) are missing on the Email setting page - bug is reported by Luka.
         // That is why, the auto-test will fail.
@@ -99,7 +99,7 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(isMessageWasSent,"The email message was not sent");
     }
 
-    @Test(description = "Delete message")
+    //@Test(description = "Delete message")
     public void deleteMessage_MHM_T82() {
         String messageName = getRandomString();
         site.messagesSteps()

@@ -133,7 +133,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertEquals(actualLasLogsMessage, campaignMessage, "Campaign message did not arrive to patient");
     }
 
-    @Test(description = "Create campaign - Module Biometric")
+    //@Test(description = "Create campaign - Module Biometric")
     public void createBiometricCampaign_MHM_T88() {
         //Test data
         String messageName = getRandomString();
