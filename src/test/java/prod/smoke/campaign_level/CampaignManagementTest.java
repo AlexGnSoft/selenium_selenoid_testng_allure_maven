@@ -176,31 +176,6 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert.assertTrue(areAllMessagesRemoved, "Multiple messages were not deleted to campaign");
     }
 
-    @Test(description = "Assign Campaign to Patient")
-    public void assignCampaignToPatient_MHM_T107() {
-        //Test data
-        String messageName = "Message"+ getRandomString();
-        String programName = "Program "+ getRandomString();
-        String campaignName = "Campaign"+ getRandomString();
-        String campaignDescription = "Campaign"+ getRandomString();
-        patient.setCellPhone(getGeneratedPhoneNumber());
-        patient.setFirstName(getRandomString());
-
-        site.programSteps()
-                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
-                .addNewPatientLimitedFieldsInner(patient);
-
-        getTestBiometricMedicationMessage(messageName);
-        site.campaignSteps()
-                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER)
-                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName)
-                .addCampaignToPatient(patient, campaignName);
-
-        boolean isCampaignAssignedToPatient = site.campaignSteps()
-                .isCampaignAddedToPatient(campaignName+"1");
-
-        Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
-    }
 
     //@Test(description = "Create campaign - Module Account settings", enabled = false) //excluded this test, as it fails on Jenkins, and works Locally
     public void createAccountSettingsCampaign_MHM_T99() {
@@ -260,6 +235,32 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert.assertTrue(isCampaignDeletedFromPatient, "Campaign was not deleted from Patient");
 
         site.campaignSteps().addCampaignAfterDeletion(campaignNameDescription);
+    }
+
+    @Test(description = "Assign Campaign to Patient")
+    public void assignCampaignToPatient_MHM_T107() {
+        //Test data
+        String messageName = "Message"+ getRandomString();
+        String programName = "Program "+ getRandomString();
+        String campaignName = "Campaign"+ getRandomString();
+        String campaignDescription = "Campaign"+ getRandomString();
+        patient.setCellPhone(getGeneratedPhoneNumber());
+        patient.setFirstName(getRandomString());
+
+        site.programSteps()
+                .addNewProgram(clientName, programName, ProgramAccess.PUBLIC)
+                .addNewPatientLimitedFieldsInner(patient);
+
+        getTestBiometricMedicationMessage(messageName);
+        site.campaignSteps()
+                .addBiometricAccountSettingCampaignScheduleProtocol(clientName, Module.BIOMETRIC, campaignName, CampaignAccess.PUBLIC, campaignDescription, CampaignScheduleType.PROTOCOL, CampaignAnchor.EVENT_DATE, programName, CampaignAdjustDate.NEXT_FRIDAY, CampaignDays.AFTER)
+                .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName)
+                .addCampaignToPatient(patient, campaignName);
+
+        boolean isCampaignAssignedToPatient = site.campaignSteps()
+                .isCampaignAddedToPatient(campaignName+"1");
+
+        Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
     }
 
     @AfterClass(alwaysRun = true)
