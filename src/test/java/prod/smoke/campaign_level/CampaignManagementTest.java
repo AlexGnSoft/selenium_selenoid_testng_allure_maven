@@ -32,7 +32,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         patient.setTimezone("Eastern Time (New York)");
     }
 
-    //@Test(description = "Assign Campaign to Program")
+    @Test(description = "Assign Campaign to Program")
     public void assignCampaignToProgram_MHM_T104() {
         //Test data
         String messageName = getRandomString();
@@ -56,7 +56,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
     }
 
-    //@Test(description = "Remove campaign from program")
+    @Test(description = "Remove campaign from program")
     public void removeCampaignFromProgram_MHM_T110() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -108,7 +108,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
-    //@Test(description = "Create campaign - Module Medication")
+    @Test(description = "Create campaign - Module Medication")
     public void createMedicationCampaign_MHM_T89() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -133,7 +133,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertEquals(actualLasLogsMessage, campaignMessage, "Campaign message did not arrive to patient");
     }
 
-    //@Test(description = "Create campaign - Module Biometric")
+    @Test(description = "Create campaign - Module Biometric")
     public void createBiometricCampaign_MHM_T88() {
         //Test data
         String messageName = getRandomString();
@@ -152,7 +152,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-    //@Test(description = "Allocate multiple messages to campaign and remove them")
+    @Test(description = "Allocate multiple messages to campaign and remove them")
     public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -258,7 +258,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
                 .addCampaignToPatient(patient, campaignName);
 
         boolean isCampaignAssignedToPatient = site.campaignSteps()
-                .isCampaignAddedToPatient(campaignName+"1");
+                .isCampaignAddedToPatient(campaignName);
 
         Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
     }
