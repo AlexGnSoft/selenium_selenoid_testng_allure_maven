@@ -258,7 +258,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
                 .addCampaignToPatient(patient, campaignName);
 
         boolean isCampaignAssignedToPatient = site.campaignSteps()
-                .isCampaignAddedToPatient(campaignName+"1");
+                .isCampaignAddedToPatient(campaignName);
 
         Assert.assertTrue(isCampaignAssignedToPatient, "Campaign was not assigned to Patient");
     }

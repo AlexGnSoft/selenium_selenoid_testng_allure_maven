@@ -12,5 +12,6 @@
             <class name="prod.smoke.campaign_level.CampaignManagementTest"/>
         </classes>
 
+
     </test>
 </suite>
