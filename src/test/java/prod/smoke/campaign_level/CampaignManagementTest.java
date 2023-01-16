@@ -47,7 +47,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
                 .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName);
 
         boolean isCampaignAddedToProgram = site.campaignSteps()
-                .isCampaignAddedToProgram(campaignName);
+                .isCampaignAddedToProgram(campaignName+"111");
 
         boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
                 .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName);
