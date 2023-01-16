@@ -47,10 +47,10 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
                 .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName);
 
         boolean isCampaignAddedToProgram = site.campaignSteps()
-                .isCampaignAddedToProgram(campaignName);
+                .isCampaignAddedToProgram(campaignName+"1111");
 
         boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
-                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName+"!!!");
+                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName);
 
         softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
         softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
