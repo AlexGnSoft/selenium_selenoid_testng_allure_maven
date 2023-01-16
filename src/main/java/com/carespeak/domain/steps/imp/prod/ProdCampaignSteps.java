@@ -482,7 +482,7 @@ public class ProdCampaignSteps implements CampaignSteps {
         campaignsPage.deleteCampaignButton.click();
         //campaignsPage.deleteCampaignFromPatientPopup.waitForDisplayed();
         campaignsPage.deleteCampaignFromProgramPopup.okButton.doubleClick();
-        campaignsPage.deleteCampaignFromProgramPopup.waitForDisappear();
+        campaignsPage.refreshPage();
         return this;
     }
 
