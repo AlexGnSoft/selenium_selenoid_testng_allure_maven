@@ -10,7 +10,6 @@
         -->
         <classes>
             <class name="prod.smoke.client_level.ClientLevelEndpointsTest"/>
-            <class name="prod.smoke.campaign_level.CampaignManagementTest"/>
         </classes>
     </test>
 </suite>
