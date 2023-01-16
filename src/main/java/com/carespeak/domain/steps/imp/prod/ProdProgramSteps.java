@@ -575,6 +575,7 @@ public class ProdProgramSteps implements ProgramSteps {
         addPatientsPage.timezoneDropdown.select(patient.getTimezone());
         addPatientsPage.firstNameInput.enterText(patient.getFirstName());
         addPatientsPage.saveButton.click();
+        waitFor(()-> !addPatientsPage.saveButton.isVisible());
         return this;
     }
 
