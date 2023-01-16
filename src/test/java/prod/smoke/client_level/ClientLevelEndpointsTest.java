@@ -13,7 +13,6 @@ import java.util.List;
 public class ClientLevelEndpointsTest extends AbstractClientLevelTest {
 
     private List<String> expectedEndpoints = Arrays.asList(PropertyFileReader.getVariableValue("twilioSmsSender"));
-
     private Patient patient;
     private Client client;
     private String programName;

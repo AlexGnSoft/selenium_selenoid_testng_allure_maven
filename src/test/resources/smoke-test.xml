@@ -9,7 +9,7 @@
             TesNG won't perform multi-threading properly
         -->
         <classes>
-            <class name="prod.smoke.client_level.ClientLevelEndpointsTest"/>
+            <class name="prod.smoke.client_level.ClientManagementTest"/>
         </classes>
     </test>
 </suite>

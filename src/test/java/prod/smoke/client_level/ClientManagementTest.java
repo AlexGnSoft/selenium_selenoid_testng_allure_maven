@@ -4,6 +4,7 @@ import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.*;
+import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.staff.StaffManager;
 import org.testng.Assert;
@@ -33,6 +34,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     private SoftAssert softAssert;
 
     private final String MULTI_CLIENT_ADMIN = "Multi client program manager";
+    private List<String> expectedEndpoints = Arrays.asList(PropertyFileReader.getVariableValue("twilioSmsSender"));
     String ROLE_PROGRAM_ADMIN = "Client level program manager";
     String ROLE_PROGRAM_STAFF = "Regular staff program manager";
     String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
@@ -100,7 +102,7 @@ public class ClientManagementTest extends AbstractClientLevelTest {
 
 
     @Test(description = "Add additional language for client", dependsOnMethods = "addNewClient_MHM_T10")
-        public void addAdditionalLanguageForClient_MHM_T12() {
+    public void addAdditionalLanguageForClient_MHM_T12() {
         List<Language> expectedLanguages = Arrays.asList(Language.CH, Language.DU);
 
         List<Language> actualLanguages = site.adminToolsSteps()
@@ -212,6 +214,31 @@ public class ClientManagementTest extends AbstractClientLevelTest {
 
         softAssert.assertTrue(permissionsOfStaffMember, "It is impossible to edit staff member data");
         softAssert.assertTrue(isItPossibleToEditStaffManagerData, "There are errors with staff managers permissions");
+    }
+
+    @Test(description = "Check client level endpoints are available on program level", dependsOnMethods = "addNewClient_MHM_T10")
+    public void endpointAvailableOnProgramLevel_MHM_T167() {
+        String programName  = getTestProgramByName("ClientLevelTestEndpoints program " + getFormattedDate("dd-MM-yy-H-mm-ss"), client);
+
+        List<String> actualEndpoints = site.programSteps()
+                .getEndpointsOnProgramLevel(programName);
+
+        Assert.assertTrue(actualEndpoints.containsAll(expectedEndpoints), "Actual endpoints should contain next values:\n" +
+                expectedEndpoints + "\n" +
+                "but endpoints is " + actualEndpoints + "\n");
+    }
+
+    @Test(description = "Check client level endpoints are available on patient level", dependsOnMethods = "addNewClient_MHM_T10")
+    public void endpointAvailableOnPatientLevel_MHM_T169() {
+        String programName  = getTestProgramByName("ClientLevelTestEndpoints program " + getFormattedDate("dd-MM-yy-H-mm-ss"), client);
+        Patient patient = getTestPatientByName("ClientLevelTestEndpointsPatient", client, programName);
+
+        List<String> actualEndpoints = site.programSteps()
+                .getEndpointsOnPatientLevel(client, programName, patient);
+
+        Assert.assertTrue(actualEndpoints.containsAll(expectedEndpoints), "Actual endpoints should contain next values:\n" +
+                expectedEndpoints + "\n" +
+                "but endpoints is " + actualEndpoints + "\n");
     }
 
     @AfterClass(alwaysRun = true)
