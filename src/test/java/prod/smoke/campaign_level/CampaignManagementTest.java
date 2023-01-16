@@ -47,7 +47,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
                 .addCampaignToProgram(clientName, programName, Module.BIOMETRIC, campaignName);
 
         boolean isCampaignAddedToProgram = site.campaignSteps()
-                .isCampaignAddedToProgram(campaignName+"111");
+                .isCampaignAddedToProgram(campaignName);
 
         boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
                 .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName);
@@ -108,7 +108,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
 
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
-    //@Test(description = "Create campaign - Module Medication")
+    @Test(description = "Create campaign - Module Medication")
     public void createMedicationCampaign_MHM_T89() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -133,7 +133,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertEquals(actualLasLogsMessage, campaignMessage, "Campaign message did not arrive to patient");
     }
 
-    //@Test(description = "Create campaign - Module Biometric")
+    @Test(description = "Create campaign - Module Biometric")
     public void createBiometricCampaign_MHM_T88() {
         //Test data
         String messageName = getRandomString();
@@ -152,7 +152,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-    //@Test(description = "Allocate multiple messages to campaign and remove them")
+    @Test(description = "Allocate multiple messages to campaign and remove them")
     public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -177,7 +177,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
     }
 
 
-    //@Test(description = "Create campaign - Module Account settings", enabled = false) //excluded this test, as it fails on Jenkins, and works Locally
+    @Test(description = "Create campaign - Module Account settings", enabled = false) //excluded this test, as it fails on Jenkins, and works Locally
     public void createAccountSettingsCampaign_MHM_T99() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -207,7 +207,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertEquals(campaignMessage, actualLasLogsMessage, "Campaign message did not arrive to patient");
     }
 
-    //@Test(description = "Remove campaign from patient")
+    @Test(description = "Remove campaign from patient")
     public void removeCampaignFromPatient_MHM_T109() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -237,7 +237,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         site.campaignSteps().addCampaignAfterDeletion(campaignNameDescription);
     }
 
-    //@Test(description = "Assign Campaign to Patient")
+    @Test(description = "Assign Campaign to Patient")
     public void assignCampaignToPatient_MHM_T107() {
         //Test data
         String messageName = "Message"+ getRandomString();
