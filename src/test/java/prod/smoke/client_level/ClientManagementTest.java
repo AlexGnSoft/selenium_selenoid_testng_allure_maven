@@ -4,7 +4,6 @@ import com.carespeak.core.config.PropertyFileReader;
 import com.carespeak.domain.entities.client.Client;
 import com.carespeak.domain.entities.common.Language;
 import com.carespeak.domain.entities.message.*;
-import com.carespeak.domain.entities.patient.Patient;
 import com.carespeak.domain.entities.program.ProgramAccess;
 import com.carespeak.domain.entities.staff.StaffManager;
 import org.testng.Assert;
@@ -34,7 +33,6 @@ public class ClientManagementTest extends AbstractClientLevelTest {
     private SoftAssert softAssert;
 
     private final String MULTI_CLIENT_ADMIN = "Multi client program manager";
-
     String ROLE_PROGRAM_ADMIN = "Client level program manager";
     String ROLE_PROGRAM_STAFF = "Regular staff program manager";
     String ROLE_AGGREGATE_ONLY_STAFF = "Staff dashboard read-only";
