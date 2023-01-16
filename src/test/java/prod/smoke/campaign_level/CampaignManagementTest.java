@@ -50,7 +50,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
                 .isCampaignAddedToProgram(campaignName);
 
         boolean isSameCampaignCannotBeAddedTwice = site.campaignSteps()
-                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName);
+                .isSameCampaignCannotBeAddedTwice(Module.BIOMETRIC, campaignName+"!!!");
 
         softAssert.assertTrue(isCampaignAddedToProgram, "Campaign was not created");
         softAssert.assertTrue(isSameCampaignCannotBeAddedTwice, "Same campaign could be added to program twice");
@@ -78,7 +78,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName, FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
 
         site.campaignSteps()
-                .removeCampaignFromProgram(campaignNameDescription+"fail")
+                .removeCampaignFromProgram(campaignNameDescription)
                 .goToPatientMedCampaignsTab(FROM_PHONE_NUMBER);
 
         boolean isCampaignDeletedFromPatient = site.campaignSteps().isCampaignDeletedFromPatient(campaignNameDescription);
