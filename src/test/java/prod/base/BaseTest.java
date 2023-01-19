@@ -20,7 +20,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import java.io.File;
-import java.util.Arrays;
 
 @Listeners({ExecutionTestOrderInterceptor.class, AllureReportListener.class, AllureTestNg.class})
 public abstract class BaseTest implements IDataGenerator {

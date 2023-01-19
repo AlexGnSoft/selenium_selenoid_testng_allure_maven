@@ -81,11 +81,8 @@ public class MessageManagementTest extends AbstractMessageLeveTest {
         Assert.assertTrue(areMessagesEqual, "The message text was not updated!");
     }
 
-    //@Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87", enabled = false)
+    @Test(description = "Create email message and send it", dependsOnMethods = "createEmailTemplate_MHM_T87")
     public void createEmailMessageAndSendIt_MHM_T84() {
-        //Buttons (Save button..) are missing on the Email setting page - bug is reported by Luka.
-        // That is why, the auto-test will fail.
-
         //Test data
         String customEmail = getRandomString()+"@gmail.com";
         String subject = getRandomString();

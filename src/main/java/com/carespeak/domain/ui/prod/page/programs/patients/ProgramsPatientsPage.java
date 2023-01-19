@@ -26,7 +26,7 @@ public class ProgramsPatientsPage extends AbstractProgramPage {
     private static final String ACTIVE_TAB_LOCATOR = "//ul[@role='tablist']//li[contains(@class, 'ui-state-active')]//a[contains(text(), '%s')]";
 
     @ElementName("Status of patient")
-    @FindBy(xpath = "//td[@class=' nowrap']/span")
+    @FindBy(xpath = "//td[contains(@class,'nowrap')]/span")
     public ClickableElement statusOfPatient;
     @ElementName("Remove button")
     @FindBy(id = "csPatientGroupDelete")

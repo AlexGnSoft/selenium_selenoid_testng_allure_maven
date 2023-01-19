@@ -89,8 +89,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         softAssert.assertTrue(isCampaignAddedToProgramAfterDeletion, "Removed campaign could not be added to program again. This is an error!");
     }
 
-    //@Test(description = "Create campaign - Module Educational", enabled = false)
-    //Wait for dev to fix Email Setting Page. Method addEmailMessage() is affected. No Save Button on the page.
+    @Test(description = "Create campaign - Module Educational")
     public void createEducationalCampaign_MHM_T83() {
         //Test data
         String campaignName = getRandomString();
@@ -152,7 +151,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-    @Test(description = "Allocate multiple messages to campaign and remove them")
+   @Test(description = "Allocate multiple messages to campaign and remove them")
     public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -177,7 +176,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
     }
 
 
-    //@Test(description = "Create campaign - Module Account settings", enabled = false) //excluded this test, as it fails on Jenkins, and works Locally
+    @Test(description = "Create campaign - Module Account settings") //excluded this test, as it fails on Jenkins, and works Locally
     public void createAccountSettingsCampaign_MHM_T99() {
         //Test data
         String campaignLocation = "America/New_York";

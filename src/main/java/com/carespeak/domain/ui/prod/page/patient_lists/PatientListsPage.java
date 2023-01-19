@@ -28,7 +28,8 @@ public class PatientListsPage extends AbstractPage {
     public Button newButton;
 
     @ElementName("First patient list button")
-    @FindBy(xpath = "//tr[@role='row']//td/a")
+    @FindBy(xpath = "//tr[@class='odd']//a[contains(@href,'patient-list')]/strong")
+    //@FindBy(xpath = "//tr[@role='row']//td/a")
     public ClickableElement firstPatientList;
 
     @ElementName("Checkbox of the first patient in a list")

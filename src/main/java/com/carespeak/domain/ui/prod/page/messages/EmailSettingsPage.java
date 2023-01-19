@@ -19,7 +19,7 @@ public class EmailSettingsPage extends AbstractPage {
     public Input subject;
 
     @ElementName("Body field")
-    @FindBy(xpath = "//div[@class='message-textarea-container']")
+    @FindBy(xpath = "//div[@role='textbox']")
     public Input bodyField;
 
     @ElementName("Send test message button")

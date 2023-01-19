@@ -30,10 +30,8 @@ import com.carespeak.domain.ui.prod.page.programs.patients.patients.AddPatientsP
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.MonthDayYearContainer;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.PatientProfilePage;
 import com.carespeak.domain.ui.prod.page.programs.patients.patients.ProgramPatientsTab;
-import org.openqa.selenium.WebElement;
 import org.testng.collections.CollectionUtils;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProdProgramSteps implements ProgramSteps {

@@ -21,7 +21,7 @@ public class MessagesPage extends AbstractPage {
     public ItemsTable messageTable;
     public Dropdown dropdown;
 
-    private static final String MESSAGE_NAME = "//tbody/tr[@role='row']/td/strong/a[contains(text(), '%s')]";
+    private static final String MESSAGE_NAME = "//td/strong/a[contains(text(), '%s')]";
 
     @ElementName("Add message button")
     @FindBy(id = "messageAddBtn")
@@ -64,7 +64,7 @@ public class MessagesPage extends AbstractPage {
     public ClickableElement closeButtonOfSavedMessage;
 
     @ElementName("Message name")
-    @FindBy(xpath = "//tbody/tr[@role='row']/td/strong/a")
+    @FindBy(xpath = "//tr[@class='odd']/td/strong/a")
     public ClickableElement firstMessageName;
 
     @ElementName("Message name with MMS")
@@ -72,7 +72,7 @@ public class MessagesPage extends AbstractPage {
     public ClickableElement firstMessageNameWithMms;
 
     @ElementName("Text of message")
-    @FindBy(xpath = "//td[@class=' text-wrap']")
+    @FindBy(xpath = "//td[contains(@class,'text-wrap')]")
     public ClickableElement messageText;
 
     @ElementName("Save message button")
