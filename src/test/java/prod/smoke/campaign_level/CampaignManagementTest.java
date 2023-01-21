@@ -202,8 +202,9 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         site.adminToolsSteps().initiateKeywordSignupSendAndAgree(clientName, programName, FROM_PHONE_NUMBER, TO_ENDPOINT, SIGN_UP_KEYWORD);
 
         String actualLasLogsMessage = site.campaignSteps().didCampaignMessageArrive(campaignMessage, FROM_PHONE_NUMBER);
+        boolean bol = campaignMessage.equals(actualLasLogsMessage);
 
-        Assert.assertEquals(campaignMessage, actualLasLogsMessage, "Campaign message did not arrive to patient");
+        Assert.assertTrue(bol, "Campaign message did not arrive to patient");
     }
 
     @Test(description = "Remove campaign from patient")

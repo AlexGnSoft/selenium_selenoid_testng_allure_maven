@@ -56,10 +56,8 @@ public class ClientAutoResponderTest extends AbstractClientLevelTest {
     }
 
     @AfterClass(alwaysRun = true)
-    public void cleanUpClientData() {
-//        site.programSteps().removeProgram(client, programName);
-//        List<String> programs = site.programSteps().getProgramsForClient(client);
-//        Assert.assertFalse(programs.contains(programName), "Program '" + programName + "' was not removed!");
-        removeClient(client);
+    public void removeClient() {
+        site.adminToolsSteps()
+                .removeClient(client);
     }
 }
