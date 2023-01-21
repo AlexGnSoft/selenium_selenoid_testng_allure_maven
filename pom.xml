@@ -107,7 +107,7 @@
                     <testFailureIgnore>false</testFailureIgnore>
                     <rerunFailingTestsCount>2</rerunFailingTestsCount>
                     <parallel>classes</parallel>
-                    <threadCount>7</threadCount>
+                    <threadCount>5</threadCount>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
