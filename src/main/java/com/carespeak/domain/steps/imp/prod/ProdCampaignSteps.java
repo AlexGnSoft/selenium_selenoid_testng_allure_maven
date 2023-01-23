@@ -317,6 +317,8 @@ public class ProdCampaignSteps implements CampaignSteps {
         questionItem.questionTextInput().enterText(questionText);
         questionItem.onErrorTextInput().enterText(onErrorText);
         accountSettingsPage.saveButton.click();
+        accountSettingsPage.statusPopup.close();
+
         return this;
     }
 

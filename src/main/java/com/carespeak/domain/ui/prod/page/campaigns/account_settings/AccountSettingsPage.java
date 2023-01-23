@@ -4,6 +4,7 @@ import com.carespeak.core.driver.annotation.ElementName;
 import com.carespeak.core.driver.element.Button;
 import com.carespeak.domain.ui.prod.component.table.AccountCreationTable;
 import com.carespeak.domain.ui.prod.page.campaigns.AbstractCampaignsPage;
+import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 public class AccountSettingsPage extends AbstractCampaignsPage {
 
     public AccountCreationTable accountCreationTable;
+    public StatusPopup statusPopup;
 
     @ElementName("Add question button")
     @FindBy(id = "addQuestionBtn")
@@ -27,5 +29,6 @@ public class AccountSettingsPage extends AbstractCampaignsPage {
 
     public AccountSettingsPage() {
         accountCreationTable = new AccountCreationTable(By.id("cs-as-table"));
+        statusPopup = new StatusPopup();
     }
 }
