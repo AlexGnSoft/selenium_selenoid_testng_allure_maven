@@ -8,6 +8,7 @@ import com.carespeak.domain.ui.prod.component.header.HeaderMenu;
 import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.AbstractPage;
+import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,7 @@ public class EmailTemplatesPage extends AbstractPage {
     public HeaderMenu headerMenu;
     public SearchWithSelection searchClient;
     public ItemsTable emailTemplateTable;
+    public StatusPopup statusPopup;
 
     @ElementName("Add template button")
     @FindBy(id = "email-template-add-btn")
@@ -45,6 +47,7 @@ public class EmailTemplatesPage extends AbstractPage {
     public EmailTemplatesPage() {
         headerMenu = new HeaderMenu();
         searchClient = new SearchWithSelection();
+        statusPopup = new StatusPopup();
         emailTemplateTable = new ItemsTable(By.id("email-template-table"));
         //emailTemplateTable = new ItemsTable(By.id("email-template-table-wrapper"));
     }

@@ -150,7 +150,8 @@ public class ProdMessagesSteps implements MessagesSteps {
         emailSettingsPage.customEmailField.enterText(customEmail);
         emailSettingsPage.subject.enterText(subject);
         emailSettingsPage.bodyField.enterText(body);
-        emailSettingsPage.saveButton.click();  //this button is missing. Bug is reported
+        emailSettingsPage.saveButton.click();
+        emailTemplatesPage.statusPopup.close();
 
         return this;
     }
