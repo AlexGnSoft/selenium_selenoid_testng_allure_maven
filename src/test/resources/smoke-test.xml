@@ -9,7 +9,7 @@
             TesNG won't perform multi-threading properly
         -->
         <classes>
-            <class name="prod.smoke.campaign_level.CampaignManagementTest"/>
+            <class name="prod.smoke.campaign_level.CampaignManagementArriveTest"/>
         </classes>
     </test>
 </suite>
