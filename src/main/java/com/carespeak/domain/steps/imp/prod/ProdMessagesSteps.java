@@ -134,6 +134,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         medicationPage.nextBtn.click();
         messagesPage.messageTextField.enterText(smsMessage);
         messagesPage.saveButton.click();
+        messagesPage.statusPopup.close();
 
         return this;
     }

@@ -151,7 +151,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
         Assert.assertTrue(isCampaignCreated, "Campaign was not created");
     }
 
-   //@Test(description = "Allocate multiple messages to campaign and remove them")
+   @Test(description = "Allocate multiple messages to campaign and remove them")
     public void allocateMultipleMessagesToCampaignRemoveMessages_MHM_T100() {
         //Test data
         String campaignLocation = "America/New_York";
@@ -176,7 +176,7 @@ public class CampaignManagementTest extends AbstractCampaignLevelTest {
     }
 
 
-    //@Test(description = "Create campaign - Module Account settings") //excluded this test, as it fails on Jenkins, and works Locally
+    @Test(description = "Create campaign - Module Account settings") //excluded this test, as it fails on Jenkins, and works Locally
     public void createAccountSettingsCampaign_MHM_T99() {
         //Test data
         String campaignLocation = "America/New_York";
