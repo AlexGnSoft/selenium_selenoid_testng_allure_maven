@@ -272,7 +272,6 @@ public class ProdMessagesSteps implements MessagesSteps {
         emailTemplatesPage.templateName.enterText(templateName);
         emailTemplatesPage.contentField.enterText(templateBody);
         emailTemplatesPage.saveButton.click();
-        emailTemplatesPage.statusPopup.close();
         emailTemplatesPage.statusPopup.waitForDisappear();
         return this;
     }
