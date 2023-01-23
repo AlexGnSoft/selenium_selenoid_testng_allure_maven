@@ -17,6 +17,8 @@ import com.carespeak.domain.ui.prod.page.messages.MedicationPage;
 import com.carespeak.domain.ui.prod.page.messages.MessagesPage;
 import com.carespeak.domain.ui.prod.page.programs.opt_in_messages.OptInMessagesPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
+import com.carespeak.domain.ui.prod.popup.StatusPopup;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ProdMessagesSteps implements MessagesSteps {
     private final EmailSettingsPage emailSettingsPage;
     private final SelectModuleActionTypePopup selectModuleActionTypePopup;
     private final SideBarMenu sideBarMenu;
+
 
     public ProdMessagesSteps() {
         dashboardPage = new DashboardPage();
@@ -110,6 +113,7 @@ public class ProdMessagesSteps implements MessagesSteps {
         messagesPage.messageTextField.enterText(smsMessage);
         messagesPage.selectMmsPicture(filePath);
         messagesPage.saveButton.click();
+        messagesPage.statusPopup.close();
 
         return this;
     }

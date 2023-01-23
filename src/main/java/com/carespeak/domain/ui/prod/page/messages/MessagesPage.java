@@ -6,6 +6,7 @@ import com.carespeak.domain.ui.prod.component.search.SearchWithSelection;
 import com.carespeak.domain.ui.prod.component.table.base.ItemsTable;
 import com.carespeak.domain.ui.prod.page.AbstractPage;
 import com.carespeak.domain.ui.prod.popup.SelectModuleActionTypePopup;
+import com.carespeak.domain.ui.prod.popup.StatusPopup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +21,7 @@ public class MessagesPage extends AbstractPage {
     public SelectModuleActionTypePopup selectModuleActionTypePopup;
     public ItemsTable messageTable;
     public Dropdown dropdown;
+    public StatusPopup statusPopup;
 
     private static final String MESSAGE_NAME = "//td/strong/a[contains(text(), '%s')]";
 
@@ -124,7 +126,7 @@ public class MessagesPage extends AbstractPage {
         selectModuleActionTypePopup = new SelectModuleActionTypePopup();
         messageTable = new ItemsTable(By.id("messagesTableWrapper"));
         searchClient = new SearchWithSelection();
-
+        statusPopup = new StatusPopup();
     }
 
     public boolean isOpened() {
