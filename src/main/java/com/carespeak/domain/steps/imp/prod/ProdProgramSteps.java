@@ -689,6 +689,7 @@ public class ProdProgramSteps implements ProgramSteps {
     @Override
     public List<String> getEndpointsOnProgramLevel(String programName) {
         String url = dashboardPage.getCurrentUrl();
+        waitFor(()-> dashboardPage.headerMenu.programsMenuItemRedefined.isVisible());
         dashboardPage.headerMenu.programsMenuItemRedefined.click();
         programsPage.waitFor(() -> !programsPage.getCurrentUrl().equals(url), false);
         waitFor(()-> programsPage.isOpened());
