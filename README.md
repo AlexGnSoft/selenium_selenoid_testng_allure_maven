@@ -1,6 +1,5 @@
-# CareSpeak test automation framework #
-Test automation framework for CareSpeak products.
-Mainly for Mobile Health Manager test automation.
+# Test automation framework #
+Test automation framework: Selenium of Maven, TestNG, Allure + Selenoid for remote parallel tests run
 
 ### Requirements ###
 * Java 8+
@@ -8,7 +7,7 @@ Mainly for Mobile Health Manager test automation.
 * Will to run UI tests :)
 
 ### Information
-* To see framework architecture visit: [Test automation framework architecture](https://optimizerx.atlassian.net/wiki/spaces/EO/pages/899514503/UI+test+automation+architecture)
+* To see framework architecture visit: 
 * Framework supports next browsers: Chrome, Edge
 
 ### How to run tests?
